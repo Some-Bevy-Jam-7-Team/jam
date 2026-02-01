@@ -8,6 +8,7 @@ authors = [
     "Joona Aalto <jondolf.dev@gmail.com>",
     "Freyja Dunlin <freyjamoth@gmail.com>",
     "Nico Zweifel <nicozweifel@gmail.com>",
+    "Atlas Dostal <email@atlasdostal.com>",
 ]
 version = "0.1.0"
 edition = "2024"
