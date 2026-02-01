@@ -1,6 +1,6 @@
 [package]
-name = "foxtrot"
-description = "A 3D reference project and tech demo for the Bevy Engine."
+name = "jam"
+description = "WIPWIPWIP"
 license = "MIT OR Apache-2.0 OR CC0-1.0"
 authors = ["Jan Hohenheim <jan@hohenheim.ch>"]
 version = "0.1.0"
@@ -8,9 +8,9 @@ edition = "2024"
 exclude = ["assets"]
 readme = "readme.md"
 keywords = ["bevy", "demo", "3d", "game"]
-repository = "https://github.com/janhohenheim/foxtrot"
+repository = "https://github.com/Bevy-Jam-7/jam"
 categories = ["game-development"]
-homepage = "https://janhohenheim.itch.io/foxtrot"
+homepage = "https://janhohenheim.itch.io/jam"
 
 [dependencies]
 bevy = { version = "0.18", default-features = false, features = [
