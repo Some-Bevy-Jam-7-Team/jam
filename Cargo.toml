@@ -2,7 +2,11 @@
 name = "jam"
 description = "WIPWIPWIP"
 license = "MIT OR Apache-2.0 OR CC0-1.0"
-authors = ["Jan Hohenheim <jan@hohenheim.ch>", "Joe Buehler <jbuehler23@gmail.com>"]
+authors = [
+    "Jan Hohenheim <jan@hohenheim.ch>",
+    "Joe Buehler <jbuehler23@gmail.com>",
+    "Joona Aalto <jondolf.dev@gmail.com>",
+]
 version = "0.1.0"
 edition = "2024"
 exclude = ["assets"]
@@ -50,7 +54,7 @@ bevy = { version = "0.18", default-features = false, features = [
     "png",
     "wayland",
     "zstd_rust",
-    "reflect_auto_register"
+    "reflect_auto_register",
 ] }
 bevy_enhanced_input = "0.22"
 
