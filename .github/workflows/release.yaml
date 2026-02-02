@@ -84,14 +84,9 @@ env:
   # <https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-storage-and-bandwidth-usage>
   git_lfs: false
 
-  # Enabling this only helps with consecutive releases to the same version (and takes up cache storage space).
-  # See: <https://github.com/orgs/community/discussions/27059>.
-  # This is most useful in combination with `continuous_deployment_to_itch`
-  use_github_cache: true
-
   # Whether to deploy the newest version of the app on every push to `main` to itch.io. Requires `itch_page` to be set.
   # Will ignore warnings.
-  continuous_deployment_to_itch: true
+  continuous_deployment_to_web: true
 
   # Need to use nightly for stutterless audio on Wasm. For simplicity, use the same toolchain across all build targets
   toolchain: nightly-2026-01-22
@@ -107,7 +102,7 @@ jobs:
         run: "true"
     outputs:
       itch_page: ${{ env.itch_page }}
-      continuous_deployment_to_itch: ${{ env.continuous_deployment_to_itch }}
+      continuous_deployment_to_web: ${{ env.continuous_deployment_to_web }}
 
   # Determine the version number for this workflow.
   get-version:
@@ -232,7 +227,7 @@ jobs:
 
           # Check if building for this platform is enabled.
           echo 'is_platform_enabled=${{
-            (matrix.platform == 'web' && (inputs.build_for_web || (github.event_name == 'push' && env.continuous_deployment_to_itch == 'true'))) ||
+            (matrix.platform == 'web' && (inputs.build_for_web || (github.event_name == 'push' && env.continuous_deployment_to_web == 'true'))) ||
             (matrix.platform == 'linux' && inputs.build_for_linux) ||
             (matrix.platform == 'windows' && inputs.build_for_windows) ||
             (matrix.platform == 'macos' && inputs.build_for_macos)
@@ -264,7 +259,7 @@ jobs:
           toolchain: ${{ env.toolchain }}
 
       - name: Restore Rust cache
-        if: ${{ env.is_platform_enabled == 'true' && env.use_github_cache == 'true' }}
+        if: ${{ env.is_platform_enabled == 'true' && needs.forward-env.outputs.continuous_deployment_to_web == 'true' }}
         uses: Swatinem/rust-cache@v2
         with:
           shared-key: release
@@ -398,7 +393,7 @@ jobs:
       - forward-env
       - get-version
       - build
-    if: ${{ (inputs.deploy_to_itch || (github.event_name == 'push' && needs.forward-env.outputs.continuous_deployment_to_itch == 'true')) && needs.forward-env.outputs.itch_page != '' }}
+    if: ${{ (inputs.deploy_to_itch || (github.event_name == 'push' && needs.forward-env.outputs.continuous_deployment_to_web == 'true')) && needs.forward-env.outputs.itch_page != '' }}
 
     steps:
       - name: Download packages
