@@ -7,8 +7,8 @@ use bevy::prelude::*;
 
 use std::iter;
 
-use avian3d::prelude::*;
 use avian_pickup::prop::HeldProp;
+use avian3d::prelude::*;
 
 use crate::third_party::avian3d::CollisionLayer;
 
