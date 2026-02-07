@@ -116,10 +116,8 @@ fn tick_fever(
     for (mut timer, temp, max_temp, mut health) in units.iter_mut() {
         timer.tick(time.delta());
 
-        if timer.is_finished() {
-            if **temp > **max_temp {
-                **health -= 1.;
-            }
+        if timer.is_finished() && **temp > **max_temp {
+            **health -= 1.;
         }
     }
 }
