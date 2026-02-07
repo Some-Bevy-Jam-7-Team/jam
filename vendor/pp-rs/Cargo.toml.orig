@@ -1,0 +1,12 @@
+[package]
+name = "pp-rs"
+version = "0.2.1"
+authors = ["pp-rs Developers"]
+description = "Shader preprocessor"
+homepage = "https://github.com/Kangz/glslpp-rs"
+repository = "https://github.com/Kangz/glslpp-rs"
+keywords = ["shader", "preprocessor", "glsl"]
+license = "BSD-3-Clause"
+
+[dependencies]
+unicode-xid = "0.2"

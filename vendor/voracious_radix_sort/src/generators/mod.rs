@@ -1,0 +1,16 @@
+#[allow(dead_code)] pub mod boolean;
+#[allow(dead_code)] pub mod char;
+#[allow(dead_code)] pub mod custom;
+#[allow(dead_code)] pub mod float_32;
+#[allow(dead_code)] pub mod float_64;
+#[allow(dead_code)] pub mod signed_i128;
+#[allow(dead_code)] pub mod signed_i16;
+#[allow(dead_code)] pub mod signed_i32;
+#[allow(dead_code)] pub mod signed_i64;
+#[allow(dead_code)] pub mod signed_i8;
+// #[allow(dead_code)] pub mod string;
+#[allow(dead_code)] pub mod unsigned_u128;
+#[allow(dead_code)] pub mod unsigned_u16;
+#[allow(dead_code)] pub mod unsigned_u32;
+#[allow(dead_code)] pub mod unsigned_u64;
+#[allow(dead_code)] pub mod unsigned_u8;

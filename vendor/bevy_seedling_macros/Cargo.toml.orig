@@ -1,0 +1,20 @@
+[package]
+name = "bevy_seedling_macros"
+version = "0.7.0"
+edition = "2021"
+rust-version = "1.83.0"
+license = "MIT OR Apache-2.0"
+authors = ["Corvus Prudens <corvusprudens@gmail.com>"]
+description = "Macros sub-crate for bevy_seedling"
+readme = "README.md"
+repository = "https://github.com/corvusprudens/bevy_seedling"
+documentation = "https://docs.rs/bevy_seedling"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = { version = "2.0", features = ["full"] }
+quote = "1.0"
+proc-macro2 = "1.0"
+bevy_macro_utils = "0.18.0"

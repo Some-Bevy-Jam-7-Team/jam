@@ -1,0 +1,6 @@
+consolidate-commits = true
+sign-commit = true
+sign-tag = true
+shared-version = true
+allow-branch = ["trunk"]
+pre-release-commit-message = "Version {{version}}"

@@ -1,0 +1,523 @@
+use std::{marker::PhantomData, ops::Deref};
+
+use bevy_ecs::query::Has;
+use bevy_ecs::system::Commands;
+use bevy_ecs::{
+  bundle::Bundle, change_detection::DetectChanges, component::Component,
+  entity::Entity, query::With, system::Query, world::Ref,
+};
+use bevy_log::warn_once;
+use bevy_platform::collections::HashMap;
+use bevy_transform::{components::Transform, helper::TransformHelper};
+use landmass::AnimationLinkId;
+
+use crate::{
+  AgentState, Archipelago, TargetReachedCondition, Velocity,
+  coords::{CoordinateSystem, ThreeD, TwoD},
+};
+use crate::{ArchipelagoRef, PermittedAnimationLinks};
+
+/// A bundle to create agents. This omits the GlobalTransform component, since
+/// this is commonly added in other bundles (which is redundant and can override
+/// previous bundles).
+#[derive(Bundle)]
+pub struct AgentBundle<CS: CoordinateSystem> {
+  /// The agent marker.
+  pub agent: Agent<CS>,
+  /// The agent's settings.
+  pub settings: AgentSettings,
+  /// A reference pointing to the Archipelago to associate this entity with.
+  pub archipelago_ref: ArchipelagoRef<CS>,
+}
+
+pub type Agent2dBundle = AgentBundle<TwoD>;
+pub type Agent3dBundle = AgentBundle<ThreeD>;
+
+/// A marker component to create all required components for an agent.
+#[derive(Component)]
+#[require(Transform, Velocity<CS>, AgentTarget<CS>, AgentState, AgentDesiredVelocity<CS>)]
+pub struct Agent<CS: CoordinateSystem>(PhantomData<CS>);
+
+pub type Agent2d = Agent<TwoD>;
+pub type Agent3d = Agent<ThreeD>;
+
+impl<CS: CoordinateSystem> Default for Agent<CS> {
+  fn default() -> Self {
+    Self(Default::default())
+  }
+}
+
+/// The settings for an agent. See [`crate::AgentBundle`] for required related
+/// components.
+#[derive(Component, Debug)]
+pub struct AgentSettings {
+  /// The radius of the agent.
+  pub radius: f32,
+  /// The speed the agent prefers to move at. This should often be set lower
+  /// than the [`Self::max_speed`] to allow the agent to "speed up" in order to
+  /// get out of another agent's way.
+  pub desired_speed: f32,
+  /// The max speed of an agent.
+  pub max_speed: f32,
+}
+
+/// The distance at which an animation link can be used.
+///
+/// If not present on an agent, this will use the same distance as
+/// [`TargetReachedCondition`] but behaving like
+/// [`TargetReachedCondition::StraightPathDistance`].
+#[derive(Component, Debug)]
+pub struct AnimationLinkReachedDistance(pub f32);
+
+#[derive(Component, Default, Debug)]
+pub struct AgentTypeIndexCostOverrides(HashMap<usize, f32>);
+
+impl Deref for AgentTypeIndexCostOverrides {
+  type Target = HashMap<usize, f32>;
+  fn deref(&self) -> &Self::Target {
+    &self.0
+  }
+}
+
+impl AgentTypeIndexCostOverrides {
+  /// Sets the type index cost for this agent to `cost`. Returns false if the
+  /// cost is <= 0.0. Otherwise returns true.
+  pub fn set_type_index_cost(&mut self, type_index: usize, cost: f32) -> bool {
+    if cost <= 0.0 {
+      return false;
+    }
+    self.0.insert(type_index, cost);
+    true
+  }
+}
+
+/// The current target of the entity. Note this can be set by either reinserting
+/// the component, or dereferencing:
+///
+/// ```rust
+/// # use bevy::prelude::*;
+/// # use bevy_landmass::AgentTarget3d;
+/// fn clear_targets(mut targets: Query<&mut AgentTarget3d>) {
+///   for mut target in targets.iter_mut() {
+///     *target = AgentTarget3d::None;
+///   }
+/// }
+/// ```
+#[derive(Component, Default)]
+pub enum AgentTarget<CS: CoordinateSystem> {
+  #[default]
+  None,
+  Point(CS::Coordinate),
+  Entity(Entity),
+}
+
+pub type AgentTarget2d = AgentTarget<TwoD>;
+pub type AgentTarget3d = AgentTarget<ThreeD>;
+
+impl<CS: CoordinateSystem<Coordinate: std::fmt::Debug>> std::fmt::Debug
+  for AgentTarget<CS>
+{
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    match self {
+      Self::None => write!(f, "None"),
+      Self::Point(arg0) => f.debug_tuple("Point").field(arg0).finish(),
+      Self::Entity(arg0) => f.debug_tuple("Entity").field(arg0).finish(),
+    }
+  }
+}
+
+impl<CS: CoordinateSystem<Coordinate: PartialEq>> PartialEq
+  for AgentTarget<CS>
+{
+  fn eq(&self, other: &Self) -> bool {
+    match (self, other) {
+      (Self::Point(l0), Self::Point(r0)) => l0 == r0,
+      (Self::Entity(l0), Self::Entity(r0)) => l0 == r0,
+      _ => core::mem::discriminant(self) == core::mem::discriminant(other),
+    }
+  }
+}
+
+impl<CS: CoordinateSystem<Coordinate: Eq>> Eq for AgentTarget<CS> {}
+
+impl<CS: CoordinateSystem> AgentTarget<CS> {
+  /// Converts an agent target to a concrete world position.
+  fn to_point(
+    &self,
+    transform_helper: &TransformHelper,
+  ) -> Option<CS::Coordinate> {
+    match self {
+      Self::Point(point) => Some(point.clone()),
+      &Self::Entity(entity) => transform_helper
+        .compute_global_transform(entity)
+        .ok()
+        .map(|transform| CS::from_bevy_position(transform.translation())),
+      _ => None,
+    }
+  }
+}
+
+/// The current desired velocity of the agent. This is set by `landmass` (during
+/// [`crate::LandmassSystemSet::Output`]).
+#[derive(Component)]
+pub struct AgentDesiredVelocity<CS: CoordinateSystem>(CS::Coordinate);
+
+pub type AgentDesiredVelocity2d = AgentDesiredVelocity<TwoD>;
+pub type AgentDesiredVelocity3d = AgentDesiredVelocity<ThreeD>;
+
+impl<CS: CoordinateSystem> Default for AgentDesiredVelocity<CS> {
+  fn default() -> Self {
+    Self(Default::default())
+  }
+}
+
+impl<CS: CoordinateSystem<Coordinate: std::fmt::Debug>> std::fmt::Debug
+  for AgentDesiredVelocity<CS>
+{
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    f.debug_tuple("AgentDesiredVelocity").field(&self.0).finish()
+  }
+}
+
+impl<CS: CoordinateSystem> AgentDesiredVelocity<CS> {
+  /// The desired velocity of the agent.
+  pub fn velocity(&self) -> CS::Coordinate {
+    self.0.clone()
+  }
+}
+
+/// An animation link that an agent has reached (in order to use it).
+#[derive(Component)]
+pub struct ReachedAnimationLink<CS: CoordinateSystem> {
+  /// The ID of the animation link.
+  pub link_entity: Entity,
+  /// The point that the animation link starts at.
+  pub start_point: CS::Coordinate,
+  /// The expected point that using the animation link will take the agent to.
+  pub end_point: CS::Coordinate,
+}
+
+pub type ReachedAnimationLink2d = ReachedAnimationLink<TwoD>;
+pub type ReachedAnimationLink3d = ReachedAnimationLink<ThreeD>;
+
+impl<CS: CoordinateSystem<Coordinate: std::fmt::Debug>> std::fmt::Debug
+  for ReachedAnimationLink<CS>
+{
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    f.debug_struct("ReachedAnimationLink")
+      .field("link_entity", &self.link_entity)
+      .field("start_point", &self.start_point)
+      .field("end_point", &self.end_point)
+      .finish()
+  }
+}
+
+/// A marker component to indicate that an agent should be paused.
+///
+/// Paused agents are not considered for avoidance, and will not recompute their
+/// paths. However, their paths are still kept "consistent" - meaning that once
+/// the agent becomes unpaused, it can reuse that path if it is still valid and
+/// relevant (the agent still wants to go to the same place).
+#[derive(Component, Default, Clone, Copy, Debug)]
+pub struct PauseAgent;
+
+/// A marker component to indicate that an agent is currently using an animation
+/// link and should behave as though it is paused (see [`PauseAgent`] for
+/// details).
+#[derive(Component, Default, Clone, Copy, Debug)]
+pub struct UsingAnimationLink;
+
+#[cfg(feature = "debug-avoidance")]
+/// If inserted on an agent, it will record avoidance data that can later be
+/// visualized with [`crate::debug::draw_avoidance_data`].
+#[derive(Component, Clone, Copy, Debug)]
+pub struct KeepAvoidanceData;
+
+/// Ensures every Bevy agent has a corresponding `landmass` agent.
+pub(crate) fn add_agents_to_archipelagos<CS: CoordinateSystem>(
+  mut archipelago_query: Query<(Entity, &mut Archipelago<CS>)>,
+  agent_query: Query<
+    (Entity, &AgentSettings, &ArchipelagoRef<CS>),
+    With<Transform>,
+  >,
+) {
+  let mut archipelago_to_agents = HashMap::<_, HashMap<_, _>>::default();
+  for (entity, agent, archipleago_ref) in agent_query.iter() {
+    archipelago_to_agents
+      .entry(archipleago_ref.entity)
+      .or_default()
+      .insert(entity, agent);
+  }
+
+  for (archipelago_entity, mut archipelago) in archipelago_query.iter_mut() {
+    let mut new_agent_map = archipelago_to_agents
+      .remove(&archipelago_entity)
+      .unwrap_or_else(HashMap::default);
+    let archipelago = archipelago.as_mut();
+
+    // Remove any agents that aren't in the `new_agent_map`. Also remove any
+    // agents from the `new_agent_map` that are in the archipelago.
+    archipelago.agents.retain(|agent_entity, agent_id| {
+      match new_agent_map.remove(agent_entity) {
+        None => {
+          archipelago.archipelago.remove_agent(*agent_id);
+          archipelago.reverse_agents.remove(agent_id);
+          false
+        }
+        Some(_) => true,
+      }
+    });
+
+    for (new_agent_entity, new_agent) in new_agent_map.drain() {
+      let agent_id =
+        archipelago.archipelago.add_agent(landmass::Agent::create(
+          /* position= */ CS::from_landmass(&landmass::Vec3::ZERO),
+          /* velocity= */ CS::from_landmass(&landmass::Vec3::ZERO),
+          new_agent.radius,
+          new_agent.desired_speed,
+          new_agent.max_speed,
+        ));
+      archipelago.agents.insert(new_agent_entity, agent_id);
+      archipelago.reverse_agents.insert(agent_id, new_agent_entity);
+    }
+  }
+}
+
+#[cfg(feature = "debug-avoidance")]
+type HasKeepAvoidanceData = Has<KeepAvoidanceData>;
+#[cfg(not(feature = "debug-avoidance"))]
+type HasKeepAvoidanceData = ();
+
+/// Ensures the "input state" (position, velocity, etc) of every Bevy agent
+/// matches its `landmass` counterpart.
+pub(crate) fn sync_agent_input_state<CS: CoordinateSystem>(
+  agent_query: Query<
+    (
+      Entity,
+      &AgentSettings,
+      &ArchipelagoRef<CS>,
+      Option<&Velocity<CS>>,
+      Option<&AgentTarget<CS>>,
+      Option<&TargetReachedCondition>,
+      Option<&AnimationLinkReachedDistance>,
+      Option<&PermittedAnimationLinks>,
+      Option<Ref<AgentTypeIndexCostOverrides>>,
+      Has<PauseAgent>,
+      Has<UsingAnimationLink>,
+      HasKeepAvoidanceData,
+    ),
+    With<Transform>,
+  >,
+  transform_helper: TransformHelper,
+  mut archipelago_query: Query<&mut Archipelago<CS>>,
+) {
+  for (
+    agent_entity,
+    agent,
+    &ArchipelagoRef { entity: arch_entity, .. },
+    velocity,
+    target,
+    target_reached_condition,
+    animation_link_reached_distance,
+    permitted_animation_links,
+    type_index_cost_overrides,
+    has_pause_agent,
+    has_using_animation_link,
+    keep_avoidance_data,
+  ) in agent_query.iter()
+  {
+    let mut archipelago = match archipelago_query.get_mut(arch_entity) {
+      Err(_) => continue,
+      Ok(arch) => arch,
+    };
+
+    let Ok(transform) = transform_helper.compute_global_transform(agent_entity)
+    else {
+      continue;
+    };
+
+    let landmass_agent = archipelago
+      .get_agent_mut(agent_entity)
+      .expect("this agent is in the archipelago");
+    landmass_agent.position = CS::from_bevy_position(transform.translation());
+    if let Some(Velocity { velocity }) = velocity {
+      landmass_agent.velocity = velocity.clone();
+    }
+    landmass_agent.radius = agent.radius;
+    landmass_agent.desired_speed = agent.desired_speed;
+    landmass_agent.max_speed = agent.max_speed;
+    landmass_agent.current_target =
+      target.and_then(|target| target.to_point(&transform_helper));
+    landmass_agent.target_reached_condition =
+      if let Some(target_reached_condition) = target_reached_condition {
+        target_reached_condition.to_landmass()
+      } else {
+        landmass::TargetReachedCondition::Distance(None)
+      };
+    landmass_agent.animation_link_reached_distance =
+      animation_link_reached_distance.map(|distance| distance.0);
+    landmass_agent.permitted_animation_links = permitted_animation_links
+      .map(PermittedAnimationLinks::to_landmass)
+      .unwrap_or(landmass::PermittedAnimationLinks::All);
+    match type_index_cost_overrides {
+      None => {
+        for (type_index, _) in
+          landmass_agent.get_type_index_cost_overrides().collect::<Vec<_>>()
+        {
+          landmass_agent.remove_overridden_type_index_cost(type_index);
+        }
+      }
+      Some(type_index_cost_overrides) => {
+        if !type_index_cost_overrides.is_changed() {
+          continue;
+        }
+
+        for (type_index, _) in
+          landmass_agent.get_type_index_cost_overrides().collect::<Vec<_>>()
+        {
+          if type_index_cost_overrides.0.contains_key(&type_index) {
+            continue;
+          }
+          landmass_agent.remove_overridden_type_index_cost(type_index);
+        }
+
+        for (&type_index, &cost) in type_index_cost_overrides.0.iter() {
+          assert!(landmass_agent.override_type_index_cost(type_index, cost));
+        }
+      }
+    }
+    landmass_agent.paused = has_pause_agent;
+    match (landmass_agent.is_using_animation_link(), has_using_animation_link) {
+      (true, false) => {
+        landmass_agent.end_animation_link().unwrap();
+      }
+      (false, true) => match landmass_agent.start_animation_link() {
+        Ok(()) => {}
+        Err(err) => {
+          warn_once!("Failed to start animation link: {err}");
+        }
+      },
+      (true, true) | (false, false) => {}
+    }
+
+    #[cfg(feature = "debug-avoidance")]
+    {
+      landmass_agent.keep_avoidance_data = keep_avoidance_data;
+    }
+    #[cfg(not(feature = "debug-avoidance"))]
+    #[expect(clippy::let_unit_value)]
+    let _ = keep_avoidance_data;
+  }
+}
+
+/// Copies the agent state from `landmass` agents to their Bevy equivalent.
+pub(crate) fn sync_agent_state<CS: CoordinateSystem>(
+  mut agent_query: Query<
+    (Entity, &ArchipelagoRef<CS>, &mut AgentState),
+    With<AgentSettings>,
+  >,
+  archipelago_query: Query<&Archipelago<CS>>,
+) {
+  for (agent_entity, &ArchipelagoRef { entity: arch_entity, .. }, mut state) in
+    agent_query.iter_mut()
+  {
+    let archipelago = match archipelago_query.get(arch_entity).ok() {
+      None => continue,
+      Some(arch) => arch,
+    };
+
+    *state = AgentState::from_landmass(
+      &archipelago
+        .get_agent(agent_entity)
+        .expect("the agent is in the archipelago")
+        .state(),
+    );
+  }
+}
+
+/// Copies the agent desired velocity from `landmass` agents to their Bevy
+/// equivalent.
+pub(crate) fn sync_desired_velocity<CS: CoordinateSystem>(
+  mut agent_query: Query<
+    (Entity, &ArchipelagoRef<CS>, &mut AgentDesiredVelocity<CS>),
+    With<AgentSettings>,
+  >,
+  archipelago_query: Query<&Archipelago<CS>>,
+) {
+  for (
+    agent_entity,
+    &ArchipelagoRef { entity: arch_entity, .. },
+    mut desired_velocity,
+  ) in agent_query.iter_mut()
+  {
+    let archipelago = match archipelago_query.get(arch_entity).ok() {
+      None => continue,
+      Some(arch) => arch,
+    };
+
+    desired_velocity.0 = archipelago
+      .get_agent(agent_entity)
+      .expect("the agent is in the archipelago")
+      .get_desired_velocity()
+      .clone();
+  }
+}
+
+impl<CS: CoordinateSystem> ReachedAnimationLink<CS> {
+  /// Converts the `landmass` representation of the reached animation link, to
+  /// the `bevy_landmass` version.
+  pub(crate) fn from_landmass(
+    animation_link: &landmass::ReachedAnimationLink<CS>,
+    link_id_to_entity: &HashMap<AnimationLinkId, Entity>,
+  ) -> Self {
+    Self {
+      start_point: animation_link.start_point.clone(),
+      end_point: animation_link.end_point.clone(),
+      link_entity: *link_id_to_entity.get(&animation_link.link_id).unwrap(),
+    }
+  }
+}
+
+/// Updates the [`ReachedAnimationLink`] component (including adding and
+/// removing it) on an agent to match the state in `landmass`.
+pub(crate) fn sync_agent_reached_animation_link<CS: CoordinateSystem>(
+  mut agents: Query<
+    (Entity, &ArchipelagoRef<CS>, Option<&mut ReachedAnimationLink<CS>>),
+    With<Agent<CS>>,
+  >,
+  archipelagos: Query<&Archipelago<CS>>,
+  mut commands: Commands,
+) {
+  for (agent_entity, archipelago_ref, reached_animation_link) in
+    agents.iter_mut()
+  {
+    let Ok(archipelago) = archipelagos.get(archipelago_ref.entity) else {
+      continue;
+    };
+    let Some(agent) = archipelago.get_agent(agent_entity) else {
+      continue;
+    };
+
+    let new_reached_animation_link = match agent.reached_animation_link() {
+      None => {
+        if reached_animation_link.is_some() {
+          commands.entity(agent_entity).remove::<ReachedAnimationLink<CS>>();
+        }
+        continue;
+      }
+      Some(new_reached_animation_link) => new_reached_animation_link,
+    };
+    let new_reached_animation_link = ReachedAnimationLink::from_landmass(
+      new_reached_animation_link,
+      &archipelago.reverse_animation_links,
+    );
+    match reached_animation_link {
+      None => {
+        commands.entity(agent_entity).insert(new_reached_animation_link);
+      }
+      Some(mut reached_animation_link) => {
+        *reached_animation_link = new_reached_animation_link;
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+    "material": {
+        "base_color_texture": "example.png",
+        "emissive": [0.1, 0.2, 0.5, 1.0],
+        "alpha_mode": { "Mask": 0.5 }
+    },
+
+    "properties": {
+        "visibility": "Visible",
+        "collision": true,
+        "sounds": "wood"
+    }
+}

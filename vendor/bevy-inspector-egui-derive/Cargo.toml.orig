@@ -1,0 +1,23 @@
+[package]
+name = "bevy-inspector-egui-derive"
+version = "0.36.0"
+edition = "2021"
+repository = "https://github.com/jakobhellermann/bevy-inspector-egui/"
+readme = "README.md"
+license = "MIT OR Apache-2.0"
+description = "Implementation detail of the `bevy-inspector-egui` crate"
+documentation = "https://docs.rs/bevy-inspector-egui-derive"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = "2.0"
+quote = "1.0"
+proc-macro2 = "1.0"
+
+[dev-dependencies]
+bevy_ecs = { version = "0.18.0", default-features = false }
+bevy_math = { version = "0.18.0", default-features = false }
+bevy_reflect = { version = "0.18.0", default-features = false }
+bevy-inspector-egui = { path = "../bevy-inspector-egui" }

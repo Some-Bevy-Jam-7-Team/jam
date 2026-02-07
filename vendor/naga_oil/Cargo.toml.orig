@@ -1,0 +1,34 @@
+[package]
+name = "naga_oil"
+version = "0.20.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "a crate for combining and manipulating shaders using naga IR"
+repository = "https://github.com/bevyengine/naga_oil/"
+readme = "README.md"
+rust-version = "1.84"
+
+[features]
+default = ["test_shader", "glsl"]
+# enable tests that need a graphical card
+test_shader = []
+glsl = ["naga/glsl-in", "naga/glsl-out"]
+override_any = []
+prune = []
+allow_deprecated = []
+
+[dependencies]
+naga = { version = "27", features = ["wgsl-in", "wgsl-out", "termcolor"] }
+tracing = "0.1"
+regex = "1.8"
+thiserror = "2.0"
+codespan-reporting = "0.12"
+data-encoding = "2.3.2"
+rustc-hash = "1.1"
+unicode-ident = "1"
+indexmap = "2"
+
+[dev-dependencies]
+wgpu = { version = "27", features = ["naga-ir"] }
+futures-lite = "2"
+tracing-subscriber = { version = "0.3", features = ["std", "fmt"] }

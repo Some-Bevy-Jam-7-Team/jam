@@ -1,0 +1,199 @@
+[package]
+name = "bevy_hanabi"
+version = "0.18.0"
+authors = ["Jerome Humbert <djeedai@gmail.com>"]
+edition = "2021"
+rust-version = "1.89.0"
+description = "Hanabi GPU particle system for the Bevy game engine"
+repository = "https://github.com/djeedai/bevy_hanabi"
+homepage = "https://github.com/djeedai/bevy_hanabi"
+documentation = "https://docs.rs/bevy_hanabi"
+keywords = ["bevy", "particle-system", "particles", "vfx"]
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+exclude = [
+  "docs/*.svg",
+  "docs/*.png",
+  "examples/*.gif",
+  "examples/*.png",
+  "examples/wasm/*",
+  ".github",
+  "release.md",
+  "build_examples_wasm.bat",
+  "build_examples_wasm.sh",
+  "run_examples.bat",
+  "run_examples.sh",
+  "deny.toml",
+  "rustfmt.toml.nightly"
+]
+autoexamples = false
+
+[features]
+default = ["2d", "3d", "serde", "gpu_tests"]
+
+# Enable support for rendering through a 2D camera (Camera2d).
+# You need to activate either the 2d or 3d feature at least (or both).
+2d = []
+
+# Enable support for rendering through a 3D camera (Camera3d).
+# You need to activate either the 2d or 3d feature at least (or both).
+3d = []
+
+# Enable serializing and deserializing of assets. This doesn't work on WASM,
+# because typetag is not available for the wasm target.
+serde = ["typetag"]
+
+# Enable tracing annotations. This is disabled by default for performance.
+trace = []
+
+# Special feature to enable GPU-based tests, which otherwise fail
+# on a CI machine without a graphic adapter or without proper drivers.
+# This is a testing-only feature, which has no effect on the build.
+gpu_tests = []
+
+[dependencies]
+bytemuck = { version = "1.5", features = ["derive", "must_cast"] }
+fixedbitset = "0.5"
+rand = "0.9"
+rand_pcg = "0.9"
+serde = { version = "1.0", features = ["derive"] }
+anyhow = "1.0"
+ron = "0.8"
+bitflags = "2.3"
+typetag = { version = "0.2", optional = true }
+thiserror = "2"
+# Same versions as Bevy 0.18 (bevy_render)
+wgpu = { version = "27", default-features = false, features = [
+  "wgsl",
+  "dx12",
+  "metal",
+  "vulkan",
+  "naga-ir",
+  "fragile-send-sync-non-atomic-wasm",
+] }
+naga = { version = "27", features = ["wgsl-in"] }
+naga_oil = { version = "0.20", default-features = false, features = ["test_shader"] }
+
+# getrandom requires both 'wasm_js' as a feature AND as a RUSTFLAGS to work on wasm
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+getrandom = { version = "0.3", default-features = false, features = [
+  "wasm_js",
+] }
+
+[dependencies.bevy]
+version = "0.18"
+default-features = false
+features = [
+  "bevy_core_pipeline",
+  "bevy_render",
+  "bevy_asset",
+  "bevy_log",
+  "x11",
+]
+
+[package.metadata.docs.rs]
+all-features = true
+
+[dev-dependencies]
+# Enable all features by default in examples to make it easier to run them and to use
+# extra features like text rendering or gizmos, which are example-specific.
+bevy = { version = "0.18", default-features = true }
+
+# For procedural texture generation in examples
+noise = "0.9"
+
+futures = "0.3"
+
+[[example]]
+name = "firework"
+
+[[example]]
+name = "portal"
+
+[[example]]
+name = "expr"
+
+[[example]]
+name = "spawn"
+
+[[example]]
+name = "multicam"
+
+[[example]]
+name = "visibility"
+
+[[example]]
+name = "random"
+
+[[example]]
+name = "spawn_on_command"
+
+[[example]]
+name = "activate"
+
+[[example]]
+name = "force_field"
+
+[[example]]
+name = "lifetime"
+
+[[example]]
+name = "init"
+
+[[example]]
+name = "instancing"
+
+[[example]]
+name = "gradient"
+
+[[example]]
+name = "circle"
+
+[[example]]
+name = "billboard"
+
+[[example]]
+name = "2d"
+
+[[example]]
+name = "worms"
+
+[[example]]
+name = "ribbon"
+
+[[example]]
+name = "ordering"
+
+[[example]]
+name = "puffs"
+
+[[test]]
+name = "empty_effect"
+path = "gpu_tests/empty_effect.rs"
+harness = false
+required-features = [
+    "bevy/bevy_winit",
+    "bevy/bevy_window",
+]
+
+[[test]]
+name = "single_particle"
+path = "gpu_tests/single_particle.rs"
+harness = false
+required-features = [
+    "bevy/bevy_winit",
+    "bevy/bevy_window",
+]
+
+[[test]]
+name = "properties"
+path = "gpu_tests/properties.rs"
+harness = false
+required-features = [
+    "bevy/bevy_winit",
+    "bevy/bevy_window",
+]
+
+[workspace]
+resolver = "2"
+members = ["."]

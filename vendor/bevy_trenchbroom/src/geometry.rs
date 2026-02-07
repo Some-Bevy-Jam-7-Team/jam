@@ -1,0 +1,59 @@
+use brush::Brush;
+#[cfg(feature = "bsp")]
+use bsp::BrushHullsAsset;
+#[cfg(all(feature = "client", feature = "bsp"))]
+use bsp::lighting::AnimatedLighting;
+
+use crate::*;
+
+pub struct GeometryPlugin;
+impl Plugin for GeometryPlugin {
+	fn build(&self, app: &mut App) {
+		#[rustfmt::skip]
+		app
+			.init_asset::<BrushesAsset>()
+		;
+	}
+}
+
+/// Contains the brushes that a solid entity is made of.
+#[derive(Component, Reflect, Debug, Clone)]
+#[reflect(Component)]
+#[require(Transform)]
+pub enum Brushes {
+	/// Brushes are stored directly in the component itself, useful if you need to dynamically edit brushes.
+	///
+	/// NOTE: Dynamic brush mesh generation is not officially supported. ([see issue](https://github.com/Noxmore/bevy_trenchbroom/issues/25))
+	Owned(BrushesAsset),
+	/// Reads an asset instead for completely static geometry.
+	Shared(Handle<BrushesAsset>),
+	/// Used with the `BRUSHLIST` BSPX lump. Collision only.
+	#[cfg(feature = "bsp")]
+	Bsp(Handle<BrushHullsAsset>),
+}
+
+#[derive(Asset, Reflect, Debug, Clone)]
+pub struct BrushesAsset(pub Vec<Brush>);
+impl std::ops::Deref for BrushesAsset {
+	type Target = [Brush];
+
+	fn deref(&self) -> &Self::Target {
+		&self.0
+	}
+}
+
+#[derive(Reflect, Debug, Clone, PartialEq, Eq)]
+pub struct MapGeometryTexture {
+	pub name: Option<String>,
+	pub material: Handle<GenericMaterial>,
+	#[cfg(all(feature = "client", feature = "bsp"))]
+	pub lightmap: Option<Handle<AnimatedLighting>>,
+	/// If the texture should be full-bright
+	#[cfg(feature = "bsp")]
+	pub flags: BspTexFlags,
+}
+
+/// Marker component that marks meshes as level geometry produced by brushes.
+#[derive(Component, Reflect, Clone)]
+#[reflect(Component)]
+pub struct MapGeometry;

@@ -1,0 +1,124 @@
+[package]
+name = "bevy_seedling"
+version = "0.7.0"
+edition = "2024"
+rust-version = "1.85.0"
+license = "MIT OR Apache-2.0"
+authors = ["Corvus Prudens <corvusprudens@gmail.com>"]
+description = "A sprouting integration of the Firewheel audio engine"
+readme = "README.md"
+repository = "https://github.com/corvusprudens/bevy_seedling"
+documentation = "https://docs.rs/bevy_seedling"
+keywords = ["gamedev", "audio", "bevy", "firewheel"]
+categories = ["game-development", "multimedia::audio"]
+exclude = ["/assets"]
+
+[features]
+default = ["wav", "ogg", "rand", "reflect"]
+stream = ["firewheel/stream_nodes"]
+rand = ["dep:rand"]
+loudness = ["dep:ebur128", "dep:portable-atomic"]
+reflect = ["firewheel/bevy_reflect", "firewheel-ircam-hrtf?/bevy_reflect"]
+web_audio = ["dep:firewheel-web-audio"]
+dev = ["entity_names"]
+entity_names = []
+
+hrtf = ["dep:firewheel-ircam-hrtf"]
+# embed all HRTF subjects
+hrtf_subjects = ["firewheel-ircam-hrtf?/all_subjects"]
+
+# formats
+wav = ["symphonium/wav", "symphonium/pcm"]
+ogg = ["symphonium/ogg", "symphonium/vorbis"]
+flac = ["symphonium/flac"]
+mkv = ["symphonium/mkv"]
+
+# codecs
+mp3 = ["symphonium/mp3"]
+adpcm = ["symphonium/adpcm"]
+
+# Enables profiling and testing backend compilation.
+# This is mainly intended for internal use.
+profiling = []
+
+[dependencies]
+bevy_ecs = { version = "0.18.0", default-features = false }
+bevy_app = { version = "0.18.0", default-features = false }
+bevy_math = { version = "0.18.0", default-features = false, features = [
+  "curve",
+  "std",
+] }
+bevy_asset = { version = "0.18.0", default-features = false }
+bevy_transform = { version = "0.18.0", default-features = false, features = [
+  "bevy-support",
+] }
+bevy_log = { version = "0.18.0", default-features = false }
+bevy_platform = { version = "0.18.0", default-features = false, features = [
+  "alloc",
+] }
+bevy_time = { version = "0.18.0", default-features = false }
+bevy_reflect = { version = "0.18.0", default-features = false, features = [
+  "glam",
+] }
+
+firewheel = { version = "0.10.0", features = [
+  "bevy",
+  "spatial_basic_node",
+  "scheduled_events",
+  "musical_transport",
+  "glam-30",
+  "freeverb_node",
+] }
+symphonium = { version = "0.7", default-features = false, features = [
+  "opt-simd",
+  "fft-resampler",
+] }
+symphonia = { version = "0.5", default-features = false }
+smallvec = { version = "1.13", default-features = false }
+bevy_seedling_macros = { path = "./seedling_macros", version = "0.7.0" }
+rand = { version = "0.9", default-features = false, features = [
+  "small_rng",
+  "os_rng",
+], optional = true }
+ebur128 = { version = "0.1.10", optional = true }
+portable-atomic = { version = "1.11", optional = true, features = ["float"] }
+firewheel-ircam-hrtf = { version = "0.4.0", optional = true, features = [
+  "bevy",
+] }
+firewheel-web-audio = { version = "0.4.0", optional = true }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+firewheel = { version = "0.10.0", features = [
+  "wasm-bindgen",
+] }
+
+[dev-dependencies]
+bevy_seedling = { path = ".", features = ["hrtf", "loudness"] }
+bevy = { version = "0.18.0", default-features = false, features = [
+  "2d_bevy_render",
+  "default_app",
+  "picking",
+  "ui_bevy_render",
+  "bevy_winit",
+  "default_font",
+  "std",
+  "sysinfo_plugin",
+  "wayland",
+  "webgl2",
+  "x11",
+] }
+criterion = { version = "0.5", default-features = false, features = [
+  "plotters",
+  "cargo_bench_support",
+] }
+
+[target.'cfg(target_arch = "wasm32")'.dev-dependencies]
+getrandom = { version = "0.3", default-features = false, features = ["wasm_js"] }
+
+[[bench]]
+name = "basic"
+harness = false
+required-features = ["profiling"]
+
+[package.metadata.docs.rs]
+all-features = true

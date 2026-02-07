@@ -1,0 +1,33 @@
+name: Rust CI
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    name: Checks and tests with ${{ matrix.feature-set }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        feature-set: ['', '--no-default-features']
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: nightly
+        default: true
+        components: clippy
+    - name: Check
+      run: cargo check ${{ matrix.feature-set }}
+    - name: Lint
+      run: cargo clippy ${{ matrix.feature-set }}
+    - name: Test
+      run: cargo test ${{ matrix.feature-set }}

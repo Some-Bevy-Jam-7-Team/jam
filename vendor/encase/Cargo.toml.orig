@@ -1,0 +1,46 @@
+[package]
+name = "encase"
+version = "0.12.0"
+edition = "2021"
+rust-version = "1.77"
+
+license = "MIT-0"
+readme = "./README.md"
+description = "Provides a mechanism to lay out data into GPU buffers ensuring WGSL's memory layout requirements are met"
+repository = "https://github.com/teoxoy/encase"
+documentation = "https://docs.rs/encase"
+keywords = ["wgsl", "wgpu"]
+categories = ["rendering"]
+
+[package.metadata.docs.rs]
+all-features = true
+
+[profile.bench]
+lto = "thin"
+codegen-units = 1
+# debug = true # for profiling
+
+[[bench]]
+name = "throughput"
+harness = false
+
+[workspace]
+members = ["derive", "derive/impl", "test_impl"]
+
+[dependencies]
+encase_derive = { version = "=0.12.0", path = "derive" }
+
+thiserror = { version = "2", default-features = false }
+const_panic = { version = "0.2", default-features = false }
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["cargo_bench_support", "html_reports"], default-features = false }
+rand = { version = "0.9", features = ["std_rng"], default-features = false }
+mimalloc = { version = "0.1", default-features = false }
+wgpu = { version = "24.0.0", features = ["wgsl"] }
+futures = { version = "0.3", features = ["executor"], default-features = false }
+trybuild = { version = "1", default-features = false }
+test_impl = { path = "./test_impl" }
+
+[target.'cfg(target_family = "unix")'.dev-dependencies]
+pprof = { version = "0.14", features = ["criterion", "flamegraph"], default-features = false }

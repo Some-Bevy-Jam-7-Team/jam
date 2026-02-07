@@ -1,0 +1,55 @@
+[package]
+name = "bevy_rerecast"
+description = "Bevy integration for rerecast"
+version = "0.4.0"
+authors = { workspace = true }
+edition = { workspace = true }
+license = { workspace = true }
+repository = { workspace = true }
+keywords = { workspace = true }
+categories = { workspace = true }
+readme = { workspace = true }
+
+[dependencies]
+bevy_app = { workspace = true, features = ["std"] }
+bevy_rerecast_core = { workspace = true, features = [
+    "std",
+    "bevy_asset",
+    "tracing",
+] }
+bevy_rerecast_editor_integration = { workspace = true, optional = true }
+
+[dev-dependencies]
+bevy = { workspace = true }
+test_utils = { workspace = true }
+bincode = { workspace = true }
+
+[features]
+default = ["bevy_mesh", "editor_integration", "debug_plugin"]
+libm = ["bevy_rerecast_core/libm"]
+bevy_mesh = ["bevy_rerecast_core/bevy_mesh"]
+debug_plugin = [
+    "bevy_rerecast_core/debug_plugin",
+    "bevy_rerecast_editor_integration?/debug_plugin",
+]
+editor_integration = ["dep:bevy_rerecast_editor_integration"]
+
+pbr_transmission_textures = [
+    "bevy_rerecast_editor_integration?/pbr_transmission_textures",
+]
+pbr_specular_textures = [
+    "bevy_rerecast_editor_integration?/pbr_specular_textures",
+]
+pbr_multi_layer_material_textures = [
+    "bevy_rerecast_editor_integration?/pbr_multi_layer_material_textures",
+]
+pbr_anisotropy_texture = [
+    "bevy_rerecast_editor_integration?/pbr_anisotropy_texture",
+]
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+rustdoc-args = ["-Zunstable-options", "--generate-link-to-definition"]
+all-features = true
