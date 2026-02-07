@@ -25,3 +25,10 @@ pub struct EnvironmentTemperature(pub f32);
 #[derive(Component, Debug, Deref, DerefMut, Clone, Copy, Reflect)]
 #[reflect(Clone, Debug, Component)]
 pub struct Health(pub f32);
+
+/// Timer used to track the `fever over time` effect. Allows for slowing down or speeding up the effect.
+#[derive(Component, Debug, Deref, DerefMut, Clone, Reflect)]
+#[reflect(Clone, Debug, Component)]
+pub struct FeverTimer(pub Timer);
+
+
