@@ -6,7 +6,7 @@ use bevy::prelude::*;
 #[reflect(Clone, Debug, Component)]
 pub struct Temperature(pub f32);
 
-/// Base health of a unit/entity (modified by temperature).
+/// Base damage of a unit/entity (modified by temperature).
 #[derive(Component, Debug, Deref, DerefMut, Clone, Copy, Reflect)]
 #[reflect(Clone, Debug, Component)]
 pub struct Damage(pub f32);
