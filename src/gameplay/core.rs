@@ -46,7 +46,7 @@ impl Default for GlobalTemperature {
     }
 }
 
-/// Multiplier for the global temperature can be placed in the world.
+/// Temperature of objects/entities/space in the environment, affecting the temperature of units around them.
 #[derive(Component, Debug, Deref, DerefMut, Clone, Copy, Reflect)]
 #[reflect(Clone, Debug, Component)]
 pub struct EnvironmentTemperature(pub f32);
