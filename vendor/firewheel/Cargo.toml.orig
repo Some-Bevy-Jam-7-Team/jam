@@ -1,0 +1,252 @@
+[package]
+name = "firewheel"
+version = "0.10.0"
+description = "A mid-level open source audio graph engine for games and other applications"
+repository.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+exclude.workspace = true
+
+# Show documentation with all features enabled on docs.rs
+[package.metadata.docs.rs]
+all-features = true
+
+[workspace.package]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+authors = ["Billy Messenger <billydm@noreply.codeberg.org>"]
+keywords = ["game", "audio", "graph"]
+categories = ["game-development", "multimedia::audio"]
+exclude = ["assets/"]
+repository = "https://github.com/BillyDM/firewheel"
+
+[features]
+default = [
+    "std",
+    "cpal",
+    "symphonium",
+    "symphonium_resample",
+    "sampler_node",
+    "tracing",
+]
+std = [
+    "firewheel-core/std",
+    "firewheel-graph/std",
+    "firewheel-nodes/std",
+    "firewheel-pool?/std",
+]
+# Enable this if "std" is disabled.
+libm = ["firewheel-core/libm", "firewheel-nodes/libm"]
+# Use the `tracing` crate for logging. Currently requires `std`.
+tracing = [
+    "firewheel-graph/tracing",
+    "firewheel-cpal?/tracing",
+    "firewheel-rtaudio?/tracing",
+    "firewheel-symphonium?/tracing",
+    "std",
+]
+# Use the `log` crate for logging
+log = [
+    "firewheel-graph/log",
+    "firewheel-cpal?/log",
+    "firewheel-rtaudio?/log",
+    "firewheel-symphonium?/log",
+]
+# Enables scheduling events for nodes
+scheduled_events = [
+    "firewheel-core/scheduled_events",
+    "firewheel-graph/scheduled_events",
+    "firewheel-nodes/scheduled_events",
+    "firewheel-pool?/scheduled_events",
+]
+# Enables the musical transport feature
+musical_transport = [
+    "scheduled_events",
+    "firewheel-core/musical_transport",
+    "firewheel-graph/musical_transport",
+]
+# Enables the cpal backend
+cpal = ["std", "dep:firewheel-cpal"]
+# Enables resampling input streams in the cpal backend
+cpal_resample_inputs = ["firewheel-cpal?/resample_inputs"]
+# Enables the alternative RtAudio backend
+# This backend has better support for "full duplex" audio devices than
+# the default CPAL backend, which allows for less latency between input
+# and output streams. The drawback is that this backend only supports
+# Windows, MacOS, and Linux desktop platforms.
+rtaudio = ["std", "firewheel-rtaudio"]
+# Enables using Symphonium for loading audio files.
+# Requires the standard library.
+symphonium = ["dep:firewheel-symphonium"]
+# Enables resampling audio files when loading them with Symphonium.
+symphonium_resample = ["symphonium", "firewheel-symphonium?/resample"]
+# Enables the "arbitrary sinc" resampler for changing the pitch/length
+# of samples at load time.
+symphonium_stretch = ["symphonium", "firewheel-symphonium?/stretch"]
+# Enables the `AudioNodePool` helper type for constructing a pool of
+# audio node chains that can dynamically be assigned work.
+pool = ["dep:firewheel-pool"]
+# Enables all built-in factory nodes
+all_nodes = ["firewheel-nodes/all_nodes"]
+# Enables all built-in factory nodes which are no_std compatible
+all_nodes_no_std = ["firewheel-nodes/all_nodes_no_std"]
+# Enables the "beep test" node
+beep_test_node = ["firewheel-nodes/beep_test"]
+# Enables the peak meter node
+peak_meter_node = ["firewheel-nodes/peak_meter"]
+# Enables the sampler node
+sampler_node = ["firewheel-nodes/sampler", "firewheel-pool?/sampler"]
+# Enables the basic 3D spatial positioning node
+spatial_basic_node = [
+    "firewheel-nodes/spatial_basic",
+    "firewheel-pool?/spatial_basic",
+]
+# Enables the stream writer/reader nodes for sending/receiving audio
+# directly to/from the audio graph from another thread. (requires std)
+stream_nodes = ["firewheel-nodes/stream"]
+# Enables the triple buffer node for sending raw audio data from the
+# audio graph to another thread. Useful for cases where you only care
+# about the latest data in the buffer, such as for creating visualizers.
+triple_buffer_node = ["firewheel-nodes/triple_buffer"]
+# Enables the white and pink noise generator nodes
+noise_gen_nodes = ["firewheel-nodes/noise_generators"]
+# Enables FastLowpassNode, FastHighpassNode, and FastBandpassNode
+fast_filter_nodes = ["firewheel-nodes/fast_filters"]
+# Enables the SVF (state variable filter) node
+svf_node = ["firewheel-nodes/svf"]
+# Enables the delay compensation node
+delay_compensation_node = ["firewheel-nodes/delay_compensation"]
+# Enables the mix node
+mix_node = ["firewheel-nodes/mix"]
+# Enables the freeverb node
+freeverb_node = ["firewheel-nodes/freeverb"]
+# Enables the convolution node (requires std)
+convolution_node = ["firewheel-nodes/convolution"]
+# Enables the FastRmsNode for measuring loudness
+fast_rms_node = ["firewheel-nodes/fast_rms"]
+# Enables `Component` derive macros for node parameters
+bevy = ["firewheel-nodes/bevy", "firewheel-core/bevy"]
+# Enables `Reflect` derive macros for types
+bevy_reflect = [
+    "firewheel-nodes/bevy_reflect",
+    "firewheel-core/bevy_reflect",
+    "firewheel-graph/bevy_reflect",
+]
+# Enables the wasm-bindgen feature for the CPAL backend
+wasm-bindgen = ["firewheel-cpal/wasm-bindgen"]
+# Enables `glam::Vec2` and `glam::Vec3` parameter derives for glam 0.29.
+glam-29 = ["firewheel-core/glam-29"]
+# Enables `glam::Vec2` and `glam::Vec3` parameter derives for glam 0.30.
+glam-30 = ["firewheel-core/glam-30"]
+# Enables `glam::Vec2` and `glam::Vec3` parameter derives for glam 0.31.
+glam-31 = ["firewheel-core/glam-31"]
+# Enables the `MIDI` event type, using the `wmidi` crate.
+midi_events = ["firewheel-core/midi_events"]
+# Enables serde derives for types
+serde = [
+    "firewheel-core/serde",
+    "firewheel-graph/serde",
+    "firewheel-nodes/serde",
+]
+# Enables setting the "flush to zero" CPU flag to avoid denormal numbers when
+# processing. This can lead to a significant performance increases in some cases.
+#
+# HOWEVER, the Rust compiler technically considers this to be undefined behavior,
+# so USE AT YOUR OWN RISK! Though if any UB did occur, the only damage will
+# likely just be audio glitches, not memory safety issues.
+#
+# Note, performance issues due to denormal numbers only effect x86 targets (ARM,
+# WASM, and RISC-V targets are all uneffected by denormal numbers).
+#
+# For more information on why this is considered undefined behavior, see:
+# https://doc.rust-lang.org/core/arch/x86_64/fn._mm_setcsr.html
+#
+# There is also currently an open issue to fix the "undefined behavior" status:
+# https://github.com/rust-lang/rust/issues/136469
+#
+# For an explanation on why denormal numbers are a problem, see:
+# https://mu.krj.st/denormal/
+unsafe_flush_denormals_to_zero = [
+    "firewheel-graph/unsafe_flush_denormals_to_zero",
+]
+
+[workspace]
+members = [
+    "crates/firewheel-core",
+    "crates/firewheel-cpal",
+    "crates/firewheel-graph",
+    "crates/firewheel-nodes",
+    "crates/firewheel-macros",
+    "crates/firewheel-pool",
+    "crates/firewheel-rtaudio",
+    "crates/firewheel-symphonium",
+    "examples/beep_test",
+    "examples/cpal_input",
+    "examples/custom_nodes",
+    "examples/play_sample",
+    "examples/rtaudio_beep_test",
+    "examples/sampler_pool",
+    "examples/sampler_test",
+    "examples/spatial_basic",
+    "examples/stream_nodes",
+    "examples/visual_node_graph",
+    "examples/memoized",
+    "examples/visualizer",
+]
+
+[workspace.dependencies]
+tracing = "0.1"
+tracing-subscriber = "0.3"
+log = "0.4"
+ringbuf = { version = "0.4", default-features = false, features = [
+    "portable-atomic",
+    "alloc",
+] }
+triple_buffer = "8"
+thiserror = { version = "2", default-features = false }
+smallvec = "1"
+arrayvec = { version = "0.7", default-features = false }
+bitflags = "2"
+thunderdome = { version = "0.6", default-features = false }
+fast-interleave = "0.1"
+firewheel-macros = { path = "crates/firewheel-macros", version = "0.10.0" }
+bevy_platform = { version = "0.18", default-features = false, features = [
+    "alloc",
+] }
+bevy_ecs = { version = "0.18", default-features = false }
+bevy_reflect = { version = "0.18", default-features = false }
+num-traits = { version = "0.2", default-features = false }
+serde = { version = "1", features = ["derive"] }
+egui = "0.33.3"
+eframe = { version = "0.33.3", default-features = false, features = [
+    "default_fonts",
+    "wayland",
+    "x11",
+    "glow",
+] }
+
+[dependencies]
+firewheel-core = { path = "crates/firewheel-core", version = "0.10.0", default-features = false }
+firewheel-graph = { path = "crates/firewheel-graph", version = "0.10.0", default-features = false }
+firewheel-cpal = { path = "crates/firewheel-cpal", version = "0.10.0", default-features = false, optional = true }
+firewheel-nodes = { path = "crates/firewheel-nodes", version = "0.10.0", default-features = false }
+firewheel-pool = { path = "crates/firewheel-pool", version = "0.10.0", default-features = false, optional = true }
+firewheel-symphonium = { path = "crates/firewheel-symphonium", version = "0.10.0", default-features = false, optional = true }
+firewheel-rtaudio = { path = "crates/firewheel-rtaudio", version = "0.10.0", default-features = false, optional = true }
+thunderdome = { workspace = true, optional = true }
+smallvec = { workspace = true, optional = true }
+thiserror.workspace = true
+
+# Optimize all dependencies in debug builds:
+[profile.dev.package."*"]
+opt-level = 2
+
+[dev-dependencies]
+criterion = "0.7"
+
+[[bench]]
+name = "core"
+harness = false

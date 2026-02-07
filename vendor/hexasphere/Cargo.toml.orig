@@ -1,0 +1,34 @@
+[package]
+name = "hexasphere"
+version = "16.0.0"
+authors = ["OptimisticPeach <patrikbuhring@gmail.com>"]
+edition = "2021"
+description = """
+A library to evenly tile hexagons on a sphere.
+"""
+readme = "readme.md"
+repository = "https://github.com/OptimisticPeach/hexasphere.git"
+license = "MIT OR Apache-2.0"
+keywords = ["gamedev", "graphics", "hexagons", "sphere", "math"]
+categories = [
+    "algorithms",
+    "data-structures",
+    "graphics",
+    "mathematics",
+    "rendering::data-formats",
+]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+default = ["std"]
+std = ["glam/std", "tinyvec?/std"]
+adjacency = ["dep:tinyvec"]
+shape-extras = []
+libm = ["dep:libm", "glam/libm"]
+
+[dependencies]
+constgebra = { version = "0.1.4", default-features = false }
+glam = { version = "0.30.0", default-features = false }
+libm = { version = "0.2", optional = true }
+tinyvec = { version = "1.8.1", optional = true, default-features = false }

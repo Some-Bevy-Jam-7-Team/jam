@@ -1,0 +1,77 @@
+[package]
+name = "rdst"
+description = "A flexible parallel unstable radix sort that supports sorting by any arbitrarily defined sequence of bytes."
+version = "0.20.14"
+authors = ["Nathan Essex <nathan@essex.id.au>"]
+edition = "2018"
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/Nessex/rdst"
+homepage = "https://github.com/Nessex/rdst"
+categories = ["algorithms"]
+keywords = ["radix","sort","rayon","parallel","multithreaded"]
+documentation = "https://docs.rs/rdst/"
+
+[features]
+default = ["multi-threaded"]
+multi-threaded = ["rayon"]
+work_profiles = []
+profiling = ["multi-threaded"]
+timings = ["multi-threaded"]
+
+[dependencies]
+rayon = { version = "1.8", optional = true }
+arbitrary-chunks = "0.4.1"
+partition = "0.1.2"
+
+[dev-dependencies]
+rayon = "1.8"
+criterion = "0.5.1"
+block-pseudorand = "0.1.2"
+
+[target.'cfg(all(not(target_env = "msvc"), tuning))'.dependencies]
+tikv-jemallocator = "0.5.4"
+
+# Workaround for reducing compile time when not tuning or benchmarking
+# Suggestions for a better alternative very welcome...
+[target.'cfg(any(bench, tuning))'.dependencies]
+voracious_radix_sort = { version = "1.2", features = ["voracious_multithread"] }
+criterion = "0.5.1"
+block-pseudorand = "0.1.2"
+
+[profile.release]
+codegen-units = 1
+opt-level = 3
+
+[[bench]]
+name = "basic_sort"
+harness = false
+required-features = ["multi-threaded"]
+
+[[bench]]
+name = "full_sort"
+harness = false
+required-features = ["multi-threaded"]
+
+[[bench]]
+name = "struct_sort"
+harness = false
+required-features = ["multi-threaded"]
+
+[[bench]]
+name = "tuning_parameters"
+harness = false
+required-features = ["multi-threaded"]
+
+[[bin]]
+# Requires: RUSTFLAGS="--cfg bench --cfg tuning" AND --features profiling
+# Suggestions for a better alternative very welcome...
+name = "profiling"
+path = "src/cmd/profiling.rs"
+required-features = ["profiling"]
+
+[[bin]]
+# Requires: RUSTFLAGS="--cfg bench --cfg tuning" AND --features timings
+# Suggestions for a better alternative very welcome...
+name = "timings"
+path = "src/cmd/timings.rs"
+required-features = ["timings"]

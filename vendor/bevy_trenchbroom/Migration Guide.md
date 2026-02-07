@@ -1,0 +1,63 @@
+# 0.10 to 0.11
+- The global spawner in `TrenchBroomConfig` has been split into `pre_spawn_hook` and `post_spawn_hook` for more granular control.
+- Quake 2 and GoldSrc BSP formats are now supported. If you are using BSPs, you should probably switch to the Quake 2 QBISM format, as it is a direct upgrade to BSP2. Check the [BSP section in the manual](https://docs.rs/bevy_trenchbroom/latest/bevy_trenchbroom/manual/index.html#bsp) for updated recommended command arguments.
+	- Quake 2 BSPs made from Quake 1 `.map` files currently fail to load BSPX data. (See [`qbsp/#12`](https://github.com/Noxmore/qbsp/issues/12))
+- Quake 2 maps are now supported, and the default map format has changed to `Quake2Valve`. If you want to use them, you'll have to manually convert them. such as with ericw-tools' `maputil`.
+- Spawn hooks have been renamed into scene hooks to better represent where they are run.
+
+# 0.9 to 0.10
+- Physics integrations have been decoupled into the `bevy_trenchbroom_rapier` and `bevy_trenchbroom_avian` crates to make releasing updates quicker. Add one of those into your project, and add the plugin `TrenchBroomPhysicsPlugin::new(/*(physics engine)*/}PhysicsBackend)`.
+
+# 0.8 to 0.9
+- Derive macros have been converted to attribute macros to greatly reduce boilerplate
+	- Replace your `#[derive(<type>Class)]` with `#[<type>_class]`
+	- `#[derive(<type>Class, Component, Reflect)]` is now implied if not specified.
+	- `#[reflect(QuakeClass, Component)]` is now implied if not specified.
+	- Attributes have been put into the macro body, though they are not needed.
+	- `spawn_hooks` attribute has been renamed to just `hooks`.
+	- The `no_default` field attribute has been renamed to `#[class(must_set)`, along with 4 new field attributes.
+	- Here's an example:
+		```rust
+		#[solid_class(
+			base(BspWorldspawn),
+			hooks(SpawnHooks::new().smooth_by_default_angle()),
+		)]
+		struct Worldspawn;
+
+		#[solid_class]
+		#[derive(Default)]
+		struct FuncDoor {
+			#[must_set]
+			pub my_field: f32,
+		}
+		```
+- Many generic/widely useful classes have been created and automatically registered for convenience.
+	- You can remove all of them by disabling the various `*ClassesPlugin`s in the `TrenchBroomPlugins` plugin group, originating from the `BasicClassesPlugins` plugin group.
+	- Disable specific classes with `.disable_class::<T>()` in app initialization, or use `.override_class::<T>()` if you want to replace them with your own!
+- Default spawn hooks have been added to `TrenchBroomConfig` per type of class. You can probably remove a lot of copy-pasted hooks!
+- A manual has been added for more accessible comprehensive documentation, [check it out!](https://docs.rs/bevy_trenchbroom/latest/bevy_trenchbroom/manual/index.html)
+- `QuakeClassSpawnView::config` have been renamed to `tb_config`.
+- `TrenchBroomConfig` writing now happens automatically with `WriteTrenchBroomConfigOnStartPlugin`. If you're writing out your config on startup, you can remove that system. If not, disable `WriteTrenchBroomConfigOnStartPlugin` through `TrenchBroomPlugins`.
+
+# 0.7 to 0.8
+- `TrenchBroomPlugin` has been changed to the `TrenchBroomPlugins` plugin group. The syntax is the exact same by default, you're just able to disable specific plugins now.
+- QuakeClass registration has been moved from `TrenchBroomConfig` to Bevy's type registry.
+	- Add `#[reflect(QuakeClass, Component, ...)]` to your classes. (To be clear, you had to reflect `Component` before as well)
+	- Auto-registration has been removed, see below.
+	- Add `.register_type::<T>()` to your app initialization to register your classes.
+	- If a class by the same name has already been registered, use `.override_class::<T>()` instead.
+- Auto-registration has been removed due to platform problems with wasm, and the move to Bevy's type registry. There are efforts to make [automatic type registration](https://github.com/bevyengine/bevy/pull/15030) happen officially, keep an eye out for that and optionally roll your own in the meantime.
+- The `TrenchBroomConfig` configuration writing function has been split and improved.
+	- Use `write_game_config_to_default_directory` to write the game config directly into the user's TrenchBroom installation.
+	- Use `add_game_to_preferences_in_default_directory` to set the game directory in the user's TrenchBroom settings to the current working directory.
+- The default material extension has been changed to `toml` due to the fact that the default material deserializer is `TomlMaterialDeserializer`. This can be changed in `TrenchBroomConfig`.
+- `TrenchBroomConfig` now supports multiple texture and material extensions, and those fields have been pluralized to reflect that.
+- BSP loading has been locked behind the `bsp` feature flag.
+- We now ship with [`bevy_fix_gltf_coordinate_system`](https://github.com/janhohenheim/bevy_fix_gltf_coordinate_system) by default. You can disable it in your `TrenchBroomPlugins` if you don't want it or already add it, but be aware that without it glTFs in-editor won't align with those in-game.
+- `GeometryProvider` has been removed in favor of spawn hooks.
+	- Change `#[geometry(GeometryProvider::new().<...>)]` to `#[spawn_hooks(SpawnHooks::new().<...>)]`
+	- `with_lightmaps` is now opt-out rather than opt-in (`without_lightmaps`)
+
+### bevy_materialize
+- Non-color maps in `StandardMaterial` now use a linear color space out of the box, making PBR materials look correctly.
+- Material inheritance and processing has been added. See [its readme](https://github.com/Noxmore/bevy_materialize/blob/9d56fb86507ccfe26a4122406aff9bf64de43d3e/readme.md) for an overview of these features.

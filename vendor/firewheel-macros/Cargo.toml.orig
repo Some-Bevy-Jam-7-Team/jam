@@ -1,0 +1,22 @@
+[package]
+name = "firewheel-macros"
+version = "0.10.0"
+description = "Macros for Firewheel crates"
+homepage = "https://github.com/BillyDM/firewheel/blob/main/crates/firewheel-macros"
+repository.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+exclude.workspace = true
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = "2.0"
+quote = "1.0"
+proc-macro2 = "1.0"
+bevy_macro_utils = "0.18"
+toml_edit = { version = "0.23.9", default-features = false, features = ["parse"] }

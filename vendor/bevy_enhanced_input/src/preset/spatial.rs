@@ -1,0 +1,103 @@
+use crate::prelude::*;
+use bevy::{
+    ecs::spawn::SpawnableList,
+    prelude::*,
+    ptr::{MovingPtr, move_as_ptr},
+};
+
+/// A preset to map 6 buttons as 3-dimensional input.
+#[derive(Debug, Clone, Copy)]
+pub struct Spatial<F, B, L, R, U, D> {
+    pub forward: F,
+    pub backward: B,
+    pub left: L,
+    pub right: R,
+    pub up: U,
+    pub down: D,
+}
+
+impl<F, B, L, R, U, D, T: Clone> WithBundle<T> for Spatial<F, B, L, R, U, D> {
+    type Output = Spatial<(F, T), (B, T), (L, T), (R, T), (U, T), (D, T)>;
+
+    fn with(self, bundle: T) -> Self::Output {
+        Spatial {
+            forward: (self.forward, bundle.clone()),
+            backward: (self.backward, bundle.clone()),
+            left: (self.left, bundle.clone()),
+            right: (self.right, bundle.clone()),
+            up: (self.up, bundle.clone()),
+            down: (self.down, bundle),
+        }
+    }
+}
+
+impl Spatial<Binding, Binding, Binding, Binding, Binding, Binding> {
+    /// Maps 6 bindings as 3-dimensional input.
+    #[must_use]
+    pub fn new(
+        forward: impl Into<Binding>,
+        backward: impl Into<Binding>,
+        left: impl Into<Binding>,
+        right: impl Into<Binding>,
+        up: impl Into<Binding>,
+        down: impl Into<Binding>,
+    ) -> Self {
+        Spatial {
+            forward: forward.into(),
+            backward: backward.into(),
+            left: left.into(),
+            right: right.into(),
+            up: up.into(),
+            down: down.into(),
+        }
+    }
+
+    /// Applies keyboard modifiers to all bindings.
+    #[must_use]
+    pub fn with_mod_keys(self, mod_keys: ModKeys) -> Self {
+        Self {
+            forward: self.forward.with_mod_keys(mod_keys),
+            backward: self.backward.with_mod_keys(mod_keys),
+            left: self.left.with_mod_keys(mod_keys),
+            right: self.right.with_mod_keys(mod_keys),
+            up: self.up.with_mod_keys(mod_keys),
+            down: self.down.with_mod_keys(mod_keys),
+        }
+    }
+}
+
+impl<F, B, L, R, U, D> SpawnableList<BindingOf> for Spatial<F, B, L, R, U, D>
+where
+    F: Bundle,
+    B: Bundle,
+    L: Bundle,
+    R: Bundle,
+    U: Bundle,
+    D: Bundle,
+{
+    fn spawn(this: MovingPtr<'_, Self>, world: &mut World, entity: Entity) {
+        let spatial = this.read();
+        let xy = Cardinal {
+            north: spatial.up,
+            east: spatial.right,
+            south: spatial.down,
+            west: spatial.left,
+        };
+
+        move_as_ptr!(xy);
+        SpawnableList::spawn(xy, world, entity);
+
+        let z = Bidirectional {
+            positive: spatial.backward,
+            negative: spatial.forward,
+        }
+        .with(SwizzleAxis::ZYX);
+
+        move_as_ptr!(z);
+        SpawnableList::spawn(z, world, entity);
+    }
+
+    fn size_hint(&self) -> usize {
+        6
+    }
+}

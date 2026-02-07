@@ -1,0 +1,6 @@
+{
+  "git": {
+    "sha1": "9106021e8b80e441689ebbcb2c8f9da14e782426"
+  },
+  "path_in_vcs": "crates/bevy-inspector-egui-derive"
+}

@@ -1,0 +1,113 @@
+[package]
+name = "firewheel-nodes"
+version = "0.10.0"
+description = "Official factory nodes for the Firewheel audio engine"
+homepage = "https://github.com/BillyDM/firewheel/blob/main/crates/firewheel-nodes"
+repository.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+exclude.workspace = true
+
+# Show documentation with all features enabled on docs.rs
+[package.metadata.docs.rs]
+all-features = true
+
+[features]
+default = ["std"]
+std = [
+    "bevy_ecs?/std",
+    "bevy_platform/std",
+    "bevy_reflect?/std",
+    "num-traits/std",
+    "firewheel-core/std",
+]
+# Enable this if "std" is disabled.
+libm = ["firewheel-core/libm", "num-traits/libm"]
+all_nodes = [
+    "beep_test",
+    "peak_meter",
+    "sampler",
+    "spatial_basic",
+    "stream",
+    "fast_filters",
+    "svf",
+    "noise_generators",
+    "delay_compensation",
+    "mix",
+    "freeverb",
+    "convolution",
+    "fast_rms",
+    "triple_buffer",
+]
+# All nodes which are no_std compatible
+all_nodes_no_std = [
+    "beep_test",
+    "peak_meter",
+    "sampler",
+    "spatial_basic",
+    "fast_filters",
+    "svf",
+    "noise_generators",
+    "delay_compensation",
+    "mix",
+    "freeverb",
+    "fast_rms",
+    "triple_buffer"
+]
+# Enables event scheduling support in some nodes.
+scheduled_events = ["firewheel-core/scheduled_events"]
+# Enables the "beep test" node
+beep_test = []
+# Enables the peak meter node
+peak_meter = []
+# Enables the sampler node
+sampler = ["dep:smallvec"]
+# Enables the basic 3D spatial positioning node
+spatial_basic = []
+# Enables FastLowpassNode, FastHighpassNode, and FastBandpassNode
+fast_filters = []
+# Enables the SVF (state variable filter) node
+svf = []
+# Enables WhiteNoiseGenNode and PinkNoiseGenNode
+noise_generators = []
+# Enables the stream writer/reader nodes for sending/receiving audio
+# directly to/from the audio graph from another thread. (requires std)
+stream = ["std", "dep:fixed-resample"]
+# Enables the triple buffer node for sending raw audio data from the
+# audio graph to another thread. Useful for cases where you only care
+# about the latest data in the buffer, such as for creating visualizers.
+triple_buffer = ["dep:triple_buffer"]
+# Enables the delay compensation node
+delay_compensation = ["dep:smallvec"]
+# Enables the mix node
+mix = []
+# Enables the freeverb node
+freeverb = []
+# Enables the convolution node (requires std)
+convolution = ["dep:fft-convolver"]
+# Enables the FastRmsNode for measuring loudness
+fast_rms = []
+# Enables `Component` derive macros
+bevy = ["dep:bevy_ecs", "firewheel-core/bevy"]
+# Enables `Reflect` derive macros
+bevy_reflect = ["dep:bevy_reflect", "firewheel-core/bevy_reflect"]
+# Enables serde derives for types
+serde = ["dep:serde"]
+
+[dependencies]
+firewheel-core = { path = "../firewheel-core", version = "0.10.0", default-features = false }
+bevy_platform.workspace = true
+num-traits.workspace = true
+smallvec = { workspace = true, optional = true }
+fixed-resample = { version = "0.9.1", features = [
+    "fft-resampler",
+    "channel",
+], optional = true }
+bevy_ecs = { workspace = true, optional = true }
+bevy_reflect = { workspace = true, optional = true }
+serde = { workspace = true, optional = true }
+fft-convolver = { version = "0.2.0", optional = true }
+triple_buffer = { workspace = true, optional = true }

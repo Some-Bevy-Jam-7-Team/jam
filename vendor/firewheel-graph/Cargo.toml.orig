@@ -1,0 +1,75 @@
+[package]
+name = "firewheel-graph"
+version = "0.10.0"
+description = "Core audio graph algorithm and executor for Firewheel"
+homepage = "https://github.com/BillyDM/firewheel/blob/main/crates/firewheel-graph"
+repository.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+exclude.workspace = true
+
+# Show documentation with all features enabled on docs.rs
+[package.metadata.docs.rs]
+all-features = true
+
+[features]
+default = ["std", "tracing"]
+std = [
+    "arrayvec/std",
+    "bevy_platform/std",
+    "firewheel-core/std",
+    "ringbuf/std",
+    "thunderdome/std",
+    "thiserror/std",
+    "bevy_reflect?/std",
+    "num-traits/std",
+]
+# Enables scheduling events for audio nodes.
+scheduled_events = ["firewheel-core/scheduled_events"]
+# Enables the musical transport feature.
+musical_transport = ["scheduled_events", "firewheel-core/musical_transport"]
+# Enables serde derives for types
+serde = ["dep:serde"]
+# Enables Reflect derives for types
+bevy_reflect = ["dep:bevy_reflect"]
+# Use the `tracing` crate for logging. Currently requires `std`.
+tracing = ["dep:tracing", "std"]
+# Use the `log` crate for logging
+log = ["dep:log"]
+# Enables setting the "flush to zero" CPU flag to avoid denormal numbers when
+# processing. This can lead to a significant performance increases in some cases.
+#
+# HOWEVER, the Rust compiler technically considers this to be undefined behavior,
+# so USE AT YOUR OWN RISK! Though if any UB did occur, the only damage will
+# likely just be audio glitches, not memory safety issues.
+#
+# Note, performance issues due to denormal numbers only effect x86 targets (ARM,
+# WASM, and RISC-V targets are all uneffected by denormal numbers).
+#
+# For more information on why this is considered undefined behavior, see:
+# https://doc.rust-lang.org/core/arch/x86_64/fn._mm_setcsr.html
+#
+# There is also currently an open issue to fix the "undefined behavior" status:
+# https://github.com/rust-lang/rust/issues/136469
+#
+# For an explanation on why denormal numbers are a problem, see:
+# https://mu.krj.st/denormal/
+unsafe_flush_denormals_to_zero = []
+
+[dependencies]
+firewheel-core = { path = "../firewheel-core", version = "0.10.0", default-features = false }
+tracing = { workspace = true, optional = true }
+log = { workspace = true, optional = true }
+ringbuf.workspace = true
+triple_buffer.workspace = true
+smallvec.workspace = true
+arrayvec.workspace = true
+thunderdome.workspace = true
+thiserror.workspace = true
+bevy_platform.workspace = true
+num-traits.workspace = true
+serde = { workspace = true, optional = true }
+bevy_reflect = { workspace = true, optional = true }

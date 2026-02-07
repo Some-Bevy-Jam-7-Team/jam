@@ -1,0 +1,48 @@
+[package]
+name = "bevy_yarnspinner"
+version = "0.7.0"
+edition = "2024"
+repository = "https://github.com/YarnSpinnerTool/YarnSpinner-Rust"
+homepage = "https://docs.yarnspinner.dev/"
+keywords = ["gamedev", "dialog", "yarn", "bevy"]
+categories = ["game-development", "compilers"]
+authors = ["Jan Hohenheim <jan@hohenheim.ch>"]
+license = "MIT OR Apache-2.0"
+exclude = ["assets", "wasm"]
+description = "Bevy plugin for Yarn Spinner for Rust, friendly tool for writing game dialogue"
+readme = "../../readme.md"
+
+[features]
+default = []
+audio_assets = ["bevy/bevy_audio", "bevy/vorbis"]
+
+[dependencies]
+anyhow = "1"
+csv = "1"
+serde = { version = "1", features = ["derive"] }
+yarnspinner_internal_shared = { path = "../internal_shared", version = "0.1.0" }
+yarnspinner = { path = "../yarnspinner", features = [
+    "bevy",
+    "serde",
+], version = "0.7.0" }
+sha2 = "0.10"
+rand = { version = "0.9", features = ["small_rng"] }
+variadics_please = "1"
+
+
+[dependencies.bevy]
+version = "0.18"
+default-features = false
+features = ["bevy_asset", "multi_threaded", "bevy_log"]
+
+[dev-dependencies]
+tempfile = "3"
+static_assertions = "1.1.0"
+
+[dev-dependencies.bevy]
+version = "0.18"
+default-features = false
+features = ["bevy_core_pipeline", "bevy_audio"]
+
+[target.'cfg(all(not(target_arch = "wasm32"), not(target_os = "android")))'.dependencies]
+glob = "0.3.1"

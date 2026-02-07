@@ -1,0 +1,126 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+env:
+  CARGO_TERM_COLOR: always
+  # Sparse cargo registry for faster updates
+  CARGO_REGISTRIES_CRATES_IO_PROTOCOL: sparse
+  RUSTFLAGS: "-D warnings"
+  RUSTDOCFLAGS: "--deny warnings"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    env:
+      # Handle cargo check and cargo clippy warnings as errors
+      RUSTFLAGS: "-D warnings"
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "true"
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+          components: clippy
+      - name: Populate target directory from cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+      - name: Install alsa and udev
+        run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev libwayland-dev
+      - name: Run cargo clippy on workspace for default features
+        run: cargo clippy --workspace --all-targets
+      - name: Run cargo clippy without default features
+        run: cargo clippy --all-targets --no-default-features
+      - name: Run cargo clippy for bsps
+        run: cargo clippy --all-targets --features bsp
+
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "true"
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+          components: rustfmt
+      - name: Populate target directory from cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+      - name: Run cargo fmt
+        run: cargo fmt --check --all
+
+  doc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "true"
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+      - name: Populate target directory from cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+      - name: Install alsa and udev
+        run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev libwayland-dev
+      - name: Run cargo doc with default features
+        run: cargo doc --no-deps --workspace
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "true"
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+      - name: Populate target directory from cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+      - name: Install alsa and udev
+        run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev libwayland-dev
+      - name: Run tests\
+        run: |
+          cargo test --locked --lib --all-targets --features bevy/x11 --features client,bsp
+          # Running doc tests separately is a workaround for https://github.com/rust-lang/cargo/issues/6669
+          # Setting LD_LIBRARY_PATH is a workaround for https://github.com/TheBevyFlock/bevy_new_2d/pull/318#issuecomment-2585935350
+          LD_LIBRARY_PATH="$(rustc --print target-libdir)" cargo test --locked --workspace --doc --features bevy/x11 --features client,bsp
+
+  # Check that the crate builds for web.
+  build-web:
+    name: Build for web
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Install dependencies
+        run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev libwayland-dev libxkbcommon-dev
+
+      - name: Populate target directory from cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: Install Bevy CLI
+        run: cargo install --git=https://github.com/TheBevyFlock/bevy_cli --locked bevy_cli
+
+      - name: Build for web
+        run: |
+          cd example/map_loading
+          bevy build --locked --bin map_loading --all-targets --yes web

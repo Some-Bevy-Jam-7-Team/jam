@@ -1,0 +1,38 @@
+[package]
+name = "firewheel-symphonium"
+version = "0.10.0"
+description = "Symphonium integration for Firewheel"
+homepage = "https://github.com/BillyDM/firewheel/blob/main/crates/firewheel-symphonium"
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+exclude.workspace = true
+repository.workspace = true
+
+[features]
+default = ["tracing"]
+resample = [
+    "dep:fixed-resample",
+    "symphonium/resampler",
+]
+# Enables the "arbitrary sinc" resampler in Symphonium for changing the
+# pitch/length of samples at load time.
+stretch = [
+    "resample",
+    "symphonium/stretch-sinc-resampler",
+]
+# Use the `tracing` crate for logging. Currently requires `std`.
+tracing = ["symphonium/tracing"]
+# Use the `log` crate for logging
+log = ["symphonium/log"]
+
+[dependencies]
+firewheel-core = { path = "../firewheel-core", version = "0.10.0", default-features = false, features = ["std"] }
+symphonium = { version = "0.7.0", default-features = false }
+fixed-resample = { version = "0.9.2", default-features = false, features = [
+    "resampler",
+    "fft-resampler",
+], optional = true }
+bevy_platform.workspace = true

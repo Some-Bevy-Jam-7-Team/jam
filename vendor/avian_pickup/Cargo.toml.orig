@@ -1,0 +1,48 @@
+[package]
+name = "avian_pickup"
+version = "0.5.0-rc.1"
+authors = ["Jan Hohenheim <jan@hohenheim.ch>"]
+license = "MIT OR Apache-2.0"
+edition = "2024"
+exclude = ["/assets/", "/docs/", "/.github/"]
+repository = "https://github.com/janhohenheim/avian_pickup"
+description = "A plugin for implementing picking up dynamic rigid bodies in Avian physics for the Bevy engine. Modeled after Half Life 2's gravity gun."
+keywords = ["bevy", "physics", "avian", "pickup", "gravity"]
+categories = ["game-development"]
+
+[features]
+# Since this library does not make sense without also depending on `avian3d`,
+# we are not replicating the `f32`, `f64`, `parry-f32`, and `parry-f64` features.
+# If you want to use f64 precision, add `avian_pickup` with `default-features = false`
+# and activate the f64-related features in `avian3d`.
+default = ["avian3d/f32", "avian3d/parry-f32"]
+serialize = ["dep:serde", "bevy/serialize", "avian3d/serialize"]
+
+[dependencies]
+rand = "0.9"
+serde = { version = "1.0.210", optional = true }
+bevy_ecs = { version = "0.18.0", default-features = false }
+bevy_app = { version = "0.18.0", default-features = false }
+bevy_transform = { version = "0.18.0", default-features = false }
+bevy_math = { version = "0.18.0", default-features = false }
+bevy_platform = { version = "0.18.0", default-features = false }
+bevy_reflect = { version = "0.18.0", default-features = false }
+bevy_time = { version = "0.18.0", default-features = false }
+bevy_utils = { version = "0.18.0", default-features = false }
+bevy_log = { version = "0.18.0", default-features = false }
+
+[dependencies.avian3d]
+version = "0.6.0-rc.1"
+default-features = false
+features = ["3d", "default-collider"]
+
+[dev-dependencies]
+bevy = { version = "0.18.0", features = ["dynamic_linking"] }
+
+# Enable a small amount of optimization in debug mode
+[profile.dev]
+opt-level = 1
+
+# Enable high optimizations for dependencies (incl. Bevy), but not for our code:
+[profile.dev.package."*"]
+opt-level = 3

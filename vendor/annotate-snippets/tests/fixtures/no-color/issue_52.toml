@@ -1,0 +1,16 @@
+[snippet.title]
+annotation_type = "Error"
+
+[[snippet.slices]]
+source = """
+
+
+invalid syntax
+"""
+line_start = 1
+origin = "path/to/error.rs"
+fold = true
+[[snippet.slices.annotations]]
+label = "error here"
+annotation_type = "Warning"
+range = [2,16]

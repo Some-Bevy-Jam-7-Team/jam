@@ -1,0 +1,28 @@
+[package]
+name = "bevy_shuffle_bag"
+version = "0.4.0"
+edition = "2024"
+authors = ["Jan Hohenheim <jan@hohenheim.ch>"]
+exclude = ["./assets/"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/janhohenheim/bevy_shuffle_bag"
+description = "A crate for shuffling collections in Bevy"
+keywords = ["bevy", "collection", "shuffle", "bag"]
+categories = ["game-development"]
+
+[features]
+default = ["bevy_assets"]
+bevy_assets = ["bevy/bevy_asset"]
+serialize = ["dep:serde"]
+
+[dependencies]
+rand = "0.9"
+serde = { version = "1", features = ["derive"], optional = true }
+
+[dependencies.bevy]
+version = "0.18"
+default-features = false
+
+[dev-dependencies]
+paste = "1.0.15"
+bevy = { version = "0.18" }

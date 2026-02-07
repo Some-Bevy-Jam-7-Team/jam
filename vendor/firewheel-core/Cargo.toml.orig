@@ -1,0 +1,122 @@
+[package]
+name = "firewheel-core"
+version = "0.10.1"
+description = "Shared types for Firewheel crates"
+homepage = "https://github.com/BillyDM/firewheel/blob/main/crates/firewheel-core"
+repository.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+exclude.workspace = true
+
+# Show documentation with all features enabled on docs.rs
+[package.metadata.docs.rs]
+all-features = true
+
+[features]
+# NOTE TO THIRD PARTY NODE DEVELOPERS: If you want your crate to be
+# `no_std` compatible, use `default_features = false` for
+# `firewheel-core` and provide a "std" feature in your crate which
+# enables "firewheel-core/std" like so:
+#
+# firewheel-core = { version = "x.x.x", default_features = false }
+#
+# [features]
+# default = ["std"]
+# std = ["firewheel-core/std"]
+#
+# If you also need floating point math methods, you should also add a
+# `libm` feature which imports either the `libm` crate or the `num_traits`
+# crate like so:
+#
+# firewheel-core = { version = "x.x.x", default_features = false }
+# num-traits = { version = "0.2", default-features = false }
+#
+# [features]
+# default = ["std"]
+# std = ["firewheel-core/std", "num-traits/std"]
+# libm = ["firewheel-core/libm", "num-traits/libm"]
+default = ["std"]
+std = [
+    "arrayvec/std",
+    "bevy_ecs?/std",
+    "bevy_platform/std",
+    "bevy_reflect?/std",
+    "glam-29?/std",
+    "glam-30?/std",
+    "glam-31?/std",
+    "portable-atomic/std",
+    "num-traits/std",
+    "thiserror/std",
+    "thunderdome/std",
+    "ringbuf/std",
+    "wmidi?/std",
+    "rtgc/std",
+]
+# Enable this if "std" is disabled.
+libm = [
+    "num-traits/libm",
+    "glam-29?/nostd-libm",
+    "glam-30?/nostd-libm",
+    "glam-31?/nostd-libm"
+]
+# Enables scheduling events for audio nodes.
+#
+# NOTE TO THIRD PARTY NODE DEVELOPERS: Please keep this feature disabled
+# unless your node internally uses the `EventInstant` type in processing.
+# Users can still schedule events for your node even if you have this
+# feature disabled in your library.
+#
+# If your node makes use of `ProcEvents::drain_with_timestamps` or
+# `ProcEvents::drain_patches_with_timestamps`, please consider adding
+# a "scheduled_events" feature to your library that can also be disabled.
+# For an example of this, see
+# https://github.com/BillyDM/Firewheel/blob/4b06aa276d99b66e1b488d14a0fd3a6217149daa/crates/firewheel-nodes/src/sampler.rs#L771
+scheduled_events = []
+# Enables the musical transport feature.
+#
+# NOTE TO THIRD PARTY NODE DEVELOPERS: Please keep this feature disabled
+# unless your node internally uses the musical types in processing. Users
+# can still schedule musical events for your node even if you have this
+# feature disabled in your library.
+musical_transport = ["scheduled_events"]
+# Enables `Component` derives for parameters.
+bevy = ["dep:bevy_ecs"]
+# Enables `Reflect` derives for core types.
+bevy_reflect = ["dep:bevy_reflect"]
+# Enables `glam::Vec2` and `glam::Vec3` parameter derives for glam 0.29.
+glam-29 = ["dep:glam-29"]
+# Enables `glam::Vec2` and `glam::Vec3` parameter derives for glam 0.30.
+glam-30 = ["dep:glam-30"]
+# Enables `glam::Vec2` and `glam::Vec3` parameter derives for glam 0.31.
+glam-31 = ["dep:glam-31"]
+# Enables the `MIDI` event type, using the `wmidi` crate.
+midi_events = ["dep:wmidi"]
+# Enables serde derives for types
+serde = ["dep:serde"]
+
+[dependencies]
+firewheel-macros.workspace = true
+arrayvec.workspace = true
+bitflags.workspace = true
+thunderdome.workspace = true
+smallvec.workspace = true
+bevy_platform.workspace = true
+thiserror.workspace = true
+ringbuf.workspace = true
+num-traits.workspace = true
+bevy_ecs = { workspace = true, optional = true }
+bevy_reflect = { workspace = true, optional = true }
+glam-29 = { package = "glam", version = "0.29", default-features = false, optional = true }
+glam-30 = { package = "glam", version = "0.30", default-features = false, optional = true }
+glam-31 = { package = "glam", version = "0.31", default-features = false, optional = true }
+# TODO: Remove this once `bevy_platform` exposes the atomic float types from `portable-atomic`.
+portable-atomic = { version = "1", default-features = false, features = [
+    "fallback",
+    "float",
+] }
+wmidi = { version = "4", default-features = false, optional = true }
+serde = { workspace = true, optional = true }
+rtgc = { version = "0.3.0", default-features = false, features = ["bevy_platform"] }
