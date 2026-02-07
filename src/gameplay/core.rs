@@ -13,6 +13,17 @@ impl Default for Temperature {
     }
 }
 
+/// Max temperature that a unit can handle before it takes damage.
+#[derive(Component, Debug, Deref, DerefMut, Clone, Copy, Reflect)]
+#[reflect(Clone, Debug, Component)]
+pub struct MaxTemperature(pub f32);
+
+impl Default for MaxTemperature {
+    fn default() -> Self {
+        Self(40.0)
+    }
+}
+
 /// Base damage of a unit/entity (could be modified by temperature/fever).
 #[derive(Component, Debug, Deref, DerefMut, Clone, Copy, Reflect)]
 #[reflect(Clone, Debug, Component)]
@@ -57,7 +68,7 @@ impl Default for Health {
     }
 }
 
-/// Timer used to track the `fever over time` effect. Allows for slowing down or speeding up the effect.
+/// Timer used to manage the `fever over time` effect. Allows for slowing down or speeding up the effect.
 #[derive(Component, Debug, Deref, DerefMut, Clone, Reflect)]
 #[reflect(Clone, Debug, Component)]
 pub struct FeverTimer(pub Timer);
@@ -65,5 +76,50 @@ pub struct FeverTimer(pub Timer);
 impl Default for FeverTimer {
     fn default() -> Self {
         Self(Timer::new(Duration::from_secs(1), TimerMode::Repeating))
+    }
+}
+
+/// Timer used to manage the Temperature of units, i.e., adjusting based on global/env temp.
+#[derive(Component, Debug, Deref, DerefMut, Clone, Reflect)]
+#[reflect(Clone, Debug, Component)]
+pub struct TemperatureTimer(pub Timer);
+
+pub struct FeverPlugin;
+
+impl Plugin for FeverPlugin {
+    fn build(&self, app: &mut App) {
+        app.init_resource::<GlobalTemperature>()
+            .add_systems(FixedUpdate, (tick_fever, tick_temperature).chain());
+    }
+}
+
+fn tick_temperature(
+    time: Res<Time>,
+    mut units: Query<(&mut TemperatureTimer, &mut Temperature)>,
+    global_temperature: Res<GlobalTemperature>,
+    environment_temperatures: Query<&EnvironmentTemperature>,
+) {
+    // TODO look up collisions with EnvironmentTemperature entities
+    for (mut timer, mut temp) in units.iter_mut() {
+        timer.tick(time.delta());
+
+        if timer.is_finished() {
+            // cool down / heat up depending on global/env temperature
+        }
+    }
+}
+
+fn tick_fever(
+    time: Res<Time>,
+    mut units: Query<(&mut FeverTimer, &Temperature, &MaxTemperature, &mut Health)>,
+) {
+    for (mut timer, temp, max_temp, mut health) in units.iter_mut() {
+        timer.tick(time.delta());
+
+        if timer.is_finished() {
+            if **temp > **max_temp {
+                **health -= 1.;
+            }
+        }
     }
 }
