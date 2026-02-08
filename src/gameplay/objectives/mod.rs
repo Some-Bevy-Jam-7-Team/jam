@@ -8,6 +8,7 @@ pub(super) fn plugin(app: &mut App) {
 	app.add_plugins(ui::plugin);
 
 	app.add_systems(OnEnter(Screen::Gameplay), spawn_test_objectives);
+	app.add_systems(PostUpdate, complete_parent_objectives);
 }
 
 /// A game objective.
@@ -69,4 +70,27 @@ fn spawn_test_objectives(mut commands: Commands) {
 			Objective::new("Task 2.3")
 		]),
 	));
+}
+
+/// Marks parent objectives as completed when all their sub-objectives are completed.
+// TODO (Jondolf): I wanted to handle this with an observer, but had problems where
+//                 siblings of completed sub-objectives were not yet spawned, and thus it
+//                 would incorrectly mark the parent objective as completed.
+fn complete_parent_objectives(
+	new_completed_query: Query<&SubObjectiveOf, Added<ObjectiveCompleted>>,
+	sub_objectives_query: Query<&SubObjectives>,
+	completed_query: Query<(), With<ObjectiveCompleted>>,
+	mut commands: Commands,
+) {
+	for sub_objective_of in new_completed_query.iter() {
+		// Check if all sibling sub-objectives are completed.
+		if let Ok(sub_objectives) = sub_objectives_query.get(sub_objective_of.objective)
+			&& completed_query.iter_many(sub_objectives.iter()).count() == sub_objectives.len()
+		{
+			// Mark the parent objective as completed.
+			commands
+				.entity(sub_objective_of.objective)
+				.insert(ObjectiveCompleted);
+		}
+	}
 }

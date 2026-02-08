@@ -1,16 +1,16 @@
 use bevy::prelude::*;
 
 use crate::{
-	gameplay::objectives::{Objective, ObjectiveCompleted, SubObjectiveOf, SubObjectives},
+	gameplay::objectives::{Objective, ObjectiveCompleted, SubObjectiveOf},
 	screens::Screen,
 };
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_observer(on_spawn_objective);
+	app.add_observer(on_complete_objective);
 
 	app.add_systems(OnEnter(Screen::Gameplay), spawn_objective_ui);
 	app.add_systems(Update, update_objective_description_ui);
-	app.add_systems(PostUpdate, handle_completed_objectives);
 }
 
 /// The UI node that holds all objectives.
@@ -145,50 +145,26 @@ fn on_spawn_objective(
 	}
 }
 
-/// When a parent objective is completed:
-/// 1. Mark the parent objective's UI text as completed with a strikethrough,
-///    and remove the sub-objective.
-/// 2. If this objective is a sub-objective of another objective, check if all
-///    sibling sub-objectives are completed, and if so, mark the parent objective as completed.
-// TODO (Jondolf): I wanted to handle this with an observer, but had problems where
-//                 siblings of completed sub-objectives were not yet spawned, and thus it
-//                 would incorrectly mark the parent objective as completed.
-fn handle_completed_objectives(
-	new_completed_query: Query<
-		(&ObjectiveOfNode, Option<&SubObjectiveOf>),
-		Added<ObjectiveCompleted>,
-	>,
-	sub_objectives_query: Query<&SubObjectives>,
+/// Updates the objective UI and completes parent objectives when an objective is completed.
+fn on_complete_objective(
+	completed: On<Insert, (ObjectiveCompleted, ObjectiveOfNode)>,
+	objective_node_query: Query<&ObjectiveOfNode, With<ObjectiveCompleted>>,
 	child_query: Query<&Children>,
-	completed_query: Query<(), With<ObjectiveCompleted>>,
 	mut commands: Commands,
 ) {
-	for (objective_node, sub_objective_of) in new_completed_query.iter() {
-		// Update the objective UI to show the objective as completed.
-		if let Ok(children) = child_query.get(objective_node.node) {
-			let text_entity = children[0];
-			commands
-				.entity(text_entity)
-				.try_insert((Strikethrough, StrikethroughColor(Color::WHITE)));
-
-			// Remove the sub-objectives from the world.
-			if let Some(sub_objective_list) = children.get(1) {
-				commands.entity(*sub_objective_list).despawn();
-			}
-		}
-
-		// Check if this objective is a sub-objective of another objective.
-		let Some(sub_objective_of) = sub_objective_of else {
-			continue;
+	// Update the objective UI to show the objective as completed.
+	if let Ok(objective_node) = objective_node_query.get(completed.entity) {
+		let Ok(children) = child_query.get(objective_node.node) else {
+			return;
 		};
+		let text_entity = children[0];
+		commands
+			.entity(text_entity)
+			.try_insert((Strikethrough, StrikethroughColor(Color::WHITE)));
 
-		// Check if all sibling sub-objectives are completed.
-		let parent_objective = sub_objective_of.objective;
-		if let Ok(sub_objectives) = sub_objectives_query.get(parent_objective)
-			&& completed_query.iter_many(sub_objectives.iter()).count() == sub_objectives.len()
-		{
-			// Mark the parent objective as completed.
-			commands.entity(parent_objective).insert(ObjectiveCompleted);
+		// Remove the sub-objectives from the world.
+		if let Some(sub_objective_list) = children.get(1) {
+			commands.entity(*sub_objective_list).despawn();
 		}
 	}
 }
