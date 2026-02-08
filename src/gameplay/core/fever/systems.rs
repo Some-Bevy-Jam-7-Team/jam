@@ -2,6 +2,13 @@ use bevy::prelude::*;
 
 use crate::gameplay::core::*;
 
+pub fn tick_source(time: Res<Time>, mut query: Query<(&mut Temperature, &FeverSource)>) {
+    let dt = time.delta_secs();
+    for (mut temp, rate) in &mut query {
+        **temp += **rate * dt;
+    }
+}
+
 pub fn tick_fever(
     mut cmd: Commands,
     time: Res<Time>,
@@ -17,8 +24,13 @@ pub fn tick_fever(
     )>,
 ) {
     for (entity, mut timer, temp, threshold, mut health, dmg, base, max) in &mut units {
-        timer.tick(time.delta());
+        if **temp > **base {
+            cmd.entity(entity).insert(Feverish);
+        } else {
+            cmd.entity(entity).remove::<Feverish>();
+        }
 
+        timer.tick(time.delta());
         if !timer.is_finished() {
             continue;
         }
@@ -28,12 +40,6 @@ pub fn tick_fever(
 
         if **temp > **threshold {
             **health -= (**temp - **threshold) * **dmg;
-        }
-
-        if **temp > **base {
-            cmd.entity(entity).insert(Feverish);
-        } else {
-            cmd.entity(entity).remove::<Feverish>();
         }
 
         if **temp > **max {

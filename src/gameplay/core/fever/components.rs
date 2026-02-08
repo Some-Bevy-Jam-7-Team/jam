@@ -42,3 +42,14 @@ impl Default for FeverTimer {
         Self(Timer::new(Duration::from_secs(1), TimerMode::Repeating))
     }
 }
+
+/// A rate that represents an internal source of fever/heat that raises the entity's temperature over time.
+#[derive(Component, Debug, Clone, Copy, Deref, DerefMut, Reflect)]
+#[reflect(Clone, Debug, Component)]
+pub struct FeverSource(pub f32);
+
+impl Default for FeverSource {
+    fn default() -> Self {
+        Self(1.0)
+    }
+}
