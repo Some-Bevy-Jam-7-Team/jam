@@ -1,9 +1,0 @@
-[package]
-name = "chiapos-chacha8"
-description = "A chiapos compatible implementation of chiapos-chacha8. NOTE: This is not an implementation of standard ChaCha8 and should not be used as such."
-version = "0.1.0"
-edition = "2018"
-license = "Apache-2.0 OR MIT"
-
-[dependencies]
-rayon = "1.5.1"

@@ -309,4 +309,3 @@ wgpu-core-deps-apple = { path = "vendor/wgpu-core-deps-apple" }
 wgpu-core-deps-windows-linux-android = { path = "vendor/wgpu-core-deps-windows-linux-android" }
 wgpu-hal = { path = "vendor/wgpu-hal" }
 wgpu-types = { path = "vendor/wgpu-types" }
-wide = { path = "vendor/wide" }

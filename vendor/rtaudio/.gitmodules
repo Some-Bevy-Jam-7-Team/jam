@@ -1,3 +1,0 @@
-[submodule "rtaudio"]
-	path = rtaudio-sys/rtaudio
-	url = https://github.com/thestk/rtaudio
