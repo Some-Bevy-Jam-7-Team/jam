@@ -2,16 +2,18 @@ use avian3d::prelude::*;
 use bevy::prelude::*;
 
 use crate::gameplay::core::*;
+use crate::gameplay::stomach::Stomach;
 
 /// Simulates thermal transfer by weighting global temperature with
-/// collision-based temperature sources.
-pub fn tick_temp(
+/// collision-based and eaten temperature sources.
+pub fn temp(
     time: Res<Time>,
     mut units: Query<(
         &mut Temperature,
         &BaseTemperature,
         &Children,
         Option<&Conductivity>,
+        &Stomach,
     )>,
     global_temp: Res<GlobalTemperature>,
     sensors: Query<&CollidingEntities, With<TemperatureSensor>>,
@@ -20,7 +22,7 @@ pub fn tick_temp(
 ) {
     let delta_seconds = time.delta_secs();
 
-    for (mut temp, temp_base, children, conductivity) in &mut units {
+    for (mut temp, temp_base, children, conductivity, stomach) in &mut units {
         let (temp_weighted, total_weight) = children
             .iter()
             .filter_map(|child| sensors.get(child).ok().map(|hits| (child, hits)))
@@ -34,13 +36,20 @@ pub fn tick_temp(
                     .map(|p| p.penetration)
                     .unwrap_or(0.0);
 
-                Some((temp, penetration))
+                // Might have to adjust depth sensitivity (10x) and play with higher env temps instead.
+                let weight = 1.0 + (penetration * 10.0).max(0.0);
+
+                Some((temp, weight))
             })
+            .chain(
+                stomach
+                    .contents
+                    .iter()
+                    .filter_map(|e| env_temps.get(*e).ok().map(|t| (t, 1.))),
+            )
             .fold(
                 (**global_temp, 1.0),
-                |(acc_temp, acc_weight), (env_temp, penetration)| {
-                    // Might have to adjust depth sensitivity (10x) and play with higher env temps instead.
-                    let weight = 1.0 + (penetration * 10.0).max(0.0);
+                |(acc_temp, acc_weight), (env_temp, weight)| {
                     (acc_temp + (**env_temp * weight), acc_weight + weight)
                 },
             );

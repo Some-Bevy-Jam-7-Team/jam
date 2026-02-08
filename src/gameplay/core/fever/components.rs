@@ -11,7 +11,8 @@ use std::time::Duration;
     TemperatureThreshold,
     Health,
     FeverTimer,
-    FeverDamage
+    FeverDamage,
+    FeverSource
 )]
 pub struct Fever;
 
@@ -33,10 +34,19 @@ impl Default for FeverDamage {
     }
 }
 
-/// Timer used to manage the `fever over time` effect. Allows for slowing down or speeding up the effect.
+/// Timer used to manage the `fever over time` effect, i.e., the interval in which fever applies damage.
+///
+/// Allows for slowing down or speeding up the effect.
 #[derive(Component, Debug, Deref, DerefMut, Clone, Reflect)]
 #[reflect(Clone, Debug, Component)]
 pub struct FeverTimer(pub Timer);
+
+/// Timer used to manage the `fever source` effect, i.e., the rate of a debuff that increases fever.
+///
+/// Allows for slowing down or speeding up the effect.
+#[derive(Component, Debug, Deref, DerefMut, Clone, Reflect)]
+#[reflect(Clone, Debug, Component)]
+pub struct FeverSourceTimer(pub Timer);
 
 impl Default for FeverTimer {
     fn default() -> Self {
@@ -45,12 +55,14 @@ impl Default for FeverTimer {
 }
 
 /// A rate that represents an internal source of fever/heat that raises the entity's temperature over time.
+///
+/// Defaults to 1% per tick.
 #[derive(Component, Debug, Clone, Copy, Deref, DerefMut, Reflect)]
 #[reflect(Clone, Debug, Component)]
 pub struct FeverSource(pub f32);
 
 impl Default for FeverSource {
     fn default() -> Self {
-        Self(1.0)
+        Self(1.01)
     }
 }
