@@ -193,6 +193,7 @@ opt-level = 3
 debug-assertions = false
 
 [patch.crates-io]
+avian3d = { path = "vendor/avian3d" }
 # Not released yet
 bevy_framepace = { git = "https://github.com/aevyrie/bevy_framepace" }
 # Avian 0.6 not released yet

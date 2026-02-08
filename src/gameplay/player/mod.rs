@@ -79,7 +79,11 @@ fn setup_player(
             // engine.
             Collider::cylinder(PLAYER_RADIUS, PLAYER_HEIGHT),
             // This is Tnua's interface component.
-            CharacterController::default(),
+            CharacterController {
+                filter: SpatialQueryFilter::DEFAULT
+                    .with_mask(LayerMask::ALL & !CollisionLayer::Stomach.to_bits()),
+                ..default()
+            },
             ColliderDensity(1_000.0),
             CollisionLayers::new(CollisionLayer::Character, LayerMask::ALL),
             AnimationState::<PlayerAnimationState>::default(),

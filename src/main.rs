@@ -182,10 +182,11 @@ enum PostPhysicsAppSystems {
 
 /// This enum is converted to an `isize` to be used as a camera's order.
 /// Since we have three camera, we use three enum variants.
-/// This ordering here mean UI > ViewModel > World.
+/// This ordering here mean UI > Stomach > ViewModel > World.
 enum CameraOrder {
     World,
     ViewModel,
+    Stomach,
     Ui,
 }
 
@@ -211,6 +212,8 @@ bitflags! {
         /// Specifically, the UI camera is a 2D camera, which by default is placed at a far away Z position,
         /// so it will effectively render a very zoomed out view of the scene in the center of the screen.
         const GIZMO3 = 0b0001000;
+        /// Used by the stomach and its contents.
+        const STOMACH = 0b0010000;
     }
 }
 
