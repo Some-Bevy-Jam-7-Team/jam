@@ -47,6 +47,7 @@ pub fn fever(
 
         if **temp > **threshold {
             **health -= (**temp - **threshold) * **dmg;
+            **health = health.max(0.);
         }
 
         if **temp > **max {
