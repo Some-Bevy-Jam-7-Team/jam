@@ -11,13 +11,13 @@ mod lamp_sitting;
 mod lamp_wall_electric;
 
 pub(super) fn plugin(app: &mut App) {
-    app.add_plugins((
-        burning_logs::plugin,
-        chair::plugin,
-        crate_::plugin,
-        lamp_sitting::plugin,
-        lamp_wall_electric::plugin,
-        lamp_shaded::plugin,
-        lamp_plain::plugin,
-    ));
+	app.add_plugins((
+		burning_logs::plugin,
+		chair::plugin,
+		crate_::plugin,
+		lamp_sitting::plugin,
+		lamp_wall_electric::plugin,
+		lamp_shaded::plugin,
+		lamp_plain::plugin,
+	));
 }

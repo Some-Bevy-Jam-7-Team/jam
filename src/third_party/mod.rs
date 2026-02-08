@@ -18,16 +18,16 @@ mod fixes;
 mod rerecast;
 
 pub(super) fn plugin(app: &mut App) {
-    app.add_plugins((
-        fixes::plugin,
-        bevy_trenchbroom::plugin,
-        avian3d::plugin,
-        bevy_enhanced_input::plugin,
-        bevy_ahoy::plugin,
-        bevy_landmass::plugin,
-        bevy_yarnspinner::plugin,
-        bevy_hanabi::plugin,
-        bevy_framepace::plugin,
-        rerecast::plugin,
-    ));
+	app.add_plugins((
+		fixes::plugin,
+		bevy_trenchbroom::plugin,
+		avian3d::plugin,
+		bevy_enhanced_input::plugin,
+		bevy_ahoy::plugin,
+		bevy_landmass::plugin,
+		bevy_yarnspinner::plugin,
+		bevy_hanabi::plugin,
+		bevy_framepace::plugin,
+		rerecast::plugin,
+	));
 }

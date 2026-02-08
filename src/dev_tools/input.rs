@@ -4,8 +4,8 @@ use bevy::prelude::*;
 use bevy_enhanced_input::prelude::*;
 
 pub(super) fn plugin(app: &mut App) {
-    app.add_systems(Startup, setup_dev_tools_input);
-    app.add_input_context::<DevToolsInputContext>();
+	app.add_systems(Startup, setup_dev_tools_input);
+	app.add_input_context::<DevToolsInputContext>();
 }
 
 #[derive(Debug, InputAction)]
@@ -20,12 +20,12 @@ pub(crate) struct ForceFreeCursor;
 struct DevToolsInputContext;
 
 fn setup_dev_tools_input(mut commands: Commands) {
-    commands.spawn((
-        Name::new("DevToolsInput"),
-        DevToolsInputContext,
-        actions!(DevToolsInputContext[
-            (Action::<ToggleDebugUi>::new(), bindings![KeyCode::F3]),
-            (Action::<ForceFreeCursor>::new(), bindings![KeyCode::Backquote]),
-        ]),
-    ));
+	commands.spawn((
+		Name::new("DevToolsInput"),
+		DevToolsInputContext,
+		actions!(DevToolsInputContext[
+			(Action::<ToggleDebugUi>::new(), bindings![KeyCode::F3]),
+			(Action::<ForceFreeCursor>::new(), bindings![KeyCode::Backquote]),
+		]),
+	));
 }
