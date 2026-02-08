@@ -6,13 +6,12 @@ pub fn source(
 	time: Res<Time>,
 	mut query: Query<(&mut Temperature, &mut FeverSource, &mut FeverSourceTimer)>,
 ) {
-	let dt = time.delta_secs();
 	for (mut temp, rate, mut timer) in &mut query {
 		timer.tick(time.delta());
 		if !timer.is_finished() {
 			continue;
 		}
-		**temp += **rate * dt;
+		**temp += **rate;
 	}
 }
 

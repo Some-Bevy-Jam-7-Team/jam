@@ -53,7 +53,7 @@ impl Default for FeverSourceTimer {
 
 /// A rate that represents an internal source of fever/heat that raises the entity's temperature over time.
 ///
-/// Defaults to 1% per tick.
+/// Defaults to 1% per tick multiplied.
 #[derive(Component, Debug, Clone, Copy, Deref, DerefMut, Reflect)]
 #[reflect(Clone, Debug, Component)]
 #[require(Temperature, FeverSourceTimer)]
