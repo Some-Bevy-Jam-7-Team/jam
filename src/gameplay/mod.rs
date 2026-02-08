@@ -21,5 +21,6 @@ pub(super) fn plugin(app: &mut App) {
         // This plugin preloads the level,
         // so make sure to add it last.
         level::plugin,
+        core::plugin,
     ));
 }

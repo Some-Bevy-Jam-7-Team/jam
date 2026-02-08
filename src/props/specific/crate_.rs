@@ -7,6 +7,7 @@ use bevy_trenchbroom::prelude::*;
 
 use crate::{
     asset_tracking::LoadResource as _,
+    gameplay::core::*,
     props::setup::setup_static_prop_with_convex_hull,
     third_party::{
         avian3d::CollisionLayer,
@@ -49,7 +50,7 @@ fn setup_crate_small(
         ColliderConstructorHierarchy::new(ColliderConstructor::ConvexHullFromMesh)
             .with_default_layers(CollisionLayers::new(CollisionLayer::Prop, LayerMask::ALL))
             .with_default_density(1_000.0),
-        // Not inserting `TnuaNotPlatform`, otherwise the player will not be able to jump on it.
+        EnvironmentTemperature::default(),
         SceneRoot(model),
         // The prop should be held upright.
         PreferredPickupRotation(Quat::IDENTITY),
