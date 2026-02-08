@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Correct, fast, and configurable [base64][] decoding and encoding. Base64
 //! transports binary data efficiently in contexts where only plain text is
 //! allowed.

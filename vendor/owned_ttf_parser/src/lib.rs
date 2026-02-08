@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Extends [ttf_parser](https://docs.rs/ttf-parser) with owned version of
 //! [`Face`](struct.Face.html): [`OwnedFace`](struct.OwnedFace.html).
 //!

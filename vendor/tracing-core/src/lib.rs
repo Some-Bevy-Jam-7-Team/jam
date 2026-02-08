@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Core primitives for `tracing`.
 //!
 //! [`tracing`] is a framework for instrumenting Rust programs to collect

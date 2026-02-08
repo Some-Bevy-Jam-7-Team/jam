@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 A high-level, safe, zero-allocation font parser for:
 * [TrueType](https://docs.microsoft.com/en-us/typography/truetype/),

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Decoding and Encoding of TIFF Images
 //!
 //! TIFF (Tagged Image File Format) is a versatile image format that supports

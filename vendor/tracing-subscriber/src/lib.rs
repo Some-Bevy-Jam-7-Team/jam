@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Utilities for implementing and composing [`tracing`] subscribers.
 //!
 //! [`tracing`] is a framework for instrumenting Rust programs to collect

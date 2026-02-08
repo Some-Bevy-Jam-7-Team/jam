@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Assorted proc macro derive functions.
 
 #![forbid(unsafe_code)]

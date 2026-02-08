@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A Rust library for build scripts to automatically configure code based on
 //! compiler support.  Code snippets are dynamically tested to see if the `rustc`
 //! will accept them, rather than hard-coding specific version support.

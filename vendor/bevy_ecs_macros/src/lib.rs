@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Macros for deriving ECS traits.
 
 #![cfg_attr(docsrs, feature(doc_cfg))]

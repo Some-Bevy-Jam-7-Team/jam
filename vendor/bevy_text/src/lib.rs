@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate provides the tools for positioning and rendering text in Bevy.
 //!
 //! # `Font`

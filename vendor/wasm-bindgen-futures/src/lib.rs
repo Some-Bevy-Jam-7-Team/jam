@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Converting between JavaScript `Promise`s to Rust `Future`s.
 //!
 //! This crate provides a bridge for working with JavaScript `Promise` types as

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![deny(missing_docs)]
 
 

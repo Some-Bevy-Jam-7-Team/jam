@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # block-pseudorand
 //!
 //! This crate allows multi-threaded creation of pseudorandom `Vec<T>`'s of arbitrary length. It does this

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Reading OpenType tables
 //!
 //! This crate provides memory safe zero-allocation parsing of font files.

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Concurrent work-stealing deques.
 //!
 //! These data structures are most commonly used in work-stealing schedulers. The typical setup

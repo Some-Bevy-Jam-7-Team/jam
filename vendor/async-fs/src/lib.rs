@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Async filesystem primitives.
 //!
 //! This crate is an async version of [`std::fs`].

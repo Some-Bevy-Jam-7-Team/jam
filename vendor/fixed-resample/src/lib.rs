@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #[cfg(feature = "resampler")]
 mod resampler;
 #[cfg(feature = "resampler")]

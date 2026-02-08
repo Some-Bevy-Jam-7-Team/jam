@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A thin rust wrapper for Android system properties.
 //!
 //! This crate is similar to the `android-properties` crate with the exception that

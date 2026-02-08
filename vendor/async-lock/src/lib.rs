@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Async synchronization primitives.
 //!
 //! This crate provides the following primitives:

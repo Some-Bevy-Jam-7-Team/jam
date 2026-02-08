@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A pure rust replacement for the [miniz](https://github.com/richgel999/miniz)
 //! DEFLATE/zlib encoder/decoder.
 //! Used a rust back-end for the

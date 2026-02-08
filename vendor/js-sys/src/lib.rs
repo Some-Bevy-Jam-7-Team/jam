@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Bindings to JavaScript's standard, built-in objects, including their methods
 //! and properties.
 //!

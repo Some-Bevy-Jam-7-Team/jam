@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![no_std]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![allow(clippy::new_without_default)]

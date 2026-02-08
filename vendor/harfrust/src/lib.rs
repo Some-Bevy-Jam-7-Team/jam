@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 A complete [harfbuzz](https://github.com/harfbuzz/harfbuzz) shaping algorithm port to Rust.
 */

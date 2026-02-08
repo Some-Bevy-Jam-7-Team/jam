@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate provides traits which describe functionality of cryptographic hash
 //! functions and Message Authentication algorithms.
 //!

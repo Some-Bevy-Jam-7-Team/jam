@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A build dependency for running `cmake` to build a native library
 //!
 //! This crate provides some necessary boilerplate and shim support for running

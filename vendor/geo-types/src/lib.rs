@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![cfg_attr(not(feature = "std"), no_std)]
 #![warn(missing_debug_implementations)]
 #![doc(html_logo_url = "https://raw.githubusercontent.com/georust/meta/master/logo/logo.png")]

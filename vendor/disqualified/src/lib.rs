@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![cfg_attr(not(feature = "alloc"), no_std)]
 
 mod short_name;

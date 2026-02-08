@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![warn(
     clippy::alloc_instead_of_core,
     clippy::use_self,

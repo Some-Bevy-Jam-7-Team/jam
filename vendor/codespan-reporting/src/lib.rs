@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Diagnostic reporting support for the codespan crate.
 
 #![forbid(unsafe_code)]

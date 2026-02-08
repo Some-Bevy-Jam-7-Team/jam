@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Fast, SIMD-accelerated CRC32 (IEEE) checksum computation.
 //!
 //! ## Usage

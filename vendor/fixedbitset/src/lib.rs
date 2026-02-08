@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! `FixedBitSet` is a simple fixed size set of bits.
 //!
 //! ### Crate features

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Backend for using [`avian3d`](https://docs.rs/avian3d) with [`bevy_rerecast`](https://docs.rs/bevy_rerecast).
 
 use avian3d::prelude::*;

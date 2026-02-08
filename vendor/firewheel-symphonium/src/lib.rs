@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use std::{
     num::{NonZeroU32, NonZeroUsize},
     ops::Range,

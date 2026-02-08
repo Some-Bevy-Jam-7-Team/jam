@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! An implementation of the GNU make jobserver.
 //!
 //! This crate is an implementation, in Rust, of the GNU `make` jobserver for

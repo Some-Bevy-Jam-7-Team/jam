@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! `hermit-abi` is small interface to call functions from the
 //! [Hermit unikernel](https://github.com/hermit-os/kernel).
 

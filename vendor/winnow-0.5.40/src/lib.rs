@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! > winnow, making parsing a breeze
 //!
 //! `winnow` is a parser combinator library

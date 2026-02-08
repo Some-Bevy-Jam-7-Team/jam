@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![deny(rust_2018_idioms)]
 
 //! A library for formatting of text or programming code snippets.

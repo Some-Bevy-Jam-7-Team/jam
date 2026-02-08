@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Portable interface to epoll, kqueue, event ports, and IOCP.
 //!
 //! Supported platforms:

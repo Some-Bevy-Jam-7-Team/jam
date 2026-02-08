@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! dlib is a small crate providing macros to make easy the use of external system libraries that
 //! can or cannot be optionally loaded at runtime, depending on whether a certain feature is enabled.
 //!

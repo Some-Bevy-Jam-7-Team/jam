@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Copyright 2012-2014 The Rust Project Developers and Eric Kidd.  See the
 // COPYRIGHT-RUST.txt file at the top-level directory of this distribution.
 //

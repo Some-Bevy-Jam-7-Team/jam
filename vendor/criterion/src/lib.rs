@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A statistics-driven micro-benchmarking library written in Rust.
 //!
 //! This crate is a microbenchmarking library which aims to provide strong

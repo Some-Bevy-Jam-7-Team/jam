@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A pure Rust implementation of the [Zstandard compression format](https://www.rfc-editor.org/rfc/rfc8878.pdf).
 //!
 //! ## Decompression

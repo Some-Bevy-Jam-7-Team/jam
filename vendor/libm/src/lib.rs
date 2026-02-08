@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! libm in pure Rust
 #![no_std]
 #![cfg_attr(intrinsics_enabled, allow(internal_features))]

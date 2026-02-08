@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # `console_error_panic_hook`
 //!
 //! [![](https://docs.rs/console_error_panic_hook/badge.svg)](https://docs.rs/console_error_panic_hook/)

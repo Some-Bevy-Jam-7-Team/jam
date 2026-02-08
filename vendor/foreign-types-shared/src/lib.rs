@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Internal crate used by foreign-types
 
 #![no_std]

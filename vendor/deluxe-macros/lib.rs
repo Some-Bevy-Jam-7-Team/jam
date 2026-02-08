@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Deluxe Macros
 //!
 //! Procedural derive macros for [deluxe](https://docs.rs/deluxe). See the documentation of that

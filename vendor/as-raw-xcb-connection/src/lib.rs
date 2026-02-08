@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate provides the trait [`AsRawXcbConnection`].
 //!
 //! The idea is to facilitate interoperability in the ecosystem. The problem is as follows:

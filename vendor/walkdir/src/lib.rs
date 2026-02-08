@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 Crate `walkdir` provides an efficient and cross platform implementation
 of recursive directory traversal. Several options are exposed to control

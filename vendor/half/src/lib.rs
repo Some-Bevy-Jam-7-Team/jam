@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A crate that provides support for half-precision 16-bit floating point types.
 //!
 //! This crate provides the [`struct@f16`] type, which is an implementation of the IEEE 754-2008 standard

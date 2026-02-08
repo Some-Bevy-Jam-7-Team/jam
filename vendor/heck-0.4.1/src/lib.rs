@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! **heck** is a case conversion library.
 //!
 //! This library exists to provide case conversion between common cases like

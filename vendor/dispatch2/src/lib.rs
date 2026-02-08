@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Apple's Dispatch (Grand Central Dispatch)
 //!
 //! This crate provides a safe and sound interface to Apple's Grand Central

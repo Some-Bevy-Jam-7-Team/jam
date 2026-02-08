@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![doc = include_str!("../readme.md")]
 #![cfg(windows)]
 #![allow(non_snake_case)]

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // SPDX-License-Identifier: MIT OR Apache-2.0 OR Zlib
 // Copyright 2022-2023 John Nunley
 //

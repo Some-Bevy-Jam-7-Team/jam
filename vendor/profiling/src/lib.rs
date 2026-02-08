@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //
 // To use this library, enable one of the feature flags. Each backend implementation provides the
 // exact same interface. Only one may be active at a time.

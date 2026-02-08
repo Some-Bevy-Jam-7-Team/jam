@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate provides 'picking' capabilities for the Bevy game engine, allowing pointers to
 //! interact with entities using hover, click, and drag events.
 //!

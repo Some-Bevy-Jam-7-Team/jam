@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 `petgraph` is a graph data structure library.
 

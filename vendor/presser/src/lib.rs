@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # `🗜 presser`
 //!
 //! **Utilities to help make copying data around into raw, possibly-uninitialized buffers

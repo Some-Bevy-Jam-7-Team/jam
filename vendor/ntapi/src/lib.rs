@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Features
 //! **`func-types`** -- Generate [types][fn_ptr] for external functions.<br/>
 //! **`impl-default`** -- Implement [`Default`] for structs and unions.<br/>

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A scoped, structured logging and diagnostics system.
 //!
 //! # Overview

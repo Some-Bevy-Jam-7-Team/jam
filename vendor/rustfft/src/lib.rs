@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! RustFFT is a high-performance FFT library written in pure Rust.
 //!
 //! On X86_64, RustFFT supports the AVX instruction set for increased performance. No special code is needed to activate AVX:

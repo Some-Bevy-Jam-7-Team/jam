@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! High performance XML reader/writer.
 //!
 //! # Description

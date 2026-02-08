@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![no_std]
 
 const FNV_OFFSET_BASIS_32:  u32  = 0x811c9dc5;

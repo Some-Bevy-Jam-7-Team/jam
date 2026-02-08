@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Miscellaneous tools for concurrent programming.
 //!
 //! ## Atomics

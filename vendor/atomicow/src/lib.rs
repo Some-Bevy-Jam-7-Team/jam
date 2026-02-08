@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! <style>
 //! .rustdoc-hidden { display: none; }
 //! </style>

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate contains parser combinators, roughly based on the Haskell libraries
 //! [parsec](http://hackage.haskell.org/package/parsec) and
 //! [attoparsec](https://hackage.haskell.org/package/attoparsec).

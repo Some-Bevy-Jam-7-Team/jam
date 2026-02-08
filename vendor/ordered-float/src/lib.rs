@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![no_std]
 #![cfg_attr(test, deny(warnings))]
 #![deny(missing_docs)]

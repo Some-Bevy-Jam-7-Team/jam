@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //!
 //! Implementation agnostic memory allocator for Vulkan like APIs.
 //!

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 //! Implementation detail of the `pin-project` crate. - **do not use directly**

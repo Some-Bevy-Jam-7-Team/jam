@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! An implementation of the [SHA-2][1] cryptographic hash algorithms.
 //!
 //! There are 6 standard algorithms specified in the SHA-2 standard: [`Sha224`],

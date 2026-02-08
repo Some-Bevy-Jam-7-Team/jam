@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // SPDX-License-Identifier: MIT
 
 //! Utilities for using an [`EventQueue`] from wayland-client with an event loop

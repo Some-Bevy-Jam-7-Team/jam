@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![doc = include_str!("../README.md")]
 // The contents of this file were primarily ported from Agent.cc from RVO2 with
 // significant alterations. As per the Apache-2.0 license, the original

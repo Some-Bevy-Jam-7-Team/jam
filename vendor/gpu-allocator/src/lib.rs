@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate provides a fully written in Rust memory allocator for Vulkan, DirectX 12 and Metal.
 //!
 //! # [Windows-rs] and [winapi]

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 This crate provides a robust regular expression parser.
 

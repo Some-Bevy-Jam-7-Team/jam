@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Combinators and utilities for working with `Future`s, `Stream`s, `Sink`s,
 //! and the `AsyncRead` and `AsyncWrite` traits.
 

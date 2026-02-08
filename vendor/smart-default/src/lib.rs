@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use syn::{parse_macro_input, DeriveInput};
 
 mod body_impl;

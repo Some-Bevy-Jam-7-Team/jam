@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Utilities for pinning
 
 #![no_std]

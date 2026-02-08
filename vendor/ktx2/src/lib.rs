@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Parser for the [ktx2](https://github.khronos.org/KTX-Specification/ktxspec.v2.html) texture container format.
 //!
 //! ## Features

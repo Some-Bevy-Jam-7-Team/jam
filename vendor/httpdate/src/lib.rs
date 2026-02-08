@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Date and time utils for HTTP.
 //!
 //! Multiple HTTP header fields store timestamps.

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Parses hexadecimal float literals.
 //! There are two functions `parse_hexf32` and `parse_hexf64` provided for each type.
 //!

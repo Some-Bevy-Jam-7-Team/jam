@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Objective-C interface and runtime bindings
 //!
 //! Quick links:

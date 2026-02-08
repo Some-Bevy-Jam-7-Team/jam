@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! The SPIR-V header.
 //!
 //! This crate contains Rust definitions of all SPIR-V structs, enums,

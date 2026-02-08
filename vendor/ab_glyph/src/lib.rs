@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! API for loading, scaling, positioning and rasterizing OpenType font glyphs.
 //!
 //! # Example

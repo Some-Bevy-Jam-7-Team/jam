@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A cross-platform unsafe graphics abstraction.
 //!
 //! This crate defines a set of traits abstracting over modern graphics APIs,

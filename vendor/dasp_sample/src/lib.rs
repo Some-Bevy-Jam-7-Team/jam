@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Use the [**Sample**](./trait.Sample.html) trait to remain generic over sample types, easily
 //! access sample type conversions, apply basic audio operations and more.
 //!

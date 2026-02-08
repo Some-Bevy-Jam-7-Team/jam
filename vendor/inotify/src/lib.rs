@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Idiomatic inotify wrapper for the Rust programming language
 //!
 //! # About

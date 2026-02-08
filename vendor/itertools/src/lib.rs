@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![warn(missing_docs, clippy::default_numeric_fallback)]
 #![crate_name = "itertools"]
 #![cfg_attr(not(feature = "use_std"), no_std)]

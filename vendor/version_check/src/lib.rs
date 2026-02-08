@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This tiny crate checks that the running or installed `rustc` meets some
 //! version requirements. The version is queried by calling the Rust compiler
 //! with `--version`. The path to the compiler is determined first via the

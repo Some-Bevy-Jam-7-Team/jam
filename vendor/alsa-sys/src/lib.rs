@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![allow(non_camel_case_types)]
 
 use libc::{FILE, pid_t, timeval, timespec, pollfd};

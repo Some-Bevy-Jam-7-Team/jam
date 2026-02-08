@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![cfg_attr(docsrs, doc = "This is a stub. The latest API documentation is here: <https://microsoft.github.io/windows-docs-rs/>")]
 #![cfg_attr(docsrs, doc = "")]
 /*!

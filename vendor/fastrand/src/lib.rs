@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A simple and fast random number generator.
 //!
 //! The implementation uses [Wyrand](https://github.com/wangyi-fudan/wyhash), a simple and fast

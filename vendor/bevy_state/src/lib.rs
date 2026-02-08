@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![no_std]
 
 //! In Bevy, states are app-wide interdependent, finite state machines that are generally used to model the large scale structure of your program: whether a game is paused, if the player is in combat, if assets are loaded and so on.

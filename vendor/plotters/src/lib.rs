@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![warn(missing_docs)]
 #![allow(clippy::type_complexity)]
 #![cfg_attr(doc_cfg, feature(doc_cfg))]

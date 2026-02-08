@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This is `#[proc_macro_error]` attribute to be used with
 //! [`proc-macro-error`](https://docs.rs/proc-macro-error2/). There you go.
 

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A library for [Cargo build scripts](https://doc.rust-lang.org/cargo/reference/build-scripts.html)
 //! to compile a set of C/C++/assembly/CUDA files into a static archive for Cargo
 //! to link into the crate being built. This crate does not compile code itself;

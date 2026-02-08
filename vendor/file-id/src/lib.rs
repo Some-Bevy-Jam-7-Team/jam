@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Utility for reading inode numbers (Linux, macOS) and file ids (Windows) that uniquely identify a file on a single computer.
 //!
 //! Modern file systems assign a unique ID to each file. On Linux and macOS it is called an `inode number`,

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! These modules are all glue to support reading the MSVC version from
 //! the registry and from COM interfaces.
 

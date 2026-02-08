@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Bevy Yarn Spinner
 //!
 //! This is the Bevy integration for Yarn Spinner, the friendly dialogue creation tool for Rust.

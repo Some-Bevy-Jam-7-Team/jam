@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Copyright 2024 the Raw Resource Handle Authors
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 

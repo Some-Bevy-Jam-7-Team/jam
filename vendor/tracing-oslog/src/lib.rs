@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![deny(
 	clippy::complexity,
 	clippy::correctness,

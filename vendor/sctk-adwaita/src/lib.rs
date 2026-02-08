@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use std::error::Error;
 use std::mem;
 use std::num::NonZeroU32;

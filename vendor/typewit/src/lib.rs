@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![allow(clippy::needless_doctest_main)]
 //! This crate provides abstractions for creating
 //! [type witnesses](#what-are-type-witnesses).

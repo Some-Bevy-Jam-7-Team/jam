@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Utility for transposing multi-dimensional data stored as a flat slice
 //!
 //! This library treats Rust slices as flattened row-major 2D arrays, and provides functions to transpose these 2D arrays, so that the row data becomes the column data, and vice versa.

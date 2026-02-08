@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate exposes the Unicode `Script` and `Script_Extension`
 //! properties from [UAX #24](http://www.unicode.org/reports/tr24/)
 

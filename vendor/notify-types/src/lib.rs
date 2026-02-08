@@ -1,3 +1,4 @@
+#![allow(warnings)]
 pub mod debouncer_full;
 pub mod debouncer_mini;
 pub mod event;

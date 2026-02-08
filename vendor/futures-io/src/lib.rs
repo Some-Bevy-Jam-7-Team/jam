@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Asynchronous I/O
 //!
 //! This crate contains the `AsyncRead`, `AsyncWrite`, `AsyncSeek`, and

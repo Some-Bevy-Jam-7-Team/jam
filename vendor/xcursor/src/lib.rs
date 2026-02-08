@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A crate to load cursor themes, and parse XCursor files.
 
 use std::collections::HashSet;

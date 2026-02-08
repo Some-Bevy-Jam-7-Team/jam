@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! `futures::task::AtomicWaker` extracted into its own crate.
 //!
 //! # Features

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # PNG encoder and decoder
 //!
 //! This crate contains a PNG encoder and decoder. It supports reading of single lines or whole frames.

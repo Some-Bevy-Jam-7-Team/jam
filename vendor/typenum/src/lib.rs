@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate provides type-level numbers evaluated at compile time. It depends only on libcore.
 //!
 //! The traits defined or used in this crate are used in a typical manner. They can be divided into

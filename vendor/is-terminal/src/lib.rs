@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! is-terminal is a simple utility that answers one question:
 //!
 //! > Is this a terminal?

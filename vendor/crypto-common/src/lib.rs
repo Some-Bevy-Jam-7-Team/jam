@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Common cryptographic traits.
 
 #![no_std]

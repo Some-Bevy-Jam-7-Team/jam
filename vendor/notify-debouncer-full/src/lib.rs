@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A debouncer for [notify] that is optimized for ease of use.
 //!
 //! * Only emits a single `Rename` event if the rename `From` and `To` events can be matched

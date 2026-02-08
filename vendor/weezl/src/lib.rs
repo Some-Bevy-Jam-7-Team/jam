@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # LZW decoder and encoder
 //!
 //! This crates provides an `Encoder` and a `Decoder` in their respective modules. The code words

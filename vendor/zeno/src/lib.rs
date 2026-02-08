@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 This crate provides a high performance, low level 2D rasterization library
 with support for rendering paths of various styles into alpha or subpixel

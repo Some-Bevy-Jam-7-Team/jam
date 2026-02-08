@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // SPDX-License-Identifier: Apache-2.0
 
 //! Low level CBOR parsing tools

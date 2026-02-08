@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Low-level bindings to the [RenderDoc](https://renderdoc.org/) in-application API.
 //!
 //! RenderDoc is a free and open source debugger for real-time graphics providing quick and easy

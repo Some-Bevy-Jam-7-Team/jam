@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
   The Plotters backend API crate. This is a part of Plotters, the Rust drawing and plotting library, for more details regarding the entire
   Plotters project, please check the [main crate](https://crates.io/crates/plotters).

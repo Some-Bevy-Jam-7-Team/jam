@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! `strength_reduce` implements integer division and modulo via "arithmetic strength reduction"
 //!
 //! Modern processors can do multiplication and shifts much faster than division, and "arithmetic strength reduction" is an algorithm to transform divisions into multiplications and shifts.

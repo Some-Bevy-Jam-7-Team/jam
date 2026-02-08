@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![warn(missing_docs)]
 #![allow(clippy::upper_case_acronyms)]
 // TODO: https://github.com/jni-rs/jni-rs/issues/348

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # ANSI Escape Sequences provider & parser
 //!
 //! ## Sequences provider

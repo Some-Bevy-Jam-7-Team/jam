@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 Font introspection, complex text shaping and glyph rendering.
 

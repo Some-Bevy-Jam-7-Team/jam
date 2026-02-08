@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # How to use cpal
 //!
 //! Here are some concepts cpal exposes:

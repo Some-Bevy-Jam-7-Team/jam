@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![allow(non_camel_case_types)]
 #![allow(non_upper_case_globals)]
 #![deny(missing_debug_implementations)]

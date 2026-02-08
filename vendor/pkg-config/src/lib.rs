@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A build dependency for Cargo libraries to find system artifacts through the
 //! `pkg-config` utility.
 //!

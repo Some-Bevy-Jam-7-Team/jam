@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Rerecast
 //! [![crates.io](https://img.shields.io/crates/v/rerecast)](https://crates.io/crates/rerecast)
 //! [![docs.rs](https://docs.rs/rerecast/badge.svg)](https://docs.rs/rerecast)

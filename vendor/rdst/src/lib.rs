@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # rdst
 //!
 //! rdst is a flexible native Rust implementation of multi-threaded unstable radix sort.

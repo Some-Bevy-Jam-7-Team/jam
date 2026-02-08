@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! `static` friendly data structures that don't require dynamic memory allocation
 //!
 //! The core principle behind `heapless` is that its data structures are backed by a *static* memory

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! ANSI Text Styling
 //!
 //! *A portmanteau of "ansi style"*

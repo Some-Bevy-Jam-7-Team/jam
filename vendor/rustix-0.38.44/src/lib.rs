@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // wasip2 conditionally gates stdlib APIs such as `OsStrExt`.
 // https://github.com/rust-lang/rust/issues/130323
 #![cfg_attr(

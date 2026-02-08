@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #[cfg(feature = "serialization")]
 #[macro_use]
 pub extern crate serde;

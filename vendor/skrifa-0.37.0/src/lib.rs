@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A robust, ergonomic, high performance crate for OpenType fonts.
 //!  
 //! Skrifa is a mid level library that provides access to various types

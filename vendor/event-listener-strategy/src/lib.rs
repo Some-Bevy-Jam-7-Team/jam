@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // SPDX-Licenser-Identifier: MIT OR Apache-2.0
 //! A strategy for using the [`event-listener`] crate in both blocking and non-blocking contexts.
 //!

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![doc = include_str!("../README.md")]
 
 pub use rustfft::num_complex;

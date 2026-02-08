@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![cfg_attr(not(feature = "std"), no_std)]
 #![forbid(missing_docs)]
 #![warn(

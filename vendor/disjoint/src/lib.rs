@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![allow(clippy::allow_attributes_without_reason)]
 #![allow(unknown_lints)]
 // Disabled to support old Rust versions.

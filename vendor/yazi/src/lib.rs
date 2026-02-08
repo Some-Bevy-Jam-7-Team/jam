@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Yet another zlib implementation.
 //!
 //! This crate is an implementation of the RFC 1950 DEFLATE specification with

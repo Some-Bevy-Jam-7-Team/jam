@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // TODO re-enable needless_range_loop lint and evaluate performance / clarity
 #![allow(clippy::needless_range_loop)]
 

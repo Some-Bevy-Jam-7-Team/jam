@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # `bevy_transform_interpolation`
 //!
 //! A drop-in [`Transform`] interpolation solution for fixed timesteps for the [Bevy game engine](https://bevyengine.org).

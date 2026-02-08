@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Coverage rasterization for lines, quadratic & cubic beziers.
 //! Useful for drawing .otf font glyphs.
 //!

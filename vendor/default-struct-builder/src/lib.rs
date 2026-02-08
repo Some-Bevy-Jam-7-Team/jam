@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Generates builder methods of every field of a struct. It is meant to be used on structs that
 //! implement `Default`. There is no separate builder struct generated and no need to call a
 //! `build()` method at the end or `.unwrap()`.

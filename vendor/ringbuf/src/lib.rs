@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Lock-free SPSC FIFO ring buffer with direct access to inner data.
 //!
 //! # Usage

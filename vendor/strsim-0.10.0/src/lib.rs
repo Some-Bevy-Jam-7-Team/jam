@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This library implements string similarity metrics.
 
 #![forbid(unsafe_code)]

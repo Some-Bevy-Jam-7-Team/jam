@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Serde JSON
 //!
 //! JSON is a ubiquitous open-standard format that uses human-readable text to

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![no_std]
 
 /// Returns the next representable float value in the direction of y

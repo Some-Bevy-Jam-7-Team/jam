@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Serde
 //!
 //! Serde is a framework for ***ser***ializing and ***de***serializing Rust data

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![allow(
     clippy::blocks_in_conditions,
     clippy::cast_lossless,

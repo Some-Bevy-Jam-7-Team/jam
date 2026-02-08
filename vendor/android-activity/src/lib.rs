@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A glue layer for building standalone, Rust applications on Android
 //!
 //! This crate provides a "glue" layer for building native Rust

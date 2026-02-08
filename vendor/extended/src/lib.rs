@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Extended-precision 80-bit floating-point numbers (f80).
 
 #[warn(missing_docs)]

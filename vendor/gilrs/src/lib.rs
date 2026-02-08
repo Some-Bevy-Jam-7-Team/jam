@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Copyright 2016-2018 Mateusz Sieczko and other GilRs Developers
 //
 // Licensed under the Apache License, Version 2.0, <LICENSE-APACHE or

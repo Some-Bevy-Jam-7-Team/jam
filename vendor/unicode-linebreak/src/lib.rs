@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Implementation of the Line Breaking Algorithm described in [Unicode Standard Annex #14][UAX14].
 //!
 //! Given an input text, locates "line break opportunities", or positions appropriate for wrapping

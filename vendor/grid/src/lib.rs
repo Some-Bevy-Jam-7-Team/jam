@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![warn(clippy::all, clippy::pedantic, clippy::nursery)]
 /*!
 # Two Dimensional Grid

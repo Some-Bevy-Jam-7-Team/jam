@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use proc_macro2::{TokenStream, Span, Literal};
 use quote::{quote, ToTokens};
 use syn::{

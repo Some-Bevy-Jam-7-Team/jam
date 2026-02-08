@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This library provides a convenient derive macro for the standard library's
 //! [`core::fmt::Display`] trait.
 //!

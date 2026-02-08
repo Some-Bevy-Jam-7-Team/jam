@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This is a `bevy` plugin that adds framepacing and framelimiting to improve input latency and
 //! power use.
 //!

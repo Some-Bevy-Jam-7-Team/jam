@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Copyright 2018 Developers of the Rand project.
 // Copyright 2017-2018 The Rust Project Developers.
 //

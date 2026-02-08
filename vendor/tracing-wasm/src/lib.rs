@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use core::fmt::{self, Write};
 use core::sync::atomic::AtomicUsize;
 

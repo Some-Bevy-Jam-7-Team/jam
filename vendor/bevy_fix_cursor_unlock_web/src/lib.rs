@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![warn(missing_docs)]
 #![allow(clippy::type_complexity)]
 #![doc = include_str!("../readme.md")]

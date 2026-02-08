@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // MIT/Apache2 License
 
 //! Implementation of [`hyper`]'s runtime traits for [`smol`].

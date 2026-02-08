@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Overview
 //!
 //! `once_cell` provides two new cell-like types, [`unsync::OnceCell`] and

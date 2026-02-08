@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Head-Related Transfer Function (HRTF) renderer.
 //!
 //! # Overview

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! `egui`:  an easy-to-use GUI in pure Rust!
 //!
 //! Try the live web demo: <https://www.egui.rs/#demo>. Read more about egui at <https://github.com/emilk/egui>.

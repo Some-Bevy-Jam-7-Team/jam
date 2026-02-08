@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Minimal, flexible command-line parser
 //!
 //! As opposed to a declarative parser, this processes arguments as a stream of tokens.  As lexing

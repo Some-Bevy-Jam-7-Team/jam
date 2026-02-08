@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Symphonia
 // Copyright (c) 2019-2022 The Project Symphonia Developers.
 //

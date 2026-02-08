@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![doc(html_root_url = "https://docs.rs/wasm-bindgen-shared/0.2")]
 #![no_std]
 

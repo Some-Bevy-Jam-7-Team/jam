@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //!
 //! allocator-api2 crate.
 //!

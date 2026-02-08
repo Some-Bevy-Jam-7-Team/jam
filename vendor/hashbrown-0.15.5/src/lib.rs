@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate is a Rust port of Google's high-performance [SwissTable] hash
 //! map, adapted to make it a drop-in replacement for Rust's standard `HashMap`
 //! and `HashSet` types.

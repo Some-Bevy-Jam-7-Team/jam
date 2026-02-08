@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 `tiny-skia` is a tiny [Skia](https://skia.org/) subset ported to Rust.
 

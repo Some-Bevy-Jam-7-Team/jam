@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! UEFI Reference Specification Protocol Constants and Definitions
 //!
 //! This project provides protocol constants and definitions as defined in the UEFI Reference

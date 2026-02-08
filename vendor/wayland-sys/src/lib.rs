@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! FFI bindings to the wayland system libraries.
 //!
 //! The names exported by this crate should *not* be used directly, but through

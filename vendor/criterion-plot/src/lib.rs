@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! [Criterion]'s plotting library.
 //!
 //! [Criterion]: https://github.com/bheisler/criterion.rs

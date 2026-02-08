@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*
  * // Copyright (c) Radzivon Bartoshyk 6/2025. All rights reserved.
  * //

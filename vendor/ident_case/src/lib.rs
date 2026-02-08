@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Crate for changing case of Rust identifiers.
 //!
 //! # Features

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate provides Serde's two derive macros.
 //!
 //! ```edition2021

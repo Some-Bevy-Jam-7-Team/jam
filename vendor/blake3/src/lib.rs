@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! The official Rust implementation of the [BLAKE3] cryptographic hash
 //! function.
 //!

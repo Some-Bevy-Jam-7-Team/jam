@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A DEFLATE-based stream compression/decompression library
 //!
 //! This library provides support for compression and decompression of

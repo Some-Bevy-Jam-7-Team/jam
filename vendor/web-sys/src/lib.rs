@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Raw API bindings for Web APIs
 //!
 //! This is a procedurally generated crate from browser WebIDL which provides a

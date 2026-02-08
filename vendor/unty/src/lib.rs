@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![no_std]
 //! A crate that allows you to untype your types.
 //!

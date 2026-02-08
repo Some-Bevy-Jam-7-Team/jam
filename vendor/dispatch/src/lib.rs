@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 Rust wrapper for Apple's Grand Central Dispatch (GCD).
 

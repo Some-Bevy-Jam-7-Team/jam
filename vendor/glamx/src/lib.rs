@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # glamx - Extensions for glam
 //!
 //! This crate provides additional types and utilities for the `glam` math library:

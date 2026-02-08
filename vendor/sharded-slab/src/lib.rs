@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A lock-free concurrent slab.
 //!
 //! Slabs provide pre-allocated storage for many instances of a single data

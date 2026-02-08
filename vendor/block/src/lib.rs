@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 A Rust interface for Objective-C blocks.
 

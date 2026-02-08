@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
 //! This crate contains macros used by Bevy's `Reflect` API.

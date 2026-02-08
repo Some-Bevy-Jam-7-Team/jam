@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # proc-macro-error2
 //!
 //! This crate aims to make error reporting in proc-macros simple and easy to use.

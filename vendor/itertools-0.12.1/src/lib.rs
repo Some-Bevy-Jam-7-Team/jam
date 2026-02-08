@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![warn(missing_docs)]
 #![crate_name = "itertools"]
 #![cfg_attr(not(feature = "use_std"), no_std)]

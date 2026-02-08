@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Matrix types and utilities for [`glam`].
 
 #![warn(missing_docs)]

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate provides bindings to the plasma wayland protocol extensions
 //! provided in <https://github.com/KDE/plasma-wayland-protocols>
 //!

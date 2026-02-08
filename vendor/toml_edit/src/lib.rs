@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # `toml_edit`
 //!
 //! This crate allows you to parse and modify toml

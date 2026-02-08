@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
    The Plotters SVG backend.
 

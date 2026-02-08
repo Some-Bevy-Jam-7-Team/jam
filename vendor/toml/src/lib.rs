@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A [serde]-compatible [TOML]-parsing library
 //!
 //! TOML itself is a simple, ergonomic, and readable configuration format:

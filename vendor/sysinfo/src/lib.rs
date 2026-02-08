@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Take a look at the license at the top of the repository in the LICENSE file.
 
 #![cfg_attr(

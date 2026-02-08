@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! libc - Raw FFI bindings to platforms' system libraries
 #![crate_name = "libc"]
 #![crate_type = "rlib"]

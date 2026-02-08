@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![deny(
     warnings,
     missing_copy_implementations,

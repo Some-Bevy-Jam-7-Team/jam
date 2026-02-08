@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![doc = include_str!("../readme.md")]
 #![doc(html_no_source)]
 #![allow(non_snake_case)]

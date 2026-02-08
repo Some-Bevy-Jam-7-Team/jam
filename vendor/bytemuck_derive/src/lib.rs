@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Derive macros for [bytemuck](https://docs.rs/bytemuck) traits.
 
 extern crate proc_macro;

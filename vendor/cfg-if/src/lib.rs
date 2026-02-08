@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A macro for defining `#[cfg]` if-else statements.
 //!
 //! The macro provided by this crate, `cfg_if`, is similar to the `if/elif` C
