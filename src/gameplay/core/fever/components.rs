@@ -8,6 +8,7 @@ use std::time::Duration;
     Temperature,
     MaxTemperature,
     BaseTemperature,
+    TemperatureThreshold,
     Health,
     FeverTimer,
     FeverDamage
