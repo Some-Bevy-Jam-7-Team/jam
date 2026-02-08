@@ -6,7 +6,6 @@ use bevy::{
 
 use crate::{
 	menus::Menu,
-	screens::Screen,
 	theme::{palette::SCREEN_BACKGROUND, widget},
 };
 
@@ -23,27 +22,22 @@ fn spawn_main_menu(mut commands: Commands, mut cursor_options: Single<&mut Curso
 		DespawnOnExit(Menu::Main),
 		#[cfg(not(target_family = "wasm"))]
 		children![
-			widget::button("Play", enter_loading_screen),
+			widget::button("Play", open_level_select),
 			widget::button("Settings", open_settings_menu),
 			widget::button("Credits", open_credits_menu),
 			widget::button("Exit", exit_app),
 		],
 		#[cfg(target_family = "wasm")]
 		children![
-			widget::button("Play", enter_loading_screen),
+			widget::button("Play", open_level_select),
 			widget::button("Settings", open_settings_menu),
 			widget::button("Credits", open_credits_menu),
 		],
 	));
 }
 
-fn enter_loading_screen(
-	_on: On<Pointer<Click>>,
-	mut next_screen: ResMut<NextState<Screen>>,
-	mut cursor_options: Single<&mut CursorOptions>,
-) {
-	next_screen.set(Screen::Loading);
-	cursor_options.grab_mode = CursorGrabMode::Locked;
+fn open_level_select(_: On<Pointer<Click>>, mut next_menu: ResMut<NextState<Menu>>) {
+	next_menu.set(Menu::LevelSelect);
 }
 
 fn open_settings_menu(_: On<Pointer<Click>>, mut next_menu: ResMut<NextState<Menu>>) {

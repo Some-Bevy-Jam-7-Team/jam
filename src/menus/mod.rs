@@ -1,6 +1,7 @@
 //! The game's main screen states and transitions between them.
 
 mod credits;
+mod level_select;
 mod main;
 mod pause;
 mod settings;
@@ -12,6 +13,7 @@ pub(super) fn plugin(app: &mut App) {
 
 	app.add_plugins((
 		credits::plugin,
+		level_select::plugin,
 		main::plugin,
 		settings::plugin,
 		pause::plugin,
@@ -25,6 +27,7 @@ pub(crate) enum Menu {
 	#[default]
 	None,
 	Main,
+	LevelSelect,
 	Credits,
 	Settings,
 	Pause,
