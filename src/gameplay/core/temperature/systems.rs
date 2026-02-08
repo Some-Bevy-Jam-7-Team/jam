@@ -13,16 +13,16 @@ pub fn temp(
         &BaseTemperature,
         &Children,
         Option<&Conductivity>,
-        &Stomach,
     )>,
     global_temp: Res<GlobalTemperature>,
     sensors: Query<&CollidingEntities, With<TemperatureSensor>>,
     env_temps: Query<&EnvironmentTemperature>,
     collisions: Collisions,
+    stomach: Single<&Stomach>,
 ) {
     let delta_seconds = time.delta_secs();
 
-    for (mut temp, temp_base, children, conductivity, stomach) in &mut units {
+    for (mut temp, temp_base, children, conductivity) in &mut units {
         let (temp_weighted, total_weight) = children
             .iter()
             .filter_map(|child| sensors.get(child).ok().map(|hits| (child, hits)))
