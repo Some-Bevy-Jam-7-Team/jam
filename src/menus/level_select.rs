@@ -16,7 +16,6 @@ use crate::{
     theme::{interaction::InteractionPalette, palette::SCREEN_BACKGROUND, widget},
 };
 
-// --- Cruelty Squad palette ---
 
 const NEON_GREEN: Color = Color::srgb(0.0, 1.0, 0.0);
 const GRID_BG: Color = Color::srgb(0.12, 0.12, 0.14);
@@ -143,9 +142,6 @@ fn cleanup_selected_level(mut commands: Commands) {
     commands.remove_resource::<SelectedLevel>();
 }
 
-// ============================================================
-// Spawn functions — each section is independent and reusable.
-// ============================================================
 
 /// Top-level level-select screen. Composes all sub-panels.
 fn spawn_level_select(mut commands: Commands) {
