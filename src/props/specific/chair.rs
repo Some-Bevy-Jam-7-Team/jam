@@ -6,6 +6,7 @@ use bevy_trenchbroom::prelude::*;
 
 use crate::{
 	asset_tracking::LoadResource as _,
+	gameplay::core::*,
 	third_party::{
 		avian3d::CollisionLayer,
 		bevy_trenchbroom::{GetTrenchbroomModelPath as _, LoadTrenchbroomModel as _},
@@ -42,6 +43,7 @@ fn setup_chair(
 			.with_default_layers(CollisionLayers::new(CollisionLayer::Prop, LayerMask::ALL))
 			// Make the chair way more dense than the default, as it feels janky to be able to push it around easily.
 			.with_default_density(10_000.0),
+		EnvironmentTemperature::default(),
 		RigidBody::Dynamic,
 		// Not inserting `TnuaNotPlatform`, otherwise the player will not be able to jump on it.
 		SceneRoot(model),

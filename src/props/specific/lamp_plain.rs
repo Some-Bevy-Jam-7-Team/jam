@@ -5,6 +5,7 @@ use bevy_trenchbroom::prelude::*;
 
 use crate::{
 	asset_tracking::LoadResource as _,
+	gameplay::core::*,
 	props::{effects::disable_shadow_casting_on_instance_ready, setup::static_bundle},
 	third_party::bevy_trenchbroom::GetTrenchbroomModelPath as _,
 };
@@ -43,7 +44,7 @@ fn setup_lamp_wall_electric(
 	let bundle = static_bundle::<LampPlain>(&asset_server, ColliderConstructor::ConvexHullFromMesh);
 	commands
 		.entity(add.entity)
-		.insert(bundle)
+		.insert((bundle, EnvironmentTemperature::default()))
 		.with_child((
 			Transform::from_xyz(0.0, -0.08, -0.35),
 			PointLight {
