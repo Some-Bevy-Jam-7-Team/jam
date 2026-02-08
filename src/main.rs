@@ -16,6 +16,7 @@ mod shader_compilation;
 mod theme;
 mod third_party;
 mod ui_camera;
+mod ui_layout;
 
 use asset_processing::default_image_sampler_descriptor;
 use bevy::gltf::GltfPlugin;
@@ -153,6 +154,7 @@ fn main() -> AppExit {
 		props::plugin,
 		theme::plugin,
 		ui_camera::plugin,
+		ui_layout::plugin,
 		hdr::plugin,
 		audio::plugin,
 	));
