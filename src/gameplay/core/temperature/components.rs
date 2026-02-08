@@ -85,7 +85,7 @@ impl Default for Conductivity {
 #[reflect(Clone, Debug, Component)]
 pub struct DepthSensitivity(pub f32);
 
-impl Default for DepthSensitivity{
+impl Default for DepthSensitivity {
 	fn default() -> Self {
 		Self(10.)
 	}
