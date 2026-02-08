@@ -24,16 +24,37 @@ fn spawn_main_menu(mut commands: Commands, mut cursor_options: Single<&mut Curso
 		DespawnOnExit(Menu::Main),
 		#[cfg(not(target_family = "wasm"))]
 		children![
-			(crate::ui_layout::RootWidget, widget::button("Play", open_level_select)),
-			(crate::ui_layout::RootWidget, widget::button("Settings", open_settings_menu)),
-			(crate::ui_layout::RootWidget, widget::button("Credits", open_credits_menu)),
-			(crate::ui_layout::RootWidget, widget::button("Exit", exit_app)),
+			(
+				crate::ui_layout::RootWidget,
+				widget::button("Play", open_level_select)
+			),
+			(
+				crate::ui_layout::RootWidget,
+				widget::button("Settings", open_settings_menu)
+			),
+			(
+				crate::ui_layout::RootWidget,
+				widget::button("Credits", open_credits_menu)
+			),
+			(
+				crate::ui_layout::RootWidget,
+				widget::button("Exit", exit_app)
+			),
 		],
 		#[cfg(target_family = "wasm")]
 		children![
-			(crate::ui_layout::RootWidget, widget::button("Play", open_level_select)),
-			(crate::ui_layout::RootWidget, widget::button("Settings", open_settings_menu)),
-			(crate::ui_layout::RootWidget, widget::button("Credits", open_credits_menu)),
+			(
+				crate::ui_layout::RootWidget,
+				widget::button("Play", open_level_select)
+			),
+			(
+				crate::ui_layout::RootWidget,
+				widget::button("Settings", open_settings_menu)
+			),
+			(
+				crate::ui_layout::RootWidget,
+				widget::button("Credits", open_credits_menu)
+			),
 		],
 	));
 }

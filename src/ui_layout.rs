@@ -4,12 +4,22 @@ use bevy::{
 };
 
 pub(super) fn plugin(app: &mut App) {
-	app.add_systems(Update, (extract_root_sizes, compute_layout, apply_root_positions).chain());
+	app.add_systems(
+		Update,
+		(
+			reparent_roots,
+			extract_root_sizes,
+			compute_layout,
+			apply_root_positions,
+		)
+			.chain(),
+	);
 }
 
 /// Component that marks that a node should be laid out on the HUD via the box stacking algorithm.
 /// This should be placed on the root node of any "widget" you want in the HUD
-/// 
+/// The [`RootWidget`]s should be parented automatically to the unique [`UiCanvas`] entity
+///
 /// # See also:
 /// [`UiCanvas`]
 #[derive(Component, Default)]
@@ -17,7 +27,7 @@ pub(super) fn plugin(app: &mut App) {
 pub struct RootWidget;
 
 /// Marker component for a singleton(!) entity into which the [`RootWidget`]s should be laid out.
-/// The [`RootWidgets`] should be parented to the unique UiCanvas entity, and the UiCanvas should ideally span the whole screen
+/// The [`UiCanvas`] should ideally span the whole screen
 #[derive(Component, Default)]
 #[require(Node)]
 pub struct UiCanvas;
@@ -27,6 +37,15 @@ struct RootWidgetPosition(Vec2);
 
 #[derive(Component, Default)]
 struct RootWidgetSize(Vec2);
+
+// TODO: Optimise with change detection
+fn reparent_roots(
+	mut commands: Commands,
+	widgets: Query<Entity, With<RootWidget>>,
+	root: Single<Entity, With<UiCanvas>>,
+) {
+	commands.entity(*root).add_children(&(widgets.iter().collect::<Vec<Entity>>()));
+}
 
 fn extract_root_sizes(
 	mut widget_query: Query<(&ComputedNode, &mut RootWidgetSize), Changed<ComputedNode>>,
@@ -69,8 +88,8 @@ fn compute_layout(
 	) -> f32 {
 		let mut t = f32::MAX;
 		for rect in other_rects.iter() {
-			if let Some(collision) =
-				RayCast2d::new(position, direction, t).aabb_intersection_at(&rect.grow(half_size * 0.999))
+			if let Some(collision) = RayCast2d::new(position, direction, t)
+				.aabb_intersection_at(&rect.grow(half_size * 0.999))
 			{
 				t = f32::min(t, collision * 0.995);
 			}
@@ -150,7 +169,8 @@ fn apply_root_positions(
 ) {
 	let window_size = window_size.size.max(Vec2::ONE);
 
-	for (mut node, &RootWidgetPosition(position), &RootWidgetSize(size)) in widget_query.iter_mut() {
+	for (mut node, &RootWidgetPosition(position), &RootWidgetSize(size)) in widget_query.iter_mut()
+	{
 		node.position_type = PositionType::Absolute;
 		let offset = 100.0 * (Vec2::splat(0.5) + (position - size / 2.0) / window_size);
 		node.left = Val::Percent(offset.x);

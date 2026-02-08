@@ -35,10 +35,8 @@ pub struct ObjectiveOfNode {
 fn spawn_objective_ui(mut commands: Commands) {
 	commands.spawn((
 		ObjectiveUi,
+		crate::ui_layout::RootWidget,
 		Node {
-			position_type: PositionType::Absolute,
-			top: Val::Px(10.0),
-			left: Val::Px(10.0),
 			padding: UiRect::all(Val::Px(10.0)),
 			flex_direction: FlexDirection::Column,
 			row_gap: Val::Px(5.0),

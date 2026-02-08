@@ -15,6 +15,7 @@ use crate::{
 	CameraOrder, RenderLayer,
 	gameplay::player::{Player, camera::PlayerCamera},
 	screens::Screen,
+	theme::widget,
 	third_party::avian3d::CollisionLayer,
 };
 
@@ -23,7 +24,7 @@ pub(crate) mod vomit;
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_plugins((eat::plugin, vomit::plugin));
-	app.add_systems(OnEnter(Screen::Gameplay), spawn_stomach);
+	app.add_systems(OnEnter(Screen::Gameplay), (spawn_stomach, spawn_stomach_ui_and_render).chain());
 	app.add_systems(FixedUpdate, move_stomach);
 }
 
@@ -46,14 +47,15 @@ impl Default for Stomach {
 /// The offscreen position of the stomach.
 const STOMACH_POSITION: Vec3 = Vec3::new(2000.0, 2000.0, 2000.0);
 
+const MESH_THICKNESS: f32 = 0.25;
+
 fn spawn_stomach(
 	mut commands: Commands,
 	mut meshes: ResMut<Assets<Mesh>>,
 	mut materials: ResMut<Assets<StandardMaterial>>,
-	mut images: ResMut<Assets<Image>>,
 ) {
 	let stomach = Stomach::default();
-	let mesh_thickness = 0.25;
+	let mesh_thickness = MESH_THICKNESS;
 	let vertical_mesh = meshes.add(Cuboid::new(
 		mesh_thickness,
 		stomach.target_size.y + mesh_thickness * 2.0,
@@ -79,7 +81,7 @@ fn spawn_stomach(
 	});
 
 	// TODO: Make the walls springy
-	let stomach_entity = commands
+	commands
 		.spawn((
 			Name::new("Stomach"),
 			Stomach::default(),
@@ -161,9 +163,15 @@ fn spawn_stomach(
 					Transform::from_translation(Vec3::new(0.0, 0.0, stomach.target_size.z / 2.0,)),
 				),
 			],
-		))
-		.id();
+		));
+}
 
+fn spawn_stomach_ui_and_render(
+	mut commands: Commands,
+	mut images: ResMut<Assets<Image>>,
+	stomach: Single<(Entity, &Stomach)>,
+) {
+	let (stomach_entity, stomach) = *stomach;
 	// We'll render the stomach and its contents to a texture.
 	let aspect_ratio = stomach.target_size.x / stomach.target_size.y;
 	let image = Image::new_target_texture(
@@ -187,8 +195,8 @@ fn spawn_stomach(
 		},
 		Projection::Orthographic(OrthographicProjection {
 			scaling_mode: ScalingMode::Fixed {
-				width: stomach.target_size.x + mesh_thickness * 2.0,
-				height: stomach.target_size.y + mesh_thickness * 2.0,
+				width: stomach.target_size.x + MESH_THICKNESS * 2.0,
+				height: stomach.target_size.y + MESH_THICKNESS * 2.0,
 			},
 			..OrthographicProjection::default_3d()
 		}),
@@ -202,21 +210,35 @@ fn spawn_stomach(
 	));
 
 	// Spawn stomach UI at the top right corner of the screen.
-	commands.spawn((
-		Name::new("Stomach UI"),
-		Node {
-			width: Val::Px(256.0),
-			height: Val::Px(256.0 / aspect_ratio),
-			position_type: PositionType::Absolute,
-			top: Val::Px(10.0),
-			right: Val::Px(10.0),
-			..default()
-		},
-		ImageNode {
-			image: image_handle,
-			..default()
-		},
-	));
+	commands
+		.spawn((
+			Name::new("Stomach UI"),
+			Node {
+				flex_direction: FlexDirection::Column,
+				..default()
+			},
+			crate::ui_layout::RootWidget,
+			children![(
+				Node {
+					width: Val::Percent(100.0),
+					..default()
+				},
+				BackgroundColor(Color::srgba(1.0, 1.0, 1.0, 0.9)),
+				children![
+					widget::label_small("LIVE () STOMACH REACTION") // TODO: add red recording circle.
+				]
+			), (
+				Node {
+					width: Val::Px(256.0),
+					height: Val::Px(256.0 / aspect_ratio),
+					..default()
+				},
+				ImageNode {
+					image: image_handle,
+					..default()
+				},
+			)],
+		));
 
 	// Spawn a light to illuminate the stomach.
 	commands.spawn((
