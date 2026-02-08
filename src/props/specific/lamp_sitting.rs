@@ -6,6 +6,7 @@ use bevy_trenchbroom::prelude::*;
 
 use crate::{
     asset_tracking::LoadResource as _,
+    gameplay::core::*,
     props::{effects::disable_shadow_casting_on_instance_ready, setup::dynamic_bundle},
     third_party::bevy_trenchbroom::GetTrenchbroomModelPath as _,
 };
@@ -35,7 +36,11 @@ fn setup_lamp_sitting(
     commands
         .entity(add.entity)
         // The prop should be held upright.
-        .insert((bundle, PreferredPickupRotation(Quat::IDENTITY)))
+        .insert((
+            bundle,
+            PreferredPickupRotation(Quat::IDENTITY),
+            EnvironmentTemperature::default(),
+        ))
         // The lamp's origin is at the bottom of the lamp, so we need to offset the light a bit.
         .with_child((
             Transform::from_xyz(0.0, 0.2, 0.0),

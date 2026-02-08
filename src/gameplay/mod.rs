@@ -6,6 +6,7 @@
 use bevy::prelude::*;
 
 mod animation;
+pub(crate) mod core;
 pub(crate) mod crosshair;
 pub(crate) mod level;
 pub(crate) mod npc;
@@ -20,5 +21,6 @@ pub(super) fn plugin(app: &mut App) {
         // This plugin preloads the level,
         // so make sure to add it last.
         level::plugin,
+        core::plugin,
     ));
 }

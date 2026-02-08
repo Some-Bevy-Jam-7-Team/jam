@@ -13,6 +13,7 @@ use bevy_trenchbroom::prelude::*;
 use input::PlayerInputContext;
 use navmesh_position::LastValidPlayerNavmeshPosition;
 
+use crate::gameplay::core::*;
 use crate::{
     animation::AnimationState,
     asset_tracking::LoadResource,
@@ -75,26 +76,27 @@ fn setup_player(
         .insert((
             RigidBody::Kinematic,
             PlayerInputContext,
-            // The player character needs to be configured as a dynamic rigid body of the physics
-            // engine.
             Collider::cylinder(PLAYER_RADIUS, PLAYER_HEIGHT),
-            // This is Tnua's interface component.
             CharacterController::default(),
             ColliderDensity(1_000.0),
             CollisionLayers::new(CollisionLayer::Character, LayerMask::ALL),
             AnimationState::<PlayerAnimationState>::default(),
-            children![(
-                Name::new("Player Landmass Character"),
-                Transform::from_xyz(0.0, -PLAYER_FLOAT_HEIGHT, 0.0),
-                Character3dBundle {
-                    character: Character::default(),
-                    settings: CharacterSettings {
-                        radius: PLAYER_RADIUS,
+            Fever,
+            children![
+                (
+                    Name::new("Player Landmass Character"),
+                    Transform::from_xyz(0.0, -PLAYER_FLOAT_HEIGHT, 0.0),
+                    Character3dBundle {
+                        character: Character::default(),
+                        settings: CharacterSettings {
+                            radius: PLAYER_RADIUS,
+                        },
+                        archipelago_ref: ArchipelagoRef3d::new(*archipelago),
                     },
-                    archipelago_ref: ArchipelagoRef3d::new(*archipelago),
-                },
-                LastValidPlayerNavmeshPosition::default(),
-            )],
+                    LastValidPlayerNavmeshPosition::default(),
+                ),
+                TemperatureSensor,
+            ],
         ))
         .observe(setup_player_animations);
 }
