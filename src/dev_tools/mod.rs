@@ -10,16 +10,16 @@ mod validate_preloading;
 use crate::{menus::Menu, screens::loading::LoadingScreen};
 
 pub(super) fn plugin(app: &mut App) {
-    // Log `Screen` state transitions.
-    app.add_systems(
-        Update,
-        (log_transitions::<Menu>, log_transitions::<LoadingScreen>).chain(),
-    );
+	// Log `Screen` state transitions.
+	app.add_systems(
+		Update,
+		(log_transitions::<Menu>, log_transitions::<LoadingScreen>).chain(),
+	);
 
-    app.add_plugins((
-        debug_ui::plugin,
-        input::plugin,
-        validate_preloading::plugin,
-        log_components::plugin,
-    ));
+	app.add_plugins((
+		debug_ui::plugin,
+		input::plugin,
+		validate_preloading::plugin,
+		log_components::plugin,
+	));
 }

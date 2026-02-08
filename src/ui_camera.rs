@@ -7,7 +7,7 @@ use bevy::prelude::*;
 use crate::CameraOrder;
 
 pub(super) fn plugin(app: &mut App) {
-    app.add_systems(Startup, spawn_ui_camera);
+	app.add_systems(Startup, spawn_ui_camera);
 }
 
 #[derive(Component, Reflect)]
@@ -15,16 +15,16 @@ pub(super) fn plugin(app: &mut App) {
 pub(crate) struct UiCamera;
 
 fn spawn_ui_camera(mut commands: Commands) {
-    commands.spawn((
-        Name::new("UI Camera"),
-        UiCamera,
-        Camera2d,
-        // Render all UI to this camera.
-        IsDefaultUiCamera,
-        Camera {
-            // The UI camera order is the highest.
-            order: CameraOrder::Ui.into(),
-            ..default()
-        },
-    ));
+	commands.spawn((
+		Name::new("UI Camera"),
+		UiCamera,
+		Camera2d,
+		// Render all UI to this camera.
+		IsDefaultUiCamera,
+		Camera {
+			// The UI camera order is the highest.
+			order: CameraOrder::Ui.into(),
+			..default()
+		},
+	));
 }

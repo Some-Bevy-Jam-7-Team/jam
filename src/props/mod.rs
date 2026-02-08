@@ -10,11 +10,11 @@ mod setup;
 mod specific;
 
 pub(super) fn plugin(app: &mut App) {
-    app.add_plugins((
-        setup::plugin,
-        specific::plugin,
-        effects::plugin,
-        generic::plugin,
-        brush_entity::plugin,
-    ));
+	app.add_plugins((
+		setup::plugin,
+		specific::plugin,
+		effects::plugin,
+		generic::plugin,
+		brush_entity::plugin,
+	));
 }

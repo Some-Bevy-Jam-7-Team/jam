@@ -1,48 +1,48 @@
 use bevy::{
-    asset::RenderAssetUsages,
-    image::{ImageAddressMode, ImageSamplerDescriptor},
-    prelude::*,
+	asset::RenderAssetUsages,
+	image::{ImageAddressMode, ImageSamplerDescriptor},
+	prelude::*,
 };
 
 pub(super) fn plugin(app: &mut App) {
-    app.add_systems(Update, move_textures_to_render_world);
+	app.add_systems(Update, move_textures_to_render_world);
 }
 
 pub(crate) fn default_image_sampler_descriptor() -> ImageSamplerDescriptor {
-    ImageSamplerDescriptor {
-        address_mode_u: ImageAddressMode::Repeat,
-        address_mode_v: ImageAddressMode::Repeat,
-        address_mode_w: ImageAddressMode::Repeat,
-        anisotropy_clamp: 16,
-        ..ImageSamplerDescriptor::linear()
-    }
+	ImageSamplerDescriptor {
+		address_mode_u: ImageAddressMode::Repeat,
+		address_mode_v: ImageAddressMode::Repeat,
+		address_mode_w: ImageAddressMode::Repeat,
+		anisotropy_clamp: 16,
+		..ImageSamplerDescriptor::linear()
+	}
 }
 
 fn move_textures_to_render_world(
-    mut events: MessageReader<AssetEvent<Image>>,
-    mut images: ResMut<Assets<Image>>,
-    assets: Res<AssetServer>,
+	mut events: MessageReader<AssetEvent<Image>>,
+	mut images: ResMut<Assets<Image>>,
+	assets: Res<AssetServer>,
 ) {
-    for event in events.read() {
-        let AssetEvent::LoadedWithDependencies { id } = event else {
-            continue;
-        };
+	for event in events.read() {
+		let AssetEvent::LoadedWithDependencies { id } = event else {
+			continue;
+		};
 
-        let Some(path) = assets.get_path(id.untyped()) else {
-            continue;
-        };
+		let Some(path) = assets.get_path(id.untyped()) else {
+			continue;
+		};
 
-        let path = path.to_string();
+		let path = path.to_string();
 
-        const PATHS_WITH_MESH_TEXTURES: &[&str] = &["textures/", "models/"];
-        if !PATHS_WITH_MESH_TEXTURES.iter().any(|p| path.starts_with(p)) {
-            // Textures outside these paths are e.g. part of the UI, which would stop rendering
-            // if we set it to `RENDER_WORLD`. It also wouldn't make sense to change the sampler
-            // for those, as we look at them with a pixel-perfect camera from a single angle.
-            continue;
-        }
+		const PATHS_WITH_MESH_TEXTURES: &[&str] = &["textures/", "models/"];
+		if !PATHS_WITH_MESH_TEXTURES.iter().any(|p| path.starts_with(p)) {
+			// Textures outside these paths are e.g. part of the UI, which would stop rendering
+			// if we set it to `RENDER_WORLD`. It also wouldn't make sense to change the sampler
+			// for those, as we look at them with a pixel-perfect camera from a single angle.
+			continue;
+		}
 
-        let image = images.get_mut(*id).unwrap();
-        image.asset_usage = RenderAssetUsages::RENDER_WORLD;
-    }
+		let image = images.get_mut(*id).unwrap();
+		image.asset_usage = RenderAssetUsages::RENDER_WORLD;
+	}
 }

@@ -14,9 +14,9 @@ use input::PlayerInputContext;
 use navmesh_position::LastValidPlayerNavmeshPosition;
 
 use crate::{
-    animation::AnimationState,
-    asset_tracking::LoadResource,
-    third_party::{avian3d::CollisionLayer, bevy_trenchbroom::GetTrenchbroomModelPath as _},
+	animation::AnimationState,
+	asset_tracking::LoadResource,
+	third_party::{avian3d::CollisionLayer, bevy_trenchbroom::GetTrenchbroomModelPath as _},
 };
 
 mod animation;
@@ -29,24 +29,24 @@ pub(crate) mod navmesh_position;
 pub(crate) mod pickup;
 
 pub(super) fn plugin(app: &mut App) {
-    app.add_plugins((
-        animation::plugin,
-        assets::plugin,
-        camera::plugin,
-        input::plugin,
-        dialogue::plugin,
-        movement_sound::plugin,
-        pickup::plugin,
-        navmesh_position::plugin,
-    ));
-    app.add_observer(setup_player);
-    app.load_asset::<Gltf>(Player::model_path());
-    app.add_systems(PreUpdate, assert_only_one_player);
+	app.add_plugins((
+		animation::plugin,
+		assets::plugin,
+		camera::plugin,
+		input::plugin,
+		dialogue::plugin,
+		movement_sound::plugin,
+		pickup::plugin,
+		navmesh_position::plugin,
+	));
+	app.add_observer(setup_player);
+	app.load_asset::<Gltf>(Player::model_path());
+	app.add_systems(PreUpdate, assert_only_one_player);
 }
 
 #[point_class(
-    base(Transform, Visibility),
-    model("models/view_model/view_model.gltf")
+	base(Transform, Visibility),
+	model("models/view_model/view_model.gltf")
 )]
 pub(crate) struct Player;
 
@@ -66,43 +66,43 @@ const PLAYER_HALF_HEIGHT: f32 = PLAYER_HEIGHT / 2.0;
 const PLAYER_FLOAT_HEIGHT: f32 = PLAYER_HALF_HEIGHT + 0.01;
 
 fn setup_player(
-    add: On<Add, Player>,
-    mut commands: Commands,
-    archipelago: Single<Entity, With<Archipelago3d>>,
+	add: On<Add, Player>,
+	mut commands: Commands,
+	archipelago: Single<Entity, With<Archipelago3d>>,
 ) {
-    commands
-        .entity(add.entity)
-        .insert((
-            RigidBody::Kinematic,
-            PlayerInputContext,
-            // The player character needs to be configured as a dynamic rigid body of the physics
-            // engine.
-            Collider::cylinder(PLAYER_RADIUS, PLAYER_HEIGHT),
-            // This is Tnua's interface component.
-            CharacterController {
-                filter: SpatialQueryFilter::DEFAULT
-                    .with_mask(LayerMask::ALL & !CollisionLayer::Stomach.to_bits()),
-                ..default()
-            },
-            ColliderDensity(1_000.0),
-            CollisionLayers::new(CollisionLayer::Character, LayerMask::ALL),
-            AnimationState::<PlayerAnimationState>::default(),
-            children![(
-                Name::new("Player Landmass Character"),
-                Transform::from_xyz(0.0, -PLAYER_FLOAT_HEIGHT, 0.0),
-                Character3dBundle {
-                    character: Character::default(),
-                    settings: CharacterSettings {
-                        radius: PLAYER_RADIUS,
-                    },
-                    archipelago_ref: ArchipelagoRef3d::new(*archipelago),
-                },
-                LastValidPlayerNavmeshPosition::default(),
-            )],
-        ))
-        .observe(setup_player_animations);
+	commands
+		.entity(add.entity)
+		.insert((
+			RigidBody::Kinematic,
+			PlayerInputContext,
+			// The player character needs to be configured as a dynamic rigid body of the physics
+			// engine.
+			Collider::cylinder(PLAYER_RADIUS, PLAYER_HEIGHT),
+			// This is Tnua's interface component.
+			CharacterController {
+				filter: SpatialQueryFilter::DEFAULT
+					.with_mask(LayerMask::ALL & !CollisionLayer::Stomach.to_bits()),
+				..default()
+			},
+			ColliderDensity(1_000.0),
+			CollisionLayers::new(CollisionLayer::Character, LayerMask::ALL),
+			AnimationState::<PlayerAnimationState>::default(),
+			children![(
+				Name::new("Player Landmass Character"),
+				Transform::from_xyz(0.0, -PLAYER_FLOAT_HEIGHT, 0.0),
+				Character3dBundle {
+					character: Character::default(),
+					settings: CharacterSettings {
+						radius: PLAYER_RADIUS,
+					},
+					archipelago_ref: ArchipelagoRef3d::new(*archipelago),
+				},
+				LastValidPlayerNavmeshPosition::default(),
+			)],
+		))
+		.observe(setup_player_animations);
 }
 
 fn assert_only_one_player(player: Populated<(), With<Player>>) {
-    assert_eq!(1, player.iter().count());
+	assert_eq!(1, player.iter().count());
 }

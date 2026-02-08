@@ -9,27 +9,27 @@ use bevy::{core_pipeline::tonemapping::Tonemapping, render::render_resource::Ble
 use crate::CameraOrder;
 
 pub(super) fn plugin(app: &mut App) {
-    app.add_observer(make_hdr_compatible);
+	app.add_observer(make_hdr_compatible);
 }
 
 fn make_hdr_compatible(
-    add: On<Add, Camera>,
-    mut cameras: Query<&mut Camera>,
-    mut commands: Commands,
+	add: On<Add, Camera>,
+	mut cameras: Query<&mut Camera>,
+	mut commands: Commands,
 ) {
-    let entity = add.entity;
-    let mut camera = cameras.get_mut(entity).unwrap();
-    if camera.order == isize::from(CameraOrder::World) {
-        // Use the world model camera to determine tonemapping.
-        return;
-    }
-    // Needed because of https://github.com/bevyengine/bevy/issues/18902
-    commands.entity(entity).insert(Tonemapping::None);
-    // Needed because of https://github.com/bevyengine/bevy/issues/18901
-    // and https://github.com/bevyengine/bevy/issues/18903
-    camera.clear_color = ClearColorConfig::Custom(Color::NONE);
-    camera.output_mode = CameraOutputMode::Write {
-        blend_state: Some(BlendState::ALPHA_BLENDING),
-        clear_color: ClearColorConfig::None,
-    };
+	let entity = add.entity;
+	let mut camera = cameras.get_mut(entity).unwrap();
+	if camera.order == isize::from(CameraOrder::World) {
+		// Use the world model camera to determine tonemapping.
+		return;
+	}
+	// Needed because of https://github.com/bevyengine/bevy/issues/18902
+	commands.entity(entity).insert(Tonemapping::None);
+	// Needed because of https://github.com/bevyengine/bevy/issues/18901
+	// and https://github.com/bevyengine/bevy/issues/18903
+	camera.clear_color = ClearColorConfig::Custom(Color::NONE);
+	camera.output_mode = CameraOutputMode::Write {
+		blend_state: Some(BlendState::ALPHA_BLENDING),
+		clear_color: ClearColorConfig::None,
+	};
 }
