@@ -5,7 +5,7 @@ use crate::gameplay::core::*;
 
 /// Simulates thermal transfer by weighting global temperature with
 /// collision-based temperature sources.
-pub fn tick_temperature(
+pub fn tick_temp(
     time: Res<Time>,
     mut units: Query<(
         &mut Temperature,
