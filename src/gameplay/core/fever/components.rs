@@ -4,7 +4,7 @@ use std::time::Duration;
 /// Makes a unit affected by fever.
 #[derive(Component, Debug, Clone, Copy, Reflect)]
 #[reflect(Clone, Debug, Component)]
-#[require(Temperature, Health, FeverTimer, FeverDamage)]
+#[require(Temperature, Health, FeverTimer, FeverDamage, FeverSource)]
 pub struct Fever;
 
 /// Marker component for units that are currently feverish (temp higher than base temp).
