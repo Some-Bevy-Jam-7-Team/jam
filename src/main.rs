@@ -7,6 +7,7 @@ mod asset_tracking;
 mod audio;
 #[cfg(feature = "dev")]
 mod dev_tools;
+mod font;
 mod gameplay;
 mod hdr;
 mod menus;
@@ -161,6 +162,7 @@ fn main() -> AppExit {
 		asset_tracking::plugin,
 		#[cfg(feature = "dev")]
 		dev_tools::plugin,
+		font::plugin,
 		screens::plugin,
 		menus::plugin,
 		props::plugin,
