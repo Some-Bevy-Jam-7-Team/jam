@@ -14,6 +14,11 @@ use std::time::Duration;
 )]
 pub struct Fever;
 
+/// Marker component for units that are currently feverish (temp higher than base temp).
+#[derive(Component, Debug, Clone, Copy, Reflect)]
+#[reflect(Clone, Debug, Component)]
+pub struct Feverish;
+
 /// Amount of damage caused by fewer per-tick times degrees Celsius.
 ///
 /// E.g., When 5 deg above max temp and damage is 10, 1 tick is 50 damage.

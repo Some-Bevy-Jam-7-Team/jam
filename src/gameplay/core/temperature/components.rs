@@ -30,14 +30,25 @@ impl Default for BaseTemperature {
     }
 }
 
-/// Max temperature that a unit can handle before it takes damage.
+/// Temperature that a unit can handle before it takes damage.
+#[derive(Component, Debug, Deref, DerefMut, Clone, Copy, Reflect)]
+#[reflect(Clone, Debug, Component)]
+pub struct TemperatureThreshold(pub f32);
+
+impl Default for TemperatureThreshold {
+    fn default() -> Self {
+        Self(40.0)
+    }
+}
+
+/// Maximum temperature limit of a unit/entity.
 #[derive(Component, Debug, Deref, DerefMut, Clone, Copy, Reflect)]
 #[reflect(Clone, Debug, Component)]
 pub struct MaxTemperature(pub f32);
 
 impl Default for MaxTemperature {
     fn default() -> Self {
-        Self(40.0)
+        Self(45.0)
     }
 }
 
