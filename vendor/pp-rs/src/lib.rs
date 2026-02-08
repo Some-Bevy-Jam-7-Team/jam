@@ -1,3 +1,4 @@
+#![allow(warnings)]
 extern crate unicode_xid;
 
 #[allow(clippy::match_like_matches_macro)]

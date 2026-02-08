@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A library containing built-in fonts for `epaint`, embedded as bytes.
 //!
 //! This is intended to be consumed through the `epaint` crate.

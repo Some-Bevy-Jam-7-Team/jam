@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This is a library which allows anyone to change various properties of their
 //! strings with a heavy emphasis on performance. Allows programmers to
 //! manipulate a single programatic name consistently in multiple contexts.

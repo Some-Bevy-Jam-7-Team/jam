@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![crate_type = "lib"]
 // #![feature(try_blocks)]
 //#![feature(nll)]

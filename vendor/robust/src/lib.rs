@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![cfg_attr(feature = "no_std", no_std)]
 #![doc(html_logo_url = "https://raw.githubusercontent.com/georust/meta/master/logo/logo.png")]
 // Copyright 2017 The Spade Developers.

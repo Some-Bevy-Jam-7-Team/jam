@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Backend API for wayland crates
 //!
 //! This crate provide low-level APIs for interacting with the Wayland protocol,

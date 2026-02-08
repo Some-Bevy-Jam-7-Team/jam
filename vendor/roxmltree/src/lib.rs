@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 Represent an [XML](https://www.w3.org/TR/xml/) document as a read-only tree.
 

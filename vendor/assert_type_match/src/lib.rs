@@ -1,3 +1,4 @@
+#![allow(warnings)]
 mod args;
 mod enums;
 mod fields;

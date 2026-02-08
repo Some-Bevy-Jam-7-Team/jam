@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Deluxe Core
 //!
 //! Core functions and traits shared between [`deluxe`](https://docs.rs/deluxe) and

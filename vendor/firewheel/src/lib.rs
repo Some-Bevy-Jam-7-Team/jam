@@ -1,3 +1,4 @@
+#![allow(warnings)]
 pub use firewheel_core as core;
 pub use firewheel_core::*;
 pub use firewheel_graph::*;

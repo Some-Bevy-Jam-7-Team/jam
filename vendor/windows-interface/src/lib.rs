@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Define COM interfaces to call or implement.
 //!
 //! Take a look at [macro@interface] for an example.

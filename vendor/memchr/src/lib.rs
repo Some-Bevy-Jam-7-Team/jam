@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 This library provides heavily optimized routines for string search primitives.
 

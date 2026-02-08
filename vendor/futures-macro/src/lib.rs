@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! The futures-rs procedural macro implementations.
 
 #![doc(test(

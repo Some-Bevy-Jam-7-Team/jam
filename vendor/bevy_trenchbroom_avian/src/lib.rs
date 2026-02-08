@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use avian3d::{
 	math::AdjustPrecision,
 	parry::shape::SharedShape,

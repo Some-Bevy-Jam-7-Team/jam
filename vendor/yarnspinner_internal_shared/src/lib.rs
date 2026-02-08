@@ -1,3 +1,4 @@
+#![allow(warnings)]
 pub mod bug;
 
 pub mod prelude {

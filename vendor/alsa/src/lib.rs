@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Thin but safe wrappers for [ALSA](https://alsa-project.org).
 //!
 //! [GitHub repo](https://github.com/diwic/alsa-rs)

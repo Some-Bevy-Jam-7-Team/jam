@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Wayland protocol code-generation machinnery
 //!
 //! This crate provides procedural macros for generating the rust code associated with a

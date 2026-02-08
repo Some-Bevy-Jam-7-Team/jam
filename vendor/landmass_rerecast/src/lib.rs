@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![doc = include_str!("../README.md")]
 
 use std::sync::Arc;

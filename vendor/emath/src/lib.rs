@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Opinionated 2D math library for building GUIs.
 //!
 //! Includes vectors, positions, rectangles etc.

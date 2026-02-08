@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![deny(unsafe_code,rustdoc::bare_urls)]
 #![cfg_attr(not(feature = "std"), no_std)]
 //! [![Build status](https://img.shields.io/github/actions/workflow/status/marcianx/downcast-rs/main.yml?branch=master)](https://github.com/marcianx/downcast-rs/actions)

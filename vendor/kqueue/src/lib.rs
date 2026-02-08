@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use kqueue_sys::{kevent, kqueue};
 use libc::{close, pid_t, uintptr_t};
 use std::fmt::Debug;

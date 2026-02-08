@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use rayon::prelude::*;
 
 #[derive(Default)]

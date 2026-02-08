@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Cross-platform file system notification library
 //!
 //! # Installation

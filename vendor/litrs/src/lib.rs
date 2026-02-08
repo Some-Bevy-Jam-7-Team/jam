@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Parsing and inspecting Rust literal tokens.
 //!
 //! This library offers functionality to parse Rust literals, i.e. tokens in the

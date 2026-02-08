@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 The `csv` crate provides a fast and flexible CSV reader and writer, with
 support for Serde.

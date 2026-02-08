@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Bindings around the platform's dynamic library loading primitives with greatly improved memory safety.
 //!
 //! Using this library allows the loading of [dynamic libraries](struct.Library.html), also known as

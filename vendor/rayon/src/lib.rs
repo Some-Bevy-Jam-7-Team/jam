@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Rayon is a data-parallelism library that makes it easy to convert sequential
 //! computations into parallel.
 //!

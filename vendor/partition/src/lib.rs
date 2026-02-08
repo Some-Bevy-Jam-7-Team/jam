@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate has only one `partition(&[T], P)` function to partition slices
 //! in place.
 #![cfg_attr(not(test), no_std)]

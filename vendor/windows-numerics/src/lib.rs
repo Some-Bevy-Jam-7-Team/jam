@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![expect(missing_docs, non_snake_case, clippy::all)]
 #![doc = include_str!("../readme.md")]
 #![cfg_attr(all(not(feature = "std")), no_std)]

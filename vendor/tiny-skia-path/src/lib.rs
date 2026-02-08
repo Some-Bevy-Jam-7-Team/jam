@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Copyright 2006 The Android Open Source Project
 // Copyright 2020 Yevhenii Reizner
 //

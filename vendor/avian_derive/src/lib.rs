@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Provides derive implementations for [Avian Physics](https://github.com/Jondolf/avian).
 
 use proc_macro::TokenStream;

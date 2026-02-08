@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate provides helper types for matching against enum variants, and
 //! extracting bindings to each of the fields in the deriving Struct or Enum in
 //! a generic way.

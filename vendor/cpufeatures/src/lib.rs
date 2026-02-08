@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate provides macros for runtime CPU feature detection. It's intended
 //! as a stopgap until Rust [RFC 2725] adding first-class target feature detection
 //! macros to `libcore` is implemented.

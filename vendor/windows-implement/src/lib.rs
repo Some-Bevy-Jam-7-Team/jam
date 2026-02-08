@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Implement COM interfaces for Rust types.
 //!
 //! Take a look at [macro@implement] for an example.

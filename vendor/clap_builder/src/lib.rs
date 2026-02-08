@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Copyright ⓒ 2015-2016 Kevin B. Knapp and [`clap-rs` contributors](https://github.com/clap-rs/clap/graphs/contributors).
 // Licensed under the MIT license
 // (see LICENSE or <http://opensource.org/licenses/MIT>) All files in the project carrying such

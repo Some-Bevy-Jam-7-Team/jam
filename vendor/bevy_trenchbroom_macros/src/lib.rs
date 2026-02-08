@@ -1,3 +1,4 @@
+#![allow(warnings)]
 mod fgd_type;
 mod quake_class;
 

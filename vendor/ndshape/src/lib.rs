@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Simple, fast linearization of 2D, 3D, and 4D coordinates.
 //!
 //! The canonical choice of linearization function is row-major, i.e. stepping linearly through an N dimensional array would

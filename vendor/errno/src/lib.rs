@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Cross-platform interface to the `errno` variable.
 //!
 //! # Examples

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![deny(missing_docs)]
 // https://github.com/Marwes/combine/issues/172
 #![recursion_limit = "256"]

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Adapters for connecting unstructured log records from the `log` crate into
 //! the `tracing` ecosystem.
 //!

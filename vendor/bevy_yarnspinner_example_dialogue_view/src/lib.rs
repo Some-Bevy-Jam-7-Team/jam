@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A simple example dialogue view for Yarn Spinner.
 //! A dialogue view is a plugin that handles presenting lines and options to the user and advances the dialogue on user input.
 //! This one shows text in a dialogue box inspired by Legend of Zelda: Breath of the Wild.

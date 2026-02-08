@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Rust bindings to the `jemalloc` C library.
 //!
 //! `jemalloc` is a general purpose memory allocation, its documentation

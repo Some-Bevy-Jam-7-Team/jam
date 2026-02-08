@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Notify async tasks or threads.
 //!
 //! This is a synchronization primitive similar to [eventcounts] invented by Dmitry Vyukov.

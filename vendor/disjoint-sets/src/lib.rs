@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![doc(html_root_url = "https://docs.rs/disjoint-sets/0.4.2")]
 //! Three union-find implementations.
 //!

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! TOML lexer and parser
 //!
 //! Characteristics:

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Raw bindings to Objective-C runtimes
 //!
 //! These bindings contain almost no documentation, so it is highly

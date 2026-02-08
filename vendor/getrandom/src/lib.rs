@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Overwrite links to crate items with intra-crate links
 //! [`Error::UNEXPECTED`]: Error::UNEXPECTED
 //! [`fill_uninit`]: fill_uninit

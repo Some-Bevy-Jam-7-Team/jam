@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! The runtime components of Yarn Spinner. These mostly follow the same structure as the original Yarn Spinner runtime.
 //!
 //! You probably don't want to use this crate directly.

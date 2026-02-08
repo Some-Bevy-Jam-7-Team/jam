@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Raw FFI bindings to the Android NDK.
 //!
 //! The bindings are pre-generated and the right one for the platform is selected at compile time.

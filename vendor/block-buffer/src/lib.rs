@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Fixed size buffer for block processing of data.
 #![no_std]
 #![doc(

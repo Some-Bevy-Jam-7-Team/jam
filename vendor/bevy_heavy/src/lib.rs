@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! `bevy_heavy` is a crate for computing mass properties ([mass], [angular inertia], and [center of mass])
 //! for the [geometric primitives] in the [Bevy game engine][Bevy]. This is typically required
 //! for things like physics simulations.

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Spade
 //!
 //! Delaunay triangulations for the rust ecosystem.

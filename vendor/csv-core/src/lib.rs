@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 `csv-core` provides a fast CSV reader and writer for use in a `no_std` context.
 

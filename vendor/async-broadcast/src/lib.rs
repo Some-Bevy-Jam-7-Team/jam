@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Async broadcast channel
 //!
 //! An async multi-producer multi-consumer broadcast channel, where each consumer gets a clone of every

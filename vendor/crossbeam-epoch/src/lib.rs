@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Epoch-based memory reclamation.
 //!
 //! An interesting problem concurrent collections deal with comes from the remove operation.

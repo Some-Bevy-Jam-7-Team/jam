@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! `radsort` is a radix sort implementation for sorting by scalar keys
 //! (integers, floats, chars, bools).
 //!

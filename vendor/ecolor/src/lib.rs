@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Color conversions and types.
 //!
 //! This crate is built for the wants and needs of [`egui`](https://github.com/emilk/egui/).

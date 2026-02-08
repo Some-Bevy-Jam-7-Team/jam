@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![cfg_attr(all(not(feature = "std"), not(test)), no_std)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![deny(missing_docs)]

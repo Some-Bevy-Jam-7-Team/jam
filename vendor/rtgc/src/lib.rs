@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A simple garbage collector which collects resources dropped on a
 //! realtime thread and safely deallocates them on another thread.
 //!

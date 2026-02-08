@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Rayon-core houses the core stable APIs of Rayon.
 //!
 //! These APIs have been mirrored in the Rayon crate and it is recommended to use these from there.

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Copyright 2013-2014 The Rust Project Developers.
 // Copyright 2018 The Uuid Project Developers.
 //

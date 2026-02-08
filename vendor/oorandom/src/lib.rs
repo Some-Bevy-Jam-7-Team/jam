@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A tiny, robust PRNG implementation.
 //!
 //! More specifically, it implements a single GOOD PRNG algorithm,

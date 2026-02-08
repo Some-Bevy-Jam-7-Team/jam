@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! `wgpu` is a cross-platform, safe, pure-Rust graphics API. It runs natively on
 //! Vulkan, Metal, D3D12, and OpenGL; and on top of WebGL2 and WebGPU on wasm.
 //!

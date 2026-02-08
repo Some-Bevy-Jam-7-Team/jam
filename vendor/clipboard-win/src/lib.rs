@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![cfg(windows)]
 //! This crate provide simple means to operate with Windows clipboard.
 //!

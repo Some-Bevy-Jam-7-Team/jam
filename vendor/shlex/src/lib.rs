@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Copyright 2015 Nicholas Allegra (comex).
 // Licensed under the Apache License, Version 2.0 <https://www.apache.org/licenses/LICENSE-2.0> or
 // the MIT license <https://opensource.org/licenses/MIT>, at your option. This file may not be

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![no_std]
 #[cfg(feature = "std")]
 #[macro_use]

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 
 This crate is a fork of the [`byteorder`] crate which sets

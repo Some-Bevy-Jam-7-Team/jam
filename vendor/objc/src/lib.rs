@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 Objective-C Runtime bindings and wrapper for Rust.
 

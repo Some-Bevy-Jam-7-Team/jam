@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Raw API bindings to the WebAssembly System Interface (WASI)
 //!
 //! This crate provides Rust API bindings to WASI APIs. All WASI APIs are

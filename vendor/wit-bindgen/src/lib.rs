@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Bindings generation support for Rust with the Component Model.
 //!
 //! This crate is a bindings generator for [WIT] and the [Component Model].

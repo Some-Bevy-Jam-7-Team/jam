@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 Naga can be used to translate source code written in one shading language to another.
 

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![doc = include_str!("../readme.md")]
 #![doc(html_no_source)]
 #![debugger_visualizer(natvis_file = "../windows-core.natvis")]

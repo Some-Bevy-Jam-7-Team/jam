@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! **arrayvec** provides the types [`ArrayVec`] and [`ArrayString`]: 
 //! array-backed vector and string types, which store their contents inline.
 //!

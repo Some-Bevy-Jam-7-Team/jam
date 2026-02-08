@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A low-level interface for writing out TOML
 //!
 //! Considerations when serializing arbitrary data:

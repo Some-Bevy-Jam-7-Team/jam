@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! The core components of Yarn Spinner, used for both the compiler and the runtime. These mostly follow the same structure as in the original Yarn Spinner.
 //!
 //! You probably don't want to use this crate directly.

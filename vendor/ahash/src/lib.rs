@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! AHash is a high performance keyed hash function.
 //!
 //! It quickly provides a high quality hash where the result is not predictable without knowing the Key.

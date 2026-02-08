@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 `fontdb` is a simple, in-memory font database with CSS-like queries.
 

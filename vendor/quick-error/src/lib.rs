@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![warn(missing_docs, rust_2018_idioms)]
 //! A macro which makes errors easy to write
 //!

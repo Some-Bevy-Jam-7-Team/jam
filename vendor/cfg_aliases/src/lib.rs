@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # CFG Aliases
 //!
 //! CFG Aliases is a tiny utility to help save you a lot of effort with long winded `#[cfg()]` checks. This crate provides a single [`cfg_aliases!`] macro that doesn't have any dependencies and specifically avoids pulling in `syn` or `quote` so that the impact on your comile times should be negligible.

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // offset-allocator/src/lib.rs
 
 #![doc = include_str!("../README.md")]

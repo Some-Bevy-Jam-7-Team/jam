@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Overview
 //!
 //! This crate provides native rust implementations of image encoding and decoding as well as some

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 A collection of bounded numeric types.
 

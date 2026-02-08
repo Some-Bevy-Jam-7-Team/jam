@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Ergonomic, checked cast functions for primitive types
 //!
 //! This crate provides one checked cast function for each numeric primitive.

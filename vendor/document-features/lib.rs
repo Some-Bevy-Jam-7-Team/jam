@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Copyright © SixtyFPS GmbH <info@sixtyfps.io>
 // SPDX-License-Identifier: MIT OR Apache-2.0
 

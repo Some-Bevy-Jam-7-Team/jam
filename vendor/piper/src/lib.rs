@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A bounded single-producer single-consumer pipe.
 //!
 //! This crate provides a ring buffer that can be asynchronously read from and written to. It is

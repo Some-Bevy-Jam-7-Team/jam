@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //!
 //! Library for subdividing shapes made of triangles.
 //!

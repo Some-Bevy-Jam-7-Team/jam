@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use bevy_platform::sync::{Mutex, OnceLock};
 use core::{num::NonZeroU32, time::Duration};
 use firewheel_core::{node::StreamStatus, StreamInfo};

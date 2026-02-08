@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! The crunchy unroller - deterministically unroll constant loops. For number "crunching".
 //!
 //! The Rust optimizer will unroll constant loops that don't use the loop variable, like this:

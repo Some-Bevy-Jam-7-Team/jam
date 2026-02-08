@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Copyright (c) 2016 Stu Small
 //
 // Licensed under the Apache License, Version 2.0

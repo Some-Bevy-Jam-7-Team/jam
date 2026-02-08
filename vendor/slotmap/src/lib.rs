@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![doc(html_root_url = "https://docs.rs/slotmap/1.1.1")]
 #![crate_name = "slotmap"]
 #![cfg_attr(all(not(test), not(feature = "std")), no_std)]

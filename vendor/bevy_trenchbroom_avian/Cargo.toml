@@ -47,6 +47,6 @@ default-features = false
 
 [dependencies.bevy_trenchbroom]
 version = "0.12.0"
-path = '..\..'
+path = '../bevy_trenchbroom'
 features = ["physics-integration"]
 default-features = false

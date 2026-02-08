@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Futures, streams, and async I/O combinators.
 //!
 //! This crate is a subset of [futures] that compiles an order of magnitude faster, fixes minor

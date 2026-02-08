@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Bindings to the `CoreFoundation` framework
 //!
 //! See [Apple's docs][apple-doc] and [the general docs on framework crates][framework-crates] for more information.

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Code for [`bevy_rerecast`](https://docs.rs/bevy_rerecast)'s optional editor feature.
 
 use bevy_app::prelude::*;

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 mod buffer;
 mod device_info;
 mod enums;

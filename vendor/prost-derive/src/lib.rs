@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![doc(html_root_url = "https://docs.rs/prost-derive/0.12.6")]
 // The `quote!` macro requires deep recursion.
 #![recursion_limit = "4096"]

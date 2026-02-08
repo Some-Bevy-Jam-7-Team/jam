@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 A library for finding occurrences of many patterns at once. This library
 provides multiple pattern search principally through an implementation of the

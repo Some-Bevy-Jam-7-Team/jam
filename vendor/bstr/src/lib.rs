@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 A byte string library.
 

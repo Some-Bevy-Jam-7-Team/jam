@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 __Simba__ is a crate defining a set of trait for writing code that can be generic with regard to the
 number of lanes of the numeric input value. Those traits are implemented by `f32`, `u32`, `i16`,

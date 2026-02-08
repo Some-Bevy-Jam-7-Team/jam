@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # simd-adler32
 //!
 //! A SIMD-accelerated Adler-32 hash algorithm implementation.

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![no_std]
 
 //! [`IndexMap`] is a hash table where the iteration order of the key-value

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate provides a single macro called `if_chain!`.
 //!
 //! **If you're using Rust 1.88 or newer, check out [`if let` chains][rust] instead.

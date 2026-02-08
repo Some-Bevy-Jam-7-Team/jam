@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use core::{
     fmt::Debug,
     num::{NonZeroU32, NonZeroUsize},

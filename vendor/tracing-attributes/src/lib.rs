@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A procedural macro attribute for instrumenting functions with [`tracing`].
 //!
 //! [`tracing`] is a framework for instrumenting Rust programs to collect

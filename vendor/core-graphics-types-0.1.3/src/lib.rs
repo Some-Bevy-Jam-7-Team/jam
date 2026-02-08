@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Copyright 2013 The Servo Project Developers. See the COPYRIGHT
 // file at the top-level directory of this distribution.
 //

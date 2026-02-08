@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! The enum [`Either`] with variants `Left` and `Right` is a general purpose
 //! sum type with two cases.
 //!

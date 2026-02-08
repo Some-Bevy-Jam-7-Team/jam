@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Common [scalar data types][data types] used in font files
 //!
 //! [data types]: https://docs.microsoft.com/en-us/typography/opentype/spec/otff#data-types

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![cfg_attr(not(any(test, feature = "use_std")), no_std)]
 #![doc(html_root_url = "https://docs.rs/scopeguard/1/")]
 

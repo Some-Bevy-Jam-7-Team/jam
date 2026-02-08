@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! The arena, a fast but limited type of allocator.
 //!
 //! **A fast (but limited) allocation arena for values of a single type.**

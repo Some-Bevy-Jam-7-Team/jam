@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Winit is a cross-platform window creation and event loop management library.
 //!
 //! # Building windows

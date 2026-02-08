@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate provides bindings to the wlroots wayland protocol extensions
 //! provided in <https://gitlab.freedesktop.org/wlroots/wlr-protocols>
 //!

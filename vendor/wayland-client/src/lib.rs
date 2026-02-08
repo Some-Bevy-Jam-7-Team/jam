@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Interface for interacting with the Wayland protocol, client-side.
 //!
 //! ## General concepts

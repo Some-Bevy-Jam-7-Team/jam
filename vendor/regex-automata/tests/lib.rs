@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // We have a similar config in the regex-automata crate root. Basically, it is
 // just too annoying to deal with dead code when a subset of features is
 // enabled.

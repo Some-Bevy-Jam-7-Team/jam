@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Overview
 //!
 //! `self_cell` provides one macro-rules macro: [`self_cell`]. With this macro

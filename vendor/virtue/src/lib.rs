@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Virtue, a sinless derive macro helper
 //!
 //! ## Goals

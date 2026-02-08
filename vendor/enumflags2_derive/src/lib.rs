@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![recursion_limit = "2048"]
 extern crate proc_macro;
 #[macro_use]

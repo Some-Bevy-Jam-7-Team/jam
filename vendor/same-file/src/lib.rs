@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 This crate provides a safe and simple **cross platform** way to determine
 whether two file paths refer to the same file or directory.

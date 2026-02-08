@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![no_std]
 #[allow(unused_imports)]
 use libc::{c_int, c_short, c_uint, c_ushort, c_void, intptr_t, size_t, timespec, uintptr_t};

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Copyright 2019 The Fuchsia Authors
 //
 // Licensed under a BSD-style license <LICENSE-BSD>, Apache License, Version 2.0

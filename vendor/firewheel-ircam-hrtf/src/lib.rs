@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A head-related transfer function (HRTF) node for
 //! [Firewheel](https://github.com/BillyDM/Firewheel),
 //! powered by [Fyrox](https://docs.rs/hrtf/latest/hrtf/)'s

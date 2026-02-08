@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![doc(html_root_url="https://docs.rs/jni-sys/0.3.0")]
 #![allow(non_snake_case, non_camel_case_types)]
 

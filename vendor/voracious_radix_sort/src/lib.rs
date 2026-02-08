@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Voracious sort
 //!
 //! Voracious sort is a [sorting algorithm](https://en.wikipedia.org/wiki/Sorting_algorithm), like

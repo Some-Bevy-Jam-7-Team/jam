@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![warn(missing_docs, missing_debug_implementations)]
 #![forbid(improper_ctypes, unsafe_op_in_unsafe_fn)]
 

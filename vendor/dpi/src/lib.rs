@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # DPI
 //!
 //! ## Why should I care about UI scaling?

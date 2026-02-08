@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! ## TinyTemplate
 //!
 //! TinyTemplate is a minimal templating library originally designed for use in [Criterion.rs].

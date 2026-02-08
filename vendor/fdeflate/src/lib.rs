@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A fast deflate implementation.
 //!
 //! This crate contains an optimized implementation of the deflate algorithm tuned to compress PNG

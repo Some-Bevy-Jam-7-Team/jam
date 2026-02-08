@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![deny(clippy::all, clippy::pedantic)]
 #![allow(
     // pedantic exceptions

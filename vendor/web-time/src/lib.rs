@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Description
 //!
 //! Complete drop-in replacement for [`std::time`] that works in browsers.

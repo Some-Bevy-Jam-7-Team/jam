@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Tools for working with tasks.
 
 #![no_std]

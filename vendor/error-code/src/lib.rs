@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Error code library provides generic errno/winapi error wrapper
 //!
 //! User can define own [Category](struct.Category.html) if you want to create new error wrapper.

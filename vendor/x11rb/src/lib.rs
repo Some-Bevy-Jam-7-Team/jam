@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! X11 rust bindings.
 //!
 //! This library allows to interact with an X11 server from rust code. A connection to an X11

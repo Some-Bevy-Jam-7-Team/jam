@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use itertools::Itertools;
 use std::{cmp, iter, ops};
 

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Accurate sleeping. Only use native sleep as far as it can be trusted, then spin.
 //!
 //! The problem with `thread::sleep` is it isn't always very accurate, and this accuracy varies

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![allow(dead_code, non_camel_case_types)]
 #![cfg_attr(rustfmt, rustfmt_skip)]
 

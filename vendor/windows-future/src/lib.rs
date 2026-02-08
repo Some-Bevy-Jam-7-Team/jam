@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![expect(
     missing_docs,
     non_snake_case,

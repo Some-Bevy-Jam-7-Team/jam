@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 This crate provides a cross platform abstraction for writing colored text to
 a terminal. Colors are written using either ANSI escape sequences or by

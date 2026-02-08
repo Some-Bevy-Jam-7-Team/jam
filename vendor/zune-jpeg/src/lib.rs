@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*
  * Copyright (c) 2023.
  *

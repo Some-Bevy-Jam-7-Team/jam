@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Task abstraction for building executors.
 //!
 //! To spawn a future onto an executor, we first need to allocate it on the heap and keep some

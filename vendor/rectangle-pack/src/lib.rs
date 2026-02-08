@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! `rectangle-pack` is a library focused on laying out any number of smaller rectangles
 //! (both 2d rectangles and 3d rectangular prisms) inside any number of larger rectangles.
 #![cfg_attr(not(std), no_std)]

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![cfg_attr(not(any(feature = "std", test)), no_std)]
 #![allow(unexpected_cfgs)] // why does this even exist?
 

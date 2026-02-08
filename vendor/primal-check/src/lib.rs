@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Check some primality-related properties of numbers.
 //!
 //! This crate is designed to be used via `primal`.

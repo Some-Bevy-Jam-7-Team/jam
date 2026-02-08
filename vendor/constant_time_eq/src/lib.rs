@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Compares two equal-sized byte strings in constant time.
 //!
 //! The time of the comparison does not depend on:

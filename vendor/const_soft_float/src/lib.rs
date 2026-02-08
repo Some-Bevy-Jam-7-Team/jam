@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Rust float-point in constant context
 //!
 //! Features:

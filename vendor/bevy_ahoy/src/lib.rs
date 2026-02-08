@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![doc = include_str!("../readme.md")]
 
 /// Everything you need to get started with `bevy_ahoy`

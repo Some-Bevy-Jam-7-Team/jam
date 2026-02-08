@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Concurrent queues.
 //!
 //! This crate provides concurrent queues that can be shared among threads:

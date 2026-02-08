@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![no_std]
 #![warn(
     missing_debug_implementations,

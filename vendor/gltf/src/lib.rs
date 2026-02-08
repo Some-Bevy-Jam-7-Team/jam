@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![deny(missing_docs)]
 #![allow(unknown_lints)]
 #![cfg_attr(docsrs, feature(doc_cfg))]

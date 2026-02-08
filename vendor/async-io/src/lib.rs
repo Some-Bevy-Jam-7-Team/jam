@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Async I/O and timers.
 //!
 //! This crate provides two tools:

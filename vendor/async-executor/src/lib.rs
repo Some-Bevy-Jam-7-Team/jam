@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Async executors.
 //!
 //! This crate provides two reference executors that trade performance for

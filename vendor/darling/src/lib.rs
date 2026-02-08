@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Darling
 //! Darling is a tool for declarative attribute parsing in proc macro implementations.
 //!

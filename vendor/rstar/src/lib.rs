@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! An n-dimensional [r*-tree](https://en.wikipedia.org/wiki/R*-tree) implementation for use as a spatial index.
 //!
 //! This crate implements a flexible, n-dimensional r-tree implementation with

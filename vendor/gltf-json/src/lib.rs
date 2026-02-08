@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /// Contains `Accessor` and other related data structures.
 pub mod accessor;
 

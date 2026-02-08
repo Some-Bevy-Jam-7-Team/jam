@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Provides Android functionality for Bevy Engine.
 
 #[cfg(target_os = "android")]

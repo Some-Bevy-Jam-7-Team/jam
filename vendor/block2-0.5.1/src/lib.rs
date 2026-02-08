@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Apple's C language extension of blocks
 //!
 //! C Blocks are functions which capture their environments, i.e. the

@@ -795,7 +795,7 @@ impl EntityAllocator {
     /// See [`AllocEntitiesIterator`] docs for more.
     pub fn alloc_many(&self, count: u32) -> AllocEntitiesIterator<'_> {
         let current_len = self.free_len.fetch_sub(count as usize, Ordering::Relaxed);
-        let current_len = if current_len < self.free.len() {
+        let current_len = if current_len <= self.free.len() {
             current_len
         } else {
             0

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 This crate exposes a variety of regex engines used by the `regex` crate.
 It provides a vast, sprawling and "expert" level API to each regex engine.

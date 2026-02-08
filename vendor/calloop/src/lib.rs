@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Calloop, a Callback-based Event Loop
 //!
 //! This crate provides an [`EventLoop`] type, which is a small abstraction

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! For panicking with formatting in const contexts.
 //!
 //! This library exists because the panic macro was stabilized for use in const contexts

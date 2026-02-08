@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This library describes the API surface of WebGPU that is agnostic of the backend.
 //! This API is used for targeting both Web and Native.
 

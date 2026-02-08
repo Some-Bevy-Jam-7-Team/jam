@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Taffy
 //!
 //! Taffy is a flexible, high-performance library for **UI layout**.

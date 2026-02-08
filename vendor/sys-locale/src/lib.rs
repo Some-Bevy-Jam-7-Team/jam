@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A library to safely and easily obtain the current locale on the system or for an application.
 //!
 //! This library currently supports the following platforms:

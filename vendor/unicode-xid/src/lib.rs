@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Copyright 2012-2024 The Rust Project Developers. See the COPYRIGHT
 // file at the top-level directory of this distribution and at
 // https://www.rust-lang.org/policies/licenses.

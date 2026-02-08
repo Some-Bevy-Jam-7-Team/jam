@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Thread parking and unparking.
 //!
 //! A [`Parker`] is in either the notified or unnotified state. The [`park()`][`Parker::park()`] method blocks

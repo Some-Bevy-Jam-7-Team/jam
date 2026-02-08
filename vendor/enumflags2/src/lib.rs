@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Enum Flags
 //! `enumflags2` implements the classic bitflags datastructure. Annotate an enum
 //! with `#[bitflags]`, and `BitFlags<YourEnum>` will be able to hold arbitrary combinations

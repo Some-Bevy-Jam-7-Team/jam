@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![warn(
     clippy::undocumented_unsafe_blocks,
     clippy::missing_safety_doc,

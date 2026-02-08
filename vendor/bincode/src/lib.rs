@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![no_std]
 #![warn(missing_docs, unused_lifetimes)]
 #![cfg_attr(docsrs, feature(doc_cfg))]

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! [`Equivalent`] and [`Comparable`] are traits for key comparison in maps.
 //!
 //! These may be used in the implementation of maps where the lookup type `Q`

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 mod attribute;
 mod derive_enum;
 mod derive_struct;

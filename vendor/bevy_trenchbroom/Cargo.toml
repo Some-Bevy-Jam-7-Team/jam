@@ -87,7 +87,7 @@ package = "bevy_reflect"
 
 [dependencies.bevy_trenchbroom_macros]
 version = "0.12.0"
-path = "subcrates/bevy_trenchbroom_macros"
+path = "../bevy_trenchbroom_macros"
 
 [dependencies.enumflags2]
 version = "0.7"

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! [![Banner](https://raw.githubusercontent.com/nvzqz/static-assertions-rs/assets/Banner.png)](https://github.com/nvzqz/static-assertions-rs)
 //!
 //! <div align="center">

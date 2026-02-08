@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Adapted from `validator_derive` (https://github.com/Keats/validator).
 //
 // See LICENSE for details.

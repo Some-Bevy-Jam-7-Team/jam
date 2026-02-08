@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! [![github]](https://github.com/dtolnay/erased-serde)&ensp;[![crates-io]](https://crates.io/crates/erased-serde)&ensp;[![docs-rs]](https://docs.rs/erased-serde)
 //!
 //! [github]: https://img.shields.io/badge/github-8da0cb?style=for-the-badge&labelColor=555555&logo=github

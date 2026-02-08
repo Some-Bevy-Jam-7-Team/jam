@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Objective-C type-encoding
 //!
 //! The Objective-C directive `@encode` encodes types as strings, and this is

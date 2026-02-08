@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Raw API bindings to the [WebAssembly System Interface (WASI)][WASI]
 //!
 //! [WASI]: https://github.com/WebAssembly/WASI

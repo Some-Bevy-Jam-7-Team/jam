@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 [![GitHub CI Status](https://github.com/LPGhatguy/thunderdome/workflows/CI/badge.svg)](https://github.com/LPGhatguy/thunderdome/actions)
 [![thunderdome on crates.io](https://img.shields.io/crates/v/thunderdome.svg)](https://crates.io/crates/thunderdome)

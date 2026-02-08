@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Core traits and types for asynchronous operations in Rust.
 
 #![no_std]

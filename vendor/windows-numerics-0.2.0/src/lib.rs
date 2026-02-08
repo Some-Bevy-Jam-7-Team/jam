@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![allow(non_snake_case, clippy::all)]
 #![doc = include_str!("../readme.md")]
 #![allow(missing_docs)]

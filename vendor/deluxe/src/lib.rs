@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Deluxe
 //!
 //! A procedural macro attribute parser.

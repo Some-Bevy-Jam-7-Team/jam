@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate provide parsing fontconfig file but not yet complete all features
 //!
 //! see <https://www.freedesktop.org/software/fontconfig/fontconfig-user.html> for more detail infomation of fontconfig file

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! An audio sample rate conversion library for Rust.
 //!
 //! This library provides resamplers to process audio in chunks.

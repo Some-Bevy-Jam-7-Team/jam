@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate provides methods to normalize paths in the recommended way for
 //! the operating system.
 //!

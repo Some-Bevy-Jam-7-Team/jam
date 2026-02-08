@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This is a library for controlling colors and formatting, such as
 //! red bold text or blue underlined text, on ANSI terminals.
 //!

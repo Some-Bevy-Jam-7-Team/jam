@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Copyright 2017 Robert Grosse
 
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or

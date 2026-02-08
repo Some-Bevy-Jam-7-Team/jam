@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![forbid(unsafe_code)]
 #![cfg_attr(
     any(docsrs, docsrs_dep),

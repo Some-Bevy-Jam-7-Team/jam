@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate implements a structure that can be used as a generic array type.
 //! Core Rust array types `[T; N]` can't be used generically with
 //! respect to `N`, so for example this:

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 [`RangeMap`] and [`RangeInclusiveMap`] are map data structures whose keys
 are stored as ranges. Contiguous and overlapping ranges that map to the same

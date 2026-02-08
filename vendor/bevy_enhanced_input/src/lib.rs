@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 A powerful observer-based input manager for Bevy.
 

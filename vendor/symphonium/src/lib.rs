@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! An unofficial easy-to-use wrapper around [Symphonia](https://github.com/pdeljanov/Symphonia)
 //! for loading audio files. It also handles resampling at load-time.
 //!

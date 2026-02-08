@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A concurrent multi-producer multi-consumer queue.
 //!
 //! There are two kinds of queues:

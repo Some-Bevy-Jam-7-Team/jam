@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Asynchronous channels.
 //!
 //! Like threads, concurrent tasks sometimes need to communicate with each

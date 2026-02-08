@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Runtime support for the `wasm-bindgen` tool
 //!
 //! This crate contains the runtime support necessary for `wasm-bindgen` the

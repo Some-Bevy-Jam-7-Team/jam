@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Serde is a framework for ***ser***ializing and ***de***serializing Rust data
 //! structures efficiently and generically.
 //!
@@ -96,7 +97,7 @@
 // Restrictions
 #![deny(clippy::question_mark_used)]
 // Rustc lints.
-#![deny(missing_docs, unused_imports)]
+#![deny(missing_docs)]
 
 ////////////////////////////////////////////////////////////////////////////////
 

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 This crate provides a smattering of safe routines for parts of windows-sys. The
 primary purpose of this crate is to serve as a dumping ground for various

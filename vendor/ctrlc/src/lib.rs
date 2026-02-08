@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Copyright (c) 2017 CtrlC developers
 // Licensed under the Apache License, Version 2.0
 // <LICENSE-APACHE or

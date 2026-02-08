@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Convert to and from different string cases.
 //!
 //! # Basic Usage

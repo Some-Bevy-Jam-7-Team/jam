@@ -1,3 +1,4 @@
+#![allow(warnings)]
 // Not supported by MSRV
 #![allow(clippy::uninlined_format_args)]
 

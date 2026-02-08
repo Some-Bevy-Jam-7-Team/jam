@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Android NDK
 //!
 //! Bindings to the [Android NDK].

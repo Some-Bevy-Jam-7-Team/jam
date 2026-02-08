@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![expect(
     clippy::doc_markdown,

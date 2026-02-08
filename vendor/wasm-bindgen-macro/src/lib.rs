@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![doc(html_root_url = "https://docs.rs/wasm-bindgen-macro/0.2")]
 
 extern crate proc_macro;

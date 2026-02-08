@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! A framework for Rust wrappers over C APIs.
 //!
 //! Ownership is as important in C as it is in Rust, but the semantics are often implicit. In

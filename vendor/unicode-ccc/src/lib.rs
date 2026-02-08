@@ -1,3 +1,4 @@
+#![allow(warnings)]
 /*!
 
 This library implements

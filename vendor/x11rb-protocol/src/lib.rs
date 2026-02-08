@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! X11 rust bindings.
 //!
 //! This crate provides a representation of the X11 protocol in Rust. With this protocol, raw X11

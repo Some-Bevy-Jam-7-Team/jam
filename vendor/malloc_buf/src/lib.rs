@@ -1,3 +1,4 @@
+#![allow(warnings)]
 extern crate libc;
 
 use std::marker::PhantomData;

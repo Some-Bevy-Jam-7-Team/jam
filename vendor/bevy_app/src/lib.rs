@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![cfg_attr(
     any(docsrs, docsrs_dep),
     expect(

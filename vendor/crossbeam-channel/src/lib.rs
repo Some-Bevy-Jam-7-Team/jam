@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Multi-producer multi-consumer channels for message passing.
 //!
 //! This crate is an alternative to [`std::sync::mpsc`] with more features and better performance.

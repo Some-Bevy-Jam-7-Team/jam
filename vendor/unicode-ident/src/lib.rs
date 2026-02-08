@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! [![github]](https://github.com/dtolnay/unicode-ident)&ensp;[![crates-io]](https://crates.io/crates/unicode-ident)&ensp;[![docs-rs]](https://docs.rs/unicode-ident)
 //!
 //! [github]: https://img.shields.io/badge/github-8da0cb?style=for-the-badge&labelColor=555555&logo=github

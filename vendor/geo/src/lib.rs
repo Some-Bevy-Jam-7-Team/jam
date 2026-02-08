@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![doc(html_logo_url = "https://raw.githubusercontent.com/georust/meta/master/logo/logo.png")]
 
 //! The `geo` crate provides planar geospatial geometries and algorithms.

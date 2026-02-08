@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Core code for [`bevy_rerecast`](https://docs.rs/bevy_rerecast),
 //! which excludes the [`bevy_rerecast_editor_integration`](https://docs.rs/bevy_rerecast_editor_integration)
 

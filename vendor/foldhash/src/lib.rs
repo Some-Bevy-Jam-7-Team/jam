@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This crate provides foldhash, a fast, non-cryptographic, minimally
 //! DoS-resistant hashing algorithm designed for computational uses such as
 //! hashmaps, bloom filters, count sketching, etc.

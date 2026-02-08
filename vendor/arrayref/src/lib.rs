@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! This package contains just four macros, which enable the creation
 //! of array references to portions of arrays or slices (or things
 //! that can be sliced).

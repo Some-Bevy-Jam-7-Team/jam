@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Efficient and customizable data-encoding functions like base64, base32, and hex
 //!
 //! This [crate] provides little-endian ASCII base-conversion encodings for

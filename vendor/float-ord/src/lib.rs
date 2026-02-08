@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Order floating point numbers, into this ordering:
 //!
 //!    NaN | -Infinity | x < 0 | -0 | +0 | x > 0 | +Infinity | NaN

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 extern crate strsim;
 
 use strsim::{hamming, levenshtein, normalized_levenshtein, osa_distance,damerau_levenshtein,

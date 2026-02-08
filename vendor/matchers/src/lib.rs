@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Regex matchers on character and byte streams.
 //!
 //! ## Overview

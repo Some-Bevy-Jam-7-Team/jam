@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use std::convert::Infallible;
 use std::io::{self, Read};
 use std::iter::Map;

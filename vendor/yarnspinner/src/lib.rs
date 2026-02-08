@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! # Yarn Spinner for Rust
 //! The friendly dialogue creation tool for Rust.
 //!

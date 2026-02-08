@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! 32-bit hashing algorithms
 //!
 //! # Why?

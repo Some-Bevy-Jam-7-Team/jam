@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![doc = include_str!("../README.md")]
 #![no_std]
 #![cfg_attr(docsrs, feature(doc_cfg))]

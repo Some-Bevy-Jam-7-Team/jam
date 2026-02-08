@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //! Adler-32 checksum implementation.
 //!
 //! This implementation features:

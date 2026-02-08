@@ -1,3 +1,4 @@
+#![allow(warnings)]
 //!
 //! Library for Vulkan-like APIs to allocated descriptor sets
 //! from descriptor pools fast, with least overhead and zero fragmentation.
