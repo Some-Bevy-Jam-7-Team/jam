@@ -21,7 +21,7 @@ pub struct FeverDamage(pub f32);
 
 impl Default for FeverDamage {
     fn default() -> Self {
-        Self(5.)
+        Self(1.)
     }
 }
 
