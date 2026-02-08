@@ -26,6 +26,14 @@ pub(super) fn plugin(app: &mut App) {
 #[action_output(bool)]
 pub(crate) struct Interact;
 
+#[derive(Debug, InputAction)]
+#[action_output(bool)]
+pub(crate) struct EatObject;
+
+#[derive(Debug, InputAction)]
+#[action_output(bool)]
+pub(crate) struct VomitObject;
+
 #[derive(Debug, Component, Default)]
 #[component(on_add = PlayerInputContext::on_add)]
 pub(crate) struct PlayerInputContext;
@@ -129,8 +137,16 @@ impl PlayerInputContext {
                 ),
                 (
                     Action::<Interact>::new(),
-                    bindings![KeyCode::KeyE, GamepadButton::South]
+                    bindings![KeyCode::KeyI, GamepadButton::South]
                 ),
+                (
+                    Action::<EatObject>::new(),
+                    bindings![KeyCode::KeyE, GamepadButton::North]
+                ),
+                (
+                    Action::<VomitObject>::new(),
+                    bindings![KeyCode::KeyV, GamepadButton::East]
+                )
             ]));
     }
 }

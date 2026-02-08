@@ -46,6 +46,8 @@ fn on_add(add: On<Add, Npc>, mut commands: Commands, assets: Res<AssetServer>) {
             Collider::cylinder(NPC_RADIUS, NPC_HEIGHT),
             CharacterController {
                 speed: NPC_SPEED,
+                filter: SpatialQueryFilter::DEFAULT
+                    .with_mask(LayerMask::ALL & !CollisionLayer::Stomach.to_bits()),
                 ..default()
             },
             ColliderDensity(1_000.0),
