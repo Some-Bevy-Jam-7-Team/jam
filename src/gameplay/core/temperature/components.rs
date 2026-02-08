@@ -67,7 +67,6 @@ impl Default for BaseDamage {
 /// Temperature of objects/entities/space in the environment, affecting the temperature of units around them.
 #[derive(Component, Debug, Deref, DerefMut, Clone, Copy, Reflect)]
 #[reflect(Clone, Debug, Component)]
-#[require(CollisionEventsEnabled, Collider)]
 pub struct EnvironmentTemperature(pub f32);
 
 impl Default for EnvironmentTemperature {
