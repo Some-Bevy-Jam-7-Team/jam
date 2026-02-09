@@ -74,9 +74,9 @@ impl FromWorld for LevelAssets {
 
 		Self {
 			// Our main level is inspired by the TheDarkMod fan mission [Volta I: The Stone](https://www.thedarkmod.com/missiondetails/?internalName=volta1_3)
-			level: assets.load("maps/volta_i/volta_i.map#Scene"),
+			level: assets.load("maps/main/one/one.map#Scene"),
 			// You can regenerate the navmesh by using `bevy_rerecast_editor`
-			navmesh: assets.load("maps/volta_i/volta_i.nav"),
+			navmesh: assets.load("maps/main/one/one.nav"),
 			music: assets.load("audio/music/Ambiance_Rain_Calm_Loop_Stereo.ogg"),
 			env_map_specular: assets.load("cubemaps/NightSkyHDRI001_4K-HDR_specular.ktx2"),
 			env_map_diffuse: assets.load("cubemaps/NightSkyHDRI001_4K-HDR_diffuse.ktx2"),

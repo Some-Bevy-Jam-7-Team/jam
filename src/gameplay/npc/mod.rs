@@ -26,11 +26,15 @@ mod sound;
 pub(super) fn plugin(app: &mut App) {
 	app.add_plugins((ai::plugin, animation::plugin, assets::plugin, sound::plugin));
 	app.load_asset::<Gltf>(Npc::model_path());
-	app.add_observer(on_add);
+	app.load_asset::<Gltf>(Jan::model_path());
+	app.add_observer(on_add).add_observer(on_add_jan);
 }
 
 #[point_class(base(Transform, Visibility), model("models/fox/Fox.gltf"))]
 pub(crate) struct Npc;
+
+#[point_class(base(Transform, Visibility), model("models/jan_npc/jan.gltf"))]
+pub(crate) struct Jan;
 
 pub(crate) const NPC_RADIUS: f32 = 0.6;
 pub(crate) const NPC_HEIGHT: f32 = 1.3;
@@ -64,4 +68,28 @@ fn on_add(add: On<Add, Npc>, mut commands: Commands, assets: Res<AssetServer>) {
 			Transform::from_xyz(0.0, -NPC_FLOAT_HEIGHT, 0.0),
 		))
 		.observe(setup_npc_animations);
+}
+
+fn on_add_jan(add: On<Add, Jan>, mut commands: Commands, assets: Res<AssetServer>) {
+	commands
+		.entity(add.entity)
+		.insert((
+			Collider::cylinder(NPC_RADIUS, NPC_HEIGHT),
+			CharacterController {
+				speed: NPC_SPEED,
+				filter: SpatialQueryFilter::DEFAULT
+					.with_mask(LayerMask::ALL & !CollisionLayer::Stomach.to_bits()),
+				..default()
+			},
+			ColliderDensity(1_000.0),
+			RigidBody::Kinematic,
+			AnimationState::<NpcAnimationState>::default(),
+			AnimationPlayerAncestor,
+			CollisionLayers::new(CollisionLayer::Character, LayerMask::ALL),
+		))
+		.with_child((
+			Name::new("Npc Model"),
+			SceneRoot(assets.load_trenchbroom_model::<Jan>()),
+			Transform::from_xyz(0.0, -NPC_FLOAT_HEIGHT, 0.0),
+		));
 }

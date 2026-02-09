@@ -1,0 +1,8 @@
+inherits = "/textures/base.toml"
+
+[material]
+base_color_texture = "${name}.png"
+normal_map_texture = "${name}/${name}_normal.png"
+metallic_roughness_texture = "${name}/${name}_roughness.png"
+#occlusion_texture = "${name}/${name}_ambientOcclusion.png"
+perceptual_roughness = 1.0
