@@ -58,14 +58,6 @@ const PLAYER_HEIGHT: f32 = 1.8;
 /// The half height of the player character's capsule is the distance between the character's center and the lowest point of its collider.
 const PLAYER_HALF_HEIGHT: f32 = PLAYER_HEIGHT / 2.0;
 
-/// The height used for the player's floating character controller.
-///
-/// Such a controller works by keeping the character itself at a more-or-less constant height above the ground by
-/// using a spring. It's important to make sure that this floating height is greater (even if by little) than the half height.
-///
-/// In this case, we use 30 cm of padding to make the player float nicely up stairs.
-const PLAYER_FLOAT_HEIGHT: f32 = PLAYER_HALF_HEIGHT + 0.01;
-
 fn setup_player(
 	add: On<Add, Player>,
 	mut commands: Commands,
@@ -89,7 +81,7 @@ fn setup_player(
 			children![
 				(
 					Name::new("Player Landmass Character"),
-					Transform::from_xyz(0.0, -PLAYER_FLOAT_HEIGHT, 0.0),
+					Transform::from_xyz(0.0, -PLAYER_HALF_HEIGHT, 0.0),
 					Character3dBundle {
 						character: Character::default(),
 						settings: CharacterSettings {

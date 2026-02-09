@@ -113,6 +113,8 @@ bevy_hanabi = { version = "0.18", default-features = false, features = [
     "gpu_tests",
 ] }
 
+bevy_mod_skinned_aabb = "0.4"
+
 [features]
 default = [
     # Default to a native dev build.
