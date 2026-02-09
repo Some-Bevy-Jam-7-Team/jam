@@ -3,7 +3,11 @@
 use std::any::Any as _;
 
 use crate::{
-	gameplay::{crosshair::CrosshairState, player::input::BlocksInput}, menus::Menu, screens::Screen, theme::widget, ui_layout::RootWidget
+	gameplay::{crosshair::CrosshairState, player::input::BlocksInput},
+	menus::Menu,
+	screens::Screen,
+	theme::widget,
+	ui_layout::RootWidget,
 };
 use bevy::{input::common_conditions::input_just_pressed, prelude::*};
 

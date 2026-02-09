@@ -4,10 +4,7 @@ use bevy::{
 	window::{CursorGrabMode, CursorOptions},
 };
 
-use crate::{
-	menus::Menu,
-	theme::widget,
-};
+use crate::{menus::Menu, theme::widget};
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_systems(OnEnter(Menu::Main), spawn_main_menu);

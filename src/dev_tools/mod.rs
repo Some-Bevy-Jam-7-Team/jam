@@ -27,5 +27,9 @@ pub(super) fn plugin(app: &mut App) {
 }
 
 fn clicked_entity(event: On<Pointer<Click>>, names: Query<&Name>) {
-	info!("Clicked on: {}, with name: {:?}", event.entity, names.get(event.entity).ok())
+	info!(
+		"Clicked on: {}, with name: {:?}",
+		event.entity,
+		names.get(event.entity).ok()
+	)
 }

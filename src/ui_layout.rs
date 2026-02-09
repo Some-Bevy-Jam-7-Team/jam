@@ -23,7 +23,12 @@ pub(super) fn plugin(app: &mut App) {
 /// # See also:
 /// [`UiCanvas`]
 #[derive(Component, Default)]
-#[require(Node, RootWidgetSize, RootWidgetPosition)]
+#[require(
+	Node,
+	RootWidgetSize,
+	RootWidgetPosition,
+	RootWidgetPositionInterpolated
+)]
 pub struct RootWidget;
 
 /// Marker component for a singleton(!) entity into which the [`RootWidget`]s should be laid out.
@@ -36,6 +41,9 @@ pub struct UiCanvas;
 struct RootWidgetPosition(Vec2);
 
 #[derive(Component, Default)]
+struct RootWidgetPositionInterpolated(Vec2);
+
+#[derive(Component, Default)]
 struct RootWidgetSize(Vec2);
 
 // TODO: Optimise with change detection
@@ -44,7 +52,9 @@ fn reparent_roots(
 	widgets: Query<Entity, With<RootWidget>>,
 	root: Single<Entity, With<UiCanvas>>,
 ) {
-	commands.entity(*root).add_children(&(widgets.iter().collect::<Vec<Entity>>()));
+	commands
+		.entity(*root)
+		.add_children(&(widgets.iter().collect::<Vec<Entity>>()));
 }
 
 fn extract_root_sizes(
@@ -93,8 +103,8 @@ fn compute_layout(
 			if minkowski_sum.closest_point(position) == position {
 				continue;
 			}
-			if let Some(collision) = RayCast2d::new(position, direction, t)
-				.aabb_intersection_at(&minkowski_sum)
+			if let Some(collision) =
+				RayCast2d::new(position, direction, t).aabb_intersection_at(&minkowski_sum)
 			{
 				t = f32::min(t, collision * 0.995);
 			}
@@ -170,12 +180,25 @@ fn compute_layout(
 
 fn apply_root_positions(
 	window_size: Single<&ComputedNode, With<UiCanvas>>,
-	mut widget_query: Query<(&mut Node, &RootWidgetPosition, &RootWidgetSize)>,
+	mut widget_query: Query<(
+		&mut Node,
+		&RootWidgetPosition,
+		&mut RootWidgetPositionInterpolated,
+		&RootWidgetSize,
+	)>,
+	time: Res<Time<Real>>,
 ) {
 	let window_size = window_size.size.max(Vec2::ONE);
 
-	for (mut node, &RootWidgetPosition(position), &RootWidgetSize(size)) in widget_query.iter_mut()
+	for (mut node, &RootWidgetPosition(position), mut interpolated, &RootWidgetSize(size)) in
+		widget_query.iter_mut()
 	{
+		interpolated
+			.0
+			.smooth_nudge(&position, 3.0, time.delta_secs());
+
+		let position = interpolated.0;
+
 		node.position_type = PositionType::Absolute;
 		let offset = 100.0 * (Vec2::splat(0.5) + (position - size / 2.0) / window_size);
 		node.left = Val::Percent(offset.x);
