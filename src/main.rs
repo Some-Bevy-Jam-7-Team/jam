@@ -28,6 +28,7 @@ use bevy_seedling::SeedlingPlugin;
 use bitflags::bitflags;
 
 use bevy::{asset::AssetMetaCheck, prelude::*};
+use firewheel::FirewheelConfig;
 
 #[cfg(all(feature = "native", feature = "web"))]
 compile_error!(
@@ -53,66 +54,78 @@ fn main() -> AppExit {
 
 	// Add Bevy plugins.
 	app.insert_resource(DefaultOpaqueRendererMethod::deferred());
-	app.add_plugins((
-		DefaultPlugins
-			.set(AssetPlugin {
-				// Wasm builds will check for meta files (that don't exist) if this isn't set.
-				// This causes errors and even panics on web build on itch.
-				// See https://github.com/bevyengine/bevy_github_ci_template/issues/48.
-				meta_check: AssetMetaCheck::Never,
+	app.add_plugins((DefaultPlugins
+		.set(AssetPlugin {
+			// Wasm builds will check for meta files (that don't exist) if this isn't set.
+			// This causes errors and even panics on web build on itch.
+			// See https://github.com/bevyengine/bevy_github_ci_template/issues/48.
+			meta_check: AssetMetaCheck::Never,
+			..default()
+		})
+		.set(WindowPlugin {
+			primary_window: Window {
+				title: "Jam".to_string(),
+				fit_canvas_to_parent: true,
+				#[cfg(feature = "web")]
+				prevent_default_event_handling: true,
 				..default()
-			})
-			.set(WindowPlugin {
-				primary_window: Window {
-					title: "Jam".to_string(),
-					fit_canvas_to_parent: true,
-					#[cfg(feature = "web")]
-					prevent_default_event_handling: true,
-					..default()
-				}
-				.into(),
-				..default()
-			})
-			.set(ImagePlugin {
-				default_sampler: default_image_sampler_descriptor(),
-			})
-			.set(GltfPlugin {
-				convert_coordinates: GltfConvertCoordinates {
-					rotate_scene_entity: true,
-					rotate_meshes: true,
-				},
-				..default()
-			})
-			.set(LogPlugin {
-				filter: format!(
-					concat!(
-						"{default},",
-						"symphonia_bundle_mp3::demuxer=warn,",
-						"symphonia_format_caf::demuxer=warn,",
-						"symphonia_format_isompf4::demuxer=warn,",
-						"symphonia_format_mkv::demuxer=warn,",
-						"symphonia_format_ogg::demuxer=warn,",
-						"symphonia_format_riff::demuxer=warn,",
-						"symphonia_format_wav::demuxer=warn,",
-						"calloop::loop_logic=error,",
-					),
-					default = bevy::log::DEFAULT_FILTER
+			}
+			.into(),
+			..default()
+		})
+		.set(ImagePlugin {
+			default_sampler: default_image_sampler_descriptor(),
+		})
+		.set(GltfPlugin {
+			convert_coordinates: GltfConvertCoordinates {
+				rotate_scene_entity: true,
+				rotate_meshes: true,
+			},
+			..default()
+		})
+		.set(LogPlugin {
+			filter: format!(
+				concat!(
+					"{default},",
+					"symphonia_bundle_mp3::demuxer=warn,",
+					"symphonia_format_caf::demuxer=warn,",
+					"symphonia_format_isompf4::demuxer=warn,",
+					"symphonia_format_mkv::demuxer=warn,",
+					"symphonia_format_ogg::demuxer=warn,",
+					"symphonia_format_riff::demuxer=warn,",
+					"symphonia_format_wav::demuxer=warn,",
+					"calloop::loop_logic=error,",
 				),
-				fmt_layer: |_| {
-					Some(Box::new(
-						bevy::log::tracing_subscriber::fmt::Layer::default()
-							.without_time()
-							.map_fmt_fields(MakeExt::debug_alt)
-							.with_writer(std::io::stderr),
-					))
-				},
-				..default()
-			}),
-		#[cfg(feature = "native")]
-		SeedlingPlugin::default(),
-		#[cfg(feature = "web")]
-		SeedlingPlugin::new_web_audio(),
-	));
+				default = bevy::log::DEFAULT_FILTER
+			),
+			fmt_layer: |_| {
+				Some(Box::new(
+					bevy::log::tracing_subscriber::fmt::Layer::default()
+						.without_time()
+						.map_fmt_fields(MakeExt::debug_alt)
+						.with_writer(std::io::stderr),
+				))
+			},
+			..default()
+		}),));
+
+	let firewheel_config = FirewheelConfig {
+		scheduled_event_capacity: 1024,
+		..Default::default()
+	};
+
+	#[cfg(feature = "native")]
+	app.add_plugins(SeedlingPlugin {
+		graph_config: bevy_seedling::prelude::GraphConfiguration::Empty,
+		config: firewheel_config,
+		..Default::default()
+	});
+	#[cfg(feature = "web")]
+	app.add_plugins(SeedlingPlugin {
+		graph_config: bevy_seedling::prelude::GraphConfiguration::Empty,
+		config: firewheel_config,
+		..SeedlingPlugin::new_web_audio()
+	});
 
 	app.insert_resource(GlobalAmbientLight::NONE);
 

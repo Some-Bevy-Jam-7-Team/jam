@@ -2,6 +2,7 @@
 //! We can add all manner of settings and accessibility options here.
 //! For 3D, we'd also place the camera sensitivity and FOV here.
 
+use bevy::ecs::query::QueryFilter;
 use bevy::window::PresentMode;
 use bevy::{input::common_conditions::input_just_pressed, prelude::*, ui::Val::*};
 use bevy_framepace::{FramepaceSettings, Limiter};
@@ -9,7 +10,7 @@ use bevy_seedling::prelude::*;
 
 use crate::{
 	Pause,
-	audio::{DEFAULT_MAIN_VOLUME, perceptual::PerceptualVolumeConverter},
+	audio::{MusicPool, perceptual::PerceptualVolumeConverter},
 	gameplay::player::camera::{CameraSensitivity, WorldModelFov},
 	menus::Menu,
 	screens::Screen,
@@ -17,7 +18,6 @@ use crate::{
 };
 
 pub(super) fn plugin(app: &mut App) {
-	app.init_resource::<VolumeSliderSettings>();
 	app.init_resource::<VsyncSetting>();
 	app.init_resource::<FpsLimiterSettings>();
 	app.add_systems(OnEnter(Menu::Settings), spawn_settings_menu);
@@ -29,8 +29,9 @@ pub(super) fn plugin(app: &mut App) {
 	app.add_systems(
 		Update,
 		(
-			update_global_volume.run_if(resource_exists_and_changed::<VolumeSliderSettings>),
-			update_volume_label,
+			update_volume_label::<With<GlobalVolumeLabel>, With<MainBus>>,
+			update_volume_label::<With<MusicVolumeLabel>, With<SamplerPool<MusicPool>>>,
+			update_volume_label::<With<SfxVolumeLabel>, With<SoundEffectsBus>>,
 			update_camera_sensitivity_label,
 			update_camera_fov_label,
 			update_vsync.run_if(resource_exists_and_changed::<VsyncSetting>),
@@ -62,13 +63,41 @@ fn spawn_settings_menu(mut commands: Commands, paused: Res<State<Pause>>) {
 				children![
 					// Audio
 					(
-						widget::label("Audio Volume"),
+						widget::label("Global Volume"),
 						Node {
 							justify_self: JustifySelf::End,
 							..default()
 						}
 					),
-					widget::plus_minus_bar(GlobalVolumeLabel, lower_volume, raise_volume),
+					widget::plus_minus_bar(
+						GlobalVolumeLabel,
+						lower_volume::<With<MainBus>>,
+						raise_volume::<With<MainBus>>
+					),
+					(
+						widget::label("Music Volume"),
+						Node {
+							justify_self: JustifySelf::End,
+							..default()
+						}
+					),
+					widget::plus_minus_bar(
+						MusicVolumeLabel,
+						lower_volume::<With<SamplerPool<MusicPool>>>,
+						raise_volume::<With<SamplerPool<MusicPool>>>
+					),
+					(
+						widget::label("Sound Effects Volume"),
+						Node {
+							justify_self: JustifySelf::End,
+							..default()
+						}
+					),
+					widget::plus_minus_bar(
+						SfxVolumeLabel,
+						lower_volume::<With<SoundEffectsBus>>,
+						raise_volume::<With<SoundEffectsBus>>
+					),
 					// Camera Sensitivity
 					(
 						widget::label("Camera Sensitivity"),
@@ -137,9 +166,9 @@ fn spawn_settings_menu(mut commands: Commands, paused: Res<State<Pause>>) {
 }
 
 #[derive(Resource, Reflect, Debug)]
-struct VolumeSliderSettings(usize);
+struct VolumeTicks(usize);
 
-impl VolumeSliderSettings {
+impl VolumeTicks {
 	fn increment(&mut self) {
 		self.0 = Self::MAX_TICK_COUNT.min(self.0 + 1);
 	}
@@ -152,48 +181,63 @@ impl VolumeSliderSettings {
 		self.0 as f32 / Self::MAX_TICK_COUNT as f32
 	}
 
+	fn label(&self) -> String {
+		let filled = "█".repeat(self.0);
+		let empty = " ".repeat(VolumeTicks::MAX_TICK_COUNT - self.0);
+		filled + &empty + "|"
+	}
+
 	/// How many ticks the volume slider supports
 	const MAX_TICK_COUNT: usize = 20;
 }
 
-impl Default for VolumeSliderSettings {
-	fn default() -> Self {
-		Self(
-			(PerceptualVolumeConverter::default().to_perceptual(DEFAULT_MAIN_VOLUME)
+impl From<VolumeTicks> for Volume {
+	fn from(value: VolumeTicks) -> Self {
+		PerceptualVolumeConverter::default().to_volume(value.fraction())
+	}
+}
+
+impl From<Volume> for VolumeTicks {
+	fn from(value: Volume) -> Self {
+		VolumeTicks(
+			(PerceptualVolumeConverter::default().to_perceptual(value)
 				* Self::MAX_TICK_COUNT as f32)
 				.round() as usize,
 		)
 	}
 }
 
-fn update_global_volume(
-	mut master: Single<&mut VolumeNode, With<MainBus>>,
-	volume_step: Res<VolumeSliderSettings>,
-) {
-	master.volume = PerceptualVolumeConverter::default().to_volume(volume_step.fraction());
-}
-
-fn lower_volume(_on: On<Pointer<Click>>, mut volume_step: ResMut<VolumeSliderSettings>) {
-	volume_step.decrement();
-}
-
-fn raise_volume(_on: On<Pointer<Click>>, mut volume_step: ResMut<VolumeSliderSettings>) {
-	volume_step.increment();
-}
-
 #[derive(Component, Reflect)]
 #[reflect(Component)]
 struct GlobalVolumeLabel;
 
-fn update_volume_label(
-	mut label: Single<&mut Text, With<GlobalVolumeLabel>>,
-	slider: Res<VolumeSliderSettings>,
-) {
-	let ticks = slider.0;
-	let filled = "█".repeat(ticks);
-	let empty = " ".repeat(VolumeSliderSettings::MAX_TICK_COUNT - ticks);
-	let text = filled + &empty + "|";
-	label.0 = text;
+#[derive(Component, Reflect)]
+#[reflect(Component)]
+struct MusicVolumeLabel;
+
+#[derive(Component, Reflect)]
+#[reflect(Component)]
+struct SfxVolumeLabel;
+
+fn lower_volume<F: QueryFilter>(_on: On<Pointer<Click>>, mut volume: Single<&mut VolumeNode, F>) {
+	let mut ticks = VolumeTicks::from(volume.volume);
+	ticks.decrement();
+	volume.volume = ticks.into();
+}
+
+fn raise_volume<F: QueryFilter>(_on: On<Pointer<Click>>, mut master: Single<&mut VolumeNode, F>) {
+	let mut ticks = VolumeTicks::from(master.volume);
+	ticks.increment();
+	master.volume = ticks.into();
+}
+
+fn update_volume_label<F1, F2>(mut label: Single<&mut Text, F1>, master: Single<&VolumeNode, F2>)
+where
+	F1: QueryFilter,
+	F2: QueryFilter,
+{
+	let ticks = VolumeTicks::from(master.volume);
+	label.0 = ticks.label();
 }
 
 #[derive(Component, Reflect)]

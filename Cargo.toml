@@ -87,6 +87,7 @@ bevy-inspector-egui = { version = "0.36", optional = true }
 bevy_fix_cursor_unlock_web = "0.3.0"
 bevy_framepace = "0.21"
 bevy_seedling = "0.7.0"
+firewheel = { version = "0.10.0", features = ["svf_node"] }
 
 # Keep this in sync with Bevy
 rand = "0.9"
@@ -129,6 +130,7 @@ dev = [
     "avian3d/diagnostic_ui",
     "bevy_rerecast/debug_plugin",
     "bevy_rerecast/editor_integration",
+    "bevy_seedling/dev",
 ]
 dev_native = [
     "dev",

@@ -4407,6 +4407,7 @@ dependencies = [
  "bevy_yarnspinner_example_dialogue_view",
  "bincode",
  "bitflags 2.10.0",
+ "firewheel",
  "getrandom",
  "landmass_rerecast",
  "rand",
