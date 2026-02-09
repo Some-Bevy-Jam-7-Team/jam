@@ -1,16 +1,13 @@
 //! Player dialogue handling. This module starts the Yarn Spinner dialogue when the player starts interacting with an NPC.
 
-use std::any::Any;
-
 use avian3d::prelude::{SpatialQuery, SpatialQueryFilter};
 use bevy::prelude::*;
 use bevy_enhanced_input::prelude::*;
 
-use bevy_yarnspinner::{events::DialogueCompleted, prelude::*};
+use bevy_yarnspinner::prelude::*;
 
 use crate::{
 	PostPhysicsAppSystems,
-	gameplay::crosshair::CrosshairState,
 	screens::Screen,
 	third_party::{
 		avian3d::CollisionLayer,
@@ -20,14 +17,11 @@ use crate::{
 
 mod ui;
 
-use super::{
-	Player,
-	camera::PlayerCamera,
-	input::{BlocksInput, Interact},
-	pickup::is_holding_prop,
-};
+use super::{Player, camera::PlayerCamera, input::Interact, pickup::is_holding_prop};
 
 pub(super) fn plugin(app: &mut App) {
+	app.init_resource::<DialogueSpeaker>();
+
 	app.configure_sets(
 		Update,
 		(
@@ -40,15 +34,15 @@ pub(super) fn plugin(app: &mut App) {
 
 	app.add_systems(
 		Update,
-		check_for_dialogue_opportunity
+		(
+			check_for_dialogue_opportunity
+				.run_if(not(is_dialogue_running).and(not(is_holding_prop))),
+			stop_dialogue_far_from_speaker,
+		)
+			.chain()
 			.in_set(DialogueSystems::UpdateOpportunity)
-			.run_if(
-				in_state(Screen::Gameplay)
-					.and(not(is_dialogue_running))
-					.and(not(is_holding_prop)),
-			),
+			.run_if(in_state(Screen::Gameplay)),
 	);
-	app.add_observer(restore_input_context);
 	app.add_observer(interact_with_dialogue);
 
 	app.add_plugins(ui::plugin);
@@ -80,39 +74,60 @@ fn check_for_dialogue_opportunity(
 	let node = hit
 		.and_then(|hit| q_yarn_node.get(hit.entity).ok())
 		.cloned();
-	if interaction_prompt.0 != node {
-		interaction_prompt.0 = node;
+	if interaction_prompt.node != node {
+		interaction_prompt.node = node;
+	}
+	if let Some(hit) = hit {
+		interaction_prompt.entity = Some(hit.entity);
 	}
 }
 
 #[derive(Component, Default, Reflect)]
 #[reflect(Component, Default)]
-struct InteractionPrompt(Option<YarnNode>);
+struct InteractionPrompt {
+	node: Option<YarnNode>,
+	entity: Option<Entity>,
+}
+
+/// A resource that tracks the current speaker of the dialogue, if any.
+#[derive(Resource, Default, Reflect)]
+struct DialogueSpeaker(Option<Entity>);
 
 fn interact_with_dialogue(
 	_on: On<Start<Interact>>,
 	mut interaction_prompt: Single<&mut InteractionPrompt>,
 	mut dialogue_runner: Single<&mut DialogueRunner>,
-	mut crosshair: Single<&mut CrosshairState>,
-	mut blocks_input: ResMut<BlocksInput>,
+	mut speaker: ResMut<DialogueSpeaker>,
 ) {
-	let Some(node) = interaction_prompt.0.take() else {
+	let Some(node) = interaction_prompt.node.take() else {
 		return;
 	};
+
+	speaker.0 = Some(interaction_prompt.entity.take().unwrap());
 	dialogue_runner.start_node(&node.yarn_node);
-	blocks_input.insert(interact_with_dialogue.type_id());
-	crosshair
-		.wants_free_cursor
-		.insert(interact_with_dialogue.type_id());
 }
 
-fn restore_input_context(
-	_complete: On<DialogueCompleted>,
-	mut crosshair: Single<&mut CrosshairState>,
-	mut blocks_input: ResMut<BlocksInput>,
+/// Stops dialogue if the player is too far from the speaker.
+fn stop_dialogue_far_from_speaker(
+	player: Single<&GlobalTransform, With<PlayerCamera>>,
+	transforms: Query<&GlobalTransform>,
+	mut dialogue_runner: Single<&mut DialogueRunner>,
+	speaker: Res<DialogueSpeaker>,
 ) {
-	blocks_input.remove(&interact_with_dialogue.type_id());
-	crosshair
-		.wants_free_cursor
-		.remove(&interact_with_dialogue.type_id());
+	const MAX_DIALOGUE_DISTANCE: f32 = 10.0;
+
+	let Some(speaker_transform) = speaker
+		.0
+		.and_then(|speaker_entity| transforms.get(speaker_entity).ok())
+	else {
+		return;
+	};
+
+	let distance = player
+		.translation()
+		.distance(speaker_transform.translation());
+
+	if distance > MAX_DIALOGUE_DISTANCE {
+		dialogue_runner.stop();
+	}
 }

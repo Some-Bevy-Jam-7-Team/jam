@@ -1,6 +1,7 @@
 //! A credits menu.
 
 use crate::audio::MusicPool;
+use crate::ui_layout::RootWidget;
 use crate::{
 	Pause,
 	asset_tracking::LoadResource,
@@ -26,7 +27,7 @@ pub(super) fn plugin(app: &mut App) {
 
 fn spawn_credits_menu(mut commands: Commands, paused: Res<State<Pause>>) {
 	let mut entity_commands = commands.spawn((
-		widget::ui_root("Credits Screen"),
+		RootWidget,
 		DespawnOnExit(Menu::Credits),
 		GlobalZIndex(2),
 		children![

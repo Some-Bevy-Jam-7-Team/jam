@@ -43,8 +43,8 @@ impl FromWorld for PlayerAssets {
 			_model: assets.load_with_settings(
 				Player::scene_path(),
 				|settings: &mut GltfLoaderSettings| {
-					settings.load_meshes = RenderAssetUsages::RENDER_WORLD;
-					settings.load_materials = RenderAssetUsages::RENDER_WORLD;
+					settings.load_meshes = RenderAssetUsages::all();
+					settings.load_materials = RenderAssetUsages::all();
 				},
 			),
 			throw_sound: assets.load("audio/sound_effects/throw.ogg"),

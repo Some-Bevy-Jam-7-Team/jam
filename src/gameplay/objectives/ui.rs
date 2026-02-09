@@ -32,13 +32,13 @@ pub struct ObjectiveOfNode {
 }
 
 /// Spawns the main objective UI node.
-fn spawn_objective_ui(mut commands: Commands) {
+pub fn spawn_objective_ui(mut commands: Commands) {
 	commands.spawn((
+		Name::new("Objective UI"),
+		crate::ui_layout::RootWidget,
+		DespawnOnExit(Screen::Gameplay),
 		ObjectiveUi,
 		Node {
-			position_type: PositionType::Absolute,
-			top: Val::Px(10.0),
-			left: Val::Px(10.0),
 			padding: UiRect::all(Val::Px(10.0)),
 			flex_direction: FlexDirection::Column,
 			row_gap: Val::Px(5.0),

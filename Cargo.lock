@@ -1328,6 +1328,26 @@ name = "bevy_mikktspace"
 version = "0.17.0-dev"
 
 [[package]]
+name = "bevy_mod_skinned_aabb"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5400b061b7047540f6e4f3f422cec47cf63b658e38cca7235a794f70adea5394"
+dependencies = [
+ "bevy_app",
+ "bevy_asset",
+ "bevy_camera",
+ "bevy_color",
+ "bevy_derive",
+ "bevy_ecs",
+ "bevy_gizmos",
+ "bevy_log",
+ "bevy_math",
+ "bevy_mesh",
+ "bevy_reflect",
+ "bevy_transform",
+]
+
+[[package]]
 name = "bevy_pbr"
 version = "0.18.0"
 dependencies = [
@@ -2039,15 +2059,6 @@ dependencies = [
  "variadics_please",
  "yarnspinner",
  "yarnspinner_internal_shared",
-]
-
-[[package]]
-name = "bevy_yarnspinner_example_dialogue_view"
-version = "0.7.0"
-dependencies = [
- "bevy",
- "bevy_yarnspinner",
- "unicode-segmentation",
 ]
 
 [[package]]
@@ -4398,13 +4409,13 @@ dependencies = [
  "bevy_framepace",
  "bevy_hanabi",
  "bevy_landmass",
+ "bevy_mod_skinned_aabb",
  "bevy_rerecast",
  "bevy_seedling",
  "bevy_shuffle_bag",
  "bevy_trenchbroom",
  "bevy_trenchbroom_avian",
  "bevy_yarnspinner",
- "bevy_yarnspinner_example_dialogue_view",
  "bincode",
  "bitflags 2.10.0",
  "firewheel",
@@ -4413,6 +4424,7 @@ dependencies = [
  "rand",
  "regex",
  "tracing",
+ "unicode-segmentation",
  "wasm-bindgen",
 ]
 

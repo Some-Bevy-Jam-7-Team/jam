@@ -8,6 +8,7 @@ use bevy::prelude::*;
 mod animation;
 pub(crate) mod core;
 pub(crate) mod crosshair;
+pub(crate) mod dialogue_view;
 pub(crate) mod level;
 pub(crate) mod npc;
 pub(crate) mod objectives;
@@ -18,6 +19,7 @@ pub(super) fn plugin(app: &mut App) {
 	app.add_plugins((
 		animation::plugin,
 		crosshair::plugin,
+		dialogue_view::plugin,
 		npc::plugin,
 		objectives::plugin,
 		player::plugin,

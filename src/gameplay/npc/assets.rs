@@ -18,13 +18,7 @@ pub(super) fn plugin(app: &mut App) {
 #[reflect(Resource)]
 pub(crate) struct NpcAssets {
 	#[dependency]
-	pub(crate) _model: Handle<Scene>,
-	#[dependency]
-	pub(crate) idle_animation: Handle<AnimationClip>,
-	#[dependency]
-	pub(crate) walk_animation: Handle<AnimationClip>,
-	#[dependency]
-	pub(crate) run_animation: Handle<AnimationClip>,
+	pub(crate) model: Handle<Gltf>,
 	#[dependency]
 	pub(crate) steps: ShuffleBag<Handle<AudioSample>>,
 }
@@ -34,16 +28,13 @@ impl FromWorld for NpcAssets {
 		let assets = world.resource::<AssetServer>();
 		let rng = &mut rand::rng();
 		Self {
-			_model: assets.load_with_settings(
-				Npc::scene_path(),
+			model: assets.load_with_settings(
+				Npc::model_path(),
 				|settings: &mut GltfLoaderSettings| {
-					settings.load_meshes = RenderAssetUsages::RENDER_WORLD;
-					settings.load_materials = RenderAssetUsages::RENDER_WORLD;
+					settings.load_meshes = RenderAssetUsages::all();
+					settings.load_materials = RenderAssetUsages::all();
 				},
 			),
-			run_animation: assets.load(Npc::animation_path(0)),
-			idle_animation: assets.load(Npc::animation_path(1)),
-			walk_animation: assets.load(Npc::animation_path(2)),
 			steps: ShuffleBag::try_new(
 				[
 					assets.load("audio/sound_effects/run/Footsteps_Rock_Run_01.ogg"),

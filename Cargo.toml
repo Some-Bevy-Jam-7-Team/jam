@@ -80,7 +80,7 @@ bevy_trenchbroom_avian = "0.13.0-rc.1"
 
 # dialogue
 bevy_yarnspinner = "0.7"
-bevy_yarnspinner_example_dialogue_view = "0.7"
+unicode-segmentation = "1"
 
 bevy_shuffle_bag = "0.4.0"
 bevy-inspector-egui = { version = "0.36", optional = true }
@@ -112,6 +112,8 @@ bevy_hanabi = { version = "0.18", default-features = false, features = [
     "3d",
     "gpu_tests",
 ] }
+
+bevy_mod_skinned_aabb = "0.4"
 
 [features]
 default = [
@@ -279,7 +281,6 @@ bevy_utils = { path = "vendor/bevy_utils" }
 bevy_window = { path = "vendor/bevy_window" }
 bevy_winit = { path = "vendor/bevy_winit" }
 bevy_yarnspinner = { path = "vendor/bevy_yarnspinner" }
-bevy_yarnspinner_example_dialogue_view = { path = "vendor/bevy_yarnspinner_example_dialogue_view" }
 bevy-inspector-egui = { path = "vendor/bevy-inspector-egui" }
 bevy-inspector-egui-derive = { path = "vendor/bevy-inspector-egui-derive" }
 cosmic-text = { path = "vendor/cosmic-text" }

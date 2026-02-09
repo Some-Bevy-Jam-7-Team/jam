@@ -43,6 +43,6 @@ fn move_textures_to_render_world(
 		}
 
 		let image = images.get_mut(*id).unwrap();
-		image.asset_usage = RenderAssetUsages::RENDER_WORLD;
+		image.asset_usage = RenderAssetUsages::all();
 	}
 }

@@ -38,13 +38,15 @@ pub(crate) fn setup_npc_animations(
 	mut commands: Commands,
 	assets: Res<NpcAssets>,
 	mut graphs: ResMut<Assets<AnimationGraph>>,
+	gltfs: Res<Assets<Gltf>>,
 ) {
+	let gltf = gltfs.get(&assets.model).unwrap();
 	let anim_players = q_anim_players.get(add.entity).unwrap();
 	for anim_player in anim_players.iter() {
 		let (graph, indices) = AnimationGraph::from_clips([
-			assets.run_animation.clone(),
-			assets.idle_animation.clone(),
-			assets.walk_animation.clone(),
+			gltf.named_animations.get("idle").unwrap().clone(),
+			gltf.named_animations.get("idle").unwrap().clone(),
+			gltf.named_animations.get("idle").unwrap().clone(),
 		]);
 		let [run_index, idle_index, walk_index] = indices.as_slice() else {
 			unreachable!()

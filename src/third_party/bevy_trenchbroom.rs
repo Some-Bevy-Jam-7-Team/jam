@@ -17,6 +17,7 @@ pub(super) fn plugin(app: &mut App) {
 					"*_local",
 					"*_normal",
 					"*_roughness",
+					"*_ambientOcclusion",
 				]))
 				.default_solid_scene_hooks(|| {
 					SceneHooks::new()

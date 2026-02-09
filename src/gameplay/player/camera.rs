@@ -12,25 +12,18 @@ use bevy::pbr::ScreenSpaceAmbientOcclusion;
 use bevy::{
 	anti_alias::{fxaa::Fxaa, taa::TemporalAntiAliasing},
 	camera::{Exposure, visibility::RenderLayers},
-	core_pipeline::{
-		Skybox,
-		prepass::{DeferredPrepass, DepthPrepass},
-		tonemapping::Tonemapping,
-	},
-	light::{NotShadowCaster, ShadowFilteringMethod},
+	core_pipeline::prepass::{DeferredPrepass, DepthPrepass},
+	light::{AtmosphereEnvironmentMapLight, NotShadowCaster, ShadowFilteringMethod},
+	pbr::{Atmosphere, ScatteringMedium},
 	post_process::bloom::Bloom,
 	prelude::*,
-	render::view::Hdr,
 	scene::SceneInstanceReady,
 };
 use bevy_ahoy::camera::CharacterControllerCameraOf;
 
 use crate::{
 	CameraOrder, PostPhysicsAppSystems, RenderLayer,
-	gameplay::{
-		animation::{AnimationPlayerAncestor, AnimationPlayerOf, AnimationPlayers},
-		level::LevelAssets,
-	},
+	gameplay::animation::{AnimationPlayerAncestor, AnimationPlayerOf, AnimationPlayers},
 	screens::{Screen, loading::LoadingScreen},
 	third_party::{avian3d::CollisionLayer, bevy_trenchbroom::LoadTrenchbroomModel as _},
 };
@@ -68,20 +61,14 @@ fn spawn_view_model(
 	add: On<Add, Player>,
 	mut commands: Commands,
 	assets: Res<AssetServer>,
-	level_assets: Res<LevelAssets>,
 	fov: Res<WorldModelFov>,
+	mut media: ResMut<Assets<ScatteringMedium>>,
 ) {
 	use bevy_seedling::spatial::SpatialListener3D;
 
-	let env_map = EnvironmentMapLight {
-		diffuse_map: level_assets.env_map_diffuse.clone(),
-		specular_map: level_assets.env_map_specular.clone(),
-		intensity: 300.0,
-		..default()
-	};
+	let medium = media.add(ScatteringMedium::default());
 
-	// Optimized for a dark outdoor scene at night
-	let exposure = Exposure { ev100: 4.5 };
+	let exposure = Exposure { ev100: 10.5 };
 
 	// Spawn the player camera
 	commands
@@ -126,19 +113,11 @@ fn spawn_view_model(
 					clear_color: Color::srgb_u8(15, 9, 20).into(),
 					..default()
 				},
-				Hdr,
 				RenderLayers::from(
 					RenderLayer::DEFAULT | RenderLayer::PARTICLES | RenderLayer::GIZMO3,
 				),
 				exposure,
-				Tonemapping::TonyMcMapface,
 				Bloom::NATURAL,
-				Skybox {
-					image: level_assets.env_map_specular.clone(),
-					brightness: 8.0,
-					..default()
-				},
-				env_map.clone(),
 				(
 					Msaa::Off,
 					TemporalAntiAliasing::default(),
@@ -148,6 +127,15 @@ fn spawn_view_model(
 				#[cfg(feature = "native")]
 				// See https://github.com/bevyengine/bevy/issues/20459
 				ScreenSpaceAmbientOcclusion::default(),
+				AtmosphereEnvironmentMapLight {
+					intensity: 0.5,
+					..default()
+				},
+				Atmosphere::earthlike(medium.clone()),
+				DistanceFog {
+					falloff: FogFalloff::Exponential { density: 0.005 },
+					..default()
+				},
 			));
 
 			// Spawn view model camera.
@@ -159,7 +147,6 @@ fn spawn_view_model(
 					order: CameraOrder::ViewModel.into(),
 					..default()
 				},
-				Hdr,
 				Projection::from(PerspectiveProjection {
 					// We use whatever FOV we set in the animation software, e.g. Blender.
 					// Tip: if you want to set a camera in Blender to the same defaults as Bevy,
@@ -170,9 +157,11 @@ fn spawn_view_model(
 				// Only render objects belonging to the view model.
 				RenderLayers::from(RenderLayer::VIEW_MODEL),
 				exposure,
-				Tonemapping::TonyMcMapface,
 				(DepthPrepass, Msaa::Off, DeferredPrepass, Fxaa::default()),
-				env_map,
+				AtmosphereEnvironmentMapLight {
+					intensity: 0.5,
+					..default()
+				},
 			));
 
 			// Spawn the player's view model
