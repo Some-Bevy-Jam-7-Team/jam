@@ -142,7 +142,7 @@
 // entity 11
 {
 "classname" "light_lamp_shaded03"
-"origin" "72 200 40"
+"origin" "72 232 40"
 "angles" "1 -90 0"
 }
 // entity 12

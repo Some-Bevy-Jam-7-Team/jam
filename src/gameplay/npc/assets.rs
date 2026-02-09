@@ -32,7 +32,7 @@ impl FromWorld for NpcAssets {
 				Npc::model_path(),
 				|settings: &mut GltfLoaderSettings| {
 					settings.load_meshes = RenderAssetUsages::all();
-					settings.load_materials = RenderAssetUsages::RENDER_WORLD;
+					settings.load_materials = RenderAssetUsages::all();
 				},
 			),
 			steps: ShuffleBag::try_new(

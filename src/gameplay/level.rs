@@ -62,10 +62,6 @@ pub(crate) struct LevelAssets {
 	pub(crate) navmesh: Handle<Navmesh>,
 	#[dependency]
 	pub(crate) music: Handle<AudioSample>,
-	#[dependency]
-	pub(crate) env_map_specular: Handle<Image>,
-	#[dependency]
-	pub(crate) env_map_diffuse: Handle<Image>,
 }
 
 impl FromWorld for LevelAssets {
@@ -78,8 +74,6 @@ impl FromWorld for LevelAssets {
 			// You can regenerate the navmesh by using `bevy_rerecast_editor`
 			navmesh: assets.load("maps/main/one/one.nav"),
 			music: assets.load("audio/music/Ambiance_Rain_Calm_Loop_Stereo.ogg"),
-			env_map_specular: assets.load("cubemaps/NightSkyHDRI001_4K-HDR_specular.ktx2"),
-			env_map_diffuse: assets.load("cubemaps/NightSkyHDRI001_4K-HDR_diffuse.ktx2"),
 		}
 	}
 }
