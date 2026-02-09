@@ -34,15 +34,19 @@ pub struct ObjectiveOfNode {
 /// Spawns the main objective UI node.
 fn spawn_objective_ui(mut commands: Commands) {
 	commands.spawn((
+		Name::new("Objective UI"),
 		ObjectiveUi,
 		crate::ui_layout::RootWidget,
-		Node {
-			padding: UiRect::all(Val::Px(10.0)),
-			flex_direction: FlexDirection::Column,
-			row_gap: Val::Px(5.0),
-			..default()
-		},
-		BackgroundColor(Color::srgba(0.0, 0.0, 0.0, 0.6)),
+		DespawnOnExit(Screen::Gameplay),
+		children![(
+			Node {
+				padding: UiRect::all(Val::Px(10.0)),
+				flex_direction: FlexDirection::Column,
+				row_gap: Val::Px(5.0),
+				..default()
+			},
+			BackgroundColor(Color::srgba(0.0, 0.0, 0.0, 0.6)),
+		)],
 	));
 }
 

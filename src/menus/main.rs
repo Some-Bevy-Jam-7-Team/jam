@@ -16,46 +16,25 @@ pub(super) fn plugin(app: &mut App) {
 fn spawn_main_menu(mut commands: Commands, mut cursor_options: Single<&mut CursorOptions>) {
 	cursor_options.grab_mode = CursorGrabMode::None;
 	commands.spawn((
-		widget::ui_root("Main Menu"),
-		// For the UI layout
-		crate::ui_layout::UiCanvas,
-		BackgroundColor(SCREEN_BACKGROUND),
-		GlobalZIndex(2),
 		DespawnOnExit(Menu::Main),
-		#[cfg(not(target_family = "wasm"))]
-		children![
-			(
-				crate::ui_layout::RootWidget,
-				widget::button("Play", open_level_select)
-			),
-			(
-				crate::ui_layout::RootWidget,
-				widget::button("Settings", open_settings_menu)
-			),
-			(
-				crate::ui_layout::RootWidget,
-				widget::button("Credits", open_credits_menu)
-			),
-			(
-				crate::ui_layout::RootWidget,
-				widget::button("Exit", exit_app)
-			),
-		],
-		#[cfg(target_family = "wasm")]
-		children![
-			(
-				crate::ui_layout::RootWidget,
-				widget::button("Play", open_level_select)
-			),
-			(
-				crate::ui_layout::RootWidget,
-				widget::button("Settings", open_settings_menu)
-			),
-			(
-				crate::ui_layout::RootWidget,
-				widget::button("Credits", open_credits_menu)
-			),
-		],
+		crate::ui_layout::RootWidget,
+		widget::button("Play", open_level_select),
+	));
+	commands.spawn((
+		DespawnOnExit(Menu::Main),
+		crate::ui_layout::RootWidget,
+		widget::button("Settings", open_settings_menu),
+	));
+	commands.spawn((
+		DespawnOnExit(Menu::Main),
+		crate::ui_layout::RootWidget,
+		widget::button("Credits", open_credits_menu),
+	));
+	#[cfg(not(target_family = "wasm"))]
+	commands.spawn((
+		DespawnOnExit(Menu::Main),
+		crate::ui_layout::RootWidget,
+		widget::button("Exit", exit_app),
 	));
 }
 

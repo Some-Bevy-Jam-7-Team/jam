@@ -8,6 +8,7 @@ use bevy::{input::common_conditions::input_just_pressed, prelude::*, ui::Val::*}
 use bevy_framepace::{FramepaceSettings, Limiter};
 use bevy_seedling::prelude::*;
 
+use crate::ui_layout::RootWidget;
 use crate::{
 	Pause,
 	audio::{MusicPool, perceptual::PerceptualVolumeConverter},
@@ -46,8 +47,9 @@ pub(super) fn plugin(app: &mut App) {
 
 fn spawn_settings_menu(mut commands: Commands, paused: Res<State<Pause>>) {
 	let mut entity_commands = commands.spawn((
-		widget::ui_root("Settings Screen"),
+		RootWidget,
 		DespawnOnExit(Menu::Settings),
+		DespawnOnExit(Screen::Gameplay),
 		GlobalZIndex(2),
 		children![
 			widget::header("Settings"),

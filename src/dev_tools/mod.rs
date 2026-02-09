@@ -16,10 +16,16 @@ pub(super) fn plugin(app: &mut App) {
 		(log_transitions::<Menu>, log_transitions::<LoadingScreen>).chain(),
 	);
 
+	app.add_observer(clicked_entity);
+
 	app.add_plugins((
 		debug_ui::plugin,
 		input::plugin,
 		validate_preloading::plugin,
 		log_components::plugin,
 	));
+}
+
+fn clicked_entity(event: On<Pointer<Click>>, names: Query<&Name>) {
+	info!("Clicked on: {}, with name: {:?}", event.entity, names.get(event.entity).ok())
 }

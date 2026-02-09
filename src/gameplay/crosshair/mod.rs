@@ -37,12 +37,14 @@ fn spawn_crosshair(mut commands: Commands, assets: Res<AssetServer>) {
 				..default()
 			},
 			DespawnOnExit(Screen::Gameplay),
+			Pickable::IGNORE, // NEEDED TO UNBREAK UI
 		))
 		.with_children(|parent| {
 			parent.spawn((
 				Name::new("Crosshair Image"),
 				CrosshairState::default(),
 				ImageNode::new(assets.load(CROSSHAIR_DOT_PATH)),
+				Pickable::IGNORE, // NEEDED TO UNBREAK UI
 			));
 		});
 }

@@ -218,14 +218,22 @@ fn spawn_stomach_ui_and_render(
 				..default()
 			},
 			crate::ui_layout::RootWidget,
+			DespawnOnExit(Screen::Gameplay),
 			children![(
 				Node {
 					width: Val::Percent(100.0),
+					justify_content: JustifyContent::Center,
 					..default()
 				},
 				BackgroundColor(Color::srgba(1.0, 1.0, 1.0, 0.9)),
 				children![
-					widget::label_small("LIVE () STOMACH REACTION") // TODO: add red recording circle.
+					(
+						// TODO: add red recording circle instead of ().
+						Name::new("Stomach label"),
+						Text("LIVE () STOMACH REACTION".into()),
+						TextFont::from_font_size(18.0),
+						TextColor(Color::BLACK),
+					)
 				]
 			), (
 				Node {
