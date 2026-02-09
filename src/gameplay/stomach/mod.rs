@@ -15,7 +15,6 @@ use crate::{
 	CameraOrder, RenderLayer,
 	gameplay::player::{Player, camera::PlayerCamera},
 	screens::Screen,
-	theme::widget,
 	third_party::avian3d::CollisionLayer,
 };
 

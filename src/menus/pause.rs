@@ -3,9 +3,9 @@
 use std::any::Any as _;
 
 use crate::{
-	Pause, gameplay::{crosshair::CrosshairState, player::input::BlocksInput}, menus::Menu, screens::Screen, theme::widget, ui_layout::RootWidget
+	gameplay::{crosshair::CrosshairState, player::input::BlocksInput}, menus::Menu, screens::Screen, theme::widget, ui_layout::RootWidget
 };
-use bevy::{ecs::system::{RunSystemOnce, SystemId}, input::common_conditions::input_just_pressed, prelude::*};
+use bevy::{input::common_conditions::input_just_pressed, prelude::*};
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_systems(OnEnter(Menu::Pause), spawn_pause_menu);

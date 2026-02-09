@@ -84,12 +84,17 @@ fn compute_layout(
 		half_size: Vec2,
 		position: Vec2,
 		direction: Dir2,
-		other_rects: &Vec<Aabb2d>,
+		other_rects: &[Aabb2d],
 	) -> f32 {
 		let mut t = f32::MAX;
 		for rect in other_rects.iter() {
+			let minkowski_sum = rect.grow(half_size * 0.999);
+			// This is hopeless so we skip
+			if minkowski_sum.closest_point(position) == position {
+				continue;
+			}
 			if let Some(collision) = RayCast2d::new(position, direction, t)
-				.aabb_intersection_at(&rect.grow(half_size * 0.999))
+				.aabb_intersection_at(&minkowski_sum)
 			{
 				t = f32::min(t, collision * 0.995);
 			}

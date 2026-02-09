@@ -6,7 +6,7 @@ use bevy::{
 
 use crate::{
 	menus::Menu,
-	theme::{palette::SCREEN_BACKGROUND, widget},
+	theme::widget,
 };
 
 pub(super) fn plugin(app: &mut App) {
