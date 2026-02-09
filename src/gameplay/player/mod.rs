@@ -87,19 +87,21 @@ fn setup_player(
 			AnimationState::<PlayerAnimationState>::default(),
 			Fever,
 			related!(FeverSources[FeverSource::default()]),
-			related!(TemperatureSensors[TemperatureSensor]),
-			children![(
-				Name::new("Player Landmass Character"),
-				Transform::from_xyz(0.0, -PLAYER_FLOAT_HEIGHT, 0.0),
-				Character3dBundle {
-					character: Character::default(),
-					settings: CharacterSettings {
-						radius: PLAYER_RADIUS,
+			children![
+				TemperatureSensor,
+				(
+					Name::new("Player Landmass Character"),
+					Transform::from_xyz(0.0, -PLAYER_FLOAT_HEIGHT, 0.0),
+					Character3dBundle {
+						character: Character::default(),
+						settings: CharacterSettings {
+							radius: PLAYER_RADIUS,
+						},
+						archipelago_ref: ArchipelagoRef3d::new(*archipelago),
 					},
-					archipelago_ref: ArchipelagoRef3d::new(*archipelago),
-				},
-				LastValidPlayerNavmeshPosition::default(),
-			),],
+					LastValidPlayerNavmeshPosition::default(),
+				)
+			],
 		))
 		.observe(setup_player_animations);
 }
