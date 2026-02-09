@@ -30,6 +30,7 @@ struct NpcAnimations {
 	idle: AnimationNodeIndex,
 	walk: AnimationNodeIndex,
 	run: AnimationNodeIndex,
+	dance: AnimationNodeIndex,
 }
 
 pub(crate) fn setup_npc_animations(
@@ -44,11 +45,12 @@ pub(crate) fn setup_npc_animations(
 	let anim_players = q_anim_players.get(add.entity).unwrap();
 	for anim_player in anim_players.iter() {
 		let (graph, indices) = AnimationGraph::from_clips([
+			gltf.named_animations.get("run").unwrap().clone(),
 			gltf.named_animations.get("idle").unwrap().clone(),
-			gltf.named_animations.get("idle").unwrap().clone(),
-			gltf.named_animations.get("idle").unwrap().clone(),
+			gltf.named_animations.get("walk").unwrap().clone(),
+			gltf.named_animations.get("dance").unwrap().clone(),
 		]);
-		let [run_index, idle_index, walk_index] = indices.as_slice() else {
+		let [run_index, idle_index, walk_index, dance_index] = indices.as_slice() else {
 			unreachable!()
 		};
 		let graph_handle = graphs.add(graph);
@@ -57,6 +59,7 @@ pub(crate) fn setup_npc_animations(
 			idle: *idle_index,
 			walk: *walk_index,
 			run: *run_index,
+			dance: *dance_index,
 		};
 		let transitions = AnimationTransitions::new();
 		commands.entity(anim_player).insert((
@@ -96,7 +99,7 @@ fn play_animations(
 				let speed = velocity.length();
 				if state.grounded.is_none() {
 					NpcAnimationState::Airborne
-				} else if speed > 4.5 {
+				} else if speed > 7.0 {
 					NpcAnimationState::Running(speed)
 				} else if speed > 0.01 {
 					NpcAnimationState::Walking(speed)
@@ -104,18 +107,7 @@ fn play_animations(
 					NpcAnimationState::Standing
 				}
 			}) {
-				AnimationStateTransition::Maintain { state } => {
-					if let NpcAnimationState::Running(speed) | NpcAnimationState::Walking(speed) =
-						state
-					{
-						if let Some((_index, playing_animation)) =
-							anim_player.playing_animations_mut().next()
-						{
-							let anim_speed = (speed / 3.0).max(0.3);
-							playing_animation.set_speed(anim_speed);
-						}
-					}
-				}
+				AnimationStateTransition::Maintain { state: _ } => {}
 				AnimationStateTransition::Alter {
 					// We don't need the old state here, but it's available for transition
 					// animations.

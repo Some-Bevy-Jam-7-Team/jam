@@ -15,6 +15,7 @@ impl<T> Default for AnimationState<T> {
 
 pub(crate) enum AnimationStateTransition<'a, T> {
 	Maintain {
+		#[allow(dead_code)]
 		state: &'a T,
 	},
 

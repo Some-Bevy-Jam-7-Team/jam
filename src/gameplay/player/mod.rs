@@ -53,7 +53,7 @@ pub(crate) struct Player;
 
 /// The radius of the player character's capsule.
 pub(crate) const PLAYER_RADIUS: f32 = 0.5;
-const PLAYER_HEIGHT: f32 = 1.8;
+const PLAYER_HEIGHT: f32 = 1.7;
 
 /// The half height of the player character's capsule is the distance between the character's center and the lowest point of its collider.
 const PLAYER_HALF_HEIGHT: f32 = PLAYER_HEIGHT / 2.0;
