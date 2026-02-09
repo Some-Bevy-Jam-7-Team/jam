@@ -76,12 +76,12 @@ fn spawn_view_model(
 	let env_map = EnvironmentMapLight {
 		diffuse_map: level_assets.env_map_diffuse.clone(),
 		specular_map: level_assets.env_map_specular.clone(),
-		intensity: 300.0,
+		intensity: 500.0,
 		..default()
 	};
 
 	// Optimized for a dark outdoor scene at night
-	let exposure = Exposure { ev100: 4.5 };
+	let exposure = Exposure { ev100: 10.0 };
 
 	// Spawn the player camera
 	commands
@@ -126,12 +126,10 @@ fn spawn_view_model(
 					clear_color: Color::srgb_u8(15, 9, 20).into(),
 					..default()
 				},
-				Hdr,
 				RenderLayers::from(
 					RenderLayer::DEFAULT | RenderLayer::PARTICLES | RenderLayer::GIZMO3,
 				),
 				exposure,
-				Tonemapping::TonyMcMapface,
 				Bloom::NATURAL,
 				Skybox {
 					image: level_assets.env_map_specular.clone(),
@@ -159,7 +157,6 @@ fn spawn_view_model(
 					order: CameraOrder::ViewModel.into(),
 					..default()
 				},
-				Hdr,
 				Projection::from(PerspectiveProjection {
 					// We use whatever FOV we set in the animation software, e.g. Blender.
 					// Tip: if you want to set a camera in Blender to the same defaults as Bevy,
@@ -170,7 +167,6 @@ fn spawn_view_model(
 				// Only render objects belonging to the view model.
 				RenderLayers::from(RenderLayer::VIEW_MODEL),
 				exposure,
-				Tonemapping::TonyMcMapface,
 				(DepthPrepass, Msaa::Off, DeferredPrepass, Fxaa::default()),
 				env_map,
 			));

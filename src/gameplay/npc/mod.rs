@@ -30,7 +30,7 @@ pub(super) fn plugin(app: &mut App) {
 	app.add_observer(on_add).add_observer(on_add_jan);
 }
 
-#[point_class(base(Transform, Visibility), model("models/fox/Fox.gltf"))]
+#[point_class(base(Transform, Visibility), model("models/jan_npc/jan.gltf"))]
 pub(crate) struct Npc;
 
 #[point_class(base(Transform, Visibility), model("models/jan_npc/jan.gltf"))]
@@ -39,7 +39,6 @@ pub(crate) struct Jan;
 pub(crate) const NPC_RADIUS: f32 = 0.6;
 pub(crate) const NPC_HEIGHT: f32 = 1.3;
 const NPC_HALF_HEIGHT: f32 = NPC_HEIGHT / 2.0;
-const NPC_FLOAT_HEIGHT: f32 = NPC_HALF_HEIGHT + 0.01;
 const NPC_SPEED: f32 = 7.0;
 
 fn on_add(add: On<Add, Npc>, mut commands: Commands, assets: Res<AssetServer>) {
@@ -65,7 +64,7 @@ fn on_add(add: On<Add, Npc>, mut commands: Commands, assets: Res<AssetServer>) {
 		.with_child((
 			Name::new("Npc Model"),
 			SceneRoot(assets.load_trenchbroom_model::<Npc>()),
-			Transform::from_xyz(0.0, -NPC_FLOAT_HEIGHT, 0.0),
+			Transform::from_xyz(0.0, -NPC_HALF_HEIGHT, 0.0),
 		))
 		.observe(setup_npc_animations);
 }
@@ -90,6 +89,6 @@ fn on_add_jan(add: On<Add, Jan>, mut commands: Commands, assets: Res<AssetServer
 		.with_child((
 			Name::new("Npc Model"),
 			SceneRoot(assets.load_trenchbroom_model::<Jan>()),
-			Transform::from_xyz(0.0, -NPC_FLOAT_HEIGHT, 0.0),
+			Transform::from_xyz(0.0, -NPC_HALF_HEIGHT, 0.0),
 		));
 }

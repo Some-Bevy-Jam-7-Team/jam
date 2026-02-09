@@ -12,11 +12,14 @@ use bevy_landmass::{
 };
 
 use crate::{
-	gameplay::{npc::NPC_SPEED, player::navmesh_position::LastValidPlayerNavmeshPosition},
+	gameplay::{
+		npc::{NPC_HALF_HEIGHT, NPC_SPEED},
+		player::navmesh_position::LastValidPlayerNavmeshPosition,
+	},
 	screens::Screen,
 };
 
-use super::{NPC_FLOAT_HEIGHT, NPC_RADIUS, Npc};
+use super::{NPC_RADIUS, Npc};
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_systems(
@@ -58,7 +61,7 @@ fn setup_npc_agent(
 	));
 	commands.spawn((
 		Name::new("NPC Agent"),
-		Transform::from_translation(Vec3::new(0.0, -NPC_FLOAT_HEIGHT, 0.0)),
+		Transform::from_translation(Vec3::new(0.0, -NPC_HALF_HEIGHT, 0.0)),
 		Agent3dBundle {
 			agent: default(),
 			settings: AgentSettings {
