@@ -7,6 +7,7 @@ use crate::{
 	menus::Menu,
 	screens::Screen,
 	theme::widget,
+	ui_layout::RootWidget,
 };
 use bevy::{input::common_conditions::input_just_pressed, prelude::*};
 
@@ -25,15 +26,24 @@ fn spawn_pause_menu(
 	mut blocks_input: ResMut<BlocksInput>,
 ) {
 	commands.spawn((
-		widget::ui_root("Pause Menu"),
-		GlobalZIndex(2),
 		DespawnOnExit(Menu::Pause),
-		children![
-			widget::header("Game paused"),
-			widget::button("Continue", close_menu),
-			widget::button("Settings", open_settings_menu),
-			widget::button("Quit to title", quit_to_title),
-		],
+		RootWidget,
+		widget::header("Game paused!"),
+	));
+	commands.spawn((
+		DespawnOnExit(Menu::Pause),
+		RootWidget,
+		widget::button("Unpause", close_pause_menu),
+	));
+	commands.spawn((
+		DespawnOnExit(Menu::Pause),
+		RootWidget,
+		widget::button("Settings", open_settings_menu),
+	));
+	commands.spawn((
+		DespawnOnExit(Menu::Pause),
+		RootWidget,
+		widget::button("Quit to title", quit_to_title),
 	));
 	crosshair
 		.wants_free_cursor
@@ -46,43 +56,46 @@ fn open_settings_menu(_on: On<Pointer<Click>>, mut next_menu: ResMut<NextState<M
 	next_menu.set(Menu::Settings);
 }
 
-fn close_menu(
+fn close_pause_menu(
 	_on: On<Pointer<Click>>,
 	mut next_menu: ResMut<NextState<Menu>>,
-	mut crosshair: Single<&mut CrosshairState>,
-	mut time: ResMut<Time<Virtual>>,
-	mut blocks_input: ResMut<BlocksInput>,
+	crosshair: Single<&mut CrosshairState>,
+	time: ResMut<Time<Virtual>>,
+	blocks_input: ResMut<BlocksInput>,
 ) {
+	println!("UNPAUSE");
 	next_menu.set(Menu::None);
-	crosshair
-		.wants_free_cursor
-		.remove(&spawn_pause_menu.type_id());
-	blocks_input.remove(&spawn_pause_menu.type_id());
-	time.unpause();
+	unpause(crosshair, time, blocks_input);
 }
 
 fn quit_to_title(
 	_on: On<Pointer<Click>>,
 	mut next_screen: ResMut<NextState<Screen>>,
-	mut crosshair: Single<&mut CrosshairState>,
-	mut time: ResMut<Time<Virtual>>,
-	mut blocks_input: ResMut<BlocksInput>,
+	crosshair: Single<&mut CrosshairState>,
+	time: ResMut<Time<Virtual>>,
+	blocks_input: ResMut<BlocksInput>,
 ) {
+	println!("QUIT");
 	next_screen.set(Screen::Title);
-	crosshair
-		.wants_free_cursor
-		.remove(&spawn_pause_menu.type_id());
-	blocks_input.remove(&spawn_pause_menu.type_id());
-	time.unpause();
+	unpause(crosshair, time, blocks_input);
 }
 
 fn go_back(
 	mut next_menu: ResMut<NextState<Menu>>,
+	crosshair: Single<&mut CrosshairState>,
+	time: ResMut<Time<Virtual>>,
+	blocks_input: ResMut<BlocksInput>,
+) {
+	println!("go_back");
+	next_menu.set(Menu::None);
+	unpause(crosshair, time, blocks_input);
+}
+
+fn unpause(
 	mut crosshair: Single<&mut CrosshairState>,
 	mut time: ResMut<Time<Virtual>>,
 	mut blocks_input: ResMut<BlocksInput>,
 ) {
-	next_menu.set(Menu::None);
 	crosshair
 		.wants_free_cursor
 		.remove(&spawn_pause_menu.type_id());

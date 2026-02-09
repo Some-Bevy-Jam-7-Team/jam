@@ -1,13 +1,16 @@
 use bevy::prelude::*;
 
-use crate::screens::Screen;
+use crate::{gameplay::objectives::ui::spawn_objective_ui, screens::Screen};
 
 pub(crate) mod ui;
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_plugins(ui::plugin);
 
-	app.add_systems(OnEnter(Screen::Gameplay), spawn_test_objectives);
+	app.add_systems(
+		OnEnter(Screen::Gameplay),
+		spawn_test_objectives.after(spawn_objective_ui),
+	);
 	app.add_systems(PostUpdate, complete_parent_objectives);
 }
 

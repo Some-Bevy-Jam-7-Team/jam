@@ -4,10 +4,10 @@
 
 use bevy::prelude::*;
 
-use crate::CameraOrder;
+use crate::{CameraOrder, theme::widget, ui_layout::UiCanvas};
 
 pub(super) fn plugin(app: &mut App) {
-	app.add_systems(Startup, spawn_ui_camera);
+	app.add_systems(Startup, (spawn_ui_camera, spawn_ui_root));
 }
 
 #[derive(Component, Reflect)]
@@ -26,5 +26,12 @@ fn spawn_ui_camera(mut commands: Commands) {
 			order: CameraOrder::Ui.into(),
 			..default()
 		},
+	));
+}
+
+fn spawn_ui_root(mut commands: Commands) {
+	commands.spawn((
+		UiCanvas,
+		widget::ui_root("UI Root, don't despawn pretty please"),
 	));
 }
