@@ -1118,6 +1118,7 @@ dependencies = [
  "bevy_transform",
  "bevy_ui",
  "bevy_ui_render",
+ "bevy_ui_widgets",
  "bevy_utils",
  "bevy_window",
  "bevy_winit",
@@ -1242,6 +1243,16 @@ dependencies = [
 [[package]]
 name = "bevy_mikktspace"
 version = "0.17.0-dev"
+
+[[package]]
+name = "bevy_notify"
+version = "0.2.0"
+source = "git+https://github.com/Freyja-moth/bevy_notify#889e30b894b5bc4d45f1d919a95c542f2316c6d5"
+dependencies = [
+ "bevy_app",
+ "bevy_ecs",
+ "bevy_reflect",
+]
 
 [[package]]
 name = "bevy_pbr"
@@ -1881,6 +1892,26 @@ dependencies = [
  "bytemuck",
  "derive_more",
  "tracing",
+]
+
+[[package]]
+name = "bevy_ui_widgets"
+version = "0.18.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "94a7db20f20f567e9078c5aaabfb53f602c2c59c11584c692951d94f675c21ea"
+dependencies = [
+ "accesskit",
+ "bevy_a11y",
+ "bevy_app",
+ "bevy_camera",
+ "bevy_ecs",
+ "bevy_input",
+ "bevy_input_focus",
+ "bevy_log",
+ "bevy_math",
+ "bevy_picking",
+ "bevy_reflect",
+ "bevy_ui",
 ]
 
 [[package]]
@@ -3912,6 +3943,7 @@ dependencies = [
  "bevy_framepace",
  "bevy_hanabi",
  "bevy_landmass",
+ "bevy_notify",
  "bevy_rerecast",
  "bevy_seedling",
  "bevy_shuffle_bag",
