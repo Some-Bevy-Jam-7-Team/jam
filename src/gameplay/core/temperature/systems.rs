@@ -11,29 +11,29 @@ pub fn temp(
 	mut units: Query<(
 		&mut Temperature,
 		&BaseTemperature,
-		&Children,
+		&TemperatureSensors,
 		Option<&Conductivity>,
 		Option<&DepthSensitivity>,
 	)>,
 	global_temp: Res<GlobalTemperature>,
-	sensors: Query<&CollidingEntities, With<TemperatureSensor>>,
+	q_sensors: Query<&CollidingEntities, With<TemperatureSensor>>,
 	env_temps: Query<&EnvironmentTemperature>,
 	collisions: Collisions,
 	stomach: Single<&Stomach>,
 ) {
 	let delta_seconds = time.delta_secs();
 
-	for (mut temp, temp_base, children, conductivity, depth_sens) in &mut units {
+	for (mut temp, temp_base, sensors, conductivity, depth_sens) in &mut units {
 		let depth_sens = depth_sens.cloned().unwrap_or_default();
-		let (temp_weighted, total_weight) = children
+		let (temp_weighted, total_weight) = sensors
 			.iter()
-			.filter_map(|child| Some((child, sensors.get(child).ok()?)))
-			.flat_map(|(child, hits)| hits.iter().map(move |hit| (child, hit)))
-			.filter_map(|(child, hit)| {
+			.filter_map(|sensor| Some((sensor, q_sensors.get(sensor).ok()?)))
+			.flat_map(|(sensor, hits)| hits.iter().map(move |hit| (sensor, hit)))
+			.filter_map(|(sensor, hit)| {
 				let temp = env_temps.get(*hit).ok()?;
 
 				let penetration = collisions
-					.get(child, *hit)
+					.get(sensor, *hit)
 					.and_then(|pair| pair.find_deepest_contact())
 					.map(|p| p.penetration)
 					.unwrap_or(0.0);

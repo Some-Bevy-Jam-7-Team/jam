@@ -86,21 +86,20 @@ fn setup_player(
 			CollisionLayers::new(CollisionLayer::Character, LayerMask::ALL),
 			AnimationState::<PlayerAnimationState>::default(),
 			Fever,
-			children![
-				(
-					Name::new("Player Landmass Character"),
-					Transform::from_xyz(0.0, -PLAYER_FLOAT_HEIGHT, 0.0),
-					Character3dBundle {
-						character: Character::default(),
-						settings: CharacterSettings {
-							radius: PLAYER_RADIUS,
-						},
-						archipelago_ref: ArchipelagoRef3d::new(*archipelago),
+			related!(FeverSources[FeverSource::default()]),
+			related!(TemperatureSensors[TemperatureSensor]),
+			children![(
+				Name::new("Player Landmass Character"),
+				Transform::from_xyz(0.0, -PLAYER_FLOAT_HEIGHT, 0.0),
+				Character3dBundle {
+					character: Character::default(),
+					settings: CharacterSettings {
+						radius: PLAYER_RADIUS,
 					},
-					LastValidPlayerNavmeshPosition::default(),
-				),
-				TemperatureSensor,
-			],
+					archipelago_ref: ArchipelagoRef3d::new(*archipelago),
+				},
+				LastValidPlayerNavmeshPosition::default(),
+			),],
 		))
 		.observe(setup_player_animations);
 }

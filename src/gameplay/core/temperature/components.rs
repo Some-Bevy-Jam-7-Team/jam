@@ -7,6 +7,17 @@ use bevy::prelude::*;
 #[require(Collider::sphere(2.0), Sensor, CollidingEntities::default())]
 pub struct TemperatureSensor;
 
+/// The parent entity with a [`Temperature`] that this [`TemperatureSensorOf`] belongs to.
+#[derive(Component, Debug, Deref, Reflect, Clone, Copy)]
+#[reflect(Component, Clone, Debug)]
+#[relationship(relationship_target = TemperatureSensors)]
+pub struct TemperatureSensorOf(#[relationship] pub Entity);
+
+#[derive(Component, Debug, Clone, Deref, DerefMut, Reflect, Default)]
+#[reflect(Clone, Debug, Component, Default)]
+#[relationship_target(relationship = TemperatureSensorOf)]
+pub struct TemperatureSensors(Vec<Entity>);
+
 /// Current temperature of an entity
 #[derive(Component, Debug, Deref, DerefMut, Clone, Copy, Reflect)]
 #[reflect(Clone, Debug, Component)]
