@@ -58,6 +58,7 @@ bevy = { version = "0.18", default-features = false, features = [
     "wayland",
     "zstd_rust",
     "reflect_auto_register",
+    "experimental_bevy_ui_widgets"
 ] }
 bevy_enhanced_input = "0.23"
 
@@ -87,6 +88,8 @@ bevy-inspector-egui = { version = "0.36", optional = true }
 bevy_fix_cursor_unlock_web = "0.3.0"
 bevy_framepace = "0.21"
 bevy_seedling = "0.7.0"
+
+bevy_notify = { git = "https://github.com/Freyja-moth/bevy_notify" }
 
 # Keep this in sync with Bevy
 rand = "0.9"
