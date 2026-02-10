@@ -151,3 +151,34 @@
 "origin" "408 120 120"
 "angles" "0 -180 1"
 }
+// entity 13
+{
+"classname" "door"
+"origin" "184 -8 56"
+"locked" "true"
+"max_angle" "2.0944"
+"min_angle" "-2.0944"
+"angles" "0 0 0"
+"scale" "1 1 1"
+"visibility" "Inherited"
+}
+// entity 14
+{
+"classname" "table"
+"origin" "40 -136 24"
+}
+// entity 15
+{
+"classname" "crt"
+"origin" "56 -136 72"
+}
+// entity 16
+{
+"classname" "keyboard"
+"origin" "72 -136 72"
+}
+// entity 17
+{
+"classname" "mouse"
+"origin" "72 -120 72"
+}

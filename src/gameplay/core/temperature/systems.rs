@@ -8,7 +8,7 @@ use crate::gameplay::stomach::Stomach;
 /// collision-based and eaten temperature sources.
 pub fn temp(
 	time: Res<Time>,
-	mut units: Query<(
+	mut q_temp: Query<(
 		&mut Temperature,
 		&BaseTemperature,
 		&Children,
@@ -16,37 +16,42 @@ pub fn temp(
 		Option<&DepthSensitivity>,
 	)>,
 	global_temp: Res<GlobalTemperature>,
-	sensors: Query<&CollidingEntities, With<TemperatureSensor>>,
-	env_temps: Query<&EnvironmentTemperature>,
+	q_sensor: Query<&CollidingEntities, With<TemperatureSensor>>,
+	q_collider: Query<&ColliderOf>,
+	q_env_temp: Query<&EnvironmentTemperature>,
 	collisions: Collisions,
 	stomach: Single<&Stomach>,
 ) {
-	let delta_seconds = time.delta_secs();
+	let delta_secs = time.delta_secs();
 
-	for (mut temp, temp_base, children, conductivity, depth_sens) in &mut units {
+	for (mut temp, temp_base, sensors, conductivity, depth_sens) in &mut q_temp {
 		let depth_sens = depth_sens.cloned().unwrap_or_default();
-		let (temp_weighted, total_weight) = children
+		let (temp_weighted, total_weight) = sensors
 			.iter()
-			.filter_map(|child| Some((child, sensors.get(child).ok()?)))
-			.flat_map(|(child, hits)| hits.iter().map(move |hit| (child, hit)))
-			.filter_map(|(child, hit)| {
-				let temp = env_temps.get(*hit).ok()?;
-
-				let penetration = collisions
-					.get(child, *hit)
-					.and_then(|pair| pair.find_deepest_contact())
-					.map(|p| p.penetration)
-					.unwrap_or(0.0);
-
+			.filter_map(|sensor| Some((sensor, q_sensor.get(sensor).ok()?)))
+			.flat_map(|(sensor, hits)| hits.iter().map(move |hit| (sensor, hit)))
+			.filter_map(|(sensor, hit)| Some((sensor, hit, q_collider.get(*hit).ok()?.body)))
+			.filter_map(|(sensor, hit, body)| Some((sensor, hit, q_env_temp.get(body).ok()?)))
+			.map(|(sensor, hit, env_temp)| {
+				(
+					env_temp,
+					collisions
+						.get(sensor, *hit)
+						.and_then(|pair| pair.find_deepest_contact())
+						.map(|p| p.penetration)
+						.unwrap_or(0.0),
+				)
+			})
+			.map(|(temp, penetration)| {
 				let weight = 1.0 + (penetration * *depth_sens).max(0.0);
-
-				Some((temp, weight))
+				(temp, weight)
 			})
 			.chain(
 				stomach
 					.contents
 					.iter()
-					.filter_map(|e| env_temps.get(*e).ok().map(|t| (t, *depth_sens))),
+					.filter_map(|e| q_env_temp.get(*e).ok())
+					.map(|t| (t, *depth_sens)),
 			)
 			.fold(
 				(**global_temp, 1.0),
@@ -61,7 +66,7 @@ pub fn temp(
 		let k = conductivity.cloned().unwrap_or_default();
 
 		// rate = k * dt
-		let rate = (*k * delta_seconds).min(1.);
+		let rate = (*k * delta_secs).min(1.);
 
 		// temp += (Target - Current) * (k * dt)
 		let temp_final = **temp + (temp_env - **temp) * rate;

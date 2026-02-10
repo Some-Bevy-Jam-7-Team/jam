@@ -51,11 +51,10 @@ pub(super) fn plugin(app: &mut App) {
 )]
 pub(crate) struct Player;
 
-/// The radius of the player character's capsule.
-pub(crate) const PLAYER_RADIUS: f32 = 0.5;
-const PLAYER_HEIGHT: f32 = 1.7;
-
-/// The half height of the player character's capsule is the distance between the character's center and the lowest point of its collider.
+// Shoulder-width of 45 cm (over average but not too diabolical)
+pub(crate) const PLAYER_RADIUS: f32 = 0.225;
+// Height of 1.75 meters
+const PLAYER_HEIGHT: f32 = 1.75;
 const PLAYER_HALF_HEIGHT: f32 = PLAYER_HEIGHT / 2.0;
 
 fn setup_player(
@@ -78,7 +77,9 @@ fn setup_player(
 			CollisionLayers::new(CollisionLayer::Character, LayerMask::ALL),
 			AnimationState::<PlayerAnimationState>::default(),
 			Fever,
+			related!(FeverSources[FeverSource::default()]),
 			children![
+				TemperatureSensor,
 				(
 					Name::new("Player Landmass Character"),
 					Transform::from_xyz(0.0, -PLAYER_HALF_HEIGHT, 0.0),
@@ -90,8 +91,7 @@ fn setup_player(
 						archipelago_ref: ArchipelagoRef3d::new(*archipelago),
 					},
 					LastValidPlayerNavmeshPosition::default(),
-				),
-				TemperatureSensor,
+				)
 			],
 		))
 		.observe(setup_player_animations);

@@ -4,7 +4,7 @@ use std::time::Duration;
 /// Makes a unit affected by fever.
 #[derive(Component, Debug, Clone, Copy, Reflect)]
 #[reflect(Clone, Debug, Component)]
-#[require(Temperature, Health, FeverTimer, FeverDamage, FeverSource)]
+#[require(Temperature, Health, FeverTimer, FeverDamage, FeverSources)]
 pub struct Fever;
 
 /// Marker component for units that are currently feverish (temp higher than base temp).
@@ -50,6 +50,17 @@ impl Default for FeverSourceTimer {
 		Self(Timer::new(Duration::from_secs(1), TimerMode::Repeating))
 	}
 }
+
+/// The parent entity with [`Fever`] that this [`FeverSource`] belongs to.
+#[derive(Component, Debug, Deref, Reflect, Clone, Copy)]
+#[reflect(Component, Clone, Debug)]
+#[relationship(relationship_target = FeverSources)]
+pub struct FeverSourceOf(#[relationship] pub Entity);
+
+#[derive(Component, Debug, Clone, Deref, DerefMut, Reflect, Default)]
+#[reflect(Clone, Debug, Component, Default)]
+#[relationship_target(relationship = FeverSourceOf)]
+pub struct FeverSources(Vec<Entity>);
 
 /// A rate that represents an internal source of fever/heat that raises the entity's temperature over time.
 ///
