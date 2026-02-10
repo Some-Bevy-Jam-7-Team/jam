@@ -5,7 +5,7 @@ use bevy::prelude::*;
 use bevy_trenchbroom::prelude::*;
 use bevy_yarnspinner::{events::DialogueCompleted, prelude::*};
 
-use crate::screens::Screen;
+use crate::{gameplay::interaction::InteractableObject, screens::Screen};
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_plugins((
@@ -39,12 +39,9 @@ fn abort_all_dialogues_when_leaving_gameplay(
 	}
 }
 
-pub(crate) fn is_dialogue_running(dialogue_runner: Option<Single<&DialogueRunner>>) -> bool {
-	dialogue_runner.is_some_and(|dialogue_runner| dialogue_runner.is_running())
-}
-
 #[base_class]
 #[derive(Eq, PartialEq, Clone)]
+#[require(InteractableObject(Some("Talk".to_string())))]
 pub(crate) struct YarnNode {
 	#[class(must_set)]
 	pub(crate) yarn_node: String,
