@@ -151,3 +151,8 @@
 "origin" "408 120 120"
 "angles" "0 -180 1"
 }
+// entity 13
+{
+"classname" "door"
+"origin" "184 -8 56"
+}

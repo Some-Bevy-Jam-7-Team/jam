@@ -52,7 +52,7 @@ pub(super) fn plugin(app: &mut App) {
 pub(crate) struct Player;
 
 /// The radius of the player character's capsule.
-pub(crate) const PLAYER_RADIUS: f32 = 0.5;
+pub(crate) const PLAYER_RADIUS: f32 = 0.25;
 const PLAYER_HEIGHT: f32 = 1.7;
 
 /// The half height of the player character's capsule is the distance between the character's center and the lowest point of its collider.
@@ -68,7 +68,7 @@ fn setup_player(
 		.insert((
 			RigidBody::Kinematic,
 			PlayerInputContext,
-			Collider::cylinder(PLAYER_RADIUS, PLAYER_HEIGHT),
+			Collider::cylinder(PLAYER_RADIUS, PLAYER_HEIGHT - 2.0 * PLAYER_RADIUS),
 			CharacterController {
 				filter: SpatialQueryFilter::DEFAULT
 					.with_mask(LayerMask::ALL & !CollisionLayer::Stomach.to_bits()),
