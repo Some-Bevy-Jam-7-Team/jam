@@ -1,11 +1,14 @@
 use bevy::prelude::*;
 
 use crate::{
-	gameplay::objectives::{Objective, ObjectiveCompleted, SubObjectiveOf},
+	gameplay::objectives::{CurrentObjective, Objective, ObjectiveCompleted, SubObjectiveOf},
 	screens::Screen,
 };
 
 pub(super) fn plugin(app: &mut App) {
+	app.add_observer(show_current_objective);
+	app.add_observer(hide_previous_objective);
+
 	app.add_observer(on_spawn_objective);
 	app.add_observer(on_complete_objective);
 
@@ -53,6 +56,7 @@ fn objective_node(description: impl Into<String>, depth: usize) -> impl Bundle {
 	(
 		ObjectiveNode,
 		Node {
+			display: Display::None,
 			padding: UiRect::all(Val::Px(2.0)),
 			flex_direction: FlexDirection::Column,
 			row_gap: Val::Px((5.0 - depth as f32 * 0.5).max(2.0)),
@@ -139,7 +143,8 @@ fn on_spawn_objective(
 			))
 			.id();
 
-		commands.entity(add.entity).try_insert(ObjectiveOfNode {
+		println!("Parent node objective of node, {}", add.entity);
+		commands.entity(add.entity).insert(ObjectiveOfNode {
 			node: objective_node_entity,
 		});
 	}
@@ -188,4 +193,29 @@ fn update_objective_description_ui(
 
 		text.0 = objective.description.clone();
 	}
+}
+
+fn show_current_objective(
+	add: On<Insert, CurrentObjective>,
+	objective: Query<&ObjectiveOfNode>,
+	mut nodes: Query<&mut Node>,
+) -> Result<(), BevyError> {
+	let &ObjectiveOfNode { node } = objective.get(add.entity)?;
+	let mut node = nodes.get_mut(node)?;
+	node.display = Display::Flex;
+
+	Ok(())
+}
+
+fn hide_previous_objective(
+	remove: On<Remove, CurrentObjective>,
+	objective: Query<&ObjectiveOfNode>,
+	mut nodes: Query<&mut Node>,
+) -> Result<(), BevyError> {
+	let &ObjectiveOfNode { node } = objective.get(remove.entity)?;
+	let mut node = nodes.get_mut(node)?;
+
+	node.display = Display::None;
+
+	Ok(())
 }

@@ -11,8 +11,13 @@ pub(super) fn plugin(app: &mut App) {
 		OnEnter(Screen::Gameplay),
 		spawn_test_objectives.after(spawn_objective_ui),
 	);
+	// app.add_observer(set_current_objective);
+	app.add_observer(update_current_objective);
 	app.add_systems(PostUpdate, complete_parent_objectives);
 }
+
+#[derive(Component)]
+pub struct CurrentObjective;
 
 /// A game objective.
 #[derive(Component, Debug, Default)]
@@ -48,31 +53,52 @@ pub struct SubObjectiveOf {
 #[relationship_target(relationship = SubObjectiveOf)]
 pub struct SubObjectives(Vec<Entity>);
 
+#[derive(Component)]
+#[relationship_target(relationship = PreviousObjective)]
+pub struct NextObjective(Entity);
+
+#[derive(Component)]
+#[relationship(relationship_target = NextObjective)]
+pub struct PreviousObjective(pub Entity);
+
 fn spawn_test_objectives(mut commands: Commands) {
 	// Spawn a top-level objective.
-	commands.spawn((
-		Objective::new("Task 1"),
-		related!(SubObjectives[
-			Objective::new("Task 1.1"),
-			Objective::new("Task 1.2"),
-			(Objective::new("Task 1.3"), ObjectiveCompleted)
-		]),
-	));
-
-	commands.spawn((
-		Objective::new("Task 2"),
-		related!(SubObjectives[
-			(Objective::new("Task 2.1"), ObjectiveCompleted),
-			(
-				Objective::new("Task 2.2"),
+	commands
+		.spawn((
+			Objective::new("Task 1"),
+			related!(SubObjectives[
+				Objective::new("Task 1.1"),
+				Objective::new("Task 1.2"),
+				(Objective::new("Task 1.3"), ObjectiveCompleted)
+			]),
+			related!(NextObjective[
+				Objective::new("Task 2"),
 				related!(SubObjectives[
-					Objective::new("Task 2.2.1"),
-					Objective::new("Task 2.2.2"),
-				]),
-			),
-			Objective::new("Task 2.3")
-		]),
-	));
+					(Objective::new("Task 2.1"), ObjectiveCompleted),
+					(
+						Objective::new("Task 2.2"),
+						related!(SubObjectives[
+							Objective::new("Task 2.2.1"),
+							Objective::new("Task 2.2.2"),
+						]),
+					),
+					Objective::new("Task 2.3")
+				])
+			]),
+		))
+		// If you want to hate ui remove this.
+		.insert(CurrentObjective);
+}
+
+fn update_current_objective(
+	add: On<Add, ObjectiveCompleted>,
+	mut commands: Commands,
+	objectives: Query<&NextObjective, With<CurrentObjective>>,
+) {
+	if let Ok(&NextObjective(next_objective)) = objectives.get(add.entity) {
+		commands.entity(add.entity).remove::<CurrentObjective>();
+		commands.entity(next_objective).insert(CurrentObjective);
+	}
 }
 
 /// Marks parent objectives as completed when all their sub-objectives are completed.
