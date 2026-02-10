@@ -17,13 +17,19 @@ pub(super) fn plugin(app: &mut App) {
 		.add_observer(setup_static_prop_with_convex_hull::<FenceBarsDecorativeSingle>)
 		.add_observer(setup_static_prop_with_convex_hull::<DoorStainedGlass>);
 
-	app.add_observer(setup_dynamic_prop_with_convex_hull::<PackageMedium>)
+	app.add_observer(setup_static_prop_with_convex_hull::<Crt>)
+		.add_observer(setup_static_prop_with_convex_hull::<Keyboard>)
+		.add_observer(setup_static_prop_with_convex_hull::<Mouse>)
+		.add_observer(setup_dynamic_prop_with_convex_hull::<PackageMedium>)
 		.add_observer(setup_dynamic_prop_with_convex_hull::<PackageSmall>);
 
 	app.add_observer(setup_nonphysical_prop::<IvyPart8>)
 		.add_observer(setup_nonphysical_prop::<SmallDoorSign1>);
 
-	app.load_asset::<Gltf>(PackageMedium::model_path())
+	app.load_asset::<Gltf>(Crt::model_path())
+		.load_asset::<Gltf>(Keyboard::model_path())
+		.load_asset::<Gltf>(Mouse::model_path())
+		.load_asset::<Gltf>(PackageMedium::model_path())
 		.load_asset::<Gltf>(PackageSmall::model_path())
 		.load_asset::<Gltf>(Grate::model_path())
 		.load_asset::<Gltf>(Table::model_path())
@@ -39,6 +45,19 @@ pub(super) fn plugin(app: &mut App) {
 }
 
 // generic dynamic props
+
+// office
+
+#[point_class(base(Transform, Visibility), model("models/office/crt.gltf"))]
+pub(crate) struct Crt;
+
+#[point_class(base(Transform, Visibility), model("models/office/keyboard.gltf"))]
+pub(crate) struct Keyboard;
+
+#[point_class(base(Transform, Visibility), model("models/office/mouse.gltf"))]
+pub(crate) struct Mouse;
+
+// darkmod
 
 #[point_class(
 	base(Transform, Visibility),
