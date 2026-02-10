@@ -3,7 +3,13 @@ use super::option_selection::OptionSelection;
 use super::setup::{DialogueContinueNode, DialogueNameNode, UiRootNode};
 use super::typewriter::Typewriter;
 use bevy::prelude::*;
+use bevy_seedling::prelude::*;
 use bevy_yarnspinner::{events::*, prelude::*};
+
+use crate::audio::SfxPool;
+
+#[derive(Component)]
+struct VoiceAudio;
 
 pub(super) fn ui_updating_plugin(app: &mut App) {
 	app.init_resource::<AutoContinueTimer>();
@@ -59,8 +65,13 @@ fn show_dialog(_: On<DialogueStarted>, mut visibility: Single<&mut Visibility, W
 fn hide_dialog(
 	_: On<DialogueCompleted>,
 	mut root_visibility: Single<&mut Visibility, With<UiRootNode>>,
+	mut commands: Commands,
+	voice_query: Query<Entity, With<VoiceAudio>>,
 ) {
 	**root_visibility = Visibility::Hidden;
+	for entity in &voice_query {
+		commands.entity(entity).despawn();
+	}
 }
 
 fn present_line(
@@ -69,7 +80,21 @@ fn present_line(
 	mut typewriter: ResMut<Typewriter>,
 	name_node: Single<Entity, With<DialogueNameNode>>,
 	mut text_writer: TextUiWriter,
+	asset_server: Res<AssetServer>,
+	mut commands: Commands,
+	voice_query: Query<Entity, With<VoiceAudio>>,
 ) {
+	// Stop any previously playing voice line.
+	for entity in &voice_query {
+		commands.entity(entity).despawn();
+	}
+
+	// Play voice audio for this line.
+	let id = event.line.id.0.strip_prefix("line:").unwrap_or(&event.line.id.0);
+	let path = format!("audio/voice/{id}.ogg");
+	let handle = asset_server.load::<AudioSample>(path);
+	commands.spawn((SamplePlayer::new(handle), SfxPool, VoiceAudio));
+
 	let name = if let Some(name) = event.line.character_name() {
 		speaker_change_events.write(SpeakerChangeEvent {
 			character_name: name.to_string(),

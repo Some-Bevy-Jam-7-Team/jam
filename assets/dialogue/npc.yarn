@@ -1,9 +1,9 @@
 title: Npc
 ---
-Jan: I wish I had a Visa, but they say it's blocked on BSN.
-Jan: The visa agency says they'd need to re-issue all the visas anyway, so might as well wait now, right?
--> Oof
-  Jan: Don't worry, it's here any day now.
--> You sure you want to wait?
-  Jan: Corporate says that patience is a virtue and increases shareholder value.
+Jan: I wish I had a Visa, but they say it's blocked on BSN! #line:7791278
+Jan: The visa agency says they'd need to re-issue all the visas anyway, so might as well wait now, right? #line:16752406
+-> Oof #line:6983066
+  Jan: Don't worry, it's here any day now. #line:6856645
+-> You sure you want to wait? #line:1137076
+  Jan: Corporate says that patience is a virtue and increases shareholder value. #line:3010042
 ===
