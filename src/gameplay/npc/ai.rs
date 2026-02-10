@@ -75,7 +75,7 @@ fn setup_npc_agent(
 		ChildOf(npc),
 		AgentOf(npc),
 		AgentTarget3d::default(),
-		WantsToFollowPlayer,
+		//WantsToFollowPlayer,
 	));
 }
 
