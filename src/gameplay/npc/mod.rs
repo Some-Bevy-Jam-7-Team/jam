@@ -32,8 +32,10 @@ pub(super) fn plugin(app: &mut App) {
 #[point_class(base(Transform, Visibility), model("models/jan_npc/jan.gltf"))]
 pub(crate) struct Npc;
 
-pub(crate) const NPC_RADIUS: f32 = 0.6;
-pub(crate) const NPC_HEIGHT: f32 = 1.3;
+// Shoulder-width of 45 cm (over average but not too diabolical)
+pub(crate) const NPC_RADIUS: f32 = 0.225;
+// Height of 165 cm
+pub(crate) const NPC_HEIGHT: f32 = 1.65;
 const NPC_HALF_HEIGHT: f32 = NPC_HEIGHT / 2.0;
 const NPC_SPEED: f32 = 7.0;
 
