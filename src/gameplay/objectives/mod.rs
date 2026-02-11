@@ -88,45 +88,43 @@ fn watch_for_completors(
 }
 
 pub(crate) fn create_dialogue_objective(
-	In((description, previous)): In<(String, Option<String>)>,
+	In((identifier, description, order)): In<(String, String, f32)>,
 	mut commands: Commands,
-	objectives: Query<(Entity, &Objective), Without<SubObjectiveOf>>,
 ) {
-	if let Some(previous) = previous
-		&& let Some((previous, _)) = objectives
-			.iter()
-			.find(|(_, objective)| objective.description == previous)
-	{
-		let objective = commands.spawn(Objective::new(description)).id();
-		commands.entity(previous).insert(NextObjective(objective));
-	} else {
-		commands.spawn((CurrentObjective, Objective::new(description)));
-	}
+	commands.spawn((
+		CurrentObjective,
+		ObjectiveEntity {
+			targetname: identifier,
+			target: None,
+			objective_order: order,
+		},
+		Objective::new(description),
+	));
 }
 
-pub(crate) fn add_dialogue_objective_to_current(
-	In(description): In<String>,
+pub(crate) fn create_dialogue_subobjective(
+	In((identifier, description, parent_identifier)): In<(String, String, String)>,
 	mut commands: Commands,
-	current_objective: Option<Single<Entity, With<CurrentObjective>>>,
 ) {
-	if let Some(objective) = current_objective {
-		commands.spawn((
-			Objective::new(description),
-			SubObjectiveOf {
-				objective: *objective,
-			},
-		));
-	}
+	commands.spawn((
+		CurrentObjective,
+		ObjectiveEntity {
+			targetname: identifier,
+			target: Some(parent_identifier),
+			objective_order: 0.0,
+		},
+		Objective::new(description),
+	));
 }
 
 pub(crate) fn complete_dialogue_objective(
-	In(description): In<String>,
+	In(identifier): In<String>,
 	mut commands: Commands,
-	objectives: Query<(Entity, &Objective)>,
+	objectives: Query<(Entity, &ObjectiveEntity)>,
 ) {
 	if let Some((objective, _)) = objectives
 		.iter()
-		.find(|(_, objective)| objective.description == description)
+		.find(|(_, objective)| objective.targetname == identifier)
 	{
 		commands.entity(objective).insert(ObjectiveCompleted);
 	}

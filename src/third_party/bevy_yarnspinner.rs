@@ -9,8 +9,7 @@ use crate::{
 	gameplay::{
 		interaction::InteractableObject,
 		objectives::{
-			add_dialogue_objective_to_current, complete_dialogue_objective,
-			create_dialogue_objective, get_dialogue_current_objective,
+			complete_dialogue_objective, create_dialogue_objective, create_dialogue_subobjective, get_dialogue_current_objective
 		},
 	},
 	screens::Screen,
@@ -40,12 +39,12 @@ fn setup_dialogue_runner(mut commands: Commands, yarn_project: Res<YarnProject>)
 			commands.register_system(complete_dialogue_objective),
 		)
 		.add_command(
-			"add_objective_to_current",
-			commands.register_system(add_dialogue_objective_to_current),
-		)
-		.add_command(
 			"create_objective",
 			commands.register_system(create_dialogue_objective),
+		)
+		.add_command(
+			"create_subobjective",
+			commands.register_system(create_dialogue_subobjective),
 		);
 	dialogue_runner.library_mut().add_function(
 		"get_current_objective",

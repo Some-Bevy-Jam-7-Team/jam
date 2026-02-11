@@ -40,4 +40,6 @@ pub(crate) struct ObjectiveEntity {
 	pub targetname: String,
 	/// The objective, if any, that this is a subobjective of
 	pub target: Option<String>,
+	/// The ordering of the objective, bigger = later
+	pub objective_order: f32,
 }

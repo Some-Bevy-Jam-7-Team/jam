@@ -10,25 +10,25 @@ title: IntroCRT
   LLManager: It is employee No.6's birthday. Please go and congratulate them.
   LLManager: It is important to celebrate milestones to ensure worker productivity.
 
-  <<create_objective "Socialise">>
-  <<add_objective_to_current "Talk to employee No.1">>
-  <<add_objective_to_current "Talk to employee No.2">>
-  <<add_objective_to_current "Talk to employee No.3">>
-  <<add_objective_to_current "Talk to employee No.4">>
-  <<add_objective_to_current "Talk to employee No.5">>
-  <<add_objective_to_current "Congratulate employee No.6">>
-  <<add_objective_to_current "Talk to employee No.7">>
-  <<add_objective_to_current "Talk to employee No.8">>
-  <<add_objective_to_current "Talk to employee No.9">>
-  <<add_objective_to_current "Talk to employee No.10">>
-  <<add_objective_to_current "Talk to employee No.11">>
-  <<add_objective_to_current "Talk to employee No.12">>
+  <<create_objective "socialisation" "Socialise" 0.0>>
+  <<create_subobjective_to_current "soc_1" "Talk to employee No.1" "socialisation">>
+  <<create_subobjective_to_current "soc_2" "Talk to employee No.2" "socialisation">>
+  <<create_subobjective_to_current "soc_3" "Talk to employee No.3" "socialisation">>
+  <<create_subobjective_to_current "soc_4" "Talk to employee No.4" "socialisation">>
+  <<create_subobjective_to_current "soc_5" "Talk to employee No.5" "socialisation">>
+  <<create_subobjective_to_current "soc_6" "Congratulate employee No.6" "socialisation">>
+  <<create_subobjective_to_current "soc_7" "Talk to employee No.7" "socialisation">>
+  <<create_subobjective_to_current "soc_8" "Talk to employee No.8" "socialisation">>
+  <<create_subobjective_to_current "soc_9" "Talk to employee No.9" "socialisation">>
+  <<create_subobjective_to_current "soc_10" "Talk to employee No.10" "socialisation">>
+  <<create_subobjective_to_current "soc_11" "Talk to employee No.11" "socialisation">>
+  <<create_subobjective_to_current "soc_12" "Talk to employee No.12" "socialisation">>
 
-  <<create_objective "Talk to LLManager again" "Socialise">>
-<<elseif get_current_objective() == "Socialise">>
+  <<create_objective "talk_to_llm" "Talk to LLManager again" 1.0>>
+<<elseif get_current_objective() == "socialisation">>
   LLManager: Please engage in socialisation with your fellow employees.
-<<elseif get_current_objective() == "Talk to LLManager again">>
-  <<complete_objective "Talk to LLManager again">>
+<<elseif get_current_objective() == "talk_to_llm">>
+  <<complete_objective "talk_to_llm">>
 
   LLManager: Well done, you have engaged in productivity boosting activities.
   LLManager: Please take your mandated fifteen minute mental health break.
@@ -38,7 +38,7 @@ title: IntroCRT
   LLManager: Be sure to set a timer so you don't accidentally waste time.
   LLManager: Remember, a productive mind is a happy mind.
 
-  <<create_objective "Take a mental health break.">>
+  <<create_objective "breakroom" "Take a mental health break." 2.0>>
 <<endif>>
 ===
 
