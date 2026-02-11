@@ -14,6 +14,7 @@ pub(crate) enum CollisionLayer {
 	Default,
 	Prop,
 	Character,
+	Dialog,
 	Stomach,
 }
 

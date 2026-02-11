@@ -5,11 +5,12 @@ use std::time::Duration;
 use avian3d::prelude::LinearVelocity;
 use bevy::prelude::*;
 use bevy_ahoy::CharacterControllerState;
+use bevy_trenchbroom::prelude::FgdType;
 
 use crate::{
 	PostPhysicsAppSystems,
 	animation::{AnimationState, AnimationStateTransition},
-	gameplay::animation::AnimationPlayers,
+	gameplay::{animation::AnimationPlayers, npc::Npc},
 	screens::Screen,
 };
 
@@ -31,6 +32,7 @@ struct NpcAnimations {
 	walk: AnimationNodeIndex,
 	run: AnimationNodeIndex,
 	dance: AnimationNodeIndex,
+	typing: AnimationNodeIndex,
 }
 
 pub(crate) fn setup_npc_animations(
@@ -49,8 +51,10 @@ pub(crate) fn setup_npc_animations(
 			gltf.named_animations.get("idle").unwrap().clone(),
 			gltf.named_animations.get("walk").unwrap().clone(),
 			gltf.named_animations.get("dance").unwrap().clone(),
+			gltf.named_animations.get("typing").unwrap().clone(),
 		]);
-		let [run_index, idle_index, walk_index, dance_index] = indices.as_slice() else {
+		let [run_index, idle_index, walk_index, dance_index, typing_index] = indices.as_slice()
+		else {
 			unreachable!()
 		};
 		let graph_handle = graphs.add(graph);
@@ -60,6 +64,7 @@ pub(crate) fn setup_npc_animations(
 			walk: *walk_index,
 			run: *run_index,
 			dance: *dance_index,
+			typing: *typing_index,
 		};
 		let transitions = AnimationTransitions::new();
 		commands.entity(anim_player).insert((
@@ -71,12 +76,14 @@ pub(crate) fn setup_npc_animations(
 }
 
 /// Managed by [`play_animations`]
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug, Reflect, FgdType)]
 pub(crate) enum NpcAnimationState {
 	Standing,
 	Airborne,
-	Walking(f32),
-	Running(f32),
+	Walking,
+	Running,
+	Dancing,
+	Typing,
 }
 
 fn play_animations(
@@ -85,6 +92,7 @@ fn play_animations(
 		&LinearVelocity,
 		&CharacterControllerState,
 		&AnimationPlayers,
+		&Npc,
 	)>,
 	mut q_animation: Query<(
 		&NpcAnimations,
@@ -92,19 +100,23 @@ fn play_animations(
 		&mut AnimationTransitions,
 	)>,
 ) {
-	for (mut animating_state, velocity, state, anim_players) in &mut query {
+	for (mut animating_state, velocity, state, anim_players, npc) in &mut query {
 		let mut iter = q_animation.iter_many_mut(anim_players.iter());
 		while let Some((animations, mut anim_player, mut transitions)) = iter.fetch_next() {
 			match animating_state.update_by_discriminant({
-				let speed = velocity.length();
-				if state.grounded.is_none() {
-					NpcAnimationState::Airborne
-				} else if speed > 7.0 {
-					NpcAnimationState::Running(speed)
-				} else if speed > 0.01 {
-					NpcAnimationState::Walking(speed)
+				if let Some(lock) = npc.animation_lock {
+					lock
 				} else {
-					NpcAnimationState::Standing
+					let speed = velocity.length();
+					if state.grounded.is_none() {
+						NpcAnimationState::Airborne
+					} else if speed > 7.0 {
+						NpcAnimationState::Running
+					} else if speed > 0.01 {
+						NpcAnimationState::Walking
+					} else {
+						NpcAnimationState::Standing
+					}
 				}
 			}) {
 				AnimationStateTransition::Maintain { state: _ } => {}
@@ -128,7 +140,7 @@ fn play_animations(
 							)
 							.repeat();
 					}
-					NpcAnimationState::Walking(_speed) => {
+					NpcAnimationState::Walking => {
 						transitions
 							.play(
 								&mut anim_player,
@@ -137,9 +149,27 @@ fn play_animations(
 							)
 							.repeat();
 					}
-					NpcAnimationState::Running(_speed) => {
+					NpcAnimationState::Running => {
 						transitions
 							.play(&mut anim_player, animations.run, Duration::from_millis(400))
+							.repeat();
+					}
+					NpcAnimationState::Dancing => {
+						transitions
+							.play(
+								&mut anim_player,
+								animations.dance,
+								Duration::from_millis(800),
+							)
+							.repeat();
+					}
+					NpcAnimationState::Typing => {
+						transitions
+							.play(
+								&mut anim_player,
+								animations.typing,
+								Duration::from_millis(100),
+							)
 							.repeat();
 					}
 				},

@@ -25,7 +25,7 @@ pub(super) fn ui_updating_plugin(app: &mut App) {
 	app.add_observer(present_options);
 }
 
-const AUTO_CONTINUE_DELAY_SECS: f32 = 2.0;
+const AUTO_CONTINUE_DELAY_SECS: f32 = 4.0;
 
 #[derive(Resource, Deref, DerefMut)]
 struct AutoContinueTimer(Timer);
