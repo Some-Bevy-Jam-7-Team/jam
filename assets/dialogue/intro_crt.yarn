@@ -1,5 +1,22 @@
-title: IntroCrt
+title: IntroCRT
 ---
-LLManager: Good morning, workforce. It is day 451 of you being a helpful member of the company.
-LLManager: TODO
+<<declare $birthday_celebrated = false>>
+<<if $birthday_celebrated == false>>
+LLManager: Good morning, valued employee. You have been working with us for 450 days.
+LLManager: Thank you for your continued productivity, if you keep this up you might get a promotion.
+LLManager: Which means two pizza parties per month.
+LLManager: Before you get to work, it is important to celebrate milestones to ensure worker productivity.
+LLManager: It is employee No.6's birthday. Please go and congratulate them.
+// # TODO: Add bit that sets birthday objective here
+<<else>>
+LLManager: Well done, you have engaged in productivity boosting activities.
+LLManager: Please take your mandated fifteen minute mental health break.
+LLManager: Be sure to set a timer so you don't accidentally waste time.
+LLManager: Remember, a productive mind is a happy mind.
+<<endif>>
+===
+
+title: Day2CRT
+---
+LLManager: Good morning, valued employee. You have been working with us for $DAYS$ days.
 ===
