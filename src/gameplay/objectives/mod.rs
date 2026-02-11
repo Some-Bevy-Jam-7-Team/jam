@@ -12,7 +12,7 @@ pub(super) fn plugin(app: &mut App) {
 	app.add_plugins(ui::plugin);
 
 	app.add_observer(update_current_objective);
-//	app.add_systems(Update, find_current_objective);
+	//	app.add_systems(Update, find_current_objective);
 	app.add_observer(watch_for_completors);
 	app.add_systems(PostUpdate, complete_parent_objectives);
 }
@@ -38,7 +38,6 @@ pub struct Objective {
 }
 
 impl Objective {
-	#[expect(dead_code)]
 	/// Creates a new [`Objective`] with the given description.
 	pub fn new(description: impl Into<String>) -> Self {
 		Self {
@@ -86,6 +85,59 @@ fn watch_for_completors(
 			}
 		}
 	}
+}
+
+pub(crate) fn create_dialogue_objective(
+	In((description, previous)): In<(String, Option<String>)>,
+	mut commands: Commands,
+	objectives: Query<(Entity, &Objective), Without<SubObjectiveOf>>,
+) {
+	if let Some(previous) = previous
+		&& let Some((previous, _)) = objectives
+			.iter()
+			.find(|(_, objective)| objective.description == previous)
+	{
+		let objective = commands.spawn(Objective::new(description)).id();
+		commands.entity(previous).insert(NextObjective(objective));
+	} else {
+		commands.spawn((CurrentObjective, Objective::new(description)));
+	}
+}
+
+pub(crate) fn add_dialogue_objective_to_current(
+	In(description): In<String>,
+	mut commands: Commands,
+	current_objective: Option<Single<Entity, With<CurrentObjective>>>,
+) {
+	if let Some(objective) = current_objective {
+		commands.spawn((
+			Objective::new(description),
+			SubObjectiveOf {
+				objective: *objective,
+			},
+		));
+	}
+}
+
+pub(crate) fn complete_dialogue_objective(
+	In(description): In<String>,
+	mut commands: Commands,
+	objectives: Query<(Entity, &Objective)>,
+) {
+	if let Some((objective, _)) = objectives
+		.iter()
+		.find(|(_, objective)| objective.description == description)
+	{
+		commands.entity(objective).insert(ObjectiveCompleted);
+	}
+}
+
+pub(crate) fn get_dialogue_current_objective(
+	current_objective: Option<Single<&Objective, With<CurrentObjective>>>,
+) -> String {
+	current_objective
+		.map(|objective| objective.description.clone())
+		.unwrap_or_default()
 }
 
 fn update_current_objective(
