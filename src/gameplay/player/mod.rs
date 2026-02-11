@@ -69,6 +69,7 @@ fn setup_player(
 			PlayerInputContext,
 			Collider::cylinder(PLAYER_RADIUS, PLAYER_HEIGHT),
 			CharacterController {
+				speed: 7.0,
 				filter: SpatialQueryFilter::DEFAULT
 					.with_mask(LayerMask::ALL & !CollisionLayer::Stomach.to_bits()),
 				..default()

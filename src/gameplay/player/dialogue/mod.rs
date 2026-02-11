@@ -63,7 +63,7 @@ fn stop_dialogue_far_from_speaker(
 	mut dialogue_runner: Single<&mut DialogueRunner>,
 	speaker: Res<DialogueSpeaker>,
 ) {
-	const MAX_DIALOGUE_DISTANCE: f32 = 10.0;
+	const MAX_DIALOGUE_DISTANCE: f32 = 3.0;
 
 	let Some(speaker_transform) = speaker
 		.0

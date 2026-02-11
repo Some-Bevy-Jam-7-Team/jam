@@ -10,7 +10,10 @@ use crate::{gameplay::interaction::InteractableObject, screens::Screen};
 pub(super) fn plugin(app: &mut App) {
 	app.add_plugins((
 		// In Wasm, we need to load the dialogue file manually. If we're not targeting Wasm, we can just use `YarnSpinnerPlugin::default()` instead.
-		YarnSpinnerPlugin::with_yarn_sources(vec![YarnFileSource::file("dialogue/npc.yarn")]),
+		YarnSpinnerPlugin::with_yarn_sources(vec![
+			YarnFileSource::file("dialogue/intro_crt.yarn"),
+			YarnFileSource::file("dialogue/intro_npc.yarn"),
+		]),
 	));
 	app.add_systems(OnEnter(Screen::Gameplay), setup_dialogue_runner);
 	app.add_systems(
@@ -40,21 +43,12 @@ fn abort_all_dialogues_when_leaving_gameplay(
 }
 
 #[base_class]
-#[derive(Eq, PartialEq, Clone)]
+#[derive(Eq, PartialEq, Clone, Debug)]
 #[require(InteractableObject(Some("Talk".to_string())))]
 pub(crate) struct YarnNode {
 	#[class(must_set)]
 	pub(crate) yarn_node: String,
 	pub(crate) prompt: String,
-}
-
-impl YarnNode {
-	pub(crate) fn new(yarn_node: impl Into<String>) -> Self {
-		Self {
-			yarn_node: yarn_node.into(),
-			..default()
-		}
-	}
 }
 
 impl Default for YarnNode {

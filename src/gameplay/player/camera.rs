@@ -69,7 +69,7 @@ fn spawn_view_model(
 
 	let medium = media.add(ScatteringMedium::default());
 
-	let exposure = Exposure { ev100: 10.5 };
+	let exposure = Exposure { ev100: 12.0 };
 
 	// Spawn the player camera
 	commands
@@ -134,7 +134,7 @@ fn spawn_view_model(
 				},
 				Atmosphere::earthlike(medium.clone()),
 				DistanceFog {
-					falloff: FogFalloff::Exponential { density: 0.005 },
+					falloff: FogFalloff::Exponential { density: 0.0005 },
 					..default()
 				},
 			));
