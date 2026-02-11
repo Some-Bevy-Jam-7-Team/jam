@@ -111,8 +111,6 @@ fn main() -> AppExit {
 			},
 			..default()
 		}),));
-	// "`PhysicsPickingPlugin` is not a default plugin" - Sun Tzu - The art of aviation
-	app.add_plugins(PhysicsPickingPlugin);
 
 	let firewheel_config = FirewheelConfig {
 		scheduled_event_capacity: 1024,
