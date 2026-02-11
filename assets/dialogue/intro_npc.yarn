@@ -39,6 +39,14 @@ title: IntroNpc6
 ---
 Jannick: I would go to a therapist but the last one I went to didn't understand exposure therapy.
 Jannick: I think he might have been hitting on me.
+-> Happy birthday
+   Jannick: He tried to take me out for dinner on my birthday.
+   Jannick: Said I was very special.
+   Jannick: Are you going to do that to.
+   -> No
+     Jannick: Then save your happy birthday.
+   -> Yes
+     Jannick: I'll be waiting under the big green sign.
 ===
 
 title: IntroNpc7
