@@ -75,11 +75,11 @@ fn iquick_plz_do_not_kill_me(
 		]),
 	) && let Ok(collider) = collider.get(hit.entity)
 		&& let Ok(interaction) = interaction_query.get(collider.body)
-			&& interaction.0.as_ref().is_some_and(|desc| !desc.is_empty())
-		{
-			resource.target_entity = Some(collider.body);
-			resource.description = interaction.0.clone();
-		}
+		&& interaction.0.as_ref().is_some_and(|desc| !desc.is_empty())
+	{
+		resource.target_entity = Some(collider.body);
+		resource.description = interaction.0.clone();
+	}
 }
 
 fn interact_by_input_action(
