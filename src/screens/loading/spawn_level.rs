@@ -1,11 +1,11 @@
 //! The loading screen that appears when the game is starting, but still spawning the level.
 
 use bevy::{prelude::*, scene::SceneInstance};
-use bevy_landmass::{coords::ThreeD, NavMesh};
+use bevy_landmass::{NavMesh, coords::ThreeD};
 
 use crate::{
-	gameplay::level::{load_level_assets, spawn_level, Level},
-	screens::{loading::LoadingScreenUiNode, Screen},
+	gameplay::level::{Level, load_level_assets, spawn_level},
+	screens::{Screen, loading::LoadingScreenUiNode},
 	theme::{palette::SCREEN_BACKGROUND, prelude::*},
 };
 

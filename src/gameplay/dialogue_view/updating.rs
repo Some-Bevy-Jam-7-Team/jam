@@ -90,7 +90,12 @@ fn present_line(
 	}
 
 	// Play voice audio for this line.
-	let id = event.line.id.0.strip_prefix("line:").unwrap_or(&event.line.id.0);
+	let id = event
+		.line
+		.id
+		.0
+		.strip_prefix("line:")
+		.unwrap_or(&event.line.id.0);
 	let path = format!("audio/voice/{id}.ogg");
 	let handle = asset_server.load::<AudioSample>(path);
 	commands.spawn((SamplePlayer::new(handle), SfxPool, VoiceAudio));
