@@ -1,7 +1,9 @@
 use bevy::prelude::*;
 
 use crate::{
-	gameplay::objectives::{Objective, ObjectiveCompleted, SubObjectiveOf},
+	gameplay::objectives::{
+		CurrentObjective, Objective, ObjectiveCompleted, SubObjectiveOf, SubObjectives,
+	},
 	screens::Screen,
 };
 
@@ -78,38 +80,73 @@ fn sub_objective_list_node(depth: usize) -> impl Bundle {
 	)
 }
 
-/// Spawns an objective UI node when an objective is spawned.
-fn on_spawn_objective(
-	add: On<Add, Objective>,
-	objective_query: Query<(&Objective, Option<&SubObjectiveOf>)>,
-	objective_node_query: Query<&ObjectiveOfNode>,
-	objective_ui: Single<Entity, With<ObjectiveUi>>,
-	sub_objective_query: Query<&SubObjectiveOf>,
-	child_query: Query<&Children>,
-	mut commands: Commands,
+/// Spawns a UI node for a new current objective.
+fn on_spawn_objective(add: On<Add, CurrentObjective>, mut commands: Commands) {
+	commands.run_system_cached_with(spawn_objective, add.entity);
+}
+
+// This is gross, but we use exclusive `World` access to make structural changes immediate.
+// Using commands would really complicate this, since the logic depends on previously spawned nodes.
+fn spawn_objective(
+	In(objective_entity): In<Entity>,
+	world: &mut World,
+	objective_ui: &mut QueryState<Entity, With<ObjectiveUi>>,
+	sub_objective_query: &mut QueryState<&SubObjectives>,
+	sub_objective_of_query: &mut QueryState<&SubObjectiveOf>,
 ) {
-	let Ok((objective, sub_objective_of)) = objective_query.get(add.entity) else {
+	let Ok(objective_ui) = objective_ui.query(world).single() else {
 		return;
 	};
 
-	if let Some(sub_objective_of) = sub_objective_of {
+	let Some(objective_description) = world
+		.get::<Objective>(objective_entity)
+		.map(|o| o.description.clone())
+	else {
+		return;
+	};
+
+	let objective_node_entity = world
+		.spawn((
+			ChildOf(objective_ui),
+			objective_node(objective_description, 0),
+		))
+		.id();
+
+	world.entity_mut(objective_entity).insert(ObjectiveOfNode {
+		node: objective_node_entity,
+	});
+
+	let descendants = sub_objective_query
+		.query(world)
+		.iter_descendants(objective_entity)
+		.collect::<Vec<Entity>>();
+
+	for sub_objective_entity in descendants {
+		let Some(sub_objective_of) = world.get::<SubObjectiveOf>(sub_objective_entity) else {
+			continue;
+		};
+
 		// This is a sub-objective; find the parent objective's UI node.
-		let Ok(parent_objective_node) = objective_node_query.get(sub_objective_of.objective) else {
-			return;
+		let Some(parent_objective_node) = world.get::<ObjectiveOfNode>(sub_objective_of.objective)
+		else {
+			continue;
 		};
 
 		// Get the children of the parent objective node.
-		let Ok(children) = child_query.get(parent_objective_node.node) else {
-			return;
+		let Some(children) = world.get::<Children>(parent_objective_node.node) else {
+			continue;
 		};
 
 		// Determine the depth of this sub-objective in the hierarchy.
-		let depth = sub_objective_query.iter_ancestors(add.entity).count();
+		let depth = sub_objective_of_query
+			.query(world)
+			.iter_ancestors(sub_objective_entity)
+			.count();
 
 		// Find or create the objective list node under the parent objective node.
 		let objective_list_node_entity = if children.len() == 1 {
 			// No objective list node yet; create one.
-			commands
+			world
 				.spawn((
 					ChildOf(parent_objective_node.node),
 					sub_objective_list_node(depth),
@@ -120,28 +157,22 @@ fn on_spawn_objective(
 			children[1]
 		};
 
-		let objective_node_entity = commands
+		let sub_objective_description = world
+			.get::<Objective>(sub_objective_entity)
+			.map(|o| o.description.clone())
+			.unwrap();
+		let objective_node_entity = world
 			.spawn((
 				ChildOf(objective_list_node_entity),
-				objective_node(objective.description.clone(), depth),
+				objective_node(sub_objective_description, depth),
 			))
 			.id();
 
-		commands.entity(add.entity).try_insert(ObjectiveOfNode {
-			node: objective_node_entity,
-		});
-	} else {
-		// This is a top-level objective; add it to the main objective UI.
-		let objective_node_entity = commands
-			.spawn((
-				ChildOf(*objective_ui),
-				objective_node(objective.description.clone(), 0),
-			))
-			.id();
-
-		commands.entity(add.entity).try_insert(ObjectiveOfNode {
-			node: objective_node_entity,
-		});
+		world
+			.entity_mut(sub_objective_entity)
+			.insert(ObjectiveOfNode {
+				node: objective_node_entity,
+			});
 	}
 }
 
@@ -149,6 +180,7 @@ fn on_spawn_objective(
 fn on_complete_objective(
 	completed: On<Insert, (ObjectiveCompleted, ObjectiveOfNode)>,
 	objective_node_query: Query<&ObjectiveOfNode, With<ObjectiveCompleted>>,
+	sub_objective_query: Query<&SubObjectiveOf>,
 	child_query: Query<&Children>,
 	mut commands: Commands,
 ) {
@@ -168,6 +200,13 @@ fn on_complete_objective(
 	// Remove the sub-objectives from the world.
 	if let Some(sub_objective_list) = children.get(1) {
 		commands.entity(*sub_objective_list).despawn();
+	}
+
+	// If this objective is a top-level objective, despawn its node when completed.
+	if !sub_objective_query.contains(completed.entity)
+		&& let Ok(objective_of_node) = objective_node_query.get(completed.entity)
+	{
+		commands.entity(objective_of_node.node).try_despawn();
 	}
 }
 

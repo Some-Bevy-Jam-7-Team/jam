@@ -10,11 +10,14 @@ use crate::screens::Screen;
 pub(super) fn plugin(app: &mut App) {
 	app.add_plugins((
 		// In Wasm, we need to load the dialogue file manually. If we're not targeting Wasm, we can just use `YarnSpinnerPlugin::default()` instead.
-		YarnSpinnerPlugin::with_yarn_sources(vec![YarnFileSource::file("dialogue/npc.yarn")])
-			.with_localizations(Localizations {
-				base_localization: "en".into(),
-				translations: vec![],
-			}),
+		YarnSpinnerPlugin::with_yarn_sources(vec![
+			YarnFileSource::file("dialogue/intro_crt.yarn"),
+			YarnFileSource::file("dialogue/intro_npc.yarn"),
+		])
+		.with_localizations(Localizations {
+			base_localization: "en".into(),
+			translations: vec![],
+		}),
 	));
 	app.add_systems(OnEnter(Screen::Gameplay), setup_dialogue_runner);
 	app.add_systems(
@@ -48,20 +51,11 @@ pub(crate) fn is_dialogue_running(dialogue_runner: Option<Single<&DialogueRunner
 }
 
 #[base_class]
-#[derive(Eq, PartialEq, Clone)]
+#[derive(Eq, PartialEq, Clone, Debug)]
 pub(crate) struct YarnNode {
 	#[class(must_set)]
 	pub(crate) yarn_node: String,
 	pub(crate) prompt: String,
-}
-
-impl YarnNode {
-	pub(crate) fn new(yarn_node: impl Into<String>) -> Self {
-		Self {
-			yarn_node: yarn_node.into(),
-			..default()
-		}
-	}
 }
 
 impl Default for YarnNode {

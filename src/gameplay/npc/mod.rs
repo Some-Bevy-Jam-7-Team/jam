@@ -29,11 +29,19 @@ pub(super) fn plugin(app: &mut App) {
 	app.add_observer(on_add);
 }
 
-#[point_class(base(Transform, Visibility), model("models/jan_npc/jan.gltf"))]
-pub(crate) struct Npc;
+#[point_class(
+	base(Transform, Visibility, YarnNode),
+	model("models/jan_npc/jan.gltf")
+)]
+#[derive(Default)]
+pub(crate) struct Npc {
+	animation_lock: Option<NpcAnimationState>,
+}
 
-pub(crate) const NPC_RADIUS: f32 = 0.6;
-pub(crate) const NPC_HEIGHT: f32 = 1.3;
+// Shoulder-width of 45 cm (over average but not too diabolical)
+pub(crate) const NPC_RADIUS: f32 = 0.225;
+// Height of 165 cm
+pub(crate) const NPC_HEIGHT: f32 = 1.65;
 const NPC_HALF_HEIGHT: f32 = NPC_HEIGHT / 2.0;
 const NPC_SPEED: f32 = 7.0;
 
@@ -41,7 +49,6 @@ fn on_add(add: On<Add, Npc>, mut commands: Commands, assets: Res<AssetServer>) {
 	commands
 		.entity(add.entity)
 		.insert((
-			Npc,
 			Collider::cylinder(NPC_RADIUS, NPC_HEIGHT),
 			CharacterController {
 				speed: NPC_SPEED,
@@ -53,9 +60,10 @@ fn on_add(add: On<Add, Npc>, mut commands: Commands, assets: Res<AssetServer>) {
 			RigidBody::Kinematic,
 			AnimationState::<NpcAnimationState>::default(),
 			AnimationPlayerAncestor,
-			CollisionLayers::new(CollisionLayer::Character, LayerMask::ALL),
-			// The Yarn Node is what we use to trigger dialogue.
-			YarnNode::new("Npc"),
+			CollisionLayers::new(
+				[CollisionLayer::Character, CollisionLayer::Dialog],
+				LayerMask::ALL,
+			),
 		))
 		.with_child((
 			Name::new("Npc Model"),

@@ -75,7 +75,7 @@ fn setup_npc_agent(
 		ChildOf(npc),
 		AgentOf(npc),
 		AgentTarget3d::default(),
-		WantsToFollowPlayer,
+		//WantsToFollowPlayer,
 	));
 }
 
@@ -134,6 +134,9 @@ fn rotate_npc(
 	time: Res<Time>,
 ) {
 	for (mut transform, velocity) in &mut agent_query {
+		if velocity.length_squared() < 0.01 {
+			continue;
+		}
 		let hz_velocity = vec3(velocity.x, 0.0, velocity.z);
 		if let Ok(dir) = Dir3::new(hz_velocity) {
 			let target = transform.looking_to(dir, Vec3::Y).rotation;

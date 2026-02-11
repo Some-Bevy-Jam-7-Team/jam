@@ -1,4 +1,4 @@
-title: Npc
+title: IntroNpc1
 ---
 Jan: I wish I had a Visa, but they say it's blocked on BSN! #line:7791278
 Jan: The visa agency says they'd need to re-issue all the visas anyway, so might as well wait now, right? #line:16752406
@@ -6,4 +6,9 @@ Jan: The visa agency says they'd need to re-issue all the visas anyway, so might
   Jan: Don't worry, it's here any day now. #line:6856645
 -> You sure you want to wait? #line:1137076
   Jan: Corporate says that patience is a virtue and increases shareholder value. #line:3010042
+===
+
+title: IntroNpc2
+---
+Jan2: I'm a different Jan!
 ===

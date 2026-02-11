@@ -1,6 +1,6 @@
 //! Player dialogue handling. This module starts the Yarn Spinner dialogue when the player starts interacting with an NPC.
 
-use avian3d::prelude::{SpatialQuery, SpatialQueryFilter};
+use avian3d::prelude::*;
 use bevy::prelude::*;
 use bevy_enhanced_input::prelude::*;
 
@@ -60,21 +60,23 @@ fn check_for_dialogue_opportunity(
 	mut interaction_prompt: Single<&mut InteractionPrompt>,
 	q_yarn_node: Query<&YarnNode>,
 	spatial_query: SpatialQuery,
+	rigid_bodies: Query<&ColliderOf>,
 ) {
 	let camera_transform = player.compute_transform();
-	const MAX_INTERACTION_DISTANCE: f32 = 3.0;
+	const MAX_INTERACTION_DISTANCE: f32 = 2.0;
 	let hit = spatial_query.cast_ray(
 		camera_transform.translation,
 		camera_transform.forward(),
 		MAX_INTERACTION_DISTANCE,
 		true,
-		&SpatialQueryFilter::from_mask(CollisionLayer::Character)
+		&SpatialQueryFilter::from_mask(CollisionLayer::Dialog)
 			.with_excluded_entities([*player_collider]),
 	);
-	let node = hit
-		.and_then(|hit| q_yarn_node.get(hit.entity).ok())
-		.cloned();
-	if interaction_prompt.node != node {
+	let rb = hit
+		.and_then(|hit| rigid_bodies.get(hit.entity).ok())
+		.map(|rb| rb.body);
+	let node = rb.and_then(|rb| q_yarn_node.get(rb).ok()).cloned();
+	if interaction_prompt.node != node && !node.as_ref().is_some_and(|n| n.yarn_node.is_empty()) {
 		interaction_prompt.node = node;
 	}
 	if let Some(hit) = hit {
@@ -114,7 +116,7 @@ fn stop_dialogue_far_from_speaker(
 	mut dialogue_runner: Single<&mut DialogueRunner>,
 	speaker: Res<DialogueSpeaker>,
 ) {
-	const MAX_DIALOGUE_DISTANCE: f32 = 10.0;
+	const MAX_DIALOGUE_DISTANCE: f32 = 3.0;
 
 	let Some(speaker_transform) = speaker
 		.0

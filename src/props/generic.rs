@@ -1,9 +1,19 @@
 use crate::{
-	asset_tracking::LoadResource, third_party::bevy_trenchbroom::GetTrenchbroomModelPath as _,
+	asset_tracking::LoadResource,
+	third_party::{
+		avian3d::CollisionLayer,
+		bevy_trenchbroom::{GetTrenchbroomModelPath as _, LoadTrenchbroomModel as _},
+		bevy_yarnspinner::YarnNode,
+	},
 };
 
 use super::setup::*;
-use bevy::prelude::*;
+use avian3d::prelude::*;
+use bevy::{
+	asset::io::embedded::GetAssetServer,
+	ecs::{lifecycle::HookContext, world::DeferredWorld},
+	prelude::*,
+};
 use bevy_trenchbroom::prelude::*;
 
 pub(super) fn plugin(app: &mut App) {
@@ -17,13 +27,18 @@ pub(super) fn plugin(app: &mut App) {
 		.add_observer(setup_static_prop_with_convex_hull::<FenceBarsDecorativeSingle>)
 		.add_observer(setup_static_prop_with_convex_hull::<DoorStainedGlass>);
 
-	app.add_observer(setup_dynamic_prop_with_convex_hull::<PackageMedium>)
+	app.add_observer(setup_static_prop_with_convex_hull::<Keyboard>)
+		.add_observer(setup_static_prop_with_convex_hull::<Mouse>)
+		.add_observer(setup_dynamic_prop_with_convex_hull::<PackageMedium>)
 		.add_observer(setup_dynamic_prop_with_convex_hull::<PackageSmall>);
 
 	app.add_observer(setup_nonphysical_prop::<IvyPart8>)
 		.add_observer(setup_nonphysical_prop::<SmallDoorSign1>);
 
-	app.load_asset::<Gltf>(PackageMedium::model_path())
+	app.load_asset::<Gltf>(Crt::model_path())
+		.load_asset::<Gltf>(Keyboard::model_path())
+		.load_asset::<Gltf>(Mouse::model_path())
+		.load_asset::<Gltf>(PackageMedium::model_path())
 		.load_asset::<Gltf>(PackageSmall::model_path())
 		.load_asset::<Gltf>(Grate::model_path())
 		.load_asset::<Gltf>(Table::model_path())
@@ -39,6 +54,40 @@ pub(super) fn plugin(app: &mut App) {
 }
 
 // generic dynamic props
+
+// office
+
+#[point_class(base(Transform, Visibility, YarnNode), model("models/office/crt.gltf"))]
+#[component(on_add = Crt::on_add)]
+#[derive(Default)]
+pub(crate) struct Crt;
+
+impl Crt {
+	fn on_add(mut world: DeferredWorld, ctx: HookContext) {
+		if world.is_scene_world() {
+			return;
+		}
+		let model = world.get_asset_server().load_trenchbroom_model::<Self>();
+
+		world.commands().entity(ctx.entity).insert((
+			ColliderConstructorHierarchy::new(ColliderConstructor::ConvexHullFromMesh)
+				.with_default_layers(CollisionLayers::new(
+					[CollisionLayer::Default, CollisionLayer::Dialog],
+					LayerMask::ALL,
+				)),
+			RigidBody::Static,
+			SceneRoot(model),
+		));
+	}
+}
+
+#[point_class(base(Transform, Visibility), model("models/office/keyboard.gltf"))]
+pub(crate) struct Keyboard;
+
+#[point_class(base(Transform, Visibility), model("models/office/mouse.gltf"))]
+pub(crate) struct Mouse;
+
+// darkmod
 
 #[point_class(
 	base(Transform, Visibility),
