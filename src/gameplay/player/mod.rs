@@ -27,7 +27,6 @@ pub(crate) mod dialogue;
 pub(crate) mod input;
 pub(crate) mod movement_sound;
 pub(crate) mod navmesh_position;
-pub(crate) mod pickup;
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_plugins((
@@ -37,7 +36,6 @@ pub(super) fn plugin(app: &mut App) {
 		input::plugin,
 		dialogue::plugin,
 		movement_sound::plugin,
-		pickup::plugin,
 		navmesh_position::plugin,
 	));
 	app.add_observer(setup_player);
