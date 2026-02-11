@@ -1,5 +1,11 @@
-title: IntroCrt
+title: IntroCRT
 ---
-LLManager: Good morning, workforce. It is day 451 of you being a helpful member of the company.
-LLManager: TODO
+LLManager: Good morning, valued employee. You have been working with us for 450 days.
+LLManager: Thank you for your continued productivity.
+LLManager: It is employee No.6's birthday. Please go and congratulate them.
+===
+
+title: Day2CRT
+---
+LLManager: Good morning, valued employee. You have been working with us for $DAYS$ days.
 ===
