@@ -11,7 +11,6 @@ pub(super) fn plugin(app: &mut App) {
 		OnEnter(Screen::Gameplay),
 		spawn_test_objectives.after(spawn_objective_ui),
 	);
-	// app.add_observer(set_current_objective);
 	app.add_observer(update_current_objective);
 	app.add_systems(PostUpdate, complete_parent_objectives);
 }
