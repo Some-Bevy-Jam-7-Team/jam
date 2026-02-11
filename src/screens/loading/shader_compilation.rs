@@ -4,6 +4,7 @@
 use bevy::prelude::*;
 
 use crate::{
+	screens::loading::LoadingScreenUiNode,
 	shader_compilation::{LoadedPipelineCount, all_pipelines_loaded, spawn_shader_compilation_map},
 	theme::{palette::SCREEN_BACKGROUND, prelude::*},
 };
@@ -40,6 +41,7 @@ fn spawn_or_skip_shader_compilation_loading_screen(
 		return;
 	}
 	commands.spawn((
+		LoadingScreenUiNode,
 		widget::ui_root("Loading Screen"),
 		BackgroundColor(SCREEN_BACKGROUND),
 		DespawnOnExit(LoadingScreen::Shaders),

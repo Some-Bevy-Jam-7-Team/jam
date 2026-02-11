@@ -5,7 +5,7 @@ use bevy_landmass::{NavMesh, coords::ThreeD};
 
 use crate::{
 	gameplay::level::{Level, load_level_assets, spawn_level},
-	screens::Screen,
+	screens::{Screen, loading::LoadingScreenUiNode},
 	theme::{palette::SCREEN_BACKGROUND, prelude::*},
 };
 
@@ -26,9 +26,9 @@ pub(super) fn plugin(app: &mut App) {
 
 fn spawn_level_loading_screen(mut commands: Commands) {
 	commands.spawn((
+		LoadingScreenUiNode,
 		widget::ui_root("Loading Screen"),
 		BackgroundColor(SCREEN_BACKGROUND),
-		DespawnOnExit(LoadingScreen::Level),
 		children![widget::label("Spawning Level...")],
 	));
 }

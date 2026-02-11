@@ -28,3 +28,7 @@ pub(crate) enum LoadingScreen {
 	Shaders,
 	Level,
 }
+
+#[derive(Component, Reflect, Debug)]
+#[reflect(Component)]
+pub(crate) struct LoadingScreenUiNode;

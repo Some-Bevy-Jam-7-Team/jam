@@ -42,7 +42,9 @@ pub(crate) fn spawn_level(
 	level_assets: Res<Assets<LevelAssets>>,
 	existing_level: Query<(), With<Level>>,
 ) {
-	let Some(handle) = handle else { return; };
+	let Some(handle) = handle else {
+		return;
+	};
 	if !existing_level.is_empty() {
 		return;
 	}
@@ -50,10 +52,7 @@ pub(crate) fn spawn_level(
 		return;
 	};
 	// Check individual sub-assets since `asset_server.add()` doesn't track #[dependency] fields.
-	if !asset_server.is_loaded_with_dependencies(&assets.level)
-		|| !asset_server.is_loaded_with_dependencies(&assets.navmesh)
-		|| !asset_server.is_loaded_with_dependencies(&assets.music)
-	{
+	if !asset_server.is_loaded_with_dependencies(&handle.0) {
 		return;
 	}
 

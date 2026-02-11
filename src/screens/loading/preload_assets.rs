@@ -5,6 +5,7 @@ use bevy::prelude::*;
 
 use crate::{
 	asset_tracking::ResourceHandles,
+	screens::loading::LoadingScreenUiNode,
 	theme::{palette::SCREEN_BACKGROUND, prelude::*},
 };
 
@@ -36,6 +37,7 @@ fn spawn_or_skip_asset_loading_screen(
 		return;
 	}
 	commands.spawn((
+		LoadingScreenUiNode,
 		widget::ui_root("Loading Screen"),
 		BackgroundColor(SCREEN_BACKGROUND),
 		DespawnOnExit(LoadingScreen::Assets),
