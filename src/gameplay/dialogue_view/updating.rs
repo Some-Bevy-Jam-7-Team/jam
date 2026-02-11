@@ -96,7 +96,7 @@ fn present_line(
 		.0
 		.strip_prefix("line:")
 		.unwrap_or(&event.line.id.0);
-	let path = format!("audio/voice/{id}.ogg");
+	let path = format!("audio/dialogue/{id}.ogg");
 	let handle = asset_server.load::<AudioSample>(path);
 	commands.spawn((SamplePlayer::new(handle), SfxPool, VoiceAudio));
 
