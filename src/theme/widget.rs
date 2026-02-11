@@ -16,7 +16,9 @@ pub(crate) fn ui_root(name: impl Into<Cow<'static, str>>) -> impl Bundle {
 		Name::new(name),
 		Node {
 			position_type: PositionType::Absolute,
+			// DO NOT CHANGE: THINGS WILL BREAK AND I WILL NOT EXPLAIN HOW IT HAS COME TO THIS.
 			width: Percent(100.0),
+			// THIS TOO
 			height: Percent(100.0),
 			align_items: AlignItems::Center,
 			justify_content: JustifyContent::Center,

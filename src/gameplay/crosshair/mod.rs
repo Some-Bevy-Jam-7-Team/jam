@@ -2,9 +2,10 @@
 //! The crosshair is a UI element that is used to indicate the player's aim. We change the crosshair when the player is looking at a prop or an NPC.
 //! This is done by registering which systems are interested in the crosshair state.
 
-use crate::{PostPhysicsAppSystems, screens::Screen};
+use crate::{PostPhysicsAppSystems, gameplay::interaction::AvailableInteraction, screens::Screen};
 use assets::{CROSSHAIR_DOT_PATH, CROSSHAIR_SQUARE_PATH};
 use bevy::{
+	picking::input::MousePointerPositionOverride,
 	platform::collections::HashSet,
 	prelude::*,
 	window::{CursorGrabMode, CursorOptions},
@@ -17,7 +18,12 @@ pub(crate) mod assets;
 pub(super) fn plugin(app: &mut App) {
 	app.add_systems(
 		Update,
-		update_crosshair.in_set(PostPhysicsAppSystems::ChangeUi),
+		(
+			update_pointer,
+			(square_cross_hair_if_interactable, update_crosshair)
+				.chain()
+				.in_set(PostPhysicsAppSystems::ChangeUi),
+		),
 	);
 	app.add_systems(OnEnter(Screen::Gameplay), spawn_crosshair);
 
@@ -57,12 +63,52 @@ pub(crate) struct CrosshairState {
 	pub(crate) wants_free_cursor: HashSet<TypeId>,
 }
 
+fn update_pointer(
+	crosshair: Option<Single<&CrosshairState>>,
+	window: Single<&Window>,
+	mut mouse_override: ResMut<MousePointerPositionOverride>,
+	mut cursor_options: Single<&mut CursorOptions>,
+) {
+	let crosshair_state = crosshair.as_deref();
+	if crosshair_state.is_some_and(|a| a.wants_free_cursor.is_empty()) {
+		cursor_options.grab_mode = CursorGrabMode::Locked;
+		#[cfg(feature = "native")]
+		{
+			cursor_options.visible = false;
+		}
+		mouse_override.over_ride = Some(window.size() / 2.0);
+	} else {
+		cursor_options.grab_mode = CursorGrabMode::None;
+		#[cfg(feature = "native")]
+		{
+			cursor_options.visible = true;
+		}
+		mouse_override.over_ride = None;
+	}
+}
+
+fn square_cross_hair_if_interactable(
+	mut crosshair: Single<&mut CrosshairState>,
+	interaction_opportunity: Res<AvailableInteraction>,
+) {
+	if interaction_opportunity.is_changed() {
+		if interaction_opportunity.target_entity.is_some() {
+			crosshair
+				.wants_square
+				.insert(square_cross_hair_if_interactable.type_id());
+		} else {
+			crosshair
+				.wants_square
+				.remove(&square_cross_hair_if_interactable.type_id());
+		}
+	}
+}
+
 fn update_crosshair(
 	crosshair: Option<
 		Single<(&mut CrosshairState, &mut ImageNode, &mut Visibility), Changed<CrosshairState>>,
 	>,
 	assets: Res<AssetServer>,
-	mut cursor_options: Single<&mut CursorOptions>,
 ) {
 	let Some((mut crosshair_state, mut image_node, mut visibility)) =
 		crosshair.map(|c| c.into_inner())
@@ -76,23 +122,13 @@ fn update_crosshair(
 	}
 
 	if crosshair_state.wants_free_cursor.is_empty() {
-		cursor_options.grab_mode = CursorGrabMode::Locked;
 		crosshair_state
 			.wants_invisible
 			.remove(&update_crosshair.type_id());
-		#[cfg(feature = "native")]
-		{
-			cursor_options.visible = false;
-		}
 	} else {
-		cursor_options.grab_mode = CursorGrabMode::None;
 		crosshair_state
 			.wants_invisible
 			.insert(update_crosshair.type_id());
-		#[cfg(feature = "native")]
-		{
-			cursor_options.visible = true;
-		}
 	}
 
 	if crosshair_state.wants_invisible.is_empty() {

@@ -29,7 +29,7 @@ bevy = { version = "0.18", default-features = false, features = [
     "bevy_gilrs",
     "bevy_gizmos",
     "bevy_gltf",
-    "mesh_picking",
+    # "mesh_picking",
     "bevy_pbr",
     "bevy_picking",
     "bevy_post_process",

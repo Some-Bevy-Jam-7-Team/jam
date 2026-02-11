@@ -7,13 +7,17 @@ use bevy::{
 		tonemapping::Tonemapping,
 	},
 	ecs::entity::EntityHashSet,
+	picking::Pickable,
 	prelude::*,
 	render::{render_resource::TextureFormat, view::Hdr},
 };
 
 use crate::{
 	CameraOrder, RenderLayer,
-	gameplay::player::{Player, camera::PlayerCamera},
+	gameplay::{
+		interaction::InteractableObject,
+		player::{Player, camera::PlayerCameraParent},
+	},
 	screens::Screen,
 	third_party::avian3d::CollisionLayer,
 };
@@ -29,6 +33,11 @@ pub(super) fn plugin(app: &mut App) {
 	);
 	app.add_systems(FixedUpdate, move_stomach);
 }
+
+#[derive(Component, Reflect, Debug, Default)]
+#[reflect(Component)]
+#[require(InteractableObject(Some("Eat".to_string())))]
+pub struct EdibleProp;
 
 #[derive(Component, Debug)]
 pub struct Stomach {
@@ -93,6 +102,7 @@ fn spawn_stomach(
 		children![
 			(
 				Name::new("Stomach Left Wall"),
+				Pickable::IGNORE,
 				Collider::half_space(Vec3::X),
 				CollisionLayers::new(CollisionLayer::Stomach, CollisionLayer::Stomach),
 				Transform::from_translation(Vec3::new(-stomach.target_size.x / 2.0, 0.0, 0.0,)),
@@ -106,6 +116,7 @@ fn spawn_stomach(
 			),
 			(
 				Name::new("Stomach Right Wall"),
+				Pickable::IGNORE,
 				Collider::half_space(-Vec3::X),
 				CollisionLayers::new(CollisionLayer::Stomach, CollisionLayer::Stomach),
 				Transform::from_translation(Vec3::new(stomach.target_size.x / 2.0, 0.0, 0.0,)),
@@ -119,6 +130,7 @@ fn spawn_stomach(
 			),
 			(
 				Name::new("Stomach Ceiling"),
+				Pickable::IGNORE,
 				Collider::half_space(-Vec3::Y),
 				CollisionLayers::new(CollisionLayer::Stomach, CollisionLayer::Stomach),
 				Transform::from_translation(Vec3::new(0.0, stomach.target_size.y / 2.0, 0.0)),
@@ -132,6 +144,7 @@ fn spawn_stomach(
 			),
 			(
 				Name::new("Stomach Floor"),
+				Pickable::IGNORE,
 				Collider::half_space(Vec3::Y),
 				CollisionLayers::new(CollisionLayer::Stomach, CollisionLayer::Stomach),
 				Transform::from_translation(Vec3::new(0.0, -stomach.target_size.y / 2.0, 0.0)),
@@ -145,6 +158,7 @@ fn spawn_stomach(
 			),
 			(
 				Name::new("Stomach Back Wall"),
+				Pickable::IGNORE,
 				Collider::half_space(Vec3::Z),
 				CollisionLayers::new(CollisionLayer::Stomach, CollisionLayer::Stomach),
 				Transform::from_translation(Vec3::new(0.0, 0.0, -stomach.target_size.z / 2.0)),
@@ -159,6 +173,7 @@ fn spawn_stomach(
 			(
 				Name::new("Stomach Front Wall (Invisible)"),
 				// No mesh for the front wall, so that we can see inside the stomach.
+				Pickable::IGNORE,
 				Collider::half_space(-Vec3::Z),
 				CollisionLayers::new(CollisionLayer::Stomach, CollisionLayer::Stomach),
 				Transform::from_translation(Vec3::new(0.0, 0.0, stomach.target_size.z / 2.0,)),
@@ -263,7 +278,7 @@ fn spawn_stomach_ui_and_render(
 
 fn move_stomach(
 	mut stomach_velocity: Single<&mut LinearVelocity, (With<Stomach>, Without<Player>)>,
-	player_camera_transform: Single<&GlobalTransform, With<PlayerCamera>>,
+	player_camera_transform: Single<&GlobalTransform, With<PlayerCameraParent>>,
 	player_velocity: Single<&LinearVelocity, With<Player>>,
 ) {
 	let target_velocity = player_camera_transform.rotation().inverse() * player_velocity.0 * 0.5;

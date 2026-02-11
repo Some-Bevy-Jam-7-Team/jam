@@ -1,6 +1,5 @@
 title: IntroCRT
 ---
-
 // # I hate sentinal values but hey
 
 <<if get_current_objective() == "">>
@@ -40,8 +39,6 @@ title: IntroCRT
   LLManager: Remember, a productive mind is a happy mind.
 
   <<create_objective "Take a mental health break.">>
-
-// # TODO: Potentially add a timer activiation here.
 <<endif>>
 ===
 

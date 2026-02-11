@@ -6,7 +6,7 @@
 use std::iter;
 
 use avian_pickup::prelude::*;
-use avian3d::prelude::*;
+use avian3d::{picking::PhysicsPickingCamera, prelude::*};
 #[cfg(feature = "native")]
 use bevy::pbr::ScreenSpaceAmbientOcclusion;
 use bevy::{
@@ -30,6 +30,8 @@ use crate::{
 
 use super::Player;
 
+pub const INTERACTION_DISTANCE: f32 = 3.0;
+
 pub(super) fn plugin(app: &mut App) {
 	app.init_resource::<CameraSensitivity>();
 	app.init_resource::<WorldModelFov>();
@@ -50,11 +52,14 @@ pub(super) fn plugin(app: &mut App) {
 #[derive(Component, Debug, Reflect)]
 #[reflect(Component)]
 #[require(Transform, Visibility)]
-pub(crate) struct PlayerCamera;
+pub(crate) struct PlayerCameraParent;
 
+/// Marker component for the camera that ACTUALLY renders the world.
 #[derive(Component, Debug, Reflect)]
 #[reflect(Component)]
-#[require(Transform, Visibility)]
+#[require(Transform, Visibility, PhysicsPickingCamera {
+	max_distance: INTERACTION_DISTANCE,
+}, PhysicsPickingFilter(SpatialQueryFilter::from_mask(!CollisionLayer::Stomach.to_bits() & !CollisionLayer::PlayerCharacter.to_bits())))]
 struct WorldModelCamera;
 
 fn spawn_view_model(
@@ -76,13 +81,15 @@ fn spawn_view_model(
 			// Enable the optional builtin camera controller
 			CharacterControllerCameraOf::new(add.entity),
 			Name::new("Player Camera Parent"),
-			PlayerCamera,
+			PlayerCameraParent,
 			DespawnOnExit(Screen::Gameplay),
 			DespawnOnExit(LoadingScreen::Shaders),
 			AvianPickupActor {
 				prop_filter: SpatialQueryFilter::from_mask(CollisionLayer::Prop),
 				obstacle_filter: SpatialQueryFilter::from_mask(CollisionLayer::Default),
-				actor_filter: SpatialQueryFilter::from_mask(CollisionLayer::Character),
+				actor_filter: SpatialQueryFilter::from_mask(
+					CollisionLayer::Character.to_bits() | CollisionLayer::PlayerCharacter.to_bits(),
+				),
 				interaction_distance: 2.0,
 				pull: AvianPickupActorPullConfig {
 					impulse: 20.0,
@@ -176,7 +183,7 @@ fn spawn_view_model(
 }
 
 /// It makes more sense for the animation players to be related to the [`Player`] entity
-/// than to the [`PlayerCamera`] entity, so let's move the relationship there.
+/// than to the [`PlayerCameraParent`] entity, so let's move the relationship there.
 fn move_anim_players_relationship_to_player(
 	add: On<Add, AnimationPlayers>,
 	q_anim_player: Query<&AnimationPlayers>,

@@ -366,6 +366,7 @@ impl Plugin for PickingPlugin {
         app.init_resource::<PickingSettings>()
             .init_resource::<pointer::PointerMap>()
             .init_resource::<backend::ray::RayMap>()
+            .init_resource::<input::MousePointerPositionOverride>()
             .add_message::<pointer::PointerInput>()
             .add_message::<backend::PointerHits>()
             // Rather than try to mark all current and future backends as ambiguous with each other,

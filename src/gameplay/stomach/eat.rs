@@ -1,6 +1,5 @@
 use avian3d::prelude::*;
 use bevy::{camera::visibility::RenderLayers, prelude::*};
-use bevy_enhanced_input::prelude::Start;
 use bevy_seedling::sample::{AudioSample, RandomPitch, SamplePlayer};
 use bevy_shuffle_bag::ShuffleBag;
 
@@ -8,8 +7,8 @@ use crate::{
 	RenderLayer,
 	audio::SfxPool,
 	gameplay::{
-		player::{camera::PlayerCamera, input::EatObject},
-		stomach::Stomach,
+		interaction::InteractEvent,
+		stomach::{EdibleProp, Stomach},
 	},
 	third_party::avian3d::CollisionLayer,
 };
@@ -79,29 +78,13 @@ fn on_eat(
 }
 
 fn try_eat(
-	_eat: On<Start<EatObject>>,
-	player: Single<&GlobalTransform, With<PlayerCamera>>,
-	collider_of_query: Query<&ColliderOf>,
-	spatial_query: SpatialQuery,
+	interaction: On<InteractEvent>,
+	eidble_query: Query<(), With<EdibleProp>>,
 	mut commands: Commands,
 ) {
-	const MAX_INTERACTION_DISTANCE: f32 = 3.0;
-
-	let camera_transform = player.compute_transform();
-
-	let hit = spatial_query.cast_ray(
-		camera_transform.translation,
-		camera_transform.forward(),
-		MAX_INTERACTION_DISTANCE,
-		true,
-		&SpatialQueryFilter::from_mask(CollisionLayer::Prop),
-	);
-
-	if let Some(hit) = hit
-		&& let Ok(collider_of) = collider_of_query.get(hit.entity)
-	{
+	if eidble_query.contains(interaction.0) {
 		commands.trigger(Eat {
-			body: collider_of.body,
+			body: interaction.0,
 		});
 	}
 }

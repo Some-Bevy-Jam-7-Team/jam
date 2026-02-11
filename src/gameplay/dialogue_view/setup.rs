@@ -1,3 +1,5 @@
+use crate::ui_layout::RootWidget;
+
 use super::assets::image_handle;
 use bevy::ecs::system::EntityCommands;
 use bevy::prelude::*;
@@ -33,8 +35,8 @@ fn setup(mut commands: Commands) {
 			fmt_name("root"),
 			Node {
 				display: Display::Grid,
-				width: Val::Percent(100.0),
-				height: Val::Percent(100.0),
+				// width: Val::Percent(100.0),
+				// height: Val::Percent(100.0),
 				align_content: AlignContent::End,
 				justify_content: JustifyContent::SpaceAround,
 				grid_auto_flow: GridAutoFlow::Row,
@@ -46,6 +48,7 @@ fn setup(mut commands: Commands) {
 				..default()
 			},
 			Visibility::Hidden,
+			RootWidget,
 			UiRootNode,
 		))
 		.with_children(|parent| {

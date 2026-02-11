@@ -1,5 +1,6 @@
 use crate::{
 	asset_tracking::LoadResource,
+	gameplay::{interaction::InteractableObject, stomach::EdibleProp},
 	third_party::{
 		avian3d::CollisionLayer,
 		bevy_trenchbroom::{GetTrenchbroomModelPath as _, LoadTrenchbroomModel as _},
@@ -93,12 +94,14 @@ pub(crate) struct Mouse;
 	base(Transform, Visibility),
 	model("models/darkmod/containers/package_medium.gltf")
 )]
+#[require(EdibleProp)]
 pub(crate) struct PackageMedium;
 
 #[point_class(
 	base(Transform, Visibility),
 	model("models/darkmod/containers/package_small.gltf")
 )]
+#[require(EdibleProp)]
 pub(crate) struct PackageSmall;
 
 // generic static props
@@ -112,12 +115,14 @@ pub(crate) struct Grate;
 	base(Transform, Visibility),
 	model("models/darkmod/furniture/tables/rtable1.gltf")
 )]
+#[require(InteractableObject(Some("Lick table".to_string())))]
 pub(crate) struct Table;
 
 #[point_class(
 	base(Transform, Visibility),
 	model("models/darkmod/furniture/shelves/bookshelf02.gltf")
 )]
+#[require(InteractableObject)]
 pub(crate) struct Bookshelf;
 
 #[point_class(
@@ -142,6 +147,7 @@ pub(crate) struct Barrel01;
 	base(Transform, Visibility),
 	model("models/darkmod/containers/crate_square.gltf")
 )]
+#[require(EdibleProp)]
 pub(crate) struct CrateSquare;
 
 #[point_class(

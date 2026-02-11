@@ -39,6 +39,14 @@ pub mod prelude {
     pub use crate::input::PointerInputPlugin;
 }
 
+/// A [`Resource`] which makes mouse input events be sent to a given location instead of the actual mouse position.
+#[derive(Copy, Clone, Resource, Default, Debug, Reflect)]
+#[reflect(Resource, Default, Clone)]
+pub struct MousePointerPositionOverride {
+    /// The cursor position to use as an override, if Some.
+    pub over_ride: Option<Vec2>,
+}
+
 #[derive(Copy, Clone, Resource, Debug, Reflect)]
 #[reflect(Resource, Default, Clone)]
 /// Settings for enabling and disabling updating mouse and touch inputs for picking
@@ -122,6 +130,7 @@ pub fn mouse_pick_events(
     // Input
     mut window_events: MessageReader<WindowEvent>,
     primary_window: Query<Entity, With<PrimaryWindow>>,
+    over_ride: Res<MousePointerPositionOverride>,
     // Locals
     mut cursor_last: Local<Vec2>,
     // Output
@@ -131,6 +140,7 @@ pub fn mouse_pick_events(
         match window_event {
             // Handle cursor movement events
             WindowEvent::CursorMoved(event) => {
+                let pos = over_ride.over_ride.unwrap_or(event.position);
                 let location = Location {
                     target: match RenderTarget::Window(WindowRef::Entity(event.window))
                         .normalize(primary_window.single().ok())
@@ -138,16 +148,16 @@ pub fn mouse_pick_events(
                         Some(target) => target,
                         None => continue,
                     },
-                    position: event.position,
+                    position: pos,
                 };
                 pointer_inputs.write(PointerInput::new(
                     PointerId::Mouse,
                     location,
                     PointerAction::Move {
-                        delta: event.position - *cursor_last,
+                        delta: pos - *cursor_last,
                     },
                 ));
-                *cursor_last = event.position;
+                *cursor_last = pos;
             }
             // Handle mouse button press events
             WindowEvent::MouseButtonInput(input) => {
@@ -158,7 +168,7 @@ pub fn mouse_pick_events(
                         Some(target) => target,
                         None => continue,
                     },
-                    position: *cursor_last,
+                    position: over_ride.over_ride.unwrap_or(*cursor_last),
                 };
                 let button = match input.button {
                     MouseButton::Left => PointerButton::Primary,
@@ -182,7 +192,7 @@ pub fn mouse_pick_events(
                         Some(target) => target,
                         None => continue,
                     },
-                    position: *cursor_last,
+                    position: over_ride.over_ride.unwrap_or(*cursor_last),
                 };
 
                 let action = PointerAction::Scroll { x, y, unit };

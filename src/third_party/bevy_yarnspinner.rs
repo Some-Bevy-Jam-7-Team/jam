@@ -5,6 +5,7 @@ use bevy::prelude::*;
 use bevy_trenchbroom::prelude::*;
 use bevy_yarnspinner::{events::DialogueCompleted, prelude::*};
 
+<<<<<<< HEAD
 use crate::{
 	gameplay::objectives::{
 		add_dialogue_objective_to_current, complete_dialogue_objective, create_dialogue_objective,
@@ -12,6 +13,9 @@ use crate::{
 	},
 	screens::Screen,
 };
+=======
+use crate::{gameplay::interaction::InteractableObject, screens::Screen};
+>>>>>>> origin/main
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_plugins((
@@ -66,12 +70,9 @@ fn abort_all_dialogues_when_leaving_gameplay(
 	}
 }
 
-pub(crate) fn is_dialogue_running(dialogue_runner: Option<Single<&DialogueRunner>>) -> bool {
-	dialogue_runner.is_some_and(|dialogue_runner| dialogue_runner.is_running())
-}
-
 #[base_class]
 #[derive(Eq, PartialEq, Clone, Debug)]
+#[require(InteractableObject(Some("Talk".to_string())))]
 pub(crate) struct YarnNode {
 	#[class(must_set)]
 	pub(crate) yarn_node: String,

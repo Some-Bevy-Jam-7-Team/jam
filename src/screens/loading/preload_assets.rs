@@ -63,6 +63,7 @@ fn update_loading_assets_label(
 		);
 	}
 }
+
 fn all_assets_loaded(resource_handles: Res<ResourceHandles>) -> bool {
 	resource_handles.is_all_done()
 }

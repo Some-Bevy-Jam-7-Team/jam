@@ -10,7 +10,7 @@ use bevy_shuffle_bag::ShuffleBag;
 use crate::{
 	audio::SfxPool,
 	gameplay::{
-		player::{Player, camera::PlayerCamera, input::VomitObject},
+		player::{Player, camera::PlayerCameraParent, input::VomitObject},
 		stomach::Stomach,
 	},
 	third_party::avian3d::CollisionLayer,
@@ -78,7 +78,7 @@ fn on_vomit(
 
 fn try_vomit(
 	_vomit: On<Start<VomitObject>>,
-	player_camera_transform: Single<&GlobalTransform, With<PlayerCamera>>,
+	player_camera_transform: Single<&GlobalTransform, With<PlayerCameraParent>>,
 	player_velocity: Single<&LinearVelocity, With<Player>>,
 	stomach: Single<&Stomach>,
 	vomitables: Query<(Entity, &GlobalTransform), With<RigidBody>>,
