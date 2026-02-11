@@ -20,7 +20,7 @@ mod ui_camera;
 mod ui_layout;
 
 use asset_processing::default_image_sampler_descriptor;
-use avian3d::prelude::{PhysicsPickingPlugin, PhysicsPickingSettings};
+use avian3d::prelude::PhysicsPickingPlugin;
 use bevy::gltf::GltfPlugin;
 use bevy::gltf::convert_coordinates::GltfConvertCoordinates;
 use bevy::log::LogPlugin;
@@ -112,10 +112,7 @@ fn main() -> AppExit {
 			..default()
 		}),));
 	// "`PhysicsPickingPlugin` is not a default plugin" - Sun Tzu - The art of aviation
-	app.add_plugins(PhysicsPickingPlugin)
-		.insert_resource(PhysicsPickingSettings {
-			require_markers: true,
-		});
+	app.add_plugins(PhysicsPickingPlugin);
 
 	let firewheel_config = FirewheelConfig {
 		scheduled_event_capacity: 1024,

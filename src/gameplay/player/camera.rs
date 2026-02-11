@@ -55,7 +55,7 @@ pub(crate) struct PlayerCameraParent;
 /// Marker component for the camera that ACTUALLY renders the world.
 #[derive(Component, Debug, Reflect)]
 #[reflect(Component)]
-#[require(Transform, Visibility, PhysicsPickable)]
+#[require(Transform, Visibility, PhysicsPickable, PhysicsPickingFilter(SpatialQueryFilter::from_mask(!CollisionLayer::Stomach.to_bits() & !CollisionLayer::PlayerCharacter.to_bits())))]
 struct WorldModelCamera;
 
 fn spawn_view_model(
@@ -83,7 +83,7 @@ fn spawn_view_model(
 			AvianPickupActor {
 				prop_filter: SpatialQueryFilter::from_mask(CollisionLayer::Prop),
 				obstacle_filter: SpatialQueryFilter::from_mask(CollisionLayer::Default),
-				actor_filter: SpatialQueryFilter::from_mask(CollisionLayer::Character),
+				actor_filter: SpatialQueryFilter::from_mask(CollisionLayer::Character.to_bits() | CollisionLayer::PlayerCharacter.to_bits()),
 				interaction_distance: 2.0,
 				pull: AvianPickupActorPullConfig {
 					impulse: 20.0,
@@ -177,7 +177,7 @@ fn spawn_view_model(
 }
 
 /// It makes more sense for the animation players to be related to the [`Player`] entity
-/// than to the [`PlayerCamera`] entity, so let's move the relationship there.
+/// than to the [`PlayerCameraParent`] entity, so let's move the relationship there.
 fn move_anim_players_relationship_to_player(
 	add: On<Add, AnimationPlayers>,
 	q_anim_player: Query<&AnimationPlayers>,

@@ -51,6 +51,6 @@ fn interacted_entity(
 		interactions
 			.get(event.0)
 			.ok()
-			.map(|interaction| (&interaction.0).as_ref()),
+			.map(|interaction| interaction.0.as_ref()),
 	)
 }

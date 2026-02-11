@@ -74,7 +74,7 @@ fn setup_player(
 				..default()
 			},
 			ColliderDensity(1_000.0),
-			CollisionLayers::new(CollisionLayer::Character, LayerMask::ALL),
+			CollisionLayers::new(CollisionLayer::PlayerCharacter, LayerMask::ALL),
 			AnimationState::<PlayerAnimationState>::default(),
 			Fever,
 			related!(FeverSources[FeverSource::default()]),

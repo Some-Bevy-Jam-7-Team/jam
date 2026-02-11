@@ -68,7 +68,7 @@ fn update_pointer(
 	mut cursor_options: Single<&mut CursorOptions>,
 ) {
 	let crosshair_state = crosshair.as_deref();
-	if crosshair_state.map_or(false, |a| a.wants_free_cursor.is_empty()) {
+	if crosshair_state.is_some_and(|a| a.wants_free_cursor.is_empty()) {
 		cursor_options.grab_mode = CursorGrabMode::Locked;
 		#[cfg(feature = "native")]
 		{

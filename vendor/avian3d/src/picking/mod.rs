@@ -145,6 +145,7 @@ pub fn update_hits(
     )>,
     ray_map: Res<RayMap>,
     pickables: Query<&Pickable>,
+    sensors: Query<(), With<Sensor>>,
     collider_of: Query<&ColliderOf>,
     marked_targets: Query<&PhysicsPickable>,
     backend_settings: Res<PhysicsPickingSettings>,
@@ -159,7 +160,8 @@ pub fn update_hits(
             continue;
         };
 
-        if backend_settings.require_markers && cam_pickable.is_none() || !camera.is_active {
+        // We always require [`PhysicsPicking`] on cameras
+        if cam_pickable.is_none() || !camera.is_active {
             continue;
         }
 
@@ -212,7 +214,7 @@ pub fn update_hits(
                         let is_pickable = pickables
                             .get(entity)
                             .map(|p| *p != Pickable::IGNORE)
-                            .unwrap_or(true);
+                            .unwrap_or(true) && !sensors.contains(entity);
 
                         marker_requirement && is_pickable
                     },
