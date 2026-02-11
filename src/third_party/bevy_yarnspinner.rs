@@ -5,17 +5,16 @@ use bevy::prelude::*;
 use bevy_trenchbroom::prelude::*;
 use bevy_yarnspinner::{events::DialogueCompleted, prelude::*};
 
-<<<<<<< HEAD
 use crate::{
-	gameplay::objectives::{
-		add_dialogue_objective_to_current, complete_dialogue_objective, create_dialogue_objective,
-		get_dialogue_current_objective,
+	gameplay::{
+		interaction::InteractableObject,
+		objectives::{
+			add_dialogue_objective_to_current, complete_dialogue_objective,
+			create_dialogue_objective, get_dialogue_current_objective,
+		},
 	},
 	screens::Screen,
 };
-=======
-use crate::{gameplay::interaction::InteractableObject, screens::Screen};
->>>>>>> origin/main
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_plugins((
