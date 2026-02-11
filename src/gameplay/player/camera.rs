@@ -6,7 +6,7 @@
 use std::iter;
 
 use avian_pickup::prelude::*;
-use avian3d::prelude::*;
+use avian3d::{picking::PhysicsPickingCamera, prelude::*};
 #[cfg(feature = "native")]
 use bevy::pbr::ScreenSpaceAmbientOcclusion;
 use bevy::{
@@ -29,6 +29,8 @@ use crate::{
 };
 
 use super::Player;
+
+pub const INTERACTION_DISTANCE: f32 = 3.0;
 
 pub(super) fn plugin(app: &mut App) {
 	app.init_resource::<CameraSensitivity>();
@@ -55,7 +57,9 @@ pub(crate) struct PlayerCameraParent;
 /// Marker component for the camera that ACTUALLY renders the world.
 #[derive(Component, Debug, Reflect)]
 #[reflect(Component)]
-#[require(Transform, Visibility, PhysicsPickable, PhysicsPickingFilter(SpatialQueryFilter::from_mask(!CollisionLayer::Stomach.to_bits() & !CollisionLayer::PlayerCharacter.to_bits())))]
+#[require(Transform, Visibility, PhysicsPickingCamera {
+	max_distance: INTERACTION_DISTANCE,
+}, PhysicsPickingFilter(SpatialQueryFilter::from_mask(!CollisionLayer::Stomach.to_bits() & !CollisionLayer::PlayerCharacter.to_bits())))]
 struct WorldModelCamera;
 
 fn spawn_view_model(

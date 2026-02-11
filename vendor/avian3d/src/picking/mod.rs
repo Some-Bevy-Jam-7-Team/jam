@@ -84,11 +84,30 @@ pub struct PhysicsPickingSettings {
     pub require_markers: bool,
 }
 
-/// An optional component that marks cameras and target entities that should be used in the [`PhysicsPickingPlugin`].
+/// An optional component that marks target entities that should be used in the [`PhysicsPickingPlugin`].
 /// Only needed if [`PhysicsPickingSettings::require_markers`] is set to true.
 #[derive(Debug, Clone, Default, Component, Reflect)]
 #[reflect(Component, Default)]
 pub struct PhysicsPickable;
+
+/// A mandatory marker component that marks cameras which should partake in picking
+#[derive(Debug, Clone, Component, Reflect)]
+#[reflect(Component, Default)]
+#[require(Camera)]
+pub struct PhysicsPickingCamera {
+    #[cfg(feature = "3d")]
+    /// The maximum distance this camera should pick, default is [`Scalar::MAX`]
+    pub max_distance: Scalar
+}
+
+impl Default for PhysicsPickingCamera {
+    fn default() -> Self {
+        PhysicsPickingCamera {
+            #[cfg(feature = "3d")]
+            max_distance: Scalar::MAX
+        }
+    }
+}
 
 /// An optional component with a [`SpatialQueryFilter`] to determine
 /// which physics entities a camera considers for [physics picking](crate::picking).
@@ -141,7 +160,7 @@ pub fn update_hits(
     picking_cameras: Query<(
         &Camera,
         Option<&PhysicsPickingFilter>,
-        Option<&PhysicsPickable>,
+        &PhysicsPickingCamera,
     )>,
     ray_map: Res<RayMap>,
     pickables: Query<&Pickable>,
@@ -156,12 +175,11 @@ pub fn update_hits(
     let start_time = crate::utils::Instant::now();
 
     for (&ray_id, &ray) in ray_map.map.iter() {
-        let Ok((camera, picking_filter, cam_pickable)) = picking_cameras.get(ray_id.camera) else {
+        let Ok((camera, picking_filter, cam_picking_settings)) = picking_cameras.get(ray_id.camera) else {
             continue;
         };
 
-        // We always require [`PhysicsPicking`] on cameras
-        if cam_pickable.is_none() || !camera.is_active {
+        if !camera.is_active {
             continue;
         }
 
@@ -202,7 +220,7 @@ pub fn update_hits(
                 .cast_ray_predicate(
                     ray.origin.adjust_precision(),
                     ray.direction,
-                    Scalar::MAX,
+                    cam_picking_settings.max_distance,
                     true,
                     &filter.0,
                     &|entity| {
