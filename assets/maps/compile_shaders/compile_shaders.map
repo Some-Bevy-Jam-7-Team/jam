@@ -829,5 +829,7 @@
 // entity 21
 {
 "classname" "npc"
+"yarn_node" ""
+"prompt" "Talk"
 "origin" "-216 120 24"
 }

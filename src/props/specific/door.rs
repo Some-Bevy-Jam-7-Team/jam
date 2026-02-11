@@ -7,6 +7,7 @@ use bevy_trenchbroom::prelude::*;
 
 use crate::{
 	asset_tracking::LoadResource as _,
+	screens::Screen,
 	third_party::bevy_trenchbroom::{GetTrenchbroomModelPath as _, LoadTrenchbroomModel as _},
 };
 
@@ -70,6 +71,7 @@ fn setup_door(add: On<Add, Door>, asset_server: Res<AssetServer>, mut commands: 
 					.insert((
 						RigidBody::Dynamic,
 						Transform::from(global_transform),
+						DespawnOnExit(Screen::Gameplay),
 						ColliderConstructorHierarchy::new(
 							ColliderConstructor::ConvexDecompositionFromMesh,
 						)
@@ -112,6 +114,7 @@ fn setup_door(add: On<Add, Door>, asset_server: Res<AssetServer>, mut commands: 
 						..default()
 					},
 					JointCollisionDisabled,
+					DespawnOnExit(Screen::Gameplay),
 				));
 			},
 		);
