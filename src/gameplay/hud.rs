@@ -29,5 +29,5 @@ fn update_interaction_text(
 	***interaction_text = interaction_data
 		.description
 		.as_ref()
-		.map_or("".to_string(), |description| format!("I:{description}"));
+		.map_or("".to_string(), |description| format!("Click:{description}"));
 }
