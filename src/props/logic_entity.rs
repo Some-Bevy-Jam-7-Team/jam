@@ -5,7 +5,12 @@ use bevy_trenchbroom::prelude::*;
 use crate::gameplay::objectives::{Objective, SubObjectiveOf};
 
 pub(super) fn plugin(app: &mut App) {
-	app.add_systems(Update, initialise_objectives);
+	app.add_observer(uninitialise_objectives)
+		.add_systems(Update, initialise_objectives);
+}
+
+fn uninitialise_objectives(add: On<Insert, ObjectiveEntity>, mut commands: Commands) {
+	commands.entity(add.entity).insert(UnitialisedObjective);
 }
 
 fn initialise_objectives(
@@ -29,16 +34,19 @@ fn initialise_objectives(
 	}
 }
 
-#[base_class]
+#[derive(Component, Reflect, Debug)]
+#[reflect(Component)]
 struct UnitialisedObjective;
 
 /// An entity describing the identity of an objective
-#[point_class(base(Objective, UnitialisedObjective))]
+#[point_class(base(Objective))]
 #[derive(Default)]
 pub(crate) struct ObjectiveEntity {
 	/// The name by which other entities (such as an objective completor or subobjectives) refer to this entity
+	/// DO NOT MUTATE, IT WON'T UPDATE
 	pub targetname: String,
 	/// The objective, if any, that this is a subobjective of
+	/// DO NOT MUTATE, IT WON'T UPDATE
 	pub target: Option<String>,
 	/// The ordering of the objective, bigger = later
 	pub objective_order: f32,

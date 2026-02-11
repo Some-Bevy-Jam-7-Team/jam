@@ -8,12 +8,19 @@ use crate::{
 };
 
 pub(super) fn plugin(app: &mut App) {
-	app.add_observer(on_spawn_objective);
 	app.add_observer(on_spawn_sub_objective);
 	app.add_observer(on_complete_objective);
 
 	app.add_systems(OnEnter(Screen::Gameplay), spawn_objective_ui);
-	app.add_systems(Update, update_objective_description_ui);
+	app.add_systems(
+		Update,
+		(
+			on_change_objective
+				//		.run_if(resource_changed::<CurrentObjective>)
+				.after(super::update_current_objective),
+			update_objective_description_ui,
+		),
+	);
 }
 
 /// The UI node that holds all objectives.
@@ -82,23 +89,32 @@ fn sub_objective_list_node(depth: usize) -> impl Bundle {
 }
 
 /// Spawns a UI node for a new current objective.
-fn on_spawn_objective(add: On<Add, CurrentObjective>, mut commands: Commands) {
-	commands.run_system_cached_with(spawn_objective, add.entity);
+fn on_change_objective(
+	current_objective: Res<CurrentObjective>,
+	objective_ui: Single<Entity, With<ObjectiveUi>>,
+	mut commands: Commands,
+) {
+	commands.entity(*objective_ui).despawn_children();
+	if let Some(current_objective) = current_objective.0 {
+		commands.run_system_cached_with(spawn_objective, current_objective);
+	}
 }
 
 fn on_spawn_sub_objective(
 	add: On<Add, SubObjectiveOf>,
 	mut commands: Commands,
 	parent_objectives: Query<&SubObjectiveOf>,
-	current_objective: Single<Entity, With<CurrentObjective>>,
 	objective_ui: Single<Entity, With<ObjectiveUi>>,
+	current_objective: Res<CurrentObjective>,
 ) {
-	if parent_objectives
-		.iter_ancestors(add.entity)
-		.any(|entity| *current_objective == entity)
-	{
-		commands.entity(*objective_ui).despawn_children();
-		commands.run_system_cached_with(spawn_objective, *current_objective);
+	if let Some(current_objective) = current_objective.0 {
+		if parent_objectives
+			.iter_ancestors(add.entity)
+			.any(|entity| current_objective == entity)
+		{
+			commands.entity(*objective_ui).despawn_children();
+			commands.run_system_cached_with(spawn_objective, current_objective);
+		}
 	}
 }
 

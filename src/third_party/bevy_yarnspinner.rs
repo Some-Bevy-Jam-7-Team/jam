@@ -9,7 +9,8 @@ use crate::{
 	gameplay::{
 		interaction::InteractableObject,
 		objectives::{
-			complete_dialogue_objective, create_dialogue_objective, create_dialogue_subobjective, get_dialogue_current_objective
+			complete_dialogue_objective, create_dialogue_objective, create_dialogue_subobjective,
+			get_dialogue_current_objective,
 		},
 	},
 	screens::Screen,
