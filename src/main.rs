@@ -268,7 +268,7 @@ mod tests {
 	use super::*;
 
 	#[test]
-	fn single_bit_should_map_to_correct_index() {
+	fn single_bit_should_map_correctly() {
 		// Arrange
 		let input = RenderLayer::GIZMO3;
 
@@ -281,7 +281,7 @@ mod tests {
 	}
 
 	#[test]
-	fn mixed_bits_should_map_to_correct_indices() {
+	fn mixed_bits_should_map_correctly() {
 		// Arrange
 		let input = RenderLayer::DEFAULT | RenderLayer::GIZMO3;
 
