@@ -10,6 +10,7 @@ pub struct Fever;
 #[derive(Component, Debug, Clone, Copy, Reflect)]
 #[reflect(Clone, Debug, Component)]
 pub struct Feverish;
+
 /// Amount of damage caused by fewer per-tick times degrees Celsius.
 ///
 /// E.g., When 5 deg above max temp and damage is 10, 1 tick is 50 damage.
@@ -22,6 +23,7 @@ impl Default for FeverDamage {
 		Self(1.)
 	}
 }
+
 /// Timer used to manage the `fever over time` effect, i.e., the interval in which fever applies damage.
 ///
 /// Allows for slowing down or speeding up the effect.
@@ -34,6 +36,7 @@ impl Default for FeverTimer {
 		Self(Timer::new(Duration::from_secs(1), TimerMode::Repeating))
 	}
 }
+
 /// Timer used to manage the `fever source` effect, i.e., the rate of a debuff that increases fever.
 ///
 /// Allows for slowing down or speeding up the effect.
