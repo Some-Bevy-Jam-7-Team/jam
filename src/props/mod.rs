@@ -6,6 +6,8 @@ use bevy::prelude::*;
 mod brush_entity;
 mod effects;
 mod generic;
+pub mod interactables;
+pub mod logic_entity;
 mod setup;
 mod specific;
 
@@ -16,5 +18,7 @@ pub(super) fn plugin(app: &mut App) {
 		effects::plugin,
 		generic::plugin,
 		brush_entity::plugin,
+		logic_entity::plugin,
+		interactables::plugin,
 	));
 }

@@ -1,10 +1,10 @@
 use crate::gameplay::player::camera::PlayerCameraParent;
 use crate::gameplay::player::input::Interact;
 use crate::third_party::avian3d::CollisionLayer;
-use avian3d::prelude::{ColliderOf, PhysicsPickable, Sensor, SpatialQuery, SpatialQueryFilter};
+use avian3d::prelude::*;
 use bevy::prelude::*;
 use bevy::{ecs::component::Component, picking::Pickable};
-use bevy_enhanced_input::prelude::Start;
+use bevy_enhanced_input::prelude::*;
 
 /// Marker component for an entity being interactable by clicking on it.
 #[derive(Component, Default, Reflect, Debug)]
@@ -25,13 +25,12 @@ pub struct InteractEvent(pub Entity);
 
 pub(super) fn plugin(app: &mut App) {
 	app.init_resource::<AvailableInteraction>()
-		.add_observer(picking_click_observer)
 		.add_observer(interact_by_input_action);
 	app.add_systems(Update, iquick_plz_do_not_kill_me);
 }
 
-fn picking_click_observer(
-	_trigger: On<Pointer<Click>>,
+fn interact_by_input_action(
+	_trigger: On<Fire<Interact>>,
 	resource: Res<AvailableInteraction>,
 	mut commands: Commands,
 ) {
@@ -79,18 +78,5 @@ fn iquick_plz_do_not_kill_me(
 	{
 		resource.target_entity = Some(collider.body);
 		resource.description = interaction.0.clone();
-	}
-}
-
-fn interact_by_input_action(
-	_on: On<Start<Interact>>,
-	focused_object: Res<AvailableInteraction>,
-	interaction_query: Query<(), With<InteractableObject>>,
-	mut commands: Commands,
-) {
-	if let Some(entity) = focused_object.target_entity {
-		if interaction_query.contains(entity) {
-			commands.trigger(InteractEvent(entity));
-		}
 	}
 }

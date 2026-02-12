@@ -139,7 +139,8 @@ impl PlayerInputContext {
 				),
 				(
 					Action::<Interact>::new(),
-					bindings![KeyCode::KeyI, GamepadButton::South]
+					Press::default(),
+					bindings![MouseButton::Left, GamepadButton::South]
 				),
 				(
 					Action::<EatObject>::new(),

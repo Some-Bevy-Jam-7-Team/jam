@@ -10,6 +10,7 @@ use bevy_trenchbroom::prelude::*;
 use crate::{
 	animation::AnimationState,
 	asset_tracking::LoadResource,
+	gameplay::npc::enemy::enemy_htn,
 	third_party::{
 		avian3d::CollisionLayer,
 		bevy_trenchbroom::{GetTrenchbroomModelPath, LoadTrenchbroomModel as _},
@@ -21,10 +22,17 @@ use super::animation::AnimationPlayerAncestor;
 pub(crate) mod ai;
 mod animation;
 mod assets;
+mod enemy;
 mod sound;
 
 pub(super) fn plugin(app: &mut App) {
-	app.add_plugins((ai::plugin, animation::plugin, assets::plugin, sound::plugin));
+	app.add_plugins((
+		ai::plugin,
+		animation::plugin,
+		assets::plugin,
+		sound::plugin,
+		enemy::plugin,
+	));
 	app.load_asset::<Gltf>(Npc::model_path());
 	app.add_observer(on_add);
 }
@@ -43,7 +51,7 @@ pub(crate) const NPC_RADIUS: f32 = 0.225;
 // Height of 165 cm
 pub(crate) const NPC_HEIGHT: f32 = 1.65;
 const NPC_HALF_HEIGHT: f32 = NPC_HEIGHT / 2.0;
-const NPC_SPEED: f32 = 7.0;
+const NPC_SPEED: f32 = 3.0;
 
 fn on_add(add: On<Add, Npc>, mut commands: Commands, assets: Res<AssetServer>) {
 	commands
@@ -64,6 +72,7 @@ fn on_add(add: On<Add, Npc>, mut commands: Commands, assets: Res<AssetServer>) {
 				[CollisionLayer::Character, CollisionLayer::Dialog],
 				LayerMask::ALL,
 			),
+			enemy_htn(),
 		))
 		.with_child((
 			Name::new("Npc Model"),

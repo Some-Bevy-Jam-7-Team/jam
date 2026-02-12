@@ -73,6 +73,12 @@ version = "0.4"
 features = ["std"]
 default-features = false
 
+
+[dependencies.bevy_reflect]
+version = "0.18"
+default-features = false
+
+
 [lints.clippy]
 alloc_instead_of_core = "warn"
 nonstandard_macro_braces = "warn"

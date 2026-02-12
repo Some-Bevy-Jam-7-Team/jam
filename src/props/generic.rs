@@ -1,6 +1,6 @@
 use crate::{
 	asset_tracking::LoadResource,
-	gameplay::{interaction::InteractableObject, stomach::EdibleProp},
+	props::interactables::InteractableEntity,
 	third_party::{
 		avian3d::CollisionLayer,
 		bevy_trenchbroom::{GetTrenchbroomModelPath as _, LoadTrenchbroomModel as _},
@@ -82,51 +82,53 @@ impl Crt {
 	}
 }
 
-#[point_class(base(Transform, Visibility), model("models/office/keyboard.gltf"))]
+#[point_class(
+	base(InteractableEntity, Transform, Visibility),
+	model("models/office/keyboard.gltf")
+)]
 pub(crate) struct Keyboard;
 
-#[point_class(base(Transform, Visibility), model("models/office/mouse.gltf"))]
+#[point_class(
+	base(InteractableEntity, Transform, Visibility),
+	model("models/office/mouse.gltf")
+)]
 pub(crate) struct Mouse;
 
 // darkmod
 
 #[point_class(
-	base(Transform, Visibility),
+	base(InteractableEntity, Transform, Visibility),
 	model("models/darkmod/containers/package_medium.gltf")
 )]
-#[require(EdibleProp)]
 pub(crate) struct PackageMedium;
 
 #[point_class(
-	base(Transform, Visibility),
+	base(InteractableEntity, Transform, Visibility),
 	model("models/darkmod/containers/package_small.gltf")
 )]
-#[require(EdibleProp)]
 pub(crate) struct PackageSmall;
 
 // generic static props
 #[point_class(
-	base(Transform, Visibility),
+	base(InteractableEntity, Transform, Visibility),
 	model("models/darkmod/fireplace/grate.gltf")
 )]
 pub(crate) struct Grate;
 
 #[point_class(
-	base(Transform, Visibility),
+	base(InteractableEntity, Transform, Visibility),
 	model("models/darkmod/furniture/tables/rtable1.gltf")
 )]
-#[require(InteractableObject(Some("Lick table".to_string())))]
 pub(crate) struct Table;
 
 #[point_class(
-	base(Transform, Visibility),
+	base(InteractableEntity, Transform, Visibility),
 	model("models/darkmod/furniture/shelves/bookshelf02.gltf")
 )]
-#[require(InteractableObject)]
 pub(crate) struct Bookshelf;
 
 #[point_class(
-	base(Transform, Visibility),
+	base(InteractableEntity, Transform, Visibility),
 	model("models/darkmod/mechanical/generator2/generator2.gltf")
 )]
 pub(crate) struct Generator2;
@@ -147,7 +149,6 @@ pub(crate) struct Barrel01;
 	base(Transform, Visibility),
 	model("models/darkmod/containers/crate_square.gltf")
 )]
-#[require(EdibleProp)]
 pub(crate) struct CrateSquare;
 
 #[point_class(
