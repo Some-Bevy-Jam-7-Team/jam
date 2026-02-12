@@ -3,7 +3,11 @@
 use crate::gameplay::scatter::Landscape;
 use crate::third_party::avian3d::CollisionLayer;
 use crate::{
-	asset_tracking::LoadResource, audio::MusicPool, gameplay::npc::NPC_RADIUS, screens::Screen,
+	asset_tracking::LoadResource,
+	audio::MusicPool,
+	gameplay::{npc::NPC_RADIUS, objectives::Objective},
+	props::logic_entity::ObjectiveEntity,
+	screens::Screen,
 };
 use avian3d::prelude::*;
 use bevy::prelude::*;
@@ -106,6 +110,7 @@ pub(crate) struct LevelAssets {
 	pub(crate) mushroom: Handle<Scene>,
 	#[dependency]
 	pub(crate) mushroom_density_map: Handle<Image>,
+	pub(crate) break_room_alarm: Handle<AudioSample>,
 }
 
 impl FromWorld for LevelAssets {
@@ -129,6 +134,7 @@ impl FromWorld for LevelAssets {
 			mushroom_density_map: assets.load("textures/mushroom_density_map.png"),
 			mushroom: assets.load("models/mushroom/mushroom.gltf#Scene0"),
 			music: assets.load("audio/music/corpo slop to eat your computer to.ogg"),
+			break_room_alarm: assets.load("audio/sound_effects/mental_health_alarm.ogg"),
 		}
 	}
 }

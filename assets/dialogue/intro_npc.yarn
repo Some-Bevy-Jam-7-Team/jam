@@ -1,40 +1,40 @@
 title: IntroNpc1
 ---
-Jan: I wish I had a Visa, but they say it's blocked on BSN.
-Jan: The visa agency says they'd need to re-issue all the visas anyway, so might as well wait now, right?
--> Oof
-  Jan: Don't worry, it's here any day now.
--> You sure you want to wait?
-  Jan: Corporate says that patience is a virtue and increases shareholder value.
+Jan: I wish I had a Visa, but they say it's blocked on BSN. #line:2571463
+Jan: The visa agency says they'd need to re-issue all the visas anyway, so might as well wait now, right? #line:2100568
+-> Oof #line:13659534
+  Jan: Don't worry, it's here any day now. #line:5796988
+-> You sure you want to wait? #line:3764350
+  Jan: Corporate says that patience is a virtue and increases shareholder value. #line:7551743
 ===
 
 title: IntroNpc2
 ---
-Jannet: Scrolling the internet almost makes you wish for a Y2K.
-Jannet: ...
-Jannet: ...
-Jannet: I should start estrogen.
+Jannet: Scrolling the internet almost makes you wish for a Y2K. #line:3444625
+Jannet: ... #line:14387382
+Jannet: ... #line:168360
+Jannet: I should start estrogen. #line:12402187
 ===
 
 title: IntroNpc3
 ---
-Janitor: My friend tried to tell me about how burgers control the world.
-Janitor: But then LLManager made him go on holiday.
-Janitor: Said he had the "Proliterian Fever".
-Janitor: I miss him.
+Janitor: My friend tried to tell me about how burgers control the world. #line:13967368
+Janitor: But then LLManager made him go on holiday. #line:11530799
+Janitor: Said he had the "Proliterian Fever". #line:4041983
+Janitor: I miss him. #line:821939
 ===
 
 title: IntroNpc4
 ---
-Janissary: I could be relaxing on a beach sipping on a cocktail of moonshine, speed, and managers tears...
-Janissary: But instead I computer.
+Janissary: I could be relaxing on a beach sipping on a cocktail of moonshine, speed, and managers tears... #line:2280615
+Janissary: But instead I computer. #line:7100819
 ===
 
 title: IntroNpc5
 ---
-Janibal Lectern: I love computer.
-Janibal Lectern: It shows me coporate propoganda 24/7.
-Janibal Lectern: I want to become a propoganda maker when I grow up.
+Janibal Lectern: I love computer. #line:4910574
+Janibal Lectern: It shows me coporate propoganda 24/7. #line:2937368
+Janibal Lectern: I want to become a propoganda maker when I grow up. #line:11020882
 ===
 
 title: IntroNpc6
@@ -42,66 +42,65 @@ title: IntroNpc6
 <<declare $birthday_celebrated = false>>
 
 <<if $birthday_celebrated == false>>
-  Jannick: I would go to a therapist but the last one I went to didn't understand exposure therapy.
-  Jannick: I think he might have been hitting on me.
-  -> Happy birthday
+  Jannick: I would go to a therapist but the last one I went to didn't understand exposure therapy. #line:12131023
+  Jannick: I think he might have been hitting on me. #line:9253928
+  -> Happy birthday #line:4588995
     <<set $birthday_celebrated = true>>
     <<complete_objective "soc_1">>
-    Jannick: He tried to take me out for dinner on my birthday.
-    Jannick: Said I was very special.
-    Jannick: Are you going to do that to.
-    -> No
+    Jannick: He tried to take me out for dinner on my birthday. #line:364330
+    Jannick: Said I was very special. #line:9209822
+    Jannick: Are you going to do that to. #line:13085080
+    -> No #line:14615155
       <<set $date = false>>
-      Jannick: Then save your happy birthday.
-    -> Yes
+      Jannick: Then save your happy birthday. #line:4933784
+    -> Yes #line:13343041
       <<set $date = true>>
-      Jannick: I'll be waiting under the big green sign.
+      Jannick: I'll be waiting under the big green sign. #line:4663827
 
 <<else>>
   <<if $date == true>>
-    I can't wait for our date tonight.
+    I can't wait for our date tonight. #line:7362841
   <<else>>
-    Leave me alone, you don't even love me like he did.
+    Leave me alone, you don't even love me like he did. #line:9481253
   <<endif>>
 <<endif>>
 ===
 
 title: IntroNpc7
 ---
-Janderstülz: Last time I tried to say no to LLManager they sent me to Scunthorpe.
-Janderstülz: And like I don't have anything against the British, I just don't think they should be around kids.
-Janderstülz: Especially when they're drunk.
+Janderstülz: Last time I tried to say no to LLManager they sent me to Scunthorpe. #line:12353631
+Janderstülz: And like I don't have anything against the British, I just don't think they should be around kids. #line:4721120
 ===
 
 title: IntroNpc8
 ---
-Janthorpe: Janderstülz hates me.
-Janthorpe: He says he's not a racist, but all the racists say that.
-Janthorpe: I should know, I'm a racist too.
+Janthorpe: Janderstülz hates me. #line:4893610
+Janthorpe: He says he's not a racist, but all the racists say that. #line:9357953
+Janthorpe: I should know, I'm a racist too. #line:7951100
 ===
+
 
 title: IntroNpc9
 ---
-Janniri: I used to be a tiler.
-Janniri: But then the market crashed when big concrete took over.
-Janniri: But I shouldn't complain, don't want to catch the Proletarian Fever
+Janniri: I used to be a tiler. #line:12583390 
+Janniri: But then the market crashed when big concrete took over. #line:11627682 
 ===
 
 title: IntroNpc10
 ---
-Jandice: I used to drink two bottles a day.
-Jandice: Then my doctor called me an alchololic.
-Jandice: Now I drink three bottles a day.
+Jandice: I used to drink two bottles a day. #line:6639736 
+Jandice: But my doctor said that glass was bad for my digestive system. #line:11519151 
+Jandice: Now I drink three bottles a day. #line:10953384 
 ===
 
 title: IntroNpc11
 ---
-Janateer: I swaped Jandice's vodka for water.
-Janateer: He can't tell the difference when he's drunk.
+Janateer: I swaped Jandice's vodka for water. #line:16498861
+Janateer: He can't tell the difference when he's drunk. #line:3128113
 ===
 
 title: IntroNpc12
 ---
-John: Why did my parents name me this way.
-John: I just want to be normal.
+John: Why did my parents name me this way. #line:7825654
+John: I just want to be normal. #line:5995818
 ===
