@@ -104,8 +104,7 @@ impl RockLayer {
 				.with_default_layers(CollisionLayers::new(
 					CollisionLayer::Default,
 					LayerMask::ALL,
-				))
-				.with_default_density(1_000.0);
+				));
 
 		cmd.entity(ctx.entity)
 			.insert((DistributionPattern(rock_density_map),));
@@ -174,8 +173,7 @@ impl MushroomLayer {
 
 		let collider_hierarchy =
 			ColliderConstructorHierarchy::new(ColliderConstructor::ConvexHullFromMesh)
-				.with_default_layers(CollisionLayers::new(CollisionLayer::Prop, LayerMask::ALL))
-				.with_default_density(800.0);
+				.with_default_layers(CollisionLayers::new(CollisionLayer::Prop, LayerMask::ALL));
 
 		cmd.entity(ctx.entity)
 			.insert((DistributionPattern(mushroom_density_map),));
