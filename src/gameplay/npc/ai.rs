@@ -28,12 +28,18 @@ pub(super) fn plugin(app: &mut App) {
 			sync_agent_velocity,
 			set_controller_velocity,
 			rotate_npc,
+			update_agent_target_to_player,
 			update_agent_target,
 		)
 			.chain()
 			.run_if(in_state(Screen::Gameplay)),
 	);
-	app.add_observer(setup_npc_agent);
+	app.add_observer(setup_npc_agent)
+		.add_observer(remove_orphan_walk_target);
+	app.add_systems(
+		PostUpdate,
+		despawn_orphans.before(TransformSystems::Propagate),
+	);
 	app.add_input_context::<NpcInputContext>();
 }
 
@@ -71,11 +77,10 @@ fn setup_npc_agent(
 			},
 			archipelago_ref: ArchipelagoRef3d::new(*archipelago),
 		},
-		TargetReachedCondition::Distance(Some(3.0)),
+		TargetReachedCondition::Distance(Some(1.0)),
 		ChildOf(npc),
 		AgentOf(npc),
 		AgentTarget3d::default(),
-		//WantsToFollowPlayer,
 	));
 }
 
@@ -84,29 +89,72 @@ struct NpcInputContext;
 
 #[derive(Component, Debug, Reflect)]
 #[reflect(Component)]
-struct WantsToFollowPlayer;
+pub(crate) struct WantsToFollowPlayer;
 
-fn update_agent_target(
-	mut agents: Query<&mut AgentTarget3d, With<WantsToFollowPlayer>>,
+#[derive(Component, Debug, Reflect)]
+#[reflect(Component)]
+#[relationship_target(relationship = NpcWalkTargetOf, linked_spawn)]
+pub(crate) struct NpcWalkTarget(Entity);
+
+#[derive(Component, Debug, Reflect)]
+#[reflect(Component)]
+#[relationship(relationship_target = NpcWalkTarget)]
+pub(crate) struct NpcWalkTargetOf(pub(crate) Entity);
+
+#[derive(Component, Reflect, Debug)]
+#[reflect(Component)]
+pub(crate) struct DespawnPlz;
+
+fn remove_orphan_walk_target(remove: On<Remove, NpcWalkTargetOf>, mut commands: Commands) {
+	commands.entity(remove.entity).insert(DespawnPlz);
+}
+
+fn despawn_orphans(orphans: Query<Entity, With<DespawnPlz>>, mut commands: Commands) {
+	for orphan in &orphans {
+		commands.entity(orphan).try_despawn();
+	}
+}
+
+fn update_agent_target_to_player(
+	mut commands: Commands,
+	agents: Query<Entity, With<WantsToFollowPlayer>>,
 	player_position: Single<&LastValidPlayerNavmeshPosition>,
 ) {
 	let Some(player_position) = player_position.0 else {
 		return;
 	};
-	for mut target in &mut agents {
-		*target = AgentTarget3d::Point(player_position);
+	for agent in &agents {
+		commands
+			.entity(agent)
+			.with_related::<NpcWalkTargetOf>((Transform::from_translation(player_position),));
+	}
+}
+
+fn update_agent_target(
+	mut agents: Query<(&mut AgentTarget3d, &AgentOf)>,
+	targets: Query<&NpcWalkTarget>,
+	transforms: Query<&Transform>,
+) {
+	for (mut agent_target, agent_of) in &mut agents {
+		let Ok(transform) = targets
+			.get(agent_of.entity())
+			.and_then(|walk_target| transforms.get(walk_target.0))
+		else {
+			continue;
+		};
+		*agent_target = AgentTarget3d::Point(transform.translation);
 	}
 }
 
 #[derive(Component, Deref, Debug, Reflect)]
 #[reflect(Component)]
 #[relationship(relationship_target = Agent)]
-struct AgentOf(Entity);
+pub(crate) struct AgentOf(Entity);
 
 #[derive(Component, Deref, Debug, Reflect)]
 #[reflect(Component)]
 #[relationship_target(relationship = AgentOf)]
-struct Agent(Entity);
+pub(crate) struct Agent(Entity);
 
 /// Use the desired velocity as the agent's velocity.
 fn set_controller_velocity(

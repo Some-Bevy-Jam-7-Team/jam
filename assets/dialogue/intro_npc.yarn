@@ -46,7 +46,7 @@ title: IntroNpc6
   Jannick: I think he might have been hitting on me.
   -> Happy birthday
     <<set $birthday_celebrated = true>>
-    <<complete_objective "Congratulate employee No.6">>
+    <<complete_objective "soc_1">>
     Jannick: He tried to take me out for dinner on my birthday.
     Jannick: Said I was very special.
     Jannick: Are you going to do that to.
@@ -59,9 +59,9 @@ title: IntroNpc6
 
 <<else>>
   <<if $date == true>>
-    Jannick: I can't wait for our date tonight.
+    I can't wait for our date tonight.
   <<else>>
-    Jannick: Leave me alone, you don't even love me like he did.
+    Leave me alone, you don't even love me like he did.
   <<endif>>
 <<endif>>
 ===

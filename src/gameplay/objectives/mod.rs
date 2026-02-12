@@ -1,19 +1,41 @@
 use bevy::prelude::*;
+use bevy_trenchbroom::prelude::*;
+
+use crate::{
+	gameplay::interaction::{InteractEvent, InteractableObject},
+	props::logic_entity::ObjectiveEntity,
+	screens::Screen,
+};
 
 pub(crate) mod ui;
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_plugins(ui::plugin);
+	app.init_resource::<CurrentObjective>();
 
-	app.add_observer(update_current_objective);
+	app.add_systems(Update, update_current_objective);
+	//	app.add_systems(Update, find_current_objective);
+	app.add_observer(watch_for_completors);
 	app.add_systems(PostUpdate, complete_parent_objectives);
 }
 
-#[derive(Component)]
-pub struct CurrentObjective;
+#[derive(Resource, Reflect, Debug, Deref, Default, PartialEq)]
+#[reflect(Resource)]
+pub struct CurrentObjective(Option<Entity>);
+
+/// Marker for entities that complete subobjectives on interact
+#[derive(Component, Reflect, Debug)]
+#[reflect(Component)]
+#[require(InteractableObject(Some("Complete Objective".to_string())))]
+pub struct ObjectiveCompletor {
+	/// `ObjectiveEntity::targetname` of the objective completed by this completor
+	pub target: String,
+}
 
 /// A game objective.
-#[derive(Component, Debug, Default)]
+#[derive(Default)]
+#[base_class]
+#[require(DespawnOnExit::<Screen>(Screen::Gameplay))]
 pub struct Objective {
 	/// The description of the objective.
 	pub description: String,
@@ -46,13 +68,35 @@ pub struct SubObjectiveOf {
 #[relationship_target(relationship = SubObjectiveOf)]
 pub struct SubObjectives(Vec<Entity>);
 
-#[derive(Component)]
-#[relationship_target(relationship = PreviousObjective)]
-pub struct NextObjective(Entity);
+fn watch_for_completors(
+	trigger: On<InteractEvent>,
+	objective_query: Query<(Entity, &ObjectiveEntity)>,
+	completor_query: Query<&ObjectiveCompletor>,
+	mut commands: Commands,
+) {
+	if let Ok(completor) = completor_query.get(trigger.0) {
+		for (entity, objective) in objective_query.iter() {
+			if objective.targetname == completor.target {
+				commands.entity(entity).insert(ObjectiveCompleted);
+			}
+		}
+	}
+}
 
-#[derive(Component)]
-#[relationship(relationship_target = NextObjective)]
-pub struct PreviousObjective(pub Entity);
+pub(crate) fn create_dialogue_objective(
+	In((identifier, description, order)): In<(String, String, f32)>,
+	mut commands: Commands,
+) {
+	commands.spawn((
+		Name::new(format!("Objective: {identifier}")),
+		ObjectiveEntity {
+			targetname: identifier,
+			target: None,
+			objective_order: order,
+		},
+		Objective::new(description),
+	));
+}
 
 pub(crate) fn create_dialogue_objective(
 	In((description, previous)): In<(String, Option<String>)>,
@@ -108,14 +152,17 @@ pub(crate) fn get_dialogue_current_objective(
 }
 
 fn update_current_objective(
-	add: On<Add, ObjectiveCompleted>,
-	mut commands: Commands,
-	objectives: Query<&NextObjective, With<CurrentObjective>>,
+	objectives: Query<
+		(Entity, &ObjectiveEntity),
+		(Without<ObjectiveCompleted>, Without<SubObjectiveOf>),
+	>,
+	mut current_objective: ResMut<CurrentObjective>,
 ) {
-	if let Ok(&NextObjective(next_objective)) = objectives.get(add.entity) {
-		commands.entity(add.entity).try_remove::<CurrentObjective>();
-		commands.entity(next_objective).try_insert(CurrentObjective);
-	}
+	let minimum = objectives
+		.iter()
+		.min_by(|(_, a), (_, b)| a.objective_order.total_cmp(&b.objective_order))
+		.map(|(entity, _)| entity);
+	current_objective.set_if_neq(CurrentObjective(minimum));
 }
 
 /// Marks parent objectives as completed when all their sub-objectives are completed.

@@ -8,6 +8,7 @@ use bevy::prelude::*;
 
 pub(crate) mod avian3d;
 mod bevy_ahoy;
+mod bevy_bae;
 mod bevy_enhanced_input;
 mod bevy_framepace;
 mod bevy_hanabi;
@@ -31,5 +32,6 @@ pub(super) fn plugin(app: &mut App) {
 		bevy_framepace::plugin,
 		rerecast::plugin,
 		skinned_aabb::plugin,
+		bevy_bae::plugin,
 	));
 }

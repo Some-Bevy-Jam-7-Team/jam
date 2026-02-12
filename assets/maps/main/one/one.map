@@ -5,6 +5,7 @@
 "mapversion" "220"
 "wad" ""
 "classname" "worldspawn"
+"property 1" ""
 // brush 0
 {
 ( -312 -64 0 ) ( -312 -63 0 ) ( -312 -64 1 ) crate [ 0 -1 0 0 ] [ 0 0 -1 -1824 ] 180 0.05 0.05
@@ -1140,6 +1141,19 @@
 }
 // entity 15
 {
+"classname" "break_room_sensor"
+// brush 0
+{
+( 16 -352 816 ) ( 16 -350.75 816 ) ( 16 -352 817 ) __TB_empty [ 0 -0.8 0 22.399994 ] [ 0 0 -1 0 ] 270 1 1
+( 16 -352 816 ) ( 16 -352 817 ) ( 18.333333333333336 -352 816 ) __TB_empty [ 0.42857142857142855 0 0 25.142857 ] [ 0 0 -1 0 ] 270 1 1
+( 16 -352 816 ) ( 18.333333333333336 -352 816 ) ( 16 -350.75 816 ) __TB_empty [ -0.42857142857142855 0 0 -25.142857 ] [ 0 -0.8 0 22.399994 ] 270 1 1
+( 128 -272 832 ) ( 128 -270.75 832 ) ( 130.33333333333337 -272 832 ) __TB_empty [ 0.42857142857142855 0 0 25.142857 ] [ 0 -0.8 0 22.399994 ] 270 1 1
+( 128 -272 832 ) ( 130.33333333333337 -272 832 ) ( 128 -272 833 ) __TB_empty [ -0.42857142857142855 0 0 -25.142857 ] [ 0 0 -1 0 ] 270 1 1
+( 128 -272 832 ) ( 128 -272 833 ) ( 128 -270.75 832 ) __TB_empty [ 0 0.8 0 -22.399994 ] [ 0 0 -1 0 ] 270 1 1
+}
+}
+// entity 16
+{
 "classname" "func_group"
 "_tb_type" "_tb_layer"
 "_tb_name" "Outside"
@@ -1263,13 +1277,13 @@
 ( 784 -432 1024 ) ( 784 -432 1025 ) ( 784 -431 1024 ) crate [ 0 1 0 0 ] [ 0 0 -1 -576 ] 270 0.05 0.05
 }
 }
-// entity 16
+// entity 17
 {
 "classname" "light_point"
 "origin" "760 -456 1160"
 "_tb_layer" "2"
 }
-// entity 17
+// entity 18
 {
 "classname" "npc"
 "yarn_node" "IntroNpc12"
@@ -1277,7 +1291,7 @@
 "angles" "0 -180 0"
 "_tb_layer" "2"
 }
-// entity 18
+// entity 19
 {
 "classname" "func_group"
 "_tb_type" "_tb_layer"
@@ -1312,7 +1326,7 @@
 ( 336 -64 160 ) ( 336 -64 161 ) ( 336 -63 160 ) crate [ 0 1 0 0 ] [ 0 0 -1 -1824 ] 0 1 1
 }
 }
-// entity 19
+// entity 20
 {
 "classname" "light_point"
 "origin" "24 -120 120"
@@ -1320,7 +1334,7 @@
 "intensity" "100000.000000"
 "_tb_layer" "3"
 }
-// entity 20
+// entity 21
 {
 "classname" "light_point"
 "origin" "344 -120 136"
@@ -1328,7 +1342,7 @@
 "intensity" "100000.000000"
 "_tb_layer" "3"
 }
-// entity 21
+// entity 22
 {
 "classname" "func_group"
 "_tb_type" "_tb_layer"
@@ -1615,7 +1629,7 @@
 ( 192 168 64 ) ( 192 168 65 ) ( 192 169 64 ) crate [ -4.2862637970157366e-16 1 0 16 ] [ 0 0 -1 -1808 ] 90 1 1
 }
 }
-// entity 22
+// entity 23
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1623,21 +1637,21 @@
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 23
+// entity 24
 {
 "classname" "keyboard"
 "origin" "-200 84 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 24
+// entity 25
 {
 "classname" "mouse"
 "origin" "-200 100 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 25
+// entity 26
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1645,21 +1659,21 @@
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 26
+// entity 27
 {
 "classname" "keyboard"
 "origin" "-140 136 72"
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 27
+// entity 28
 {
 "classname" "mouse"
 "origin" "-124 136 72"
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 28
+// entity 29
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1667,28 +1681,28 @@
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 29
+// entity 30
 {
 "classname" "keyboard"
 "origin" "-48 84 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 30
+// entity 31
 {
 "classname" "mouse"
 "origin" "-48 100 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 31
+// entity 32
 {
 "classname" "keyboard"
 "origin" "-20 136 72"
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 32
+// entity 33
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1696,28 +1710,28 @@
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 33
+// entity 34
 {
 "classname" "mouse"
 "origin" "-4 136 72"
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 34
+// entity 35
 {
 "classname" "keyboard"
 "origin" "-12 192 72"
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 35
+// entity 36
 {
 "classname" "mouse"
 "origin" "-28 192 72"
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 36
+// entity 37
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1725,21 +1739,21 @@
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 37
+// entity 38
 {
 "classname" "mouse"
 "origin" "-48 236 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 38
+// entity 39
 {
 "classname" "keyboard"
 "origin" "-48 220 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 39
+// entity 40
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1747,7 +1761,7 @@
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 40
+// entity 41
 {
 "classname" "npc"
 "yarn_node" "IntroNpc5"
@@ -1755,14 +1769,14 @@
 "angles" "0 -180 0"
 "_tb_layer" "4"
 }
-// entity 41
+// entity 42
 {
 "classname" "keyboard"
 "origin" "-124 192 72"
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 42
+// entity 43
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1770,21 +1784,21 @@
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 43
+// entity 44
 {
 "classname" "mouse"
 "origin" "-140 192 72"
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 44
+// entity 45
 {
 "classname" "keyboard"
 "origin" "-200 212 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 45
+// entity 46
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1792,28 +1806,28 @@
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 46
+// entity 47
 {
 "classname" "mouse"
 "origin" "-200 228 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 47
+// entity 48
 {
 "classname" "mouse"
 "origin" "148 128 72"
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 48
+// entity 49
 {
 "classname" "keyboard"
 "origin" "132 128 72"
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 49
+// entity 50
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1821,7 +1835,7 @@
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 50
+// entity 51
 {
 "classname" "npc"
 "yarn_node" "IntroNpc12"
@@ -1830,21 +1844,21 @@
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 51
+// entity 52
 {
 "classname" "mouse"
 "origin" "168 68 72"
 "angles" "0 180 0"
 "_tb_layer" "4"
 }
-// entity 52
+// entity 53
 {
 "classname" "keyboard"
 "origin" "168 84 72"
 "angles" "0 180 0"
 "_tb_layer" "4"
 }
-// entity 53
+// entity 54
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1852,21 +1866,21 @@
 "angles" "0 180 0"
 "_tb_layer" "4"
 }
-// entity 54
+// entity 55
 {
 "classname" "mouse"
 "origin" "260 128 72"
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 55
+// entity 56
 {
 "classname" "keyboard"
 "origin" "244 128 72"
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 56
+// entity 57
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1874,21 +1888,21 @@
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 57
+// entity 58
 {
 "classname" "mouse"
 "origin" "320 92 72"
 "angles" "0 -180 0"
 "_tb_layer" "4"
 }
-// entity 58
+// entity 59
 {
 "classname" "keyboard"
 "origin" "320 108 72"
 "angles" "0 -180 0"
 "_tb_layer" "4"
 }
-// entity 59
+// entity 60
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1896,21 +1910,21 @@
 "angles" "0 -180 0"
 "_tb_layer" "4"
 }
-// entity 60
+// entity 61
 {
 "classname" "keyboard"
 "origin" "224 220 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 61
+// entity 62
 {
 "classname" "mouse"
 "origin" "224 236 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 62
+// entity 63
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1918,21 +1932,21 @@
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 63
+// entity 64
 {
 "classname" "mouse"
 "origin" "284 184 72"
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 64
+// entity 65
 {
 "classname" "keyboard"
 "origin" "300 184 72"
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 65
+// entity 66
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1940,14 +1954,14 @@
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 66
+// entity 67
 {
 "classname" "keyboard"
 "origin" "140 184 72"
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 67
+// entity 68
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1955,28 +1969,28 @@
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 68
+// entity 69
 {
 "classname" "mouse"
 "origin" "124 184 72"
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 69
+// entity 70
 {
 "classname" "mouse"
 "origin" "168 212 72"
 "angles" "0 180 0"
 "_tb_layer" "4"
 }
-// entity 70
+// entity 71
 {
 "classname" "keyboard"
 "origin" "168 228 72"
 "angles" "0 180 0"
 "_tb_layer" "4"
 }
-// entity 71
+// entity 72
 {
 "classname" "crt"
 "yarn_node" "IntroNpc6"
@@ -1984,7 +1998,7 @@
 "angles" "0 180 0"
 "_tb_layer" "4"
 }
-// entity 72
+// entity 73
 {
 "classname" "npc"
 "yarn_node" "IntroNpc4"
@@ -1992,7 +2006,7 @@
 "animation_lock" "Typing"
 "_tb_layer" "4"
 }
-// entity 73
+// entity 74
 {
 "classname" "npc"
 "yarn_node" "IntroNpc10"
@@ -2000,7 +2014,7 @@
 "angles" "0 180 0"
 "_tb_layer" "4"
 }
-// entity 74
+// entity 75
 {
 "classname" "npc"
 "yarn_node" "IntroNpc3"
@@ -2008,7 +2022,7 @@
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 75
+// entity 76
 {
 "classname" "npc"
 "yarn_node" "IntroNpc2"
@@ -2017,7 +2031,7 @@
 "animation_lock" "Typing"
 "_tb_layer" "4"
 }
-// entity 76
+// entity 77
 {
 "classname" "npc"
 "yarn_node" "IntroNpc1"
@@ -2026,7 +2040,7 @@
 "animation_lock" "Typing"
 "_tb_layer" "4"
 }
-// entity 77
+// entity 78
 {
 "classname" "npc"
 "yarn_node" "IntroNpc7"
@@ -2034,7 +2048,7 @@
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 78
+// entity 79
 {
 "classname" "npc"
 "yarn_node" "IntroNpc8"
@@ -2043,7 +2057,7 @@
 "animation_lock" "Standing"
 "_tb_layer" "4"
 }
-// entity 79
+// entity 80
 {
 "classname" "npc"
 "yarn_node" "IntroNpc9"
@@ -2052,7 +2066,7 @@
 "animation_lock" "Typing"
 "_tb_layer" "4"
 }
-// entity 80
+// entity 81
 {
 "classname" "npc"
 "yarn_node" "IntroNpc11"
@@ -2060,7 +2074,7 @@
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 81
+// entity 82
 {
 "classname" "npc"
 "yarn_node" "IntroNpc6"
