@@ -5,6 +5,12 @@
 
 use std::iter;
 
+use crate::{
+	CameraOrder, PostPhysicsAppSystems, RenderLayer,
+	gameplay::animation::{AnimationPlayerAncestor, AnimationPlayerOf, AnimationPlayers},
+	screens::{Screen, loading::LoadingScreen},
+	third_party::{avian3d::CollisionLayer, bevy_trenchbroom::LoadTrenchbroomModel as _},
+};
 use avian_pickup::prelude::*;
 use avian3d::{picking::PhysicsPickingCamera, prelude::*};
 #[cfg(feature = "native")]
@@ -21,12 +27,6 @@ use bevy::{
 };
 use bevy_ahoy::camera::CharacterControllerCameraOf;
 use bevy_eidolon::prepass::CullComputeCamera;
-use crate::{
-	CameraOrder, PostPhysicsAppSystems, RenderLayer,
-	gameplay::animation::{AnimationPlayerAncestor, AnimationPlayerOf, AnimationPlayers},
-	screens::{Screen, loading::LoadingScreen},
-	third_party::{avian3d::CollisionLayer, bevy_trenchbroom::LoadTrenchbroomModel as _},
-};
 
 use super::Player;
 

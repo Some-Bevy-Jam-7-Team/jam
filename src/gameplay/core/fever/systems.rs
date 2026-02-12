@@ -58,6 +58,8 @@ pub fn fever(
 			continue;
 		}
 
+		cmd.trigger(FeverTick { entity });
+
 		// Remove when UI exists
 		println!("fever:{:?}, health:{:?}", temp, health);
 
