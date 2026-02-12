@@ -1,11 +1,18 @@
+use std::time::Duration;
+
 use crate::{
 	asset_tracking::LoadResource,
-	props::interactables::InteractableEntity,
+	gameplay::{
+		level::LevelAssets,
+		objectives::{CurrentObjective, Objective, ObjectiveCompleted, SubObjectives},
+	},
+	props::{interactables::InteractableEntity, logic_entity::ObjectiveEntity},
 	third_party::{
 		avian3d::CollisionLayer,
 		bevy_trenchbroom::{GetTrenchbroomModelPath as _, LoadTrenchbroomModel as _},
 		bevy_yarnspinner::YarnNode,
 	},
+	timer::{GenericTimer, TimerFinished},
 };
 
 use super::setup::*;
@@ -15,6 +22,7 @@ use bevy::{
 	ecs::{lifecycle::HookContext, world::DeferredWorld},
 	prelude::*,
 };
+use bevy_seedling::{prelude::RepeatMode, sample::SamplePlayer};
 use bevy_trenchbroom::prelude::*;
 
 pub(super) fn plugin(app: &mut App) {
@@ -32,6 +40,8 @@ pub(super) fn plugin(app: &mut App) {
 		.add_observer(setup_static_prop_with_convex_hull::<Mouse>)
 		.add_observer(setup_dynamic_prop_with_convex_hull::<PackageMedium>)
 		.add_observer(setup_dynamic_prop_with_convex_hull::<PackageSmall>);
+
+	app.add_observer(setup_break_room);
 
 	app.add_observer(setup_nonphysical_prop::<IvyPart8>)
 		.add_observer(setup_nonphysical_prop::<SmallDoorSign1>);
@@ -176,3 +186,90 @@ pub(crate) struct IvyPart8;
 	model("models/darkmod/decorative/signs/small_door_sign1.gltf")
 )]
 pub(crate) struct SmallDoorSign1;
+
+struct BreakRoomTimer;
+
+#[solid_class(base(Transform, Visibility))]
+#[require(Sensor, CollisionEventsEnabled)]
+pub(crate) struct BreakRoomSensor;
+
+fn setup_break_room(add: On<Add, BreakRoomSensor>, mut commands: Commands) {
+	commands
+		.entity(add.entity)
+		.insert(
+			GenericTimer::<BreakRoomTimer>::new(Timer::new(
+				Duration::from_secs(3),
+				TimerMode::Once,
+			))
+			.with_active(false),
+		)
+		.observe(activate_timer)
+		.observe(deactivate_timer)
+		.observe(change_objective);
+}
+
+fn activate_timer(
+	collision: On<CollisionStart>,
+	mut timer: Query<&mut GenericTimer<BreakRoomTimer>>,
+	objectives: Query<&ObjectiveEntity>,
+	current_objective: Res<CurrentObjective>,
+) -> Result<(), BevyError> {
+	let Some(current_objective) = **current_objective else {
+		return Ok(());
+	};
+	let Ok(ObjectiveEntity { targetname, .. }) = objectives.get(current_objective) else {
+		return Ok(());
+	};
+
+	if targetname != "breakroom" {
+		return Ok(());
+	}
+
+	let mut timer = timer.get_mut(collision.collider1)?;
+
+	timer.set_active(true);
+
+	Ok(())
+}
+
+fn deactivate_timer(
+	collision: On<CollisionEnd>,
+	mut timer: Query<&mut GenericTimer<BreakRoomTimer>>,
+) -> Result<(), BevyError> {
+	println!("Left breakroom");
+	let mut timer = timer.get_mut(collision.collider1)?;
+
+	timer.set_active(false);
+
+	Ok(())
+}
+
+fn change_objective(
+	_: On<TimerFinished<BreakRoomTimer>>,
+	mut commands: Commands,
+	objectives: Query<(Entity, &ObjectiveEntity)>,
+	level_assets: Res<LevelAssets>,
+) {
+	if let Some((entity, _)) = objectives
+		.iter()
+		.find(|(_, ObjectiveEntity { targetname, .. })| targetname == "breakroom")
+	{
+		// TODO: Figure out why sound isn't playing
+		commands.spawn(SamplePlayer {
+			sample: level_assets.break_room_alarm.clone(),
+			repeat_mode: RepeatMode::RepeatMultiple {
+				num_times_to_repeat: 5,
+			},
+			..Default::default()
+		});
+		commands.entity(entity).insert(ObjectiveCompleted);
+		commands.spawn((
+			Objective::new("Breaks over"),
+			ObjectiveEntity {
+				targetname: "back_to_llmanager".into(),
+				..Default::default()
+			},
+			related!(SubObjectives[Objective::new("Talk to LLManager")]),
+		));
+	}
+}

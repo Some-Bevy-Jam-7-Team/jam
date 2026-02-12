@@ -16,6 +16,7 @@ mod screens;
 mod shader_compilation;
 mod theme;
 mod third_party;
+mod timer;
 mod ui_camera;
 mod ui_layout;
 
