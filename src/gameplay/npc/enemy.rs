@@ -88,7 +88,7 @@ pub(crate) fn melee_enemy_htn() -> impl Bundle {
 			),
 			(
 				conditions![Condition::eq("in_melee_range", true)],
-				Operator::new(attack_player),
+				Operator::new(melee_attack),
 			),
 			Operator::new(go_to_player),
 		],
@@ -141,9 +141,14 @@ fn walk_randomly(
 	OperatorStatus::Ongoing
 }
 
-fn attack_player(In(_input): In<OperatorInput>) -> OperatorStatus {
-	// TODO: Implement lol
-	error!("attack_player");
+fn melee_attack(
+	In(input): In<OperatorInput>,
+	mut enemy: Query<&mut EnemyAiState>,
+) -> OperatorStatus {
+	let Ok(mut enemy) = enemy.get_mut(input.entity) else {
+		return OperatorStatus::Failure;
+	};
+	enemy.punching = true;
 	OperatorStatus::Ongoing
 }
 
@@ -160,14 +165,16 @@ fn go_to_player(
 
 #[derive(Component, Reflect, Debug)]
 #[reflect(Component)]
-struct EnemyAiState {
-	walk_timer: Timer,
+pub(crate) struct EnemyAiState {
+	pub(crate) walk_timer: Timer,
+	pub(crate) punching: bool,
 }
 
 impl Default for EnemyAiState {
 	fn default() -> Self {
 		Self {
 			walk_timer: Timer::from_seconds(rng().random_range(4.0..6.0), TimerMode::Repeating),
+			punching: false,
 		}
 	}
 }

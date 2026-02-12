@@ -10,7 +10,10 @@ use bevy_trenchbroom::prelude::FgdType;
 use crate::{
 	PostPhysicsAppSystems,
 	animation::{AnimationState, AnimationStateTransition},
-	gameplay::{animation::AnimationPlayers, npc::Npc},
+	gameplay::{
+		animation::AnimationPlayers,
+		npc::{Npc, enemy::EnemyAiState},
+	},
 	screens::Screen,
 };
 
@@ -33,6 +36,7 @@ struct NpcAnimations {
 	run: AnimationNodeIndex,
 	dance: AnimationNodeIndex,
 	typing: AnimationNodeIndex,
+	punch: AnimationNodeIndex,
 }
 
 pub(crate) fn setup_npc_animations(
@@ -52,8 +56,16 @@ pub(crate) fn setup_npc_animations(
 			gltf.named_animations.get("walk").unwrap().clone(),
 			gltf.named_animations.get("dance").unwrap().clone(),
 			gltf.named_animations.get("typing").unwrap().clone(),
+			gltf.named_animations.get("punch").unwrap().clone(),
 		]);
-		let [run_index, idle_index, walk_index, dance_index, typing_index] = indices.as_slice()
+		let [
+			run_index,
+			idle_index,
+			walk_index,
+			dance_index,
+			typing_index,
+			punch_index,
+		] = indices.as_slice()
 		else {
 			unreachable!()
 		};
@@ -65,6 +77,7 @@ pub(crate) fn setup_npc_animations(
 			run: *run_index,
 			dance: *dance_index,
 			typing: *typing_index,
+			punch: *punch_index,
 		};
 		let transitions = AnimationTransitions::new();
 		commands.entity(anim_player).insert((
@@ -84,6 +97,7 @@ pub(crate) enum NpcAnimationState {
 	Running,
 	Dancing,
 	Typing,
+	Punching,
 }
 
 fn play_animations(
@@ -93,6 +107,7 @@ fn play_animations(
 		&CharacterControllerState,
 		&AnimationPlayers,
 		&Npc,
+		Option<&mut EnemyAiState>,
 	)>,
 	mut q_animation: Query<(
 		&NpcAnimations,
@@ -100,12 +115,16 @@ fn play_animations(
 		&mut AnimationTransitions,
 	)>,
 ) {
-	for (mut animating_state, velocity, state, anim_players, npc) in &mut query {
+	for (mut animating_state, velocity, state, anim_players, npc, mut enemy) in &mut query {
 		let mut iter = q_animation.iter_many_mut(anim_players.iter());
 		while let Some((animations, mut anim_player, mut transitions)) = iter.fetch_next() {
 			match animating_state.update_by_discriminant({
 				if let Some(lock) = npc.animation_lock {
 					lock
+				} else if let Some(enemy) = enemy.as_mut()
+					&& enemy.punching
+				{
+					NpcAnimationState::Punching
 				} else {
 					let speed = velocity.length();
 					if state.grounded.is_none() {
@@ -119,7 +138,16 @@ fn play_animations(
 					}
 				}
 			}) {
-				AnimationStateTransition::Maintain { state: _ } => {}
+				AnimationStateTransition::Maintain { state } => match state {
+					NpcAnimationState::Punching => {
+						if anim_player.all_finished() {
+							if let Some(enemy) = enemy.as_mut() {
+								enemy.punching = false;
+							}
+						}
+					}
+					_ => {}
+				},
 				AnimationStateTransition::Alter {
 					// We don't need the old state here, but it's available for transition
 					// animations.
@@ -168,9 +196,16 @@ fn play_animations(
 							.play(
 								&mut anim_player,
 								animations.typing,
-								Duration::from_millis(100),
+								Duration::from_millis(800),
 							)
 							.repeat();
+					}
+					NpcAnimationState::Punching => {
+						transitions.play(
+							&mut anim_player,
+							animations.punch,
+							Duration::from_millis(300),
+						);
 					}
 				},
 			}
