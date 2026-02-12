@@ -8,7 +8,7 @@ use bevy_shuffle_bag::ShuffleBag;
 use bevy_yarnspinner::{events::*, prelude::*};
 
 use crate::asset_tracking::LoadResource;
-use crate::audio::SfxPool;
+use crate::audio::{SfxPool, SpatialPool};
 use crate::gameplay::player::camera::PlayerCameraParent;
 use crate::gameplay::player::dialogue::DialogueSpeaker;
 
@@ -133,8 +133,7 @@ fn present_line(
 		if let Some(entity) = speaker.0.as_ref() {
 			commands.entity(*entity).with_child((
 				SamplePlayer::new(handle),
-				// Corvy why this no work with SpatialPool halp
-				SfxPool,
+				SpatialPool,
 				VoiceAudio,
 				Transform::default(),
 			));
@@ -152,8 +151,7 @@ fn present_line(
 			commands.entity(*entity).with_child((
 				SamplePlayer::new(handle),
 				RandomPitch(1.05..1.25),
-				// Corvyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-				SfxPool,
+				SpatialPool,
 				VoiceAudio,
 				Transform::default(),
 			));
