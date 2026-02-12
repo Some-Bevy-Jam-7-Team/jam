@@ -118,22 +118,6 @@ fn on_spawn_sub_objective(
 	}
 }
 
-fn on_spawn_sub_objective(
-	add: On<Add, SubObjectiveOf>,
-	mut commands: Commands,
-	parent_objectives: Query<&SubObjectiveOf>,
-	current_objective: Single<Entity, With<CurrentObjective>>,
-	objective_ui: Single<Entity, With<ObjectiveUi>>,
-) {
-	if parent_objectives
-		.iter_ancestors(add.entity)
-		.any(|entity| *current_objective == entity)
-	{
-		commands.entity(*objective_ui).despawn_children();
-		commands.run_system_cached_with(spawn_objective, *current_objective);
-	}
-}
-
 // This is gross, but we use exclusive `World` access to make structural changes immediate.
 // Using commands would really complicate this, since the logic depends on previously spawned nodes.
 fn spawn_objective(

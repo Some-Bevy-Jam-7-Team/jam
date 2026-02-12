@@ -98,56 +98,41 @@ pub(crate) fn create_dialogue_objective(
 	));
 }
 
-pub(crate) fn create_dialogue_objective(
-	In((description, previous)): In<(String, Option<String>)>,
+pub(crate) fn create_dialogue_subobjective(
+	In((identifier, description, parent_identifier)): In<(String, String, String)>,
 	mut commands: Commands,
-	objectives: Query<(Entity, &Objective), Without<SubObjectiveOf>>,
 ) {
-	if let Some(previous) = previous
-		&& let Some((previous, _)) = objectives
-			.iter()
-			.find(|(_, objective)| objective.description == previous)
-	{
-		let objective = commands.spawn(Objective::new(description)).id();
-		commands.entity(previous).insert(NextObjective(objective));
-	} else {
-		commands.spawn((CurrentObjective, Objective::new(description)));
-	}
-}
-
-pub(crate) fn add_dialogue_objective_to_current(
-	In(description): In<String>,
-	mut commands: Commands,
-	current_objective: Option<Single<Entity, With<CurrentObjective>>>,
-) {
-	if let Some(objective) = current_objective {
-		commands.spawn((
-			Objective::new(description),
-			SubObjectiveOf {
-				objective: *objective,
-			},
-		));
-	}
+	commands.spawn((
+		Name::new(format!("Subobjective: {identifier} of {parent_identifier}")),
+		ObjectiveEntity {
+			targetname: identifier,
+			target: Some(parent_identifier),
+			objective_order: 0.0,
+		},
+		Objective::new(description),
+	));
 }
 
 pub(crate) fn complete_dialogue_objective(
-	In(description): In<String>,
+	In(identifier): In<String>,
 	mut commands: Commands,
-	objectives: Query<(Entity, &Objective)>,
+	objectives: Query<(Entity, &ObjectiveEntity)>,
 ) {
 	if let Some((objective, _)) = objectives
 		.iter()
-		.find(|(_, objective)| objective.description == description)
+		.find(|(_, objective)| objective.targetname == identifier)
 	{
 		commands.entity(objective).insert(ObjectiveCompleted);
 	}
 }
 
 pub(crate) fn get_dialogue_current_objective(
-	current_objective: Option<Single<&Objective, With<CurrentObjective>>>,
+	current_objective: Res<CurrentObjective>,
+	objective_query: Query<&ObjectiveEntity>,
 ) -> String {
-	current_objective
-		.map(|objective| objective.description.clone())
+	(**current_objective)
+		.and_then(|entity| objective_query.get(entity).ok())
+		.map(|objective| objective.targetname.clone())
 		.unwrap_or_default()
 }
 

@@ -266,7 +266,7 @@ fn change_objective(
 		commands.spawn((
 			Objective::new("Breaks over"),
 			ObjectiveEntity {
-				targetname: "back_to_llmanager".into(),
+				targetname: "back_to_llm".into(),
 				..Default::default()
 			},
 			related!(SubObjectives[Objective::new("Talk to LLManager")]),
