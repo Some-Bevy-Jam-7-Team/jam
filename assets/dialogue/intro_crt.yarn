@@ -3,12 +3,12 @@ title: IntroCRT
 // # I hate sentinal values but hey
 
 <<if get_current_objective() == "start_work">>
-  LLManager: Good morning, valued employee. You have been working with us for 450 days.
-  LLManager: Thank you for your continued productivity, if you keep this up you might get a promotion.
-  LLManager: Which means two pizza parties per month.
-  LLManager: Before you get to work you should socialise to your fellow employees.
-  LLManager: It is employee No.6's birthday. Please go and congratulate them.
-  LLManager: It is important to celebrate milestones to ensure worker productivity.
+  LLManager: Good morning, valued employee. You have been working with us for 450 days. #line:3200474 
+  LLManager: Thank you for your continued productivity, if you keep this up you might get a promotion. #line:4060747 
+  LLManager: Which means two pizza parties per month. #line:7946244 
+  LLManager: Before you get to work you should socialise to your fellow employees. #line:11705489 
+  LLManager: It is employee No.6's birthday. Please go and congratulate them. #line:15246288 
+  LLManager: It is important to celebrate milestones to ensure worker productivity. #line:5320400 
 
   <<complete_objective "start_work">>
 
@@ -17,26 +17,26 @@ title: IntroCRT
 
   <<create_objective "talk_to_llm_again" "Talk to LLManager again" 1.0>>
 <<elseif get_current_objective() == "socialisation">>
-  LLManager: Please engage in socialisation with your fellow employees.
+  LLManager: Please engage in socialisation with your fellow employees. #line:523020 
 <<elseif get_current_objective() == "talk_to_llm_again">>
   <<complete_objective "talk_to_llm_again">>
 
-  LLManager: Well done, you have engaged in productivity boosting activities.
-  LLManager: Please take your mandated mental health break.
-  LLManager: Just up the stairs and to the left, and then up the stairs and to the left...
-  LLManager: And then up the stairs and to the left...
-  LLManager: And then up the stairs and to the left...
-  LLManager: Remember, a productive mind is a happy mind.
+  LLManager: Well done, you have engaged in productivity boosting activities. #line:5952661 
+  LLManager: Please take your mandated mental health break. #line:5092548 
+  LLManager: Just up the stairs and to the left, and then up the stairs and to the left... #line:12173553 
+  LLManager: And then up the stairs and to the left... #line:5421376 
+  LLManager: And then up the stairs and to the left... #line:6584811 
+  LLManager: Remember, a productive mind is a happy mind. #line:2486276 
 
   <<create_objective "breakroom" "Take a mental health break." 2.0>>
 <<elseif get_current_objective() == "back_to_llm">>
   <<complete_objective "back_to_llm">>
-  LLManager: Congratulations, you have completed your mandated mental health break.
-  LLManager: It is important to clear your mind before working to ensure maximum productivity.
+  LLManager: Congratulations, you have completed your mandated mental health break. #line:12397097 
+  LLManager: It is important to clear your mind before working to ensure maximum productivity. #line:2310971 
 <<endif>>
 ===
 
 title: Day2CRT
 ---
-LLManager: Good morning, valued employee. You have been working with us for $DAYS$ days.
+LLManager: Good morning, valued employee. You have been working with us for $DAYS$ days. #line:15897206
 ===

@@ -40,8 +40,8 @@ pub(super) enum DialogueSystems {
 }
 
 /// A resource that tracks the current speaker of the dialogue, if any.
-#[derive(Resource, Default, Reflect)]
-struct DialogueSpeaker(Option<Entity>);
+#[derive(Resource, Default, Reflect, Deref)]
+pub(crate) struct DialogueSpeaker(pub(crate) Option<Entity>);
 
 fn interact_with_dialogue(
 	trigger: On<InteractEvent>,

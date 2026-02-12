@@ -3,14 +3,48 @@ use super::option_selection::OptionSelection;
 use super::setup::{DialogueContinueNode, DialogueNameNode, UiRootNode};
 use super::typewriter::Typewriter;
 use bevy::prelude::*;
+use bevy_seedling::prelude::*;
+use bevy_shuffle_bag::ShuffleBag;
 use bevy_yarnspinner::{events::*, prelude::*};
+
+use crate::asset_tracking::LoadResource;
+use crate::audio::{SfxPool, SpatialPool};
+use crate::gameplay::player::camera::PlayerCameraParent;
+use crate::gameplay::player::dialogue::DialogueSpeaker;
+
+#[derive(Component)]
+struct VoiceAudio;
+
+#[derive(Resource, Asset, TypePath, Clone)]
+struct GibberishSounds(ShuffleBag<Handle<AudioSample>>);
+
+impl FromWorld for GibberishSounds {
+	fn from_world(world: &mut World) -> Self {
+		let assets = world.resource::<AssetServer>();
+		let mut rng = rand::rng();
+		Self(
+			ShuffleBag::try_new(
+				vec![
+					assets.load("audio/dialogue/shufflebag/gibberish1.ogg"),
+					assets.load("audio/dialogue/shufflebag/gibberish2.ogg"),
+					assets.load("audio/dialogue/shufflebag/gibberish3.ogg"),
+					assets.load("audio/dialogue/shufflebag/gibberish4.ogg"),
+					assets.load("audio/dialogue/shufflebag/gibberish5.ogg"),
+				],
+				&mut rng,
+			)
+			.unwrap(),
+		)
+	}
+}
 
 pub(super) fn ui_updating_plugin(app: &mut App) {
 	app.init_resource::<AutoContinueTimer>();
+	app.load_resource::<GibberishSounds>();
 
 	app.add_systems(
 		Update,
-		(continue_dialogue, auto_continue_dialogue)
+		(continue_dialogue, auto_continue_dialogue.run_if(|| false))
 			.chain()
 			.run_if(resource_exists::<Typewriter>)
 			.after(YarnSpinnerSystemSet)
@@ -59,8 +93,13 @@ fn show_dialog(_: On<DialogueStarted>, mut visibility: Single<&mut Visibility, W
 fn hide_dialog(
 	_: On<DialogueCompleted>,
 	mut root_visibility: Single<&mut Visibility, With<UiRootNode>>,
+	mut commands: Commands,
+	voice_query: Query<Entity, With<VoiceAudio>>,
 ) {
 	**root_visibility = Visibility::Hidden;
+	for entity in &voice_query {
+		commands.entity(entity).despawn();
+	}
 }
 
 fn present_line(
@@ -69,7 +108,64 @@ fn present_line(
 	mut typewriter: ResMut<Typewriter>,
 	name_node: Single<Entity, With<DialogueNameNode>>,
 	mut text_writer: TextUiWriter,
+	asset_server: Res<AssetServer>,
+	mut commands: Commands,
+	voice_query: Query<Entity, With<VoiceAudio>>,
+	mut gibberish: ResMut<GibberishSounds>,
+	speaker: Res<DialogueSpeaker>,
+	transforms: Query<&GlobalTransform>,
 ) {
+	// Stop any previously playing voice line.
+	for entity in &voice_query {
+		commands.entity(entity).despawn();
+	}
+
+	// Play voice audio for this line: use specific file if it exists, otherwise gibberish.
+	let id = event
+		.line
+		.id
+		.0
+		.strip_prefix("line:")
+		.unwrap_or(&event.line.id.0);
+	let path = format!("audio/dialogue/{id}.ogg");
+	if std::path::Path::new(&format!("assets/{path}")).exists() {
+		let handle = asset_server.load::<AudioSample>(path);
+		if let Some(entity) = speaker.0.as_ref() {
+			commands.entity(*entity).with_child((
+				SamplePlayer::new(handle),
+				SpatialPool,
+				VoiceAudio,
+				Transform::default(),
+			));
+		} else {
+			commands.spawn((
+				SamplePlayer::new(handle),
+				SfxPool,
+				VoiceAudio,
+				Transform::default(),
+			));
+		}
+	} else {
+		let handle = gibberish.0.pick(&mut rand::rng()).clone();
+		if let Some(entity) = speaker.0.as_ref() {
+			commands.entity(*entity).with_child((
+				SamplePlayer::new(handle),
+				RandomPitch(1.05..1.25),
+				SpatialPool,
+				VoiceAudio,
+				Transform::default(),
+			));
+		} else {
+			commands.spawn((
+				SamplePlayer::new(handle),
+				RandomPitch(1.05..1.25),
+				SfxPool,
+				VoiceAudio,
+				Transform::default(),
+			));
+		}
+	};
+
 	let name = if let Some(name) = event.line.character_name() {
 		speaker_change_events.write(SpeakerChangeEvent {
 			character_name: name.to_string(),
