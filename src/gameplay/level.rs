@@ -1,7 +1,11 @@
 //! Spawn the main level.
 
 use crate::{
-	asset_tracking::LoadResource, audio::MusicPool, gameplay::npc::NPC_RADIUS, screens::Screen,
+	asset_tracking::LoadResource,
+	audio::MusicPool,
+	gameplay::{npc::NPC_RADIUS, objectives::Objective},
+	props::logic_entity::ObjectiveEntity,
+	screens::Screen,
 };
 use bevy::prelude::*;
 use bevy_landmass::prelude::*;
@@ -17,6 +21,14 @@ pub(super) fn plugin(app: &mut App) {
 
 /// A system that spawns the main level.
 pub(crate) fn spawn_level(mut commands: Commands, level_assets: Res<LevelAssets>) {
+	commands.spawn((
+		Objective::new("Clock In"),
+		ObjectiveEntity {
+			targetname: "start_work".into(),
+			..Default::default()
+		},
+	));
+
 	commands.spawn((
 		Name::new("Level"),
 		SceneRoot(level_assets.level.clone()),
@@ -62,6 +74,8 @@ pub(crate) struct LevelAssets {
 	pub(crate) navmesh: Handle<Navmesh>,
 	#[dependency]
 	pub(crate) music: Handle<AudioSample>,
+	#[dependency]
+	pub(crate) break_room_alarm: Handle<AudioSample>,
 }
 
 impl FromWorld for LevelAssets {
@@ -74,6 +88,7 @@ impl FromWorld for LevelAssets {
 			// You can regenerate the navmesh by using `bevy_rerecast_editor`
 			navmesh: assets.load("maps/main/one/one.nav"),
 			music: assets.load("audio/music/corpo slop to eat your computer to.ogg"),
+			break_room_alarm: assets.load("audio/sound_effects/mental_health_alarm.ogg"),
 		}
 	}
 }
