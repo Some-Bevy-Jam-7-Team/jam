@@ -44,7 +44,7 @@ pub(super) fn ui_updating_plugin(app: &mut App) {
 
 	app.add_systems(
 		Update,
-		(continue_dialogue, auto_continue_dialogue)
+		(continue_dialogue, auto_continue_dialogue.run_if(|| false))
 			.chain()
 			.run_if(resource_exists::<Typewriter>)
 			.after(YarnSpinnerSystemSet)
