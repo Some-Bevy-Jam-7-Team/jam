@@ -2,6 +2,11 @@ use bevy::prelude::*;
 
 use crate::gameplay::core::*;
 
+#[derive(EntityEvent)]
+pub struct FeverTick {
+	pub entity: Entity,
+}
+
 pub fn source(
 	time: Res<Time>,
 	q_fever_source: Query<&FeverSource>,

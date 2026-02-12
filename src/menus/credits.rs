@@ -77,6 +77,10 @@ fn assets() -> impl Bundle {
 			"Dark Mod assets",
 			"CC BY-NC-SA 3.0 by The Dark Mod Team, converted to Bevy-friendly assets by Jan Hohenheim",
 		],
+		[
+			"Rock",
+			"CC0 Rock Moss Set 01 by Kless Gyzen https://polyhaven.com/a/rock_moss_set_01",
+		],
 		["More stuffs", "TODO :)"],
 	])
 }
