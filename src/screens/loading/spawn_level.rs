@@ -70,7 +70,7 @@ fn scatter(
 ) {
 	mw_clear_root.write((*root).into());
 
-	println!("Scattering...");
+	debug!("Scattering...");
 	cmd.trigger(Scatter::<StandardMaterial>::new(*root));
 }
 
