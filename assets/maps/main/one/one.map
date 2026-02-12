@@ -1162,6 +1162,7 @@
 }
 }
 // entity 16
+{
 "classname" "world_emitter"
 "origin" "-72 -248 88"
 "scale" "1 1 1"
