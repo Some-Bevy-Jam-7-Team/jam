@@ -117,18 +117,18 @@ impl FromWorld for LevelAssets {
 			level: assets.load("maps/main/one/one.map#Scene"),
 			// You can regenerate the navmesh by using `bevy_rerecast_editor`
 			navmesh: assets.load("maps/main/one/one.nav"),
-			music: assets.load("audio/music/Ambiance_Rain_Calm_Loop_Stereo.ogg"),
 			landscape: assets.load("models/landscape/landscape_flat_large.gltf#Scene0"),
 			grass: assets.load("models/grass/grass.glb#Scene0"),
 			grass_med: assets.load("models/grass/grass_medium_lod.glb#Scene0"),
 			grass_low: assets.load("models/grass/grass_low_lod.glb#Scene0"),
-			rocks: assets.load("models/rocks/rocks_high_lod.gltf#Scene0"),
-			rocks_med: assets.load("models/rocks/rocks_medium_lod.gltf#Scene0"),
+			rocks: assets.load("models/rocks/rocks_low_lod.gltf#Scene0"),
+			rocks_med: assets.load("models/rocks/rocks_low_lod.gltf#Scene0"),
 			rocks_low: assets.load("models/rocks/rocks_low_lod.gltf#Scene0"),
 			grass_density_map: assets.load("textures/density_map.png"),
 			rock_density_map: assets.load("textures/rock_density_map.png"),
 			mushroom_density_map: assets.load("textures/mushroom_density_map.png"),
 			mushroom: assets.load("models/mushroom/mushroom.gltf#Scene0"),
+			music: assets.load("audio/music/corpo slop to eat your computer to.ogg"),
 		}
 	}
 }
