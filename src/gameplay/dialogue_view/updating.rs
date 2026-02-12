@@ -4,6 +4,7 @@ use super::setup::{DialogueContinueNode, DialogueNameNode, UiRootNode};
 use super::typewriter::Typewriter;
 use bevy::prelude::*;
 use bevy_seedling::prelude::*;
+use bevy_shuffle_bag::ShuffleBag;
 use bevy_yarnspinner::{events::*, prelude::*};
 
 use crate::audio::SfxPool;
@@ -11,8 +12,32 @@ use crate::audio::SfxPool;
 #[derive(Component)]
 struct VoiceAudio;
 
+#[derive(Resource)]
+struct GibberishSounds(ShuffleBag<Handle<AudioSample>>);
+
+impl FromWorld for GibberishSounds {
+	fn from_world(world: &mut World) -> Self {
+		let assets = world.resource::<AssetServer>();
+		let mut rng = rand::rng();
+		Self(
+			ShuffleBag::try_new(
+				vec![
+					assets.load("audio/dialogue/shufflebag/gibberish1.ogg"),
+					assets.load("audio/dialogue/shufflebag/gibberish2.ogg"),
+					assets.load("audio/dialogue/shufflebag/gibberish3.ogg"),
+					assets.load("audio/dialogue/shufflebag/gibberish4.ogg"),
+					assets.load("audio/dialogue/shufflebag/gibberish5.ogg"),
+				],
+				&mut rng,
+			)
+			.unwrap(),
+		)
+	}
+}
+
 pub(super) fn ui_updating_plugin(app: &mut App) {
 	app.init_resource::<AutoContinueTimer>();
+	app.init_resource::<GibberishSounds>();
 
 	app.add_systems(
 		Update,
@@ -83,13 +108,14 @@ fn present_line(
 	asset_server: Res<AssetServer>,
 	mut commands: Commands,
 	voice_query: Query<Entity, With<VoiceAudio>>,
+	mut gibberish: ResMut<GibberishSounds>,
 ) {
 	// Stop any previously playing voice line.
 	for entity in &voice_query {
 		commands.entity(entity).despawn();
 	}
 
-	// Play voice audio for this line.
+	// Play voice audio for this line: use specific file if it exists, otherwise gibberish.
 	let id = event
 		.line
 		.id
@@ -97,7 +123,11 @@ fn present_line(
 		.strip_prefix("line:")
 		.unwrap_or(&event.line.id.0);
 	let path = format!("audio/dialogue/{id}.ogg");
-	let handle = asset_server.load::<AudioSample>(path);
+	let handle = if std::path::Path::new(&format!("assets/{path}")).exists() {
+		asset_server.load::<AudioSample>(path)
+	} else {
+		gibberish.0.pick(&mut rand::rng()).clone()
+	};
 	commands.spawn((SamplePlayer::new(handle), SfxPool, VoiceAudio));
 
 	let name = if let Some(name) = event.line.character_name() {
