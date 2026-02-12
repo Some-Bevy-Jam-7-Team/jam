@@ -20,11 +20,10 @@ title: IntroCRT
   <<complete_objective "talk_to_llm">>
 
   LLManager: Well done, you have engaged in productivity boosting activities.
-  LLManager: Please take your mandated fifteen minute mental health break.
+  LLManager: Please take your mandated mental health break.
   LLManager: Just up the stairs and to the left, and then up the stairs and to the left...
   LLManager: And then up the stairs and to the left...
   LLManager: And then up the stairs and to the left...
-  LLManager: Be sure to set a timer so you don't accidentally waste time.
   LLManager: Remember, a productive mind is a happy mind.
 
   <<create_objective "breakroom" "Take a mental health break." 2.0>>
