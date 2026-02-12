@@ -2,13 +2,17 @@ use bevy::prelude::*;
 
 use bevy_trenchbroom::prelude::*;
 
-use crate::gameplay::{
-	TargetName, TargetnameEntityIndex,
-	objectives::{Objective, SubObjectiveOf},
+use crate::{
+	gameplay::{
+		TargetName, TargetnameEntityIndex,
+		objectives::{Objective, SubObjectiveOf},
+	},
+	reflection::ReflAppExt,
 };
 
 pub(super) fn plugin(app: &mut App) {
-	app.add_observer(uninitialise_objectives)
+	app.register_dynamic_component::<ObjectiveEntity>()
+		.add_observer(uninitialise_objectives)
 		.add_systems(Update, initialise_objectives);
 }
 

@@ -5,11 +5,16 @@ use bevy::{
 
 use bevy_trenchbroom::prelude::*;
 
-use crate::gameplay::{
-	interaction::InteractableObject, objectives::ObjectiveCompletor, stomach::EdibleProp,
+use crate::{
+	gameplay::{
+		interaction::InteractableObject, objectives::ObjectiveCompletor, stomach::EdibleProp,
+	},
+	reflection::ReflAppExt,
 };
 
-pub(super) fn plugin(_app: &mut App) {}
+pub(super) fn plugin(app: &mut App) {
+	app.register_dynamic_component::<InteractableEntity>();
+}
 
 /// Trenchbroom component for designing entities that can be interacted with.
 #[derive(Default, Clone)]

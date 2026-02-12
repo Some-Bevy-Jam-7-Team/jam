@@ -7,18 +7,18 @@ use bevy::{prelude::*, scene::SceneInstanceReady};
 use bevy_trenchbroom::prelude::*;
 
 use crate::{
-	asset_tracking::LoadResource as _,
-	screens::Screen,
-	third_party::bevy_trenchbroom::{GetTrenchbroomModelPath as _, LoadTrenchbroomModel as _},
+	asset_tracking::LoadResource as _, gameplay::TargetName, reflection::ReflAppExt, screens::Screen, third_party::bevy_trenchbroom::{GetTrenchbroomModelPath as _, LoadTrenchbroomModel as _}
 };
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_observer(setup_door);
 	app.add_systems(Update, update_door_locks);
 	app.load_asset::<Gltf>(Door::model_path());
+
+	app.register_dynamic_component::<Door>();
 }
 
-#[point_class(base(Transform, Visibility), model("models/general/door.gltf"))]
+#[point_class(base(TargetName, Transform, Visibility), model("models/general/door.gltf"))]
 pub(crate) struct Door {
 	pub locked: bool,
 	pub min_angle: f32,

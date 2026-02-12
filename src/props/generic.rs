@@ -1,11 +1,9 @@
 use crate::{
-	asset_tracking::LoadResource,
-	props::interactables::InteractableEntity,
-	third_party::{
+	asset_tracking::LoadResource, gameplay::TargetName, props::interactables::InteractableEntity, third_party::{
 		avian3d::CollisionLayer,
 		bevy_trenchbroom::{GetTrenchbroomModelPath as _, LoadTrenchbroomModel as _},
 		bevy_yarnspinner::YarnNode,
-	},
+	}
 };
 
 use super::setup::*;
@@ -58,7 +56,7 @@ pub(super) fn plugin(app: &mut App) {
 
 // office
 
-#[point_class(base(Transform, Visibility, YarnNode), model("models/office/crt.gltf"))]
+#[point_class(base(TargetName, Transform, Visibility, YarnNode), model("models/office/crt.gltf"))]
 #[component(on_add = Crt::on_add)]
 #[derive(Default)]
 pub(crate) struct Crt;
@@ -83,13 +81,13 @@ impl Crt {
 }
 
 #[point_class(
-	base(InteractableEntity, Transform, Visibility),
+	base(TargetName, InteractableEntity, Transform, Visibility),
 	model("models/office/keyboard.gltf")
 )]
 pub(crate) struct Keyboard;
 
 #[point_class(
-	base(InteractableEntity, Transform, Visibility),
+	base(TargetName, InteractableEntity, Transform, Visibility),
 	model("models/office/mouse.gltf")
 )]
 pub(crate) struct Mouse;
@@ -97,68 +95,68 @@ pub(crate) struct Mouse;
 // darkmod
 
 #[point_class(
-	base(InteractableEntity, Transform, Visibility),
+	base(TargetName, InteractableEntity, Transform, Visibility),
 	model("models/darkmod/containers/package_medium.gltf")
 )]
 pub(crate) struct PackageMedium;
 
 #[point_class(
-	base(InteractableEntity, Transform, Visibility),
+	base(TargetName, InteractableEntity, Transform, Visibility),
 	model("models/darkmod/containers/package_small.gltf")
 )]
 pub(crate) struct PackageSmall;
 
 // generic static props
 #[point_class(
-	base(InteractableEntity, Transform, Visibility),
+	base(TargetName, InteractableEntity, Transform, Visibility),
 	model("models/darkmod/fireplace/grate.gltf")
 )]
 pub(crate) struct Grate;
 
 #[point_class(
-	base(InteractableEntity, Transform, Visibility),
+	base(TargetName, InteractableEntity, Transform, Visibility),
 	model("models/darkmod/furniture/tables/rtable1.gltf")
 )]
 pub(crate) struct Table;
 
 #[point_class(
-	base(InteractableEntity, Transform, Visibility),
+	base(TargetName, InteractableEntity, Transform, Visibility),
 	model("models/darkmod/furniture/shelves/bookshelf02.gltf")
 )]
 pub(crate) struct Bookshelf;
 
 #[point_class(
-	base(InteractableEntity, Transform, Visibility),
+	base(TargetName, InteractableEntity, Transform, Visibility),
 	model("models/darkmod/mechanical/generator2/generator2.gltf")
 )]
 pub(crate) struct Generator2;
 
 #[point_class(
-	base(Transform, Visibility),
+	base(TargetName, Transform, Visibility),
 	model("models/darkmod/containers/barrel_large_closed.gltf")
 )]
 pub(crate) struct BarrelLargeClosed;
 
 #[point_class(
-	base(Transform, Visibility),
+	base(TargetName, Transform, Visibility),
 	model("models/darkmod/containers/barrel01.gltf")
 )]
 pub(crate) struct Barrel01;
 
 #[point_class(
-	base(Transform, Visibility),
+	base(TargetName, Transform, Visibility),
 	model("models/darkmod/containers/crate_square.gltf")
 )]
 pub(crate) struct CrateSquare;
 
 #[point_class(
-	base(Transform, Visibility),
+	base(TargetName, Transform, Visibility),
 	model("models/darkmod/architecture/fencing/fence_bars_decorative01_single.gltf")
 )]
 pub(crate) struct FenceBarsDecorativeSingle;
 
 #[point_class(
-	base(Transform, Visibility),
+	base(TargetName, Transform, Visibility),
 	model("models/darkmod/architecture/doors/door_stained_glass_118x52.gltf")
 )]
 pub(crate) struct DoorStainedGlass;
@@ -166,13 +164,13 @@ pub(crate) struct DoorStainedGlass;
 // Generic non-physical props
 
 #[point_class(
-	base(Transform, Visibility),
+	base(TargetName, Transform, Visibility),
 	model("models/darkmod/nature/ivy_part08.gltf")
 )]
 pub(crate) struct IvyPart8;
 
 #[point_class(
-	base(Transform, Visibility),
+	base(TargetName, Transform, Visibility),
 	model("models/darkmod/decorative/signs/small_door_sign1.gltf")
 )]
 pub(crate) struct SmallDoorSign1;

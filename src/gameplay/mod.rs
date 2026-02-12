@@ -25,6 +25,7 @@ pub(crate) mod stomach;
 
 pub(super) fn plugin(app: &mut App) {
 	app.init_resource::<TargetnameEntityIndex>().add_plugins((
+		scripting::plugin,
 		animation::plugin,
 		crosshair::plugin,
 		dialogue_view::plugin,

@@ -1,4 +1,7 @@
-use bevy::{ecs::{lifecycle::HookContext, world::DeferredWorld}, prelude::*};
+use bevy::{
+	ecs::{lifecycle::HookContext, world::DeferredWorld},
+	prelude::*,
+};
 use bevy_trenchbroom::prelude::*;
 
 use crate::{
@@ -56,7 +59,10 @@ impl Objective {
 		if world.is_scene_world() {
 			return;
 		}
-		world.commands().entity(ctx.entity).insert(DespawnOnExit(Screen::Gameplay));
+		world
+			.commands()
+			.entity(ctx.entity)
+			.insert(DespawnOnExit(Screen::Gameplay));
 	}
 }
 

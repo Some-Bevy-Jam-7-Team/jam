@@ -12,6 +12,7 @@ mod gameplay;
 mod hdr;
 mod menus;
 mod props;
+mod reflection;
 mod screens;
 mod shader_compilation;
 mod theme;
@@ -153,6 +154,9 @@ fn main() -> AppExit {
 		bevy::remote::RemotePlugin::default(),
 		bevy::remote::http::RemoteHttpPlugin::default(),
 	));
+
+	// Add Celeste Chapter 6.
+	app.add_plugins(reflection::plugin);
 
 	// Add third-party plugins.
 	app.add_plugins(third_party::plugin);
