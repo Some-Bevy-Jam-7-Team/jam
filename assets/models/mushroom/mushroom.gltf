@@ -33,9 +33,6 @@
 			"doubleSided":true,
 			"name":"ArmorPaintMtl",
 			"pbrMetallicRoughness":{
-				"baseColorTexture":{
-					"index":0
-				},
 				"metallicFactor":0,
 				"roughnessFactor":0.949999988079071
 			}
@@ -65,7 +62,7 @@
 						"NORMAL":5,
 						"TEXCOORD_0":6
 					},
-					"indices":7,
+					"indices":3,
 					"material":0
 				}
 			]
@@ -75,27 +72,14 @@
 			"primitives":[
 				{
 					"attributes":{
-						"POSITION":8,
-						"NORMAL":9,
-						"TEXCOORD_0":10
+						"POSITION":7,
+						"NORMAL":8,
+						"TEXCOORD_0":9
 					},
 					"indices":3,
 					"material":0
 				}
 			]
-		}
-	],
-	"textures":[
-		{
-			"sampler":0,
-			"source":0
-		}
-	],
-	"images":[
-		{
-			"mimeType":"image/png",
-			"name":"mushroom_base",
-			"uri":"mushroom_base.png"
 		}
 	],
 	"accessors":[
@@ -163,12 +147,6 @@
 		},
 		{
 			"bufferView":7,
-			"componentType":5123,
-			"count":552,
-			"type":"SCALAR"
-		},
-		{
-			"bufferView":8,
 			"componentType":5126,
 			"count":154,
 			"max":[
@@ -184,13 +162,13 @@
 			"type":"VEC3"
 		},
 		{
-			"bufferView":9,
+			"bufferView":8,
 			"componentType":5126,
 			"count":154,
 			"type":"VEC3"
 		},
 		{
-			"bufferView":10,
+			"bufferView":9,
 			"componentType":5126,
 			"count":154,
 			"type":"VEC2"
@@ -241,38 +219,26 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":1104,
-			"byteOffset":10960,
-			"target":34963
-		},
-		{
-			"buffer":0,
 			"byteLength":1848,
-			"byteOffset":12064,
+			"byteOffset":10960,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":1848,
-			"byteOffset":13912,
+			"byteOffset":12808,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":1232,
-			"byteOffset":15760,
+			"byteOffset":14656,
 			"target":34962
-		}
-	],
-	"samplers":[
-		{
-			"magFilter":9729,
-			"minFilter":9987
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":16992,
+			"byteLength":15888,
 			"uri":"mushroom.bin"
 		}
 	]
