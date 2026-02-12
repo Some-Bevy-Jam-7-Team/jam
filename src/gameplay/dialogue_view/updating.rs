@@ -7,12 +7,13 @@ use bevy_seedling::prelude::*;
 use bevy_shuffle_bag::ShuffleBag;
 use bevy_yarnspinner::{events::*, prelude::*};
 
+use crate::asset_tracking::LoadResource;
 use crate::audio::SfxPool;
 
 #[derive(Component)]
 struct VoiceAudio;
 
-#[derive(Resource)]
+#[derive(Resource, Asset, TypePath, Clone)]
 struct GibberishSounds(ShuffleBag<Handle<AudioSample>>);
 
 impl FromWorld for GibberishSounds {
@@ -37,7 +38,7 @@ impl FromWorld for GibberishSounds {
 
 pub(super) fn ui_updating_plugin(app: &mut App) {
 	app.init_resource::<AutoContinueTimer>();
-	app.init_resource::<GibberishSounds>();
+	app.load_resource::<GibberishSounds>();
 
 	app.add_systems(
 		Update,
