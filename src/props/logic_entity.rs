@@ -2,7 +2,10 @@ use bevy::prelude::*;
 
 use bevy_trenchbroom::prelude::*;
 
-use crate::gameplay::objectives::{Objective, SubObjectiveOf};
+use crate::gameplay::{
+	TargetName, TargetnameEntityIndex,
+	objectives::{Objective, SubObjectiveOf},
+};
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_observer(uninitialise_objectives)
@@ -15,18 +18,22 @@ fn uninitialise_objectives(add: On<Insert, ObjectiveEntity>, mut commands: Comma
 
 fn initialise_objectives(
 	uninit_objectives: Populated<(Entity, &ObjectiveEntity), With<UnitialisedObjective>>,
-	objectives: Query<(Entity, &ObjectiveEntity)>,
+	objectives: Query<(), With<Objective>>,
+	entity_index: Res<TargetnameEntityIndex>,
 	mut commands: Commands,
 ) {
 	for (entity, obj) in uninit_objectives.iter() {
 		if let Some(target) = obj.target.as_ref() {
-			for (parent, parent_candidate) in objectives.iter() {
-				if *target == parent_candidate.targetname {
-					commands
-						.entity(entity)
-						.remove::<UnitialisedObjective>()
-						.insert(SubObjectiveOf { objective: parent });
-				}
+			if let Some(&parent) = entity_index
+				.get_entity_by_targetname(target)
+				.iter()
+				.filter(|entity| objectives.contains(**entity))
+				.next()
+			{
+				commands
+					.entity(entity)
+					.remove::<UnitialisedObjective>()
+					.insert(SubObjectiveOf { objective: parent });
 			}
 		} else {
 			commands.entity(entity).remove::<UnitialisedObjective>();
@@ -39,12 +46,9 @@ fn initialise_objectives(
 struct UnitialisedObjective;
 
 /// An entity describing the identity of an objective
-#[point_class(base(Objective))]
+#[point_class(base(TargetName, Objective))]
 #[derive(Default)]
 pub(crate) struct ObjectiveEntity {
-	/// The name by which other entities (such as an objective completor or subobjectives) refer to this entity
-	/// DO NOT MUTATE, IT WON'T UPDATE
-	pub targetname: String,
 	/// The objective, if any, that this is a subobjective of
 	/// DO NOT MUTATE, IT WON'T UPDATE
 	pub target: Option<String>,

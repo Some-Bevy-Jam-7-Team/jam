@@ -2,7 +2,10 @@ use bevy::{ecs::{lifecycle::HookContext, world::DeferredWorld}, prelude::*};
 use bevy_trenchbroom::prelude::*;
 
 use crate::{
-	gameplay::interaction::{InteractEvent, InteractableObject},
+	gameplay::{
+		TargetName, TargetnameEntityIndex,
+		interaction::{InteractEvent, InteractableObject},
+	},
 	props::logic_entity::ObjectiveEntity,
 	screens::Screen,
 };
@@ -77,13 +80,14 @@ pub struct SubObjectives(Vec<Entity>);
 
 fn watch_for_completors(
 	trigger: On<InteractEvent>,
-	objective_query: Query<(Entity, &ObjectiveEntity)>,
+	objective_query: Query<(), With<Objective>>,
 	completor_query: Query<&ObjectiveCompletor>,
+	entity_name_index: Res<TargetnameEntityIndex>,
 	mut commands: Commands,
 ) {
 	if let Ok(completor) = completor_query.get(trigger.0) {
-		for (entity, objective) in objective_query.iter() {
-			if objective.targetname == completor.target {
+		for &entity in entity_name_index.get_entity_by_targetname(&completor.target) {
+			if objective_query.contains(entity) {
 				commands.entity(entity).insert(ObjectiveCompleted);
 			}
 		}
@@ -96,8 +100,8 @@ pub(crate) fn create_dialogue_objective(
 ) {
 	commands.spawn((
 		Name::new(format!("Objective: {identifier}")),
+		TargetName::new(identifier),
 		ObjectiveEntity {
-			targetname: identifier,
 			target: None,
 			objective_order: order,
 		},
@@ -111,8 +115,8 @@ pub(crate) fn create_dialogue_subobjective(
 ) {
 	commands.spawn((
 		Name::new(format!("Subobjective: {identifier} of {parent_identifier}")),
+		TargetName::new(identifier),
 		ObjectiveEntity {
-			targetname: identifier,
 			target: Some(parent_identifier),
 			objective_order: 0.0,
 		},
@@ -123,23 +127,25 @@ pub(crate) fn create_dialogue_subobjective(
 pub(crate) fn complete_dialogue_objective(
 	In(identifier): In<String>,
 	mut commands: Commands,
-	objectives: Query<(Entity, &ObjectiveEntity)>,
+	objective_query: Query<(), With<Objective>>,
+	entity_name_index: Res<TargetnameEntityIndex>,
 ) {
-	if let Some((objective, _)) = objectives
+	for entity in entity_name_index
+		.get_entity_by_targetname(&*identifier)
 		.iter()
-		.find(|(_, objective)| objective.targetname == identifier)
+		.filter(|entity| objective_query.contains(**entity))
 	{
-		commands.entity(objective).insert(ObjectiveCompleted);
+		commands.entity(*entity).insert(ObjectiveCompleted);
 	}
 }
 
 pub(crate) fn get_dialogue_current_objective(
 	current_objective: Res<CurrentObjective>,
-	objective_query: Query<&ObjectiveEntity>,
+	objective_query: Query<&TargetName>,
 ) -> String {
 	(**current_objective)
 		.and_then(|entity| objective_query.get(entity).ok())
-		.map(|objective| objective.targetname.clone())
+		.map(|objective| (**objective).clone())
 		.unwrap_or_default()
 }
 
