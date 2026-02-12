@@ -1,18 +1,44 @@
 title: IntroCRT
 ---
-<<declare $birthday_celebrated = false>>
-<<if $birthday_celebrated == false>>
-LLManager: Good morning, valued employee. You have been working with us for 450 days.
-LLManager: Thank you for your continued productivity, if you keep this up you might get a promotion.
-LLManager: Which means two pizza parties per month.
-LLManager: Before you get to work, it is important to celebrate milestones to ensure worker productivity.
-LLManager: It is employee No.6's birthday. Please go and congratulate them.
-// # TODO: Add bit that sets birthday objective here
-<<else>>
-LLManager: Well done, you have engaged in productivity boosting activities.
-LLManager: Please take your mandated fifteen minute mental health break.
-LLManager: Be sure to set a timer so you don't accidentally waste time.
-LLManager: Remember, a productive mind is a happy mind.
+// # I hate sentinal values but hey
+
+<<if get_current_objective() == "">>
+  LLManager: Good morning, valued employee. You have been working with us for 450 days.
+  LLManager: Thank you for your continued productivity, if you keep this up you might get a promotion.
+  LLManager: Which means two pizza parties per month.
+  LLManager: Before you get to work you should socialise to your fellow employees.
+  LLManager: It is employee No.6's birthday. Please go and congratulate them.
+  LLManager: It is important to celebrate milestones to ensure worker productivity.
+
+  <<create_objective "Socialise">>
+  <<add_objective_to_current "Talk to employee No.1">>
+  <<add_objective_to_current "Talk to employee No.2">>
+  <<add_objective_to_current "Talk to employee No.3">>
+  <<add_objective_to_current "Talk to employee No.4">>
+  <<add_objective_to_current "Talk to employee No.5">>
+  <<add_objective_to_current "Congratulate employee No.6">>
+  <<add_objective_to_current "Talk to employee No.7">>
+  <<add_objective_to_current "Talk to employee No.8">>
+  <<add_objective_to_current "Talk to employee No.9">>
+  <<add_objective_to_current "Talk to employee No.10">>
+  <<add_objective_to_current "Talk to employee No.11">>
+  <<add_objective_to_current "Talk to employee No.12">>
+
+  <<create_objective "Talk to LLManager again" "Socialise">>
+<<elseif get_current_objective() == "Socialise">>
+  LLManager: Please engage in socialisation with your fellow employees.
+<<elseif get_current_objective() == "Talk to LLManager again">>
+  <<complete_objective "Talk to LLManager again">>
+
+  LLManager: Well done, you have engaged in productivity boosting activities.
+  LLManager: Please take your mandated fifteen minute mental health break.
+  LLManager: Just up the stairs and to the left, and then up the stairs and to the left...
+  LLManager: And then up the stairs and to the left...
+  LLManager: And then up the stairs and to the left...
+  LLManager: Be sure to set a timer so you don't accidentally waste time.
+  LLManager: Remember, a productive mind is a happy mind.
+
+  <<create_objective "Take a mental health break.">>
 <<endif>>
 ===
 

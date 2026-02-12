@@ -9,6 +9,7 @@ use crate::{
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_observer(on_spawn_objective);
+	app.add_observer(on_spawn_sub_objective);
 	app.add_observer(on_complete_objective);
 
 	app.add_systems(OnEnter(Screen::Gameplay), spawn_objective_ui);
@@ -83,6 +84,22 @@ fn sub_objective_list_node(depth: usize) -> impl Bundle {
 /// Spawns a UI node for a new current objective.
 fn on_spawn_objective(add: On<Add, CurrentObjective>, mut commands: Commands) {
 	commands.run_system_cached_with(spawn_objective, add.entity);
+}
+
+fn on_spawn_sub_objective(
+	add: On<Add, SubObjectiveOf>,
+	mut commands: Commands,
+	parent_objectives: Query<&SubObjectiveOf>,
+	current_objective: Single<Entity, With<CurrentObjective>>,
+	objective_ui: Single<Entity, With<ObjectiveUi>>,
+) {
+	if parent_objectives
+		.iter_ancestors(add.entity)
+		.any(|entity| *current_objective == entity)
+	{
+		commands.entity(*objective_ui).despawn_children();
+		commands.run_system_cached_with(spawn_objective, *current_objective);
+	}
 }
 
 // This is gross, but we use exclusive `World` access to make structural changes immediate.

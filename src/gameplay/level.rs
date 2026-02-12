@@ -73,7 +73,7 @@ impl FromWorld for LevelAssets {
 			level: assets.load("maps/main/one/one.map#Scene"),
 			// You can regenerate the navmesh by using `bevy_rerecast_editor`
 			navmesh: assets.load("maps/main/one/one.nav"),
-			music: assets.load("audio/music/Ambiance_Rain_Calm_Loop_Stereo.ogg"),
+			music: assets.load("audio/music/corpo slop to eat your computer to.ogg"),
 		}
 	}
 }

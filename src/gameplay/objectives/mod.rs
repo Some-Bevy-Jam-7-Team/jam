@@ -1,16 +1,10 @@
 use bevy::prelude::*;
 
-use crate::{gameplay::objectives::ui::spawn_objective_ui, screens::Screen};
-
 pub(crate) mod ui;
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_plugins(ui::plugin);
 
-	app.add_systems(
-		OnEnter(Screen::Gameplay),
-		spawn_test_objectives.after(spawn_objective_ui),
-	);
 	app.add_observer(update_current_objective);
 	app.add_systems(PostUpdate, complete_parent_objectives);
 }
@@ -60,35 +54,57 @@ pub struct NextObjective(Entity);
 #[relationship(relationship_target = NextObjective)]
 pub struct PreviousObjective(pub Entity);
 
-fn spawn_test_objectives(mut commands: Commands) {
-	// Spawn a top-level objective.
-	commands
-		.spawn((
-			Objective::new("Task 1"),
-			related!(SubObjectives[
-				Objective::new("Task 1.1"),
-				Objective::new("Task 1.2"),
-				(Objective::new("Task 1.3"), ObjectiveCompleted)
-			]),
-			related!(
-				NextObjective[(
-					Objective::new("Task 2"),
-					related!(SubObjectives[
-						(Objective::new("Task 2.1"), ObjectiveCompleted),
-						(
-							Objective::new("Task 2.2"),
-							related!(SubObjectives[
-								Objective::new("Task 2.2.1"),
-								Objective::new("Task 2.2.2"),
-							]),
-						),
-						Objective::new("Task 2.3")
-					])
-				)]
-			),
-		))
-		// If you want to hate ui remove this.
-		.insert(CurrentObjective);
+pub(crate) fn create_dialogue_objective(
+	In((description, previous)): In<(String, Option<String>)>,
+	mut commands: Commands,
+	objectives: Query<(Entity, &Objective), Without<SubObjectiveOf>>,
+) {
+	if let Some(previous) = previous
+		&& let Some((previous, _)) = objectives
+			.iter()
+			.find(|(_, objective)| objective.description == previous)
+	{
+		let objective = commands.spawn(Objective::new(description)).id();
+		commands.entity(previous).insert(NextObjective(objective));
+	} else {
+		commands.spawn((CurrentObjective, Objective::new(description)));
+	}
+}
+
+pub(crate) fn add_dialogue_objective_to_current(
+	In(description): In<String>,
+	mut commands: Commands,
+	current_objective: Option<Single<Entity, With<CurrentObjective>>>,
+) {
+	if let Some(objective) = current_objective {
+		commands.spawn((
+			Objective::new(description),
+			SubObjectiveOf {
+				objective: *objective,
+			},
+		));
+	}
+}
+
+pub(crate) fn complete_dialogue_objective(
+	In(description): In<String>,
+	mut commands: Commands,
+	objectives: Query<(Entity, &Objective)>,
+) {
+	if let Some((objective, _)) = objectives
+		.iter()
+		.find(|(_, objective)| objective.description == description)
+	{
+		commands.entity(objective).insert(ObjectiveCompleted);
+	}
+}
+
+pub(crate) fn get_dialogue_current_objective(
+	current_objective: Option<Single<&Objective, With<CurrentObjective>>>,
+) -> String {
+	current_objective
+		.map(|objective| objective.description.clone())
+		.unwrap_or_default()
 }
 
 fn update_current_objective(

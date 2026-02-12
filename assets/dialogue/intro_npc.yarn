@@ -1,5 +1,6 @@
 title: IntroNpc1
 ---
+<<complete_objective "Talk to employee No.1">>
 Jan: I wish I had a Visa, but they say it's blocked on BSN.
 Jan: The visa agency says they'd need to re-issue all the visas anyway, so might as well wait now, right?
 -> Oof
@@ -10,6 +11,7 @@ Jan: The visa agency says they'd need to re-issue all the visas anyway, so might
 
 title: IntroNpc2
 ---
+<<complete_objective "Talk to employee No.2">>
 Jannet: Scrolling the internet almost makes you wish for a Y2K.
 Jannet: ...
 Jannet: ...
@@ -18,20 +20,23 @@ Jannet: I should start estrogen.
 
 title: IntroNpc3
 ---
-Janbal: My friend tried to tell me about how burgers control the world.
-Janbal: But then LLManager made him go on holiday.
-Janbal: Said he had the "Proliterian Fever".
-Janbal: I miss him.
+<<complete_objective "Talk to employee No.3">>
+Janitor: My friend tried to tell me about how burgers control the world.
+Janitor: But then LLManager made him go on holiday.
+Janitor: Said he had the "Proliterian Fever".
+Janitor: I miss him.
 ===
 
 title: IntroNpc4
 ---
+<<complete_objective "Talk to employee No.4">>
 Janissary: I could be relaxing on a beach sipping on a cocktail of moonshine, speed, and managers tears...
 Janissary: But instead I computer.
 ===
 
 title: IntroNpc5
 ---
+<<complete_objective "Talk to employee No.5">>
 Janibal Lectern: I love computer.
 Janibal Lectern: It shows me coporate propoganda 24/7.
 Janibal Lectern: I want to become a propoganda maker when I grow up.
@@ -39,22 +44,36 @@ Janibal Lectern: I want to become a propoganda maker when I grow up.
 
 title: IntroNpc6
 ---
-// # TODO: Add bit that completes objective here.
-Jannick: I would go to a therapist but the last one I went to didn't understand exposure therapy.
-Jannick: I think he might have been hitting on me.
--> Happy birthday
-  <<set $birthday_celebrated = true>>
-  Jannick: He tried to take me out for dinner on my birthday.
-  Jannick: Said I was very special.
-  Jannick: Are you going to do that to.
-  -> No
-    Jannick: Then save your happy birthday.
-  -> Yes
-    Jannick: I'll be waiting under the big green sign.
+<<declare $birthday_celebrated = false>>
+
+<<if $birthday_celebrated == false>>
+  Jannick: I would go to a therapist but the last one I went to didn't understand exposure therapy.
+  Jannick: I think he might have been hitting on me.
+  -> Happy birthday
+    <<set $birthday_celebrated = true>>
+    <<complete_objective "Congratulate employee No.6">>
+    Jannick: He tried to take me out for dinner on my birthday.
+    Jannick: Said I was very special.
+    Jannick: Are you going to do that to.
+    -> No
+      <<set $date = false>>
+      Jannick: Then save your happy birthday.
+    -> Yes
+      <<set $date = true>>
+      Jannick: I'll be waiting under the big green sign.
+
+<<else>>
+  <<if $date == true>>
+    I can't wait for our date tonight.
+  <<else>>
+    Leave me alone, you don't even love me like he did.
+  <<endif>>
+<<endif>>
 ===
 
 title: IntroNpc7
 ---
+<<complete_objective "Talk to employee No.7">>
 Janderstülz: Last time I tried to say no to LLManager they sent me to Scunthorpe.
 Janderstülz: And like I don't have anything against the British, I just don't think they should be around kids.
 Janderstülz: Especially when they're drunk.
@@ -62,14 +81,15 @@ Janderstülz: Especially when they're drunk.
 
 title: IntroNpc8
 ---
+<<complete_objective "Talk to employee No.8">>
 Janthorpe: Janderstülz hates me.
 Janthorpe: He says he's not a racist, but all the racists say that.
 Janthorpe: I should know, I'm a racist too.
 ===
 
-
 title: IntroNpc9
 ---
+<<complete_objective "Talk to employee No.9">>
 Janniri: I used to be a tiler.
 Janniri: But then the market crashed when big concrete took over.
 Janniri: But I shouldn't complain, don't want to catch the Proletarian Fever
@@ -77,6 +97,7 @@ Janniri: But I shouldn't complain, don't want to catch the Proletarian Fever
 
 title: IntroNpc10
 ---
+<<complete_objective "Talk to employee No.10">>
 Jandice: I used to drink two bottles a day.
 Jandice: Then my doctor called me an alchololic.
 Jandice: Now I drink three bottles a day.
@@ -84,12 +105,14 @@ Jandice: Now I drink three bottles a day.
 
 title: IntroNpc11
 ---
+<<complete_objective "Talk to employee No.11">>
 Janateer: I swaped Jandice's vodka for water.
 Janateer: He can't tell the difference when he's drunk.
 ===
 
 title: IntroNpc12
 ---
+<<complete_objective "Talk to employee No.12">>
 John: Why did my parents name me this way.
 John: I just want to be normal.
 ===
