@@ -1,6 +1,5 @@
 title: IntroNpc1
 ---
-<<complete_objective "soc_1">>
 Jan: I wish I had a Visa, but they say it's blocked on BSN.
 Jan: The visa agency says they'd need to re-issue all the visas anyway, so might as well wait now, right?
 -> Oof
@@ -11,7 +10,6 @@ Jan: The visa agency says they'd need to re-issue all the visas anyway, so might
 
 title: IntroNpc2
 ---
-<<complete_objective "soc_2">>
 Jannet: Scrolling the internet almost makes you wish for a Y2K.
 Jannet: ...
 Jannet: ...
@@ -20,7 +18,6 @@ Jannet: I should start estrogen.
 
 title: IntroNpc3
 ---
-<<complete_objective "soc_3">>
 Janitor: My friend tried to tell me about how burgers control the world.
 Janitor: But then LLManager made him go on holiday.
 Janitor: Said he had the "Proliterian Fever".
@@ -29,14 +26,12 @@ Janitor: I miss him.
 
 title: IntroNpc4
 ---
-<<complete_objective "soc_4">>
 Janissary: I could be relaxing on a beach sipping on a cocktail of moonshine, speed, and managers tears...
 Janissary: But instead I computer.
 ===
 
 title: IntroNpc5
 ---
-<<complete_objective "soc_5">>
 Janibal Lectern: I love computer.
 Janibal Lectern: It shows me coporate propoganda 24/7.
 Janibal Lectern: I want to become a propoganda maker when I grow up.
@@ -51,7 +46,7 @@ title: IntroNpc6
   Jannick: I think he might have been hitting on me.
   -> Happy birthday
     <<set $birthday_celebrated = true>>
-    <<complete_objective "soc_6">>
+    <<complete_objective "soc_1">>
     Jannick: He tried to take me out for dinner on my birthday.
     Jannick: Said I was very special.
     Jannick: Are you going to do that to.
@@ -73,7 +68,6 @@ title: IntroNpc6
 
 title: IntroNpc7
 ---
-<<complete_objective "soc_7">>
 Janderstülz: Last time I tried to say no to LLManager they sent me to Scunthorpe.
 Janderstülz: And like I don't have anything against the British, I just don't think they should be around kids.
 Janderstülz: Especially when they're drunk.
@@ -81,7 +75,6 @@ Janderstülz: Especially when they're drunk.
 
 title: IntroNpc8
 ---
-<<complete_objective "soc_8">>
 Janthorpe: Janderstülz hates me.
 Janthorpe: He says he's not a racist, but all the racists say that.
 Janthorpe: I should know, I'm a racist too.
@@ -89,7 +82,6 @@ Janthorpe: I should know, I'm a racist too.
 
 title: IntroNpc9
 ---
-<<complete_objective "soc_9">>
 Janniri: I used to be a tiler.
 Janniri: But then the market crashed when big concrete took over.
 Janniri: But I shouldn't complain, don't want to catch the Proletarian Fever
@@ -97,7 +89,6 @@ Janniri: But I shouldn't complain, don't want to catch the Proletarian Fever
 
 title: IntroNpc10
 ---
-<<complete_objective "soc_10">>
 Jandice: I used to drink two bottles a day.
 Jandice: Then my doctor called me an alchololic.
 Jandice: Now I drink three bottles a day.
@@ -105,14 +96,12 @@ Jandice: Now I drink three bottles a day.
 
 title: IntroNpc11
 ---
-<<complete_objective "soc_11">>
 Janateer: I swaped Jandice's vodka for water.
 Janateer: He can't tell the difference when he's drunk.
 ===
 
 title: IntroNpc12
 ---
-<<complete_objective "soc_12">>
 John: Why did my parents name me this way.
 John: I just want to be normal.
 ===
