@@ -72,7 +72,7 @@ fn on_add(add: On<Add, Npc>, mut commands: Commands, assets: Res<AssetServer>) {
 				[CollisionLayer::Character, CollisionLayer::Dialog],
 				LayerMask::ALL,
 			),
-			enemy_htn(),
+			//enemy_htn(),
 		))
 		.with_child((
 			Name::new("Npc Model"),
