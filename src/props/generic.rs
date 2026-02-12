@@ -2,6 +2,7 @@ use std::time::Duration;
 
 use crate::{
 	asset_tracking::LoadResource,
+	audio::{SfxPool, SpatialPool},
 	gameplay::{
 		level::LevelAssets,
 		objectives::{CurrentObjective, Objective, ObjectiveCompleted, SubObjectives},
@@ -255,16 +256,20 @@ fn change_objective(
 		.find(|(_, ObjectiveEntity { targetname, .. })| targetname == "breakroom")
 	{
 		// TODO: Figure out why sound isn't playing
-		commands.spawn(SamplePlayer {
-			sample: level_assets.break_room_alarm.clone(),
-			repeat_mode: RepeatMode::RepeatMultiple {
-				num_times_to_repeat: 5,
+		commands.spawn((
+			SamplePlayer {
+				sample: level_assets.break_room_alarm.clone(),
+				repeat_mode: RepeatMode::RepeatMultiple {
+					num_times_to_repeat: 5,
+				},
+				..Default::default()
 			},
-			..Default::default()
-		});
+			SpatialPool,
+			Transform::from_xyz(7.0, 21., -2.),
+		));
 		commands.entity(entity).insert(ObjectiveCompleted);
 		commands.spawn((
-			Objective::new("Breaks over"),
+			Objective::new("Break's over"),
 			ObjectiveEntity {
 				targetname: "back_to_llm".into(),
 				..Default::default()
