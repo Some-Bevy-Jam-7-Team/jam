@@ -22,7 +22,11 @@ pub(super) fn plugin(app: &mut App) {
 		YarnSpinnerPlugin::with_yarn_sources(vec![
 			YarnFileSource::file("dialogue/intro_crt.yarn"),
 			YarnFileSource::file("dialogue/intro_npc.yarn"),
-		]),
+		])
+		.with_localizations(Localizations {
+			base_localization: "en".into(),
+			translations: vec![],
+		}),
 	));
 	app.add_systems(OnEnter(Screen::Gameplay), setup_dialogue_runner);
 	app.add_systems(

@@ -58,6 +58,7 @@ fn update_sensors(
 	}
 }
 
+#[expect(dead_code)]
 pub(crate) fn enemy_htn() -> impl Bundle {
 	(
 		EnemyAiState::default(),
