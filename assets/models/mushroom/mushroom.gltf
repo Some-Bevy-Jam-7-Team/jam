@@ -33,6 +33,9 @@
 			"doubleSided":true,
 			"name":"ArmorPaintMtl",
 			"pbrMetallicRoughness":{
+				"baseColorTexture":{
+					"index":0
+				},
 				"metallicFactor":0,
 				"roughnessFactor":0.949999988079071
 			}
@@ -80,6 +83,19 @@
 					"material":0
 				}
 			]
+		}
+	],
+	"textures":[
+		{
+			"sampler":0,
+			"source":0
+		}
+	],
+	"images":[
+		{
+			"mimeType":"image/png",
+			"name":"mushroom_base",
+			"uri":"mushroom_base.png"
 		}
 	],
 	"accessors":[
@@ -234,6 +250,12 @@
 			"byteLength":1232,
 			"byteOffset":14656,
 			"target":34962
+		}
+	],
+	"samplers":[
+		{
+			"magFilter":9729,
+			"minFilter":9987
 		}
 	],
 	"buffers":[
