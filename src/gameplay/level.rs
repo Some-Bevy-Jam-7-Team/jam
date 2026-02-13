@@ -24,7 +24,7 @@ use landmass_rerecast::{Island3dBundle, NavMeshHandle3d};
 pub(super) fn plugin(app: &mut App) {
 	app.load_resource::<LevelAssets>()
 		.init_asset::<LevelTwoAssets>()
-		.load_resource::<LevelThreeAssets>();
+		.init_asset::<LevelThreeAssets>();
 
 	app.add_observer(advance_level);
 	app.init_resource::<CurrentLevel>();
@@ -36,14 +36,15 @@ pub(crate) enum CurrentLevel {
 	DayOne,
 	DayTwo,
 	#[default]
-	DayThree,
+	Commune,
 }
 
 impl CurrentLevel {
 	pub(crate) fn next(&self) -> Self {
 		match self {
 			CurrentLevel::DayOne => CurrentLevel::DayTwo,
-			CurrentLevel::DayTwo => CurrentLevel::DayOne,
+			CurrentLevel::DayTwo => CurrentLevel::Commune,
+			CurrentLevel::Commune => CurrentLevel::DayOne,
 		}
 	}
 }
@@ -158,7 +159,7 @@ pub(crate) fn spawn_level(
 				},
 			));
 		}
-		CurrentLevel::DayThree => {
+		CurrentLevel::Commune => {
 			let level_three_assets = level_three_assets.expect("If we don't have level three assets when spawning level three, we're in deep shit. Sorry player, we bail here.");
 			commands.spawn((
 				Name::new("Level"),
@@ -296,7 +297,8 @@ fn advance_level(
 ) {
 	match *current_level {
 		CurrentLevel::DayOne => commands.queue(advance_level_command::<LevelTwoAssets>()),
-		CurrentLevel::DayTwo => commands.queue(advance_level_command::<LevelAssets>()),
+		CurrentLevel::DayTwo => commands.queue(advance_level_command::<LevelThreeAssets>()),
+		CurrentLevel::Commune => commands.queue(advance_level_command::<LevelAssets>()),
 	};
 }
 
