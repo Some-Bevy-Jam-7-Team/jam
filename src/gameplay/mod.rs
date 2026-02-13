@@ -24,6 +24,8 @@ pub(crate) mod scatter;
 pub(crate) mod scripting;
 pub(crate) mod stomach;
 
+pub(crate) mod fever;
+
 pub(super) fn plugin(app: &mut App) {
 	app.init_resource::<TargetnameEntityIndex>().add_plugins((
 		scripting::plugin,
@@ -40,6 +42,7 @@ pub(super) fn plugin(app: &mut App) {
 		core::plugin,
 		interaction::plugin,
 		hud::plugin,
+		fever::plugin,
 	));
 }
 

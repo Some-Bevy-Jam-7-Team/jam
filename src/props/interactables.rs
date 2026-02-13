@@ -45,6 +45,15 @@ impl InteractableEntity {
 		}
 	}
 
+	pub fn new_from_text(text: String) -> Self {
+		InteractableEntity {
+			is_edible: false,
+			interaction_text_override: Some(text),
+			completes_subobjective: None,
+			interaction_relay: None,
+		}
+	}
+
 	/// Gets a string roughly representing the action of this entity.
 	///
 	pub fn get_hover_text(&self) -> Option<&str> {

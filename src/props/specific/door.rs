@@ -8,7 +8,8 @@ use bevy_trenchbroom::prelude::*;
 
 use crate::{
 	asset_tracking::LoadResource as _,
-	gameplay::TargetName,
+	gameplay::{TargetName, interaction::InteractEvent, player::camera::PlayerCameraParent},
+	props::interactables::InteractableEntity,
 	reflection::ReflAppExt,
 	screens::Screen,
 	third_party::bevy_trenchbroom::{GetTrenchbroomModelPath as _, LoadTrenchbroomModel as _},
@@ -16,11 +17,15 @@ use crate::{
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_observer(setup_door);
+	app.add_observer(interact_with_door);
 	app.add_systems(Update, update_door_locks);
 	app.load_asset::<Gltf>(Door::model_path());
 
 	app.register_dynamic_component::<Door>();
 }
+
+#[derive(Component)]
+struct DoorPanel;
 
 #[point_class(
 	base(TargetName, Transform, Visibility),
@@ -78,6 +83,8 @@ fn setup_door(add: On<Add, Door>, asset_server: Res<AssetServer>, mut commands: 
 					.remove::<ChildOf>()
 					.insert((
 						RigidBody::Dynamic,
+						DoorPanel,
+						InteractableEntity::new_from_text("Clopen".to_string()),
 						ExcludeColliderFromNavmesh,
 						Transform::from(global_transform),
 						DespawnOnExit(Screen::Gameplay),
@@ -118,7 +125,11 @@ fn setup_door(add: On<Add, Door>, asset_server: Res<AssetServer>, mut commands: 
 						.with_anchor(
 							global_transform.translation() - 0.425 * global_transform.right(),
 						)
-						.with_limit_compliance(1e-6),
+						.with_limit_compliance(1e-6)
+						.with_motor(AngularMotor::new_disabled(MotorModel::SpringDamper {
+							frequency: 1.5,
+							damping_ratio: 1.0,
+						})),
 					JointDamping {
 						angular: 10.0,
 						..default()
@@ -128,6 +139,82 @@ fn setup_door(add: On<Add, Door>, asset_server: Res<AssetServer>, mut commands: 
 				));
 			},
 		);
+}
+
+/// Computes the current hinge angle of a revolute joint from the body rotations.
+fn joint_angle(joint: &RevoluteJoint, rot1: Quat, rot2: Quat) -> f32 {
+	let basis1 = joint.local_basis1().unwrap_or(Quat::IDENTITY);
+	let basis2 = joint.local_basis2().unwrap_or(Quat::IDENTITY);
+
+	let a1 = rot1 * basis1 * joint.hinge_axis;
+	let b1 = rot1 * basis1 * joint.hinge_axis.any_orthonormal_vector();
+	let b2 = rot2 * basis2 * joint.hinge_axis.any_orthonormal_vector();
+
+	let sin_angle = b1.cross(b2).dot(a1);
+	let cos_angle = b1.dot(b2);
+	sin_angle.atan2(cos_angle)
+}
+
+/// Threshold in radians (~6 degrees) below which the door is considered closed.
+const DOOR_CLOSED_THRESHOLD: f32 = 0.1;
+
+fn interact_with_door(
+	trigger: On<InteractEvent>,
+	mut door_query: Query<&Transform, With<DoorPanel>>,
+	cam: Single<&GlobalTransform, With<PlayerCameraParent>>,
+	mut forces_query: Query<Forces>,
+	joint_graph: Res<JointGraph>,
+	mut joints: Query<&mut RevoluteJoint>,
+	global_transforms: Query<&GlobalTransform>,
+) {
+	let entity = trigger.0;
+	let Ok(door_transform) = door_query.get_mut(entity) else {
+		return;
+	};
+
+	// Compute the current joint angle to determine if the door is open or closed.
+	let mut current_angle = 0.0f32;
+	for edge in joint_graph.joints_of(entity) {
+		let Ok(joint) = joints.get(edge.entity) else {
+			continue;
+		};
+		let (Ok(gt1), Ok(gt2)) = (
+			global_transforms.get(joint.body1),
+			global_transforms.get(joint.body2),
+		) else {
+			continue;
+		};
+		current_angle = joint_angle(joint, gt1.rotation(), gt2.rotation());
+		break;
+	}
+
+	if current_angle.abs() > DOOR_CLOSED_THRESHOLD {
+		// Door is open: enable spring motor and apply closing impulse.
+		for edge in joint_graph.joints_of(entity) {
+			if let Ok(mut joint) = joints.get_mut(edge.entity) {
+				joint.motor.enabled = true;
+			}
+		}
+		let torque_sign = if current_angle > 0.0 { -1.0 } else { 1.0 };
+		if let Ok(mut forces) = forces_query.get_mut(entity) {
+			forces.apply_angular_impulse(Vec3::Y * torque_sign * 4000.0);
+		}
+	} else {
+		// Door is closed: disable motor, apply impulse away from player.
+		for edge in joint_graph.joints_of(entity) {
+			if let Ok(mut joint) = joints.get_mut(edge.entity) {
+				joint.motor.enabled = false;
+			}
+		}
+
+		let to_player = cam.translation() - door_transform.translation;
+		let side = to_player.dot(door_transform.forward().into());
+		let torque_sign = if side > 0.0 { -1.0 } else { 1.0 };
+
+		if let Ok(mut forces) = forces_query.get_mut(entity) {
+			forces.apply_angular_impulse(Vec3::Y * torque_sign * 4000.0);
+		}
+	}
 }
 
 fn update_door_locks(
