@@ -88,10 +88,11 @@ fn fragment(in: FullscreenVertexOutput) -> @location(0) vec4<f32> {
     // Motion
     let motion_mask = smoothstep(0.0, 0.02, velocity) * 0.5 * fever;
 
+    // Combine
     let mask = max(vignette, depth_mask);
     let base_color = textureSample(screen_texture, texture_sampler, in.uv);
-
     let mix_factor = clamp((fever + motion_mask) * mask * settings.intensity, 0.0, 1.0);
+
     return vec4<f32>(mix(base_color.rgb, pattern, mix_factor), 1.0);
 }
 
