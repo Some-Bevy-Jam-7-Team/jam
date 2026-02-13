@@ -42,6 +42,7 @@ pub(super) fn plugin(app: &mut App) {
 	app.add_observer(scatter_extended);
 	app.add_observer(scatter_instanced);
 	app.add_observer(scattered_shroom);
+	app.add_observer(on_scatter_done);
 	app.add_systems(
 		Update,
 		(
@@ -53,6 +54,7 @@ pub(super) fn plugin(app: &mut App) {
 		Update,
 		advance_to_gameplay_screen.run_if(in_state(LoadingScreen::Level)),
 	);
+	app.init_resource::<ScatterDoneProbably>();
 }
 
 pub fn spawn_grass(mut cmd: Commands, landscape: Single<Entity, With<Landscape>>) {
@@ -107,11 +109,15 @@ fn advance_to_gameplay_screen(
 	just_added_scenes: Query<(), (With<SceneRoot>, Without<SceneInstance>)>,
 	just_added_meshes: Query<(), Added<Mesh3d>>,
 	nav_mesh_events: MessageReader<AssetEvent<NavMesh<ThreeD>>>,
+	scatter_done: Res<ScatterDoneProbably>,
 ) {
 	if !(just_added_meshes.is_empty() && just_added_scenes.is_empty()) {
 		return;
 	}
 	if !nav_mesh_events.is_empty() {
+		return;
+	}
+	if !scatter_done.0 {
 		return;
 	}
 
@@ -121,4 +127,15 @@ fn advance_to_gameplay_screen(
 		}
 	}
 	next_screen.set(Screen::Gameplay);
+}
+
+#[derive(Resource, Reflect, Debug, Default, Clone, Copy, Deref, DerefMut)]
+#[reflect(Resource)]
+struct ScatterDoneProbably(bool);
+
+fn on_scatter_done(
+	_done: On<ScatterFinished<InstancedWindAffectedMaterial>>,
+	mut scatter_done: ResMut<ScatterDoneProbably>,
+) {
+	scatter_done.0 = true;
 }
