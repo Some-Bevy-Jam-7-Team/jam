@@ -413,11 +413,10 @@ fn interact_teleport(
 		if let Some(targetname) = &teleport.teleport_target {
 			for &entity in entity_index.get_entity_by_targetname(targetname) {
 				if let Ok((_, mut transform, position)) = transform_query.get_mut(entity) {
-					transform.translation = teleport_transform.translation();
-					position_mutator(&mut transform.translation);
 					if let Some(mut x) = position {
-						**x = teleport_transform.translation();
 						position_mutator(&mut x);
+					} else {
+						position_mutator(&mut transform.translation);
 					}
 				}
 			}
@@ -425,11 +424,10 @@ fn interact_teleport(
 		if teleport.teleport_player {
 			if let Some(player_entity) = player_query {
 				if let Ok((_, mut transform, position)) = transform_query.get_mut(*player_entity) {
-					transform.translation = teleport_transform.translation();
-					position_mutator(&mut transform.translation);
 					if let Some(mut x) = position {
-						**x = teleport_transform.translation();
 						position_mutator(&mut x);
+					} else {
+						position_mutator(&mut transform.translation);
 					}
 				}
 			}
