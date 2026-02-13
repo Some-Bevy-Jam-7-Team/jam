@@ -1,5 +1,5 @@
 use avian3d::prelude::{
-	CollisionEnd, CollisionEventsEnabled, CollisionLayers, CollisionStart, Sensor,
+	CollisionEnd, CollisionEventsEnabled, CollisionLayers, CollisionStart, Position, Sensor
 };
 use bevy::{
 	ecs::{lifecycle::HookContext, world::DeferredWorld},
