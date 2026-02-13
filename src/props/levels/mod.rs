@@ -1,8 +1,8 @@
 use crate::audio::SpatialPool;
 use crate::gameplay::TargetName;
 use crate::gameplay::interaction::InteractEvent;
-use crate::props::logic_entity::SensorEntity;
 use crate::gameplay::objectives::*;
+use crate::props::logic_entity::SensorEntity;
 use avian3d::prelude::*;
 use bevy::ecs::error::Result;
 use bevy::prelude::*;

@@ -40,7 +40,7 @@ fn interact_by_input_action(
 			let objective_name = interactable.get_completes_subobjective();
 			let targets = relay_name
 				.into_iter()
-				.chain(objective_name.into_iter())
+				.chain(objective_name)
 				.flat_map(|targetname| entity_map.get_entity_by_targetname(targetname).iter())
 				.copied()
 				.collect::<HashSet<Entity>>();

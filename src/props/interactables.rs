@@ -5,10 +5,7 @@ use bevy::{
 
 use bevy_trenchbroom::prelude::*;
 
-use crate::{
-	gameplay::stomach::EdibleProp,
-	reflection::ReflAppExt,
-};
+use crate::{gameplay::stomach::EdibleProp, reflection::ReflAppExt};
 
 pub(super) fn plugin(app: &mut App) {
 	app.register_dynamic_component::<InteractableEntity>();
