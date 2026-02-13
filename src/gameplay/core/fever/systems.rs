@@ -2,6 +2,11 @@ use bevy::prelude::*;
 
 use crate::gameplay::core::*;
 
+#[derive(EntityEvent)]
+pub struct FeverTick {
+	pub entity: Entity,
+}
+
 pub fn source(
 	time: Res<Time>,
 	q_fever_source: Query<&FeverSource>,
@@ -52,6 +57,8 @@ pub fn fever(
 		if !timer.is_finished() {
 			continue;
 		}
+
+		cmd.trigger(FeverTick { entity });
 
 		// Remove when UI exists
 		println!("fever:{:?}, health:{:?}", temp, health);
