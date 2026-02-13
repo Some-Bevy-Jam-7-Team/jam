@@ -2,6 +2,7 @@ use crate::gameplay::core::fever::systems::FeverTick;
 use crate::gameplay::core::{
 	BaseTemperature, Fever, MaxTemperature, Temperature, TemperatureThreshold,
 };
+use bevy::core_pipeline::prepass::ViewPrepassTextures;
 use bevy::render::globals::{GlobalsBuffer, GlobalsUniform};
 use bevy::window::PrimaryWindow;
 use bevy::{
@@ -83,7 +84,7 @@ impl ViewNode for FeverPostProcessNode {
 
 	fn run(
 		&self,
-		_graph: &mut RenderGraphContext,
+		graph: &mut RenderGraphContext,
 		render_context: &mut RenderContext,
 		(view_target, _post_process_settings, settings_index): QueryItem<Self::ViewQuery>,
 		world: &World,
@@ -106,6 +107,19 @@ impl ViewNode for FeverPostProcessNode {
 			return Ok(());
 		};
 
+		let prepass_textures = world.get::<ViewPrepassTextures>(graph.view_entity());
+		let depth_view = prepass_textures
+			.and_then(|p| p.depth.as_ref())
+			.map(|t| &t.texture.default_view);
+
+		let motion_view = prepass_textures
+			.and_then(|p| p.motion_vectors.as_ref())
+			.map(|t| &t.texture.default_view);
+
+		let (Some(depth), Some(motion)) = (depth_view, motion_view) else {
+			return Ok(());
+		};
+
 		let post_process = view_target.post_process_write();
 		let bind_group = render_context.render_device().create_bind_group(
 			"post_process_bind_group",
@@ -115,6 +129,8 @@ impl ViewNode for FeverPostProcessNode {
 				&post_process_pipeline.sampler,
 				settings_binding.clone(),
 				globals_binding.clone(),
+				depth,
+				motion,
 			)),
 		);
 
@@ -162,6 +178,8 @@ fn init_post_process_pipeline(
 				sampler(SamplerBindingType::Filtering),
 				uniform_buffer::<FeverPostProcessSettings>(true),
 				uniform_buffer::<GlobalsUniform>(false),
+				texture_2d(TextureSampleType::Depth),
+				texture_2d(TextureSampleType::Float { filterable: false }),
 			),
 		),
 	);

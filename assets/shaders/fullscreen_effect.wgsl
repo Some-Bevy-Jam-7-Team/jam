@@ -12,26 +12,39 @@ struct FeverPostProcessSettings {
 @group(0) @binding(0) var screen_texture: texture_2d<f32>;
 @group(0) @binding(1) var texture_sampler: sampler;
 @group(0) @binding(2) var<uniform> settings: FeverPostProcessSettings;
+
 @group(0) @binding(3) var<uniform> globals: Globals;
+@group(0) @binding(4) var depth_texture: texture_depth_2d;
+@group(0) @binding(5) var motion_texture: texture_2d<f32>;
 
 @fragment
 fn fragment(in: FullscreenVertexOutput) -> @location(0) vec4<f32> {
     // Reference: https://www.shadertoy=.com/view/fdS3Dy
 
-    let color = textureSample(screen_texture, texture_sampler, in.uv);
-    let resolution = settings.resolution;
+    // Filtered heavy textures, need to use textureLoad for depth/motion raw data
+    let dims = vec2<f32>(textureDimensions(screen_texture));
+    let coords = vec2<i32>(in.uv * dims);
+
     let time = globals.time;
+    let resolution = settings.resolution;
+    let fever = clamp(settings.fever + settings.damage_indicator, 0.0, 1.0);
+
+    // Motion setup
+    let motion = textureLoad(motion_texture, coords, 0).xy;
+    let motion_warp = motion * 10.0 * settings.fever;
 
     // Convert UV to pixel coordinates
     let frag_coord = in.uv * resolution.xy;
 
     // Center coordinates
-    var coord = frag_coord - (resolution.xy * 0.5);
+    var coord = frag_coord - (resolution.xy * 0.5) + motion_warp;
     let x = coord.x;
     let y = coord.y;
 
-    // Time modulation
-    let j_time = glsl_mod(4.0 * sin(0.5 * time), 261.8) + 4.0;
+    // Time modulation with speed
+    let velocity = length(motion);
+    let motion_flash = velocity * 100.0 * fever;
+    let j_time = glsl_mod(4.0 * sin(0.5 * (time + motion_flash)), 261.8) + 4.0;
     coord *= pow(1.1, j_time);
 
     // Radial distances
@@ -60,20 +73,27 @@ fn fragment(in: FullscreenVertexOutput) -> @location(0) vec4<f32> {
     let value = fract(f32(e) * 0.000003);
     let kaleidoscope = hsv2rgb(vec3<f32>(value + time * 0.6, 0.6, 0.6));
 
-    // Fever tint
-    let fever_tint = vec3<f32>(1.0, 0.0, 0.0);
-    let pattern = mix(kaleidoscope, fever_tint, 0.6);
+    // Tint
+    let tint = vec3<f32>(1.0, 0.0, 0.0);
+    let pattern = mix(kaleidoscope, tint, 0.6);
 
     // Vignette
     let dist = distance(in.uv, vec2<f32>(0.5));
     let vignette = smoothstep(0.2, 0.8, dist);
 
-    // Combine Fever and Damage into a single intensity value,
-    // tweaking the dmg indicator manually for now
-    let intensity = (settings.fever + (settings.damage_indicator * 0.5)) * settings.intensity;
-    let mix_factor = clamp(intensity * vignette, 0.0, 1.0);
+    // Depth
+    let depth = textureLoad(depth_texture, coords, 0);
+    let depth_mask = smoothstep(0.0, 0.1, depth);
 
-    return vec4<f32>(mix(color.rgb, pattern, mix_factor), 1.0);
+    // Motion
+    let motion_mask = smoothstep(0.0, 0.02, velocity) * 0.5 * fever;
+
+    // Combine
+    let mask = max(vignette, depth_mask);
+    let base_color = textureSample(screen_texture, texture_sampler, in.uv);
+    let mix_factor = clamp((fever + motion_mask) * mask * settings.intensity, 0.0, 1.0);
+
+    return vec4<f32>(mix(base_color.rgb, pattern, mix_factor), 1.0);
 }
 
 fn glsl_mod(a: f32, b: f32) -> f32 {
