@@ -8,6 +8,7 @@ use bevy::prelude::*;
 mod animation;
 pub(crate) mod core;
 pub(crate) mod crosshair;
+mod machine_activation;
 pub(crate) mod dialogue_view;
 pub(crate) mod hud;
 pub(crate) mod interaction;
@@ -33,5 +34,6 @@ pub(super) fn plugin(app: &mut App) {
 		core::plugin,
 		interaction::plugin,
 		hud::plugin,
+		machine_activation::plugin,
 	));
 }
