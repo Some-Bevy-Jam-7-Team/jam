@@ -163,7 +163,7 @@ fn tick_timers(
 			if timer.timer_elapsed >= timer.timer_length {
 				timer_activated = true;
 				if timer.timer_repeating {
-					if timer.timer_length.is_sign_positive() && timer.timer_length.is_finite() {
+					if timer.timer_length > 0.0 && timer.timer_length.is_finite() {
 						timer.timer_elapsed =
 							f32::rem_euclid(timer.timer_elapsed, timer.timer_length);
 						if timer.timer_elapsed >= timer.timer_length {

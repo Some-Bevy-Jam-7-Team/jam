@@ -61,7 +61,7 @@ pub(crate) struct PlayerCameraParent;
 #[require(Transform, Visibility, PhysicsPickingCamera {
 	max_distance: INTERACTION_DISTANCE,
 }, PhysicsPickingFilter(SpatialQueryFilter::from_mask(!CollisionLayer::Stomach.to_bits() & !CollisionLayer::PlayerCharacter.to_bits())))]
-struct WorldModelCamera;
+pub(crate) struct WorldModelCamera;
 
 fn spawn_view_model(
 	add: On<Add, Player>,
