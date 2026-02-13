@@ -125,9 +125,18 @@ impl FromWorld for LevelAssets {
 			rocks: assets.load("models/rocks/rocks_low_lod.gltf#Scene0"),
 			rocks_med: assets.load("models/rocks/rocks_low_lod.gltf#Scene0"),
 			rocks_low: assets.load("models/rocks/rocks_low_lod.gltf#Scene0"),
+			#[cfg(feature = "dev")]
 			grass_density_map: assets.load("textures/density_map.png"),
+			#[cfg(feature = "release")]
+			grass_density_map: assets.load("textures/density_map.ktx2"),
+			#[cfg(feature = "dev")]
 			rock_density_map: assets.load("textures/rock_density_map.png"),
+			#[cfg(feature = "release")]
+			rock_density_map: assets.load("textures/rock_density_map.ktx2"),
+			#[cfg(feature = "dev")]
 			mushroom_density_map: assets.load("textures/mushroom_density_map.png"),
+			#[cfg(feature = "release")]
+			mushroom_density_map: assets.load("textures/mushroom_density_map.ktx2"),
 			mushroom: assets.load("models/mushroom/mushroom.gltf#Scene0"),
 			music: assets.load("audio/music/corpo slop to eat your computer to.ogg"),
 			break_room_alarm: assets.load("audio/sound_effects/mental_health_alarm.ogg"),
