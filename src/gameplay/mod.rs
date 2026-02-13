@@ -18,6 +18,8 @@ pub(crate) mod player;
 pub(crate) mod scatter;
 pub(crate) mod stomach;
 
+pub(crate) mod fever;
+
 pub(super) fn plugin(app: &mut App) {
 	app.add_plugins((
 		animation::plugin,
@@ -33,5 +35,6 @@ pub(super) fn plugin(app: &mut App) {
 		core::plugin,
 		interaction::plugin,
 		hud::plugin,
+		fever::plugin,
 	));
 }

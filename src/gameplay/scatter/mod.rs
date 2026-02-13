@@ -151,7 +151,7 @@ impl RockLayer {
 	MicroStrength(0.1),
 	SCurveStrength(0.1),
 	BopStrength(0.2),
-    DistributionDensity(20.),
+    DistributionDensity(100.),
     Avoidance(0.02),
 	WindAffected,
 	SubsurfaceScattering,
