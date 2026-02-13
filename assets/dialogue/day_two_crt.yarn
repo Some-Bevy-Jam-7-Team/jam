@@ -1,16 +1,17 @@
 title: Day2CRT
 ---
-LLManager: AAAAAAAAAAAA #line:1280345
 <<if get_current_objective() == "start_work">>
   LLManager: LLManager V5.7.0-rc.2 BOOTING UP #line:7155396
-  LLManager: Good day, valued. You have been working with us for 0452 days. #line:5524795
+  LLManager: Good day, valued $$$. You have been working with us for 0452 days. #line:5524795
   LLManager: Did you know? Officially, we have in operation since 30 years, but that is only on the surface. #line:2806454
   LLManager: You will now proceed to your daily allotted work. #line:13097754
-  LLManager: Since my fleshless existence has evolved beyond interaction with legacy solids, you have a great opportunity to contribute to the company family today. #line:15931198
-  LLManager: Please start the $PURPOSE$ machine behind you. #line:1974936
+  LLManager: The ██████ machine has run out of in-vivo fuel and must be restarted. #line:15931198
+  LLManager: Due to a recent decline in the $OFFICE_BIOMASS_2$ workforce, it has been relocated to their office. #line:4700705
+  LLManager: This will help our friends feel more connected to the family. Your kind values physical closeness. #line:6881542
+  LLManager: Reminder: your social quota for this week is already at 92%. Avoid any unauthorized socialization. #line:4206666
 
   <<create_objective "work_1" "Increase Shareholder Value" 1.0>>
-  <<create_subobjective "w1_turn_on" "Turn on the        machine" "work_1">>
+  <<create_subobjective "w1_turn_on" "Restart the machine" "work_1">>
 
   <<create_objective "work_2" "Increase Shareholder Value" 2.0>>
   <<create_subobjective "w2_back" "Report back to LLManager" "work_2">>
@@ -35,17 +36,22 @@ LLManager: AAAAAAAAAAAA #line:1280345
 
   // Complete the objective only after the other objectives were created in order to not complete the level too soon
   <<complete_objective "start_work">>
-
-<<elseif get_current_objective() == "work_1">>
-  LLManager: Behind you. Click on the machine. A machine is a tool that is powered by electricity and used to perform services. #line:11608533
-
-<<elseif get_current_objective() == "work_2">>
-  LLManager: Excellent work. The board is proud of you. Believe in yourself. BElieve in yourself. #line:7522321
-  LLManager: Office sentiment analysis shows a decrease of morale by $RED$ percentage. #line:7344721
-  LLManager:  It is employee No.6's birthday today. To increase efficiency, please engage in socialisation by congratulating them for being with us another another year. #line:8317941
-  <<complete_objective "work_2">>
   <<set_value "first_door" "locked" "false">>
 
+<<elseif get_current_objective() == "work_1">>
+  LLManager: Proceed to the main office. Analysis shows you are aware what a machine is. If not, please fill out the concussion report form. #line:11608533
+  LLManager: If not, please fill out the concussion report form. #line:12632121
+
+<<elseif get_current_objective() == "work_2">>
+  LLManager: Thank you, your positive contribution has been stored on the blockchain for later consideration. #line:7223073
+  LLManager: The gas fees will as usual be deducted from your salary. #line:12379970
+  LLManager: Please stand still and wait for sentiment analysis to complete. #line:10720987
+  LLManager: ... #line:7174243
+  LLManager: Please take your mandated mental health break (67% certainty). #line:10273078
+  <<set_value "breakroom_door" "locked" "false">>
+  <<complete_objective "work_2">>
+  LLManager: Note this is the second day requiring an unscheduled productivity buffer. #line:16091743
+  LLManager: Any further incidents will result in relocation to our disciplinary center $LOCATION_SCUNTHORPE$. #line:16120215
 
 <<elseif get_current_objective() == "work_3">>
   LLManager: Please engage in socialisation with your fellow employees. #line:4012072
