@@ -7,6 +7,7 @@ use bevy_trenchbroom::prelude::*;
 use crate::{
 	asset_tracking::LoadResource as _,
 	gameplay::{TargetName, core::*},
+	props::interactables::InteractableEntity,
 	third_party::{
 		avian3d::CollisionLayer,
 		bevy_trenchbroom::{GetTrenchbroomModelPath as _, LoadTrenchbroomModel as _},
@@ -19,7 +20,7 @@ pub(super) fn plugin(app: &mut App) {
 }
 
 #[point_class(
-	base(TargetName, Transform, Visibility),
+	base(TargetName, Transform, Visibility, InteractableEntity),
 	model("models/darkmod/furniture/seating/wchair1.gltf")
 )]
 pub(crate) struct Chair;

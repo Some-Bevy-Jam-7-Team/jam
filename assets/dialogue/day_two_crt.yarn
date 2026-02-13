@@ -17,22 +17,16 @@ title: Day2CRT
   <<create_subobjective "w2_back" "Report back to LLManager" "work_2">>
 
   <<create_objective "work_3" "Increase Shareholder Value" 3.0>>
-  <<create_subobjective "w3_soc" "Congratulate employee No.6" "work_3">>
+  <<create_subobjective "w3_break" "Take a mental health break." "work_3">>
 
   <<create_objective "work_4" "Increase Shareholder Value" 4.0>>
-  <<create_subobjective "w4_back" "Report back to LLManager" "work_4">>
+  <<create_subobjective "w4_eat" "Take a seat." "work_4">>
 
-  <<create_objective "work_5" "Increase Shareholder Value" 5.0>>
-  <<create_subobjective "w5_break" "Take a mental health break." "work_5">>
+  <<create_objective "work_5" "Increase Psychological Value" 5.0>>
+  <<create_subobjective "w5_look" "In a literal sense, consumption makes the world become one with you." "work_5">>
 
   <<create_objective "work_6" "Increase Shareholder Value" 6.0>>
-  <<create_subobjective "w6_eat" "Eat the provided snack on the table to allow your body to perform cellular respiration. Cellular respiration is the process of oxidizing biological fuels using an inorganic electron acceptor, such as oxygen, to drive production of adenosine triphosphate (ATP), which stores chemical energy in a biologically accessible form. Cellular respiration may be described as a set of metabolic reactions and processes that take place in the cells to transfer chemical energy from nutrients to ATP, with the flow of electrons to an electron acceptor, and then release waste products. To learn more, visit wikipedia.org, the free online encyclopedia." "work_6">>
-
-  <<create_objective "work_7" "Increase Shareholder Value" 7.0>>
-  <<create_subobjective "w7_look" "Take a moment to unwind. Enjoy the moment." "work_7">>
-
-  <<create_objective "work_8" "Increase Shareholder Value" 8.0>>
-  <<create_subobjective "w8_back" "Break time is over. Report back to LLManager" "work_8">>
+  <<create_subobjective "w6_back" "Break time is over. Report back to LLManager." "work_6">>
 
   // Complete the objective only after the other objectives were created in order to not complete the level too soon
   <<complete_objective "start_work">>
@@ -54,8 +48,9 @@ title: Day2CRT
   LLManager: Any further incidents will result in relocation to our disciplinary center $LOCATION_SCUNTHORPE$. #line:16120215
 
 <<elseif get_current_objective() == "work_3">>
-  LLManager: Please engage in socialisation with your fellow employees. #line:4012072
-<<elseif get_current_objective() == "work_4">>
+  LLManager: Please do not extend your mandated mental health break without prior approval. #line:10540699
+
+<<elseif get_current_objective() == "work_6">>
   LLManager: Well done, you have engaged in productivity boosting activities. #line:15823908
   LLManager: Please stand still and wait for sentiment analysis to complete. #line:7477901
   LLManager: ... #line:3205990
