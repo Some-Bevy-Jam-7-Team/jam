@@ -1,13 +1,13 @@
 //! Spawn the main level.
 
+use crate::gameplay::scatter::Landscape;
+use crate::third_party::avian3d::CollisionLayer;
 use crate::{
-	asset_tracking::LoadResource,
-	audio::MusicPool,
-	gameplay::{npc::NPC_RADIUS, objectives::Objective},
-	props::logic_entity::ObjectiveEntity,
-	screens::Screen,
+	asset_tracking::LoadResource, audio::MusicPool, gameplay::npc::NPC_RADIUS, screens::Screen,
 };
+use avian3d::prelude::*;
 use bevy::prelude::*;
+use bevy_feronia::prelude::*;
 use bevy_landmass::prelude::*;
 use bevy_rerecast::prelude::*;
 use bevy_seedling::prelude::*;
@@ -22,22 +22,32 @@ pub(super) fn plugin(app: &mut App) {
 /// A system that spawns the main level.
 pub(crate) fn spawn_level(mut commands: Commands, level_assets: Res<LevelAssets>) {
 	commands.spawn((
-		Objective::new("Clock In"),
-		ObjectiveEntity {
-			targetname: "start_work".into(),
-			..Default::default()
-		},
-	));
-
-	commands.spawn((
-		Name::new("Level"),
-		SceneRoot(level_assets.level.clone()),
-		DespawnOnExit(Screen::Gameplay),
-		Level,
+		Landscape,
+		ScatterRoot::default(),
+		ChunkRoot::default(),
+		MapHeight,
 		children![(
-			Name::new("Level Music"),
-			SamplePlayer::new(level_assets.music.clone()).looping(),
-			MusicPool
+			Name::new("Level"),
+			SceneRoot(level_assets.level.clone()),
+			DespawnOnExit(Screen::Gameplay),
+			Level,
+			children![
+				(
+					Name::new("Level Music"),
+					SamplePlayer::new(level_assets.music.clone()).looping(),
+					MusicPool
+				),
+				(
+					RigidBody::Static,
+					SceneRoot(level_assets.landscape.clone()),
+					ColliderConstructorHierarchy::new(ColliderConstructor::ConvexHullFromMesh)
+						.with_default_layers(CollisionLayers::new(
+							CollisionLayer::Default,
+							LayerMask::ALL,
+						))
+						.with_default_density(1_000.0)
+				),
+			]
 		)],
 	));
 
@@ -69,12 +79,33 @@ pub(crate) struct Level;
 #[derive(Resource, Asset, Clone, TypePath)]
 pub(crate) struct LevelAssets {
 	#[dependency]
+	pub(crate) landscape: Handle<Scene>,
+	#[dependency]
 	pub(crate) level: Handle<Scene>,
 	#[dependency]
 	pub(crate) navmesh: Handle<Navmesh>,
 	#[dependency]
 	pub(crate) music: Handle<AudioSample>,
 	#[dependency]
+	pub(crate) grass: Handle<Scene>,
+	#[dependency]
+	pub(crate) grass_med: Handle<Scene>,
+	#[dependency]
+	pub(crate) grass_low: Handle<Scene>,
+	#[dependency]
+	pub(crate) rocks: Handle<Scene>,
+	#[dependency]
+	pub(crate) rocks_med: Handle<Scene>,
+	#[dependency]
+	pub(crate) rocks_low: Handle<Scene>,
+	#[dependency]
+	pub(crate) grass_density_map: Handle<Image>,
+	#[dependency]
+	pub(crate) rock_density_map: Handle<Image>,
+	#[dependency]
+	pub(crate) mushroom: Handle<Scene>,
+	#[dependency]
+	pub(crate) mushroom_density_map: Handle<Image>,
 	pub(crate) break_room_alarm: Handle<AudioSample>,
 }
 
@@ -87,6 +118,17 @@ impl FromWorld for LevelAssets {
 			level: assets.load("maps/main/one/one.map#Scene"),
 			// You can regenerate the navmesh by using `bevy_rerecast_editor`
 			navmesh: assets.load("maps/main/one/one.nav"),
+			landscape: assets.load("models/landscape/landscape_flat_large.gltf#Scene0"),
+			grass: assets.load("models/grass/grass.gltf#Scene0"),
+			grass_med: assets.load("models/grass/grass_medium_lod.gltf#Scene0"),
+			grass_low: assets.load("models/grass/grass_low_lod.gltf#Scene0"),
+			rocks: assets.load("models/rocks/rocks_low_lod.gltf#Scene0"),
+			rocks_med: assets.load("models/rocks/rocks_low_lod.gltf#Scene0"),
+			rocks_low: assets.load("models/rocks/rocks_low_lod.gltf#Scene0"),
+			grass_density_map: assets.load("textures/density_map.png"),
+			rock_density_map: assets.load("textures/rock_density_map.png"),
+			mushroom_density_map: assets.load("textures/mushroom_density_map.png"),
+			mushroom: assets.load("models/mushroom/mushroom.gltf#Scene0"),
 			music: assets.load("audio/music/corpo slop to eat your computer to.ogg"),
 			break_room_alarm: assets.load("audio/sound_effects/mental_health_alarm.ogg"),
 		}
