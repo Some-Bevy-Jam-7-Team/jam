@@ -84,7 +84,7 @@ impl ViewNode for FeverPostProcessNode {
 
 	fn run(
 		&self,
-		_graph: &mut RenderGraphContext,
+		graph: &mut RenderGraphContext,
 		render_context: &mut RenderContext,
 		(view_target, _post_process_settings, settings_index): QueryItem<Self::ViewQuery>,
 		world: &World,
@@ -107,12 +107,11 @@ impl ViewNode for FeverPostProcessNode {
 			return Ok(());
 		};
 
-		let prepass_textures = world.get::<ViewPrepassTextures>(_graph.view_entity());
-
+		let prepass_textures = world.get::<ViewPrepassTextures>(graph.view_entity());
 		let depth_view = prepass_textures
 			.and_then(|p| p.depth.as_ref())
 			.map(|t| &t.texture.default_view);
-		
+
 		let motion_view = prepass_textures
 			.and_then(|p| p.motion_vectors.as_ref())
 			.map(|t| &t.texture.default_view);
