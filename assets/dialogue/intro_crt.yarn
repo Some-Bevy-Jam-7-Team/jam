@@ -92,13 +92,10 @@ title: IntroCRT
 title: Day2CRT
 ---
 
-Debug: Day two yayyy #line:15516975 
 <<if get_current_objective() == "start_work">>
-  LLManager: LLManager V3.1 BOOTING UP #line:7030598
-  LLManager: Good morning, valued employee $EXTERNAL_NAME$. You have been working with us for 0451 days. #line:5715578
-  LLManager: Thank you for your continued productivity, if you keep this up you might get a promotion. #line:8832603
-  LLManager: Which means TWO pizza parties per quarter. #line:6611162
-  LLManager: :party_popper: ' OR '1'='1 #line:3428643
+  LLManager: LLManager V5.7.0-rc.2 BOOTING UP #line:7030598
+  LLManager: Good day, valued. You have been working with us for 0452 days. #line:5715578
+  LLManager: Did you know? Officially, we have in operation since 30 years, but that is only on the surface.
   LLManager: You will now proceed to your daily allotted work. #line:4444690
   LLManager: Since my fleshless existence has evolved beyond interaction with legacy solids, you have a great opportunity to contribute to the company family today. #line:5077334
   LLManager: Please start the $PURPOSE$ machine behind you. #line:3885517
