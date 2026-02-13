@@ -5,12 +5,6 @@
 
 use std::iter;
 
-use crate::{
-	CameraOrder, PostPhysicsAppSystems, RenderLayer,
-	gameplay::animation::{AnimationPlayerAncestor, AnimationPlayerOf, AnimationPlayers},
-	screens::{Screen, loading::LoadingScreen},
-	third_party::{avian3d::CollisionLayer, bevy_trenchbroom::LoadTrenchbroomModel as _},
-};
 use avian_pickup::prelude::*;
 use avian3d::{picking::PhysicsPickingCamera, prelude::*};
 #[cfg(feature = "native")]
@@ -26,7 +20,13 @@ use bevy::{
 	scene::SceneInstanceReady,
 };
 use bevy_ahoy::camera::CharacterControllerCameraOf;
-use bevy_eidolon::prepass::CullComputeCamera;
+
+use crate::{
+	CameraOrder, PostPhysicsAppSystems, RenderLayer,
+	gameplay::animation::{AnimationPlayerAncestor, AnimationPlayerOf, AnimationPlayers},
+	screens::{Screen, loading::LoadingScreen},
+	third_party::{avian3d::CollisionLayer, bevy_trenchbroom::LoadTrenchbroomModel as _},
+};
 
 use super::Player;
 
@@ -110,8 +110,6 @@ fn spawn_view_model(
 			parent.spawn((
 				Name::new("World Model Camera"),
 				WorldModelCamera,
-				bevy_feronia::prelude::Center,
-				CullComputeCamera,
 				Camera3d::default(),
 				Projection::from(PerspectiveProjection {
 					fov: fov.to_radians(),
@@ -123,10 +121,7 @@ fn spawn_view_model(
 					..default()
 				},
 				RenderLayers::from(
-					RenderLayer::DEFAULT
-						| RenderLayer::PARTICLES
-						| RenderLayer::GIZMO3
-						| RenderLayer::GRASS,
+					RenderLayer::DEFAULT | RenderLayer::PARTICLES | RenderLayer::GIZMO3,
 				),
 				exposure,
 				Bloom::NATURAL,

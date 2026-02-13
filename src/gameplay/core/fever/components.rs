@@ -1,5 +1,6 @@
 use crate::gameplay::core::*;
 use std::time::Duration;
+
 /// Makes a unit affected by fever.
 #[derive(Component, Debug, Clone, Copy, Reflect)]
 #[reflect(Clone, Debug, Component)]

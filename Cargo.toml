@@ -87,8 +87,6 @@ bevy-inspector-egui = { version = "0.36", optional = true }
 bevy_fix_cursor_unlock_web = "0.3.0"
 bevy_framepace = "0.21"
 bevy_seedling = "0.7.0"
-bevy_feronia = { version = "0.8.1", features = ["avian"] }
-bevy_eidolon = { version = "0.3.0" }
 firewheel = { version = "0.10.0", features = ["svf_node"] }
 
 # Keep this in sync with Bevy
@@ -201,9 +199,6 @@ opt-level = 3
 debug-assertions = false
 
 [patch.crates-io]
-bevy_feronia = { git = "https://github.com/NicoZweifel/bevy_feronia", branch = "fix-deferred" }
-bevy_eidolon = { git = "https://github.com/NicoZweifel/bevy_eidolon", branch = "fix-deferred" }
-
 avian_derive = { path = "vendor/avian_derive" }
 avian_pickup = { path = "vendor/avian_pickup" }
 avian_rerecast = { path = "vendor/avian_rerecast" }
