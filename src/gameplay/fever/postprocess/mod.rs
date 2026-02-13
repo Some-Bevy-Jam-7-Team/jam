@@ -191,13 +191,27 @@ fn init_post_process_pipeline(
 	});
 }
 
-#[derive(Component, Default, Clone, Copy, ExtractComponent, ShaderType)]
+#[derive(Component, Clone, Copy, ExtractComponent, ShaderType)]
 pub struct FeverPostProcessSettings {
 	pub resolution: Vec2,
 	pub intensity: f32,
 	pub fever: f32,
 	pub damage_threshold: f32,
 	pub damage_indicator: f32,
+	_pad: Vec2,
+}
+
+impl Default for FeverPostProcessSettings {
+	fn default() -> Self {
+		Self {
+			intensity: 1.,
+			resolution: Vec2::new(1920., 1080.),
+			fever: 0.,
+			damage_threshold: 0.,
+			damage_indicator: 0.,
+			_pad: Vec2::new(0., 0.),
+		}
+	}
 }
 
 fn on_fever_tick(

@@ -70,7 +70,7 @@ fn fragment(in: FullscreenVertexOutput) -> @location(0) vec4<f32> {
 
     // Combine Fever and Damage into a single intensity value,
     // tweaking the dmg indicator manually for now
-    let intensity = settings.fever + (settings.damage_indicator * 0.5);
+    let intensity = (settings.fever + (settings.damage_indicator * 0.5)) * settings.intensity;
     let mix_factor = clamp(intensity * vignette, 0.0, 1.0);
 
     return vec4<f32>(mix(color.rgb, pattern, mix_factor), 1.0);
