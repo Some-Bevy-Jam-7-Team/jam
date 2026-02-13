@@ -1,5 +1,8 @@
 use avian3d::prelude::*;
 use bevy::prelude::*;
+use bevy_seedling::sample::{AudioSample, SamplePlayer};
+
+use crate::audio::SfxPool;
 
 use super::{
 	interaction::InteractEvent,
@@ -9,6 +12,8 @@ use super::{
 		camera::{PlayerCameraParent, WorldModelCamera},
 	},
 };
+
+const ACTIVATION_SFX: &str = "audio/sound_effects/machine_activation.ogg";
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_observer(on_machine_activated);
@@ -59,6 +64,7 @@ fn on_machine_activated(
 	mut player_velocity: Single<&mut LinearVelocity, With<Player>>,
 	cam_parent: Single<&GlobalTransform, With<PlayerCameraParent>>,
 	world_camera: Single<Entity, With<WorldModelCamera>>,
+	assets: Res<AssetServer>,
 	mut commands: Commands,
 ) {
 	let entity = trigger.0;
@@ -68,6 +74,10 @@ fn on_machine_activated(
 	if completor.target != "w1_turn_on" {
 		return;
 	}
+
+	// SFX
+	let sfx: Handle<AudioSample> = assets.load(ACTIVATION_SFX);
+	commands.spawn((SamplePlayer::new(sfx), SfxPool));
 
 	// Screen flash
 	commands.spawn((
