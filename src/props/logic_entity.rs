@@ -1,5 +1,5 @@
 use avian3d::prelude::{
-	CollisionEnd, CollisionEventsEnabled, CollisionLayers, CollisionStart, Sensor,
+	CollisionEnd, CollisionEventsEnabled, CollisionLayers, CollisionStart, Position, Sensor,
 };
 use bevy::{
 	ecs::{lifecycle::HookContext, world::DeferredWorld},
@@ -14,6 +14,7 @@ use crate::{
 		TargetName, TargetnameEntityIndex,
 		interaction::InteractEvent,
 		objectives::{Objective, SubObjectiveOf},
+		player::Player,
 		scripting::ReflectionSystems,
 	},
 	props::interactables::InteractableEntity,
@@ -36,6 +37,7 @@ pub(super) fn plugin(app: &mut App) {
 		.add_observer(run_setter)
 		.add_observer(run_toggle)
 		.add_observer(run_despawn)
+		.add_observer(interact_teleport)
 		.add_systems(
 			Update,
 			(
@@ -163,7 +165,7 @@ fn tick_timers(
 			if timer.timer_elapsed >= timer.timer_length {
 				timer_activated = true;
 				if timer.timer_repeating {
-					if timer.timer_length.is_sign_positive() && timer.timer_length.is_finite() {
+					if timer.timer_length > 0.0 && timer.timer_length.is_finite() {
 						timer.timer_elapsed =
 							f32::rem_euclid(timer.timer_elapsed, timer.timer_length);
 						if timer.timer_elapsed >= timer.timer_length {
@@ -360,5 +362,46 @@ fn run_despawn(
 			reflection_systems.get_despawn_entity_system(),
 			despawn.despawn_target.clone(),
 		);
+	}
+}
+
+/// An entity for teleportation destination
+#[point_class(base(TargetName, Transform))]
+#[derive(PartialEq, Clone, Debug, Default)]
+pub(crate) struct TeleportNode {
+	/// targetname of entity that should be teleported here
+	pub teleport_target: Option<String>,
+	/// Whether the player should be teleported too
+	pub teleport_player: bool,
+}
+
+fn interact_teleport(
+	trigger: On<InteractEvent>,
+	teleport_query: Query<(&TeleportNode, &GlobalTransform)>,
+	mut transform_query: Query<(&mut Transform, Option<&mut Position>)>,
+	entity_index: Res<TargetnameEntityIndex>,
+	player_query: Option<Single<Entity, With<Player>>>,
+) {
+	if let Ok((teleport, teleport_transform)) = teleport_query.get(trigger.0) {
+		if let Some(targetname) = &teleport.teleport_target {
+			for &entity in entity_index.get_entity_by_targetname(targetname) {
+				if let Ok((mut transform, position)) = transform_query.get_mut(entity) {
+					transform.translation = teleport_transform.translation();
+					if let Some(mut x) = position {
+						**x = teleport_transform.translation();
+					}
+				}
+			}
+		}
+		if teleport.teleport_player {
+			if let Some(player_entity) = player_query {
+				if let Ok((mut transform, position)) = transform_query.get_mut(*player_entity) {
+					transform.translation = teleport_transform.translation();
+					if let Some(mut x) = position {
+						**x = teleport_transform.translation();
+					}
+				}
+			}
+		}
 	}
 }

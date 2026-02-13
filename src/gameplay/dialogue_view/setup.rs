@@ -47,6 +47,7 @@ fn setup(mut commands: Commands) {
 				)],
 				..default()
 			},
+			GlobalZIndex(1),
 			Visibility::Hidden,
 			RootWidget,
 			UiRootNode,

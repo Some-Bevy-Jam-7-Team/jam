@@ -183,7 +183,7 @@ pub(crate) struct IvyPart8;
 pub(crate) struct SmallDoorSign1;
 
 #[point_class(
-	base(InteractableEntity, Transform, Visibility),
+	base(InteractableEntity, Transform, Visibility, TargetName),
 	model("models/rohlik/rohlik.gltf")
 )]
 pub(crate) struct Rohlik;
