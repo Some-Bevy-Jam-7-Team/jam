@@ -5,18 +5,20 @@ use bevy_trenchbroom::prelude::*;
 
 use crate::{
 	asset_tracking::LoadResource as _,
-	gameplay::core::*,
+	gameplay::{TargetName, core::*},
 	props::{effects::disable_shadow_casting_on_instance_ready, setup::static_bundle},
+	reflection::ReflAppExt,
 	third_party::bevy_trenchbroom::GetTrenchbroomModelPath as _,
 };
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_observer(setup_lamp_wall_electric);
 	app.load_asset::<Gltf>(LampPlain::model_path());
+	app.register_dynamic_component::<LampPlain>();
 }
 
 #[point_class(
-	base(Transform, Visibility),
+	base(TargetName, Transform, Visibility),
 	model("models/darkmod/lights/non-extinguishable/electric_plain1_unattached.gltf"),
 	classname("light_lamp_plain")
 )]

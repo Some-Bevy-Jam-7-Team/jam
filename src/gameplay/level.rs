@@ -1,5 +1,6 @@
 //! Spawn the main level.
 
+use crate::gameplay::TargetName;
 use crate::gameplay::scatter::Landscape;
 use crate::third_party::avian3d::CollisionLayer;
 use crate::{
@@ -36,6 +37,15 @@ pub(crate) enum CurrentLevel {
 	DayTwo,
 }
 
+impl CurrentLevel {
+	pub(crate) fn next(&self) -> Self {
+		match self {
+			CurrentLevel::DayOne => CurrentLevel::DayTwo,
+			CurrentLevel::DayTwo => CurrentLevel::DayOne,
+		}
+	}
+}
+
 /// A system that spawns the main level.
 pub(crate) fn spawn_level(
 	mut commands: Commands,
@@ -47,9 +57,10 @@ pub(crate) fn spawn_level(
 		CurrentLevel::DayOne => {
 			commands.spawn((
 				Objective::new("Clock In"),
+				TargetName::new("start_work"),
 				ObjectiveEntity {
-					targetname: "start_work".into(),
-					..Default::default()
+					target: None,
+					objective_order: -1.0,
 				},
 			));
 
@@ -86,9 +97,10 @@ pub(crate) fn spawn_level(
 		CurrentLevel::DayTwo => {
 			commands.spawn((
 				Objective::new("Clock In"),
+				TargetName::new("start_work"),
 				ObjectiveEntity {
-					targetname: "start_work".into(),
-					..Default::default()
+					target: None,
+					objective_order: -1.0,
 				},
 			));
 			let level_two_assets = level_two_assets.expect("If we don't have level two assets when spawning level two, we're in deep shit. Sorry player, we bail here.");
@@ -182,6 +194,7 @@ pub(crate) struct LevelAssets {
 	pub(crate) mushroom: Handle<Scene>,
 	#[dependency]
 	pub(crate) mushroom_density_map: Handle<Image>,
+	#[expect(dead_code)]
 	pub(crate) break_room_alarm: Handle<AudioSample>,
 }
 
@@ -231,6 +244,7 @@ pub(crate) struct LevelTwoAssets {
 	#[dependency]
 	pub(crate) music: Handle<AudioSample>,
 }
+
 impl FromWorld for LevelTwoAssets {
 	fn from_world(world: &mut World) -> Self {
 		let assets = world.resource::<AssetServer>();
@@ -245,17 +259,28 @@ impl FromWorld for LevelTwoAssets {
 	}
 }
 
-fn advance_level(_done: On<AllObjectivesDone>, mut commands: Commands) {
-	commands.queue(|world: &mut World| {
-		let value = LevelTwoAssets::from_world(world);
+fn advance_level(
+	_done: On<AllObjectivesDone>,
+	mut commands: Commands,
+	current_level: Res<CurrentLevel>,
+) {
+	match *current_level {
+		CurrentLevel::DayOne => commands.queue(advance_level_command::<LevelTwoAssets>()),
+		CurrentLevel::DayTwo => commands.queue(advance_level_command::<LevelAssets>()),
+	};
+}
+
+fn advance_level_command<T: Asset + Resource + Clone + FromWorld>() -> impl Command {
+	|world: &mut World| {
+		let value = T::from_world(world);
 		let assets = world.resource::<AssetServer>();
 		let handle = assets.add(value);
 		let mut handles = world.resource_mut::<ResourceHandles>();
 		handles
 			.waiting
 			.push_back((handle.untyped(), move |world, handle| {
-				let assets = world.resource::<Assets<LevelTwoAssets>>();
-				if let Some(value) = assets.get(handle.id().typed::<LevelTwoAssets>()) {
+				let assets = world.resource::<Assets<T>>();
+				if let Some(value) = assets.get(handle.id().typed::<T>()) {
 					world.insert_resource(value.clone());
 				}
 			}));
@@ -265,6 +290,7 @@ fn advance_level(_done: On<AllObjectivesDone>, mut commands: Commands) {
 		world
 			.resource_mut::<NextState<Screen>>()
 			.set(Screen::Loading);
-		*world.resource_mut::<CurrentLevel>() = CurrentLevel::DayTwo;
-	});
+		let mut current_level = world.resource_mut::<CurrentLevel>();
+		*current_level = current_level.next();
+	}
 }
