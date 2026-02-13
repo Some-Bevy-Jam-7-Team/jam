@@ -6,6 +6,7 @@ use bevy::{
 	prelude::*,
 };
 
+use bevy_transform_interpolation::TranslationEasingState;
 use bevy_trenchbroom::prelude::*;
 
 use crate::{
@@ -373,32 +374,74 @@ pub(crate) struct TeleportNode {
 	pub teleport_target: Option<String>,
 	/// Whether the player should be teleported too
 	pub teleport_player: bool,
+	/// targetname of entity to use as the origin, setting this will make the teleport use a relative offset (this - relative_to) it adds to the entity's transform.
+	pub teleport_relative_to: Option<String>,
 }
 
 fn interact_teleport(
 	trigger: On<InteractEvent>,
 	teleport_query: Query<(&TeleportNode, &GlobalTransform)>,
-	mut transform_query: Query<(&mut Transform, Option<&mut Position>)>,
+	mut transform_query: Query<(
+		&GlobalTransform,
+		&mut Transform,
+		Option<&mut Position>,
+		Option<&mut TranslationEasingState>,
+	)>,
 	entity_index: Res<TargetnameEntityIndex>,
 	player_query: Option<Single<Entity, With<Player>>>,
 ) {
 	if let Ok((teleport, teleport_transform)) = teleport_query.get(trigger.0) {
+		let relative = if let Some(name) = teleport.teleport_relative_to.as_ref() {
+			#[allow(clippy::incompatible_msrv)]
+			let Some(pos) = entity_index
+				.get_entity_by_targetname(name)
+				.as_array::<1>()
+				.and_then(|x| transform_query.get(x[0]).ok())
+				.map(|(transform, ..)| transform.translation())
+			else {
+				error!(
+					"Did not find a unique relative transform entity with name {:?}",
+					teleport.teleport_relative_to
+				);
+				return;
+			};
+			Some(pos)
+		} else {
+			None
+		};
+		let position_mutator = |position: &mut Vec3| {
+			if let Some(pos) = relative {
+				*position += teleport_transform.translation() - pos;
+			} else {
+				*position = teleport_transform.translation();
+			}
+		};
 		if let Some(targetname) = &teleport.teleport_target {
 			for &entity in entity_index.get_entity_by_targetname(targetname) {
-				if let Ok((mut transform, position)) = transform_query.get_mut(entity) {
-					transform.translation = teleport_transform.translation();
+				if let Ok((_, mut transform, position, easing)) = transform_query.get_mut(entity) {
 					if let Some(mut x) = position {
-						**x = teleport_transform.translation();
+						position_mutator(&mut x);
+					} else {
+						position_mutator(&mut transform.translation);
+					}
+					if let Some(mut easing) = easing {
+						*easing = default();
 					}
 				}
 			}
 		}
 		if teleport.teleport_player {
 			if let Some(player_entity) = player_query {
-				if let Ok((mut transform, position)) = transform_query.get_mut(*player_entity) {
-					transform.translation = teleport_transform.translation();
+				if let Ok((_, mut transform, position, easing)) =
+					transform_query.get_mut(*player_entity)
+				{
 					if let Some(mut x) = position {
-						**x = teleport_transform.translation();
+						position_mutator(&mut x);
+					} else {
+						position_mutator(&mut transform.translation);
+					}
+					if let Some(mut easing) = easing {
+						*easing = default();
 					}
 				}
 			}

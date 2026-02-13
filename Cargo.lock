@@ -4536,6 +4536,7 @@ dependencies = [
  "bevy_rerecast",
  "bevy_seedling",
  "bevy_shuffle_bag",
+ "bevy_transform_interpolation",
  "bevy_trenchbroom",
  "bevy_trenchbroom_avian",
  "bevy_yarnspinner",
