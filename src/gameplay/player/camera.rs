@@ -5,12 +5,15 @@
 
 use std::iter;
 
+use super::Player;
+use crate::gameplay::fever::postprocess::FeverPostProcessSettings;
 use crate::{
 	CameraOrder, PostPhysicsAppSystems, RenderLayer,
 	gameplay::animation::{AnimationPlayerAncestor, AnimationPlayerOf, AnimationPlayers},
 	screens::{Screen, loading::LoadingScreen},
 	third_party::{avian3d::CollisionLayer, bevy_trenchbroom::LoadTrenchbroomModel as _},
 };
+
 use avian_pickup::prelude::*;
 use avian3d::{picking::PhysicsPickingCamera, prelude::*};
 #[cfg(feature = "native")]
@@ -27,8 +30,6 @@ use bevy::{
 };
 use bevy_ahoy::camera::CharacterControllerCameraOf;
 use bevy_eidolon::prepass::CullComputeCamera;
-
-use super::Player;
 
 pub const INTERACTION_DISTANCE: f32 = 3.0;
 
@@ -136,18 +137,21 @@ fn spawn_view_model(
 					ShadowFilteringMethod::Temporal,
 					DeferredPrepass,
 				),
-				#[cfg(feature = "native")]
-				// See https://github.com/bevyengine/bevy/issues/20459
-				ScreenSpaceAmbientOcclusion::default(),
-				AtmosphereEnvironmentMapLight {
-					intensity: 0.5,
-					..default()
-				},
-				Atmosphere::earthlike(medium.clone()),
-				DistanceFog {
-					falloff: FogFalloff::Exponential { density: 0.0005 },
-					..default()
-				},
+				(
+					FeverPostProcessSettings::default(),
+					#[cfg(feature = "native")]
+					// See https://github.com/bevyengine/bevy/issues/20459
+					ScreenSpaceAmbientOcclusion::default(),
+					AtmosphereEnvironmentMapLight {
+						intensity: 0.5,
+						..default()
+					},
+					Atmosphere::earthlike(medium.clone()),
+					DistanceFog {
+						falloff: FogFalloff::Exponential { density: 0.0005 },
+						..default()
+					},
+				),
 			));
 
 			// Spawn the player's view model
