@@ -58,7 +58,7 @@ fn fragment(in: FullscreenVertexOutput) -> @location(0) vec4<f32> {
 
     // Color mapping
     let value = fract(f32(e) * 0.000003);
-    let kaleidoscope= hsv2rgb(vec3<f32>(value + time * 0.6, 0.6, 0.6));
+    let kaleidoscope = hsv2rgb(vec3<f32>(value + time * 0.6, 0.6, 0.6));
 
     // Fever tint
     let fever_tint = vec3<f32>(1.0, 0.0, 0.0);
