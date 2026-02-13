@@ -1,5 +1,6 @@
 //! Spawn the main level.
 
+use crate::gameplay::TargetName;
 use crate::gameplay::scatter::Landscape;
 use crate::third_party::avian3d::CollisionLayer;
 use crate::{
@@ -47,9 +48,10 @@ pub(crate) fn spawn_level(
 		CurrentLevel::DayOne => {
 			commands.spawn((
 				Objective::new("Clock In"),
+				TargetName::new("start_work"),
 				ObjectiveEntity {
-					targetname: "start_work".into(),
-					..Default::default()
+					target: None,
+					objective_order: -1.0,
 				},
 			));
 
@@ -86,9 +88,10 @@ pub(crate) fn spawn_level(
 		CurrentLevel::DayTwo => {
 			commands.spawn((
 				Objective::new("Clock In"),
+				TargetName::new("start_work"),
 				ObjectiveEntity {
-					targetname: "start_work".into(),
-					..Default::default()
+					target: None,
+					objective_order: -1.0,
 				},
 			));
 			let level_two_assets = level_two_assets.expect("If we don't have level two assets when spawning level two, we're in deep shit. Sorry player, we bail here.");
@@ -182,6 +185,7 @@ pub(crate) struct LevelAssets {
 	pub(crate) mushroom: Handle<Scene>,
 	#[dependency]
 	pub(crate) mushroom_density_map: Handle<Image>,
+	#[expect(dead_code)]
 	pub(crate) break_room_alarm: Handle<AudioSample>,
 }
 
@@ -231,6 +235,7 @@ pub(crate) struct LevelTwoAssets {
 	#[dependency]
 	pub(crate) music: Handle<AudioSample>,
 }
+
 impl FromWorld for LevelTwoAssets {
 	fn from_world(world: &mut World) -> Self {
 		let assets = world.resource::<AssetServer>();

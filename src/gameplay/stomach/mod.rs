@@ -14,10 +14,7 @@ use bevy::{
 
 use crate::{
 	CameraOrder, RenderLayer,
-	gameplay::{
-		interaction::InteractableObject,
-		player::{Player, camera::PlayerCameraParent},
-	},
+	gameplay::player::{Player, camera::PlayerCameraParent},
 	screens::Screen,
 	third_party::avian3d::CollisionLayer,
 };
@@ -36,7 +33,6 @@ pub(super) fn plugin(app: &mut App) {
 
 #[derive(Component, Reflect, Debug, Default)]
 #[reflect(Component)]
-#[require(InteractableObject(Some("Eat".to_string())))]
 pub struct EdibleProp;
 
 #[derive(Component, Debug)]
