@@ -1,5 +1,5 @@
 use avian3d::prelude::{
-	CollisionEnd, CollisionEventsEnabled, CollisionLayers, CollisionStart, Sensor,
+	CollisionEnd, CollisionEventsEnabled, CollisionLayers, CollisionStart, Position, Sensor,
 };
 use bevy::{
 	ecs::{lifecycle::HookContext, world::DeferredWorld},
@@ -378,22 +378,23 @@ pub(crate) struct TeleportNode {
 fn interact_teleport(
 	trigger: On<InteractEvent>,
 	teleport_query: Query<(&TeleportNode, &GlobalTransform)>,
-	mut transform_query: Query<&mut Transform>,
+	mut transform_query: Query<&mut Position>,
 	entity_index: Res<TargetnameEntityIndex>,
 	player_query: Option<Single<Entity, With<Player>>>,
 ) {
 	if let Ok((teleport, teleport_transform)) = teleport_query.get(trigger.0) {
+		error!("ayy");
 		if let Some(targetname) = &teleport.teleport_target {
 			for &entity in entity_index.get_entity_by_targetname(targetname) {
 				if let Ok(mut transform) = transform_query.get_mut(entity) {
-					transform.translation = teleport_transform.translation();
+					**transform = teleport_transform.translation();
 				}
 			}
 		}
 		if teleport.teleport_player {
 			if let Some(player_entity) = player_query {
 				if let Ok(mut transform) = transform_query.get_mut(*player_entity) {
-					transform.translation = teleport_transform.translation();
+					**transform = teleport_transform.translation();
 				}
 			}
 		}
