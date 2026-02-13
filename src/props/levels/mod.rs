@@ -24,14 +24,13 @@ fn setup_break_room(add: On<Add, BreakRoomSensor>, mut commands: Commands) -> Re
 		.entity(entity)
 		.insert((
 			GenericTimer::<BreakRoomTimer>::new(Timer::new(
-				Duration::from_secs(6),
+				Duration::from_secs(5),
 				TimerMode::Once,
 			))
 			.with_active(false),
 			CollisionLayers::new([CollisionLayer::Sensor], [CollisionLayer::PlayerCharacter]),
 		))
 		.observe(tell_to_eat)
-		.observe(deactivate_timer)
 		.observe(kick_out);
 	commands
 		.spawn((
@@ -75,7 +74,7 @@ fn kick_out(
 			SamplePlayer {
 				sample: level_assets.break_room_alarm.clone(),
 				repeat_mode: RepeatMode::RepeatMultiple {
-					num_times_to_repeat: 3,
+					num_times_to_repeat: 2,
 				},
 				..default()
 			},
@@ -110,16 +109,5 @@ fn tell_to_eat(
 			.entity(current_objective)
 			.insert(ObjectiveCompleted);
 	}
-	Ok(())
-}
-
-fn deactivate_timer(
-	collision: On<CollisionEnd>,
-	mut timer: Query<&mut GenericTimer<BreakRoomTimer>>,
-) -> Result<(), BevyError> {
-	let mut timer = timer.get_mut(collision.collider1)?;
-
-	timer.set_active(false);
-
 	Ok(())
 }
