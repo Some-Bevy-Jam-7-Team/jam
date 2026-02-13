@@ -5,10 +5,7 @@ use bevy::{
 use bevy_trenchbroom::prelude::*;
 
 use crate::{
-	gameplay::{
-		TargetName, TargetnameEntityIndex,
-		interaction::{InteractEvent, InteractableObject},
-	},
+	gameplay::{TargetName, TargetnameEntityIndex, interaction::InteractEvent},
 	props::logic_entity::ObjectiveEntity,
 	screens::Screen,
 };
@@ -32,7 +29,6 @@ pub struct CurrentObjective(Option<Entity>);
 /// Marker for entities that complete subobjectives on interact
 #[derive(Component, Reflect, Debug)]
 #[reflect(Component)]
-#[require(InteractableObject(Some("Complete Objective".to_string())))]
 pub struct ObjectiveCompletor {
 	/// `ObjectiveEntity::targetname` of the objective completed by this completor
 	pub target: String,

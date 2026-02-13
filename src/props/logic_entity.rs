@@ -7,6 +7,7 @@ use crate::{
 		TargetName, TargetnameEntityIndex,
 		objectives::{Objective, SubObjectiveOf},
 	},
+	props::interactables::InteractableEntity,
 	reflection::ReflAppExt,
 };
 
@@ -14,6 +15,7 @@ pub(super) fn plugin(app: &mut App) {
 	app.register_dynamic_component::<ObjectiveEntity>()
 		.register_dynamic_component::<YarnNode>()
 		.add_observer(uninitialise_objectives)
+		.add_observer(talk_ify_yarnnode)
 		.add_systems(Update, initialise_objectives);
 }
 
@@ -80,5 +82,17 @@ impl Default for YarnNode {
 			yarn_node: "".to_string(),
 			is_non_dialogue: false,
 		}
+	}
+}
+
+fn talk_ify_yarnnode(
+	on: On<Add, YarnNode>,
+	interactable_query: Query<&InteractableEntity>,
+	mut commands: Commands,
+) {
+	if let Ok(interaction) = interactable_query.get(on.entity) {
+		commands
+			.entity(on.entity)
+			.insert(interaction.add_override("Talk"));
 	}
 }

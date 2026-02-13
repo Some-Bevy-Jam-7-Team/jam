@@ -5,20 +5,12 @@ use crate::props::interactables::InteractableEntity;
 use crate::third_party::avian3d::CollisionLayer;
 use avian3d::prelude::*;
 use bevy::prelude::*;
-use bevy::{ecs::component::Component, picking::Pickable};
 use bevy_enhanced_input::prelude::*;
-
-/// Marker component for an entity being interactable by clicking on it.
-#[derive(Component, Default, Reflect, Debug)]
-#[reflect(Component)]
-#[require(Pickable, PhysicsPickable)]
-pub struct InteractableObject(pub Option<String>);
 
 /// [`Resource`] describing whether there is an interactable action available and optionally if there is a name for it.
 #[derive(Resource, Default)]
 pub struct AvailableInteraction {
 	pub target_entity: Option<Entity>,
-	pub description: Option<String>,
 }
 
 /// [`Event`] triggered when the specified entity was interacted with.
@@ -60,7 +52,7 @@ fn iquick_plz_do_not_kill_me(
 	cam: Single<&Transform, With<PlayerCameraParent>>,
 	pickable: Query<(Entity, &Pickable)>,
 	sensors: Query<Entity, With<Sensor>>,
-	interaction_query: Query<&InteractableObject>,
+	interaction_query: Query<&InteractableEntity>,
 	mut resource: ResMut<AvailableInteraction>,
 	collider: Query<&ColliderOf>,
 ) {
@@ -76,7 +68,6 @@ fn iquick_plz_do_not_kill_me(
 		})
 		.chain(sensors.iter());
 	resource.target_entity = None;
-	resource.description = None;
 	if let Some(hit) = spatial.cast_ray(
 		transform.translation,
 		transform.forward(),
@@ -90,9 +81,8 @@ fn iquick_plz_do_not_kill_me(
 		]),
 	) && let Ok(collider) = collider.get(hit.entity)
 		&& let Ok(interaction) = interaction_query.get(collider.body)
-		&& interaction.0.as_ref().is_some_and(|desc| !desc.is_empty())
+		&& interaction.is_active()
 	{
 		resource.target_entity = Some(collider.body);
-		resource.description = interaction.0.clone();
 	}
 }

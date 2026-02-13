@@ -1,7 +1,7 @@
 use crate::{
 	asset_tracking::LoadResource,
 	gameplay::TargetName,
-	props::{interactables::InteractableEntity, logic_entity::YarnNode},
+	props::interactables::InteractableEntity,
 	third_party::{
 		avian3d::CollisionLayer,
 		bevy_trenchbroom::{GetTrenchbroomModelPath as _, LoadTrenchbroomModel as _},
@@ -59,7 +59,7 @@ pub(super) fn plugin(app: &mut App) {
 // office
 
 #[point_class(
-	base(TargetName, Transform, Visibility, YarnNode),
+	base(TargetName, InteractableEntity, Transform, Visibility),
 	model("models/office/crt.gltf")
 )]
 #[component(on_add = Crt::on_add)]

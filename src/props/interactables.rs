@@ -6,9 +6,7 @@ use bevy::{
 use bevy_trenchbroom::prelude::*;
 
 use crate::{
-	gameplay::{
-		interaction::InteractableObject, objectives::ObjectiveCompletor, stomach::EdibleProp,
-	},
+	gameplay::{objectives::ObjectiveCompletor, stomach::EdibleProp},
 	reflection::ReflAppExt,
 };
 
@@ -20,6 +18,7 @@ pub(super) fn plugin(app: &mut App) {
 #[derive(Default, Clone)]
 #[base_class]
 #[component(on_insert = InteractableEntity::on_insert)]
+#[component(immutable)]
 pub struct InteractableEntity {
 	/// Whether this entity should be
 	is_edible: bool,
@@ -38,12 +37,6 @@ impl InteractableEntity {
 			return;
 		}
 		if let Some(values) = world.get::<InteractableEntity>(ctx.entity).cloned() {
-			if let Some(override_text) = values.interaction_text_override {
-				world
-					.commands()
-					.entity(ctx.entity)
-					.insert_if_new(InteractableObject(Some(override_text)));
-			}
 			if values.is_edible {
 				world
 					.commands()
@@ -63,6 +56,28 @@ impl InteractableEntity {
 		}
 	}
 
+	/// Gets a string roughly representing the action of this entity.
+	///
+	pub fn get_hover_text(&self) -> Option<&str> {
+		if self.interaction_text_override.is_some() {
+			self.get_interaction_text_override()
+		} else if self.is_edible {
+			Some("Eat")
+		} else if self.is_active() {
+			Some("Interact")
+		} else {
+			None
+		}
+	}
+
+	/// Whether this [`InteractableEntity`] has any non-default values that would make it warrant an interaction.
+	pub fn is_active(&self) -> bool {
+		self.is_edible
+			|| self.interaction_text_override.is_some()
+			|| self.completes_subobjective.is_some()
+			|| self.interaction_relay.is_some()
+	}
+
 	pub fn get_is_edible(&self) -> bool {
 		self.is_edible
 	}
@@ -77,5 +92,15 @@ impl InteractableEntity {
 
 	pub fn get_interaction_relay(&self) -> Option<&str> {
 		self.interaction_relay.as_deref()
+	}
+
+	/// Adds an override text, if there was none previously and returns the new component
+	#[must_use]
+	pub fn add_override(&self, text: &str) -> Self {
+		let mut value = self.clone();
+		if value.interaction_text_override.is_none() {
+			value.interaction_text_override = Some(text.to_string());
+		}
+		value
 	}
 }
