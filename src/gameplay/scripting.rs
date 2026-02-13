@@ -3,7 +3,7 @@
 use std::any::TypeId;
 
 use bevy::{
-	ecs::change_detection::MutUntyped,
+	ecs::{change_detection::MutUntyped, system::SystemId},
 	log,
 	prelude::*,
 	reflect::{DynamicStruct, ReflectFromPtr, ReflectMut, ReflectRef, TypeRegistry},
@@ -15,7 +15,40 @@ use crate::{
 	reflection::{DynamicPropertyMap, DynamicallyModifiableType},
 };
 
-pub(super) fn plugin(_app: &mut App) {}
+pub(super) fn plugin(app: &mut App) {
+	app.init_resource::<ReflectionSystems>();
+}
+
+#[derive(Resource, Debug)]
+pub(crate) struct ReflectionSystems {
+	set_value_system: SystemId<In<(String, String, String)>>,
+	toggle_value_system: SystemId<In<(String, String)>>,
+	despawn_entity_system: SystemId<In<String>>,
+}
+
+impl FromWorld for ReflectionSystems {
+	fn from_world(world: &mut World) -> Self {
+		ReflectionSystems {
+			set_value_system: world.register_system(set_value_on_entity),
+			toggle_value_system: world.register_system(toggle_bool_on_entity),
+			despawn_entity_system: world.register_system(despawn_entity),
+		}
+	}
+}
+
+impl ReflectionSystems {
+	pub fn get_set_value_system(&self) -> SystemId<In<(String, String, String)>> {
+		self.set_value_system
+	}
+
+	pub fn get_toggle_value_system(&self) -> SystemId<In<(String, String)>> {
+		self.toggle_value_system
+	}
+
+	pub fn get_despawn_entity_system(&self) -> SystemId<In<String>> {
+		self.despawn_entity_system
+	}
+}
 
 pub(crate) fn despawn_entity(
 	name: In<String>,

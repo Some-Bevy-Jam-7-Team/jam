@@ -14,6 +14,7 @@ use crate::{
 		TargetName, TargetnameEntityIndex,
 		interaction::InteractEvent,
 		objectives::{Objective, SubObjectiveOf},
+		scripting::ReflectionSystems,
 	},
 	props::interactables::InteractableEntity,
 	reflection::ReflAppExt,
@@ -24,11 +25,17 @@ pub(super) fn plugin(app: &mut App) {
 	app.register_dynamic_component::<ObjectiveEntity>()
 		.register_dynamic_component::<YarnNode>()
 		.register_dynamic_component::<TimerEntity>()
+		.register_dynamic_component::<LogicSetter>()
+		.register_dynamic_component::<LogicToggler>()
+		.register_dynamic_component::<LogicDespawn>()
 		.add_observer(interact_timers)
 		.add_observer(uninitialise_objectives)
 		.add_observer(talk_ify_yarnnode)
 		.add_observer(on_sensor_start)
 		.add_observer(on_sensor_end)
+		.add_observer(run_setter)
+		.add_observer(run_toggle)
+		.add_observer(run_despawn)
 		.add_systems(
 			Update,
 			(
@@ -71,6 +78,7 @@ fn initialise_objectives(
 struct UnitialisedObjective;
 
 /// An entity describing the identity of an objective
+/// Activates (completes) on [`InteractEvent`]
 #[point_class(base(TargetName, Objective))]
 #[derive(Default)]
 pub(crate) struct ObjectiveEntity {
@@ -82,8 +90,8 @@ pub(crate) struct ObjectiveEntity {
 }
 
 /// An entity describing a dialogue node or a script
-/// To activate the script, launch an [`InteractEvent`]
 /// Either by having the entity itself be interactable, or by relaying the event.
+/// Activates on [`InteractEvent`]
 /// ## See Also
 /// [`InteractableEntity::interaction_relay`]
 #[point_class(base(TargetName))]
@@ -119,6 +127,7 @@ fn talk_ify_yarnnode(
 
 /// An entity describing a timer which triggers [`InteractEvent`] after some time.
 /// Can also be used as a timed relay.
+/// Activates on [`InteractEvent`]
 #[point_class(base(TargetName))]
 #[derive(PartialEq, Clone, Debug, Default)]
 pub(crate) struct TimerEntity {
@@ -266,5 +275,90 @@ fn on_sensor_end(
 				}
 			}
 		}
+	}
+}
+
+/// An entity describing a change in properties of another entity.
+///
+/// Activates on [`InteractEvent`]
+#[point_class(base(TargetName))]
+#[derive(PartialEq, Clone, Debug, Default)]
+pub(crate) struct LogicSetter {
+	/// targetname of entity that this setter changes
+	pub logic_setter_target: String,
+	/// Name of the property to set
+	pub logic_field_to_set: String,
+	/// Value string of the property to set
+	pub logic_value_to_set: String,
+}
+
+fn run_setter(
+	trigger: On<InteractEvent>,
+	setter_query: Query<&LogicSetter>,
+	reflection_systems: Res<ReflectionSystems>,
+	mut commands: Commands,
+) {
+	if let Ok(setter) = setter_query.get(trigger.0) {
+		commands.run_system_with(
+			reflection_systems.get_set_value_system(),
+			(
+				setter.logic_setter_target.clone(),
+				setter.logic_field_to_set.clone(),
+				setter.logic_value_to_set.clone(),
+			),
+		);
+	}
+}
+
+/// An entity describing a change in properties of another entity.
+///
+/// Activates on [`InteractEvent`]
+#[point_class(base(TargetName))]
+#[derive(PartialEq, Clone, Debug, Default)]
+pub(crate) struct LogicToggler {
+	/// targetname of entity that this setter changes
+	pub logic_toggle_target: String,
+	/// Name of the property to toggle
+	pub logic_field_to_toggle: String,
+}
+
+fn run_toggle(
+	trigger: On<InteractEvent>,
+	toggler_query: Query<&LogicToggler>,
+	reflection_systems: Res<ReflectionSystems>,
+	mut commands: Commands,
+) {
+	if let Ok(toggle) = toggler_query.get(trigger.0) {
+		commands.run_system_with(
+			reflection_systems.get_toggle_value_system(),
+			(
+				toggle.logic_toggle_target.clone(),
+				toggle.logic_field_to_toggle.clone(),
+			),
+		);
+	}
+}
+
+/// An entity describing a change in properties of another entity.
+///
+/// Activates on [`InteractEvent`]
+#[point_class(base(TargetName))]
+#[derive(PartialEq, Clone, Debug, Default)]
+pub(crate) struct LogicDespawn {
+	/// targetname of entity that should be despawned
+	pub despawn_target: String,
+}
+
+fn run_despawn(
+	trigger: On<InteractEvent>,
+	despawner_query: Query<&LogicDespawn>,
+	reflection_systems: Res<ReflectionSystems>,
+	mut commands: Commands,
+) {
+	if let Ok(despawn) = despawner_query.get(trigger.0) {
+		commands.run_system_with(
+			reflection_systems.get_despawn_entity_system(),
+			despawn.despawn_target.clone(),
+		);
 	}
 }
