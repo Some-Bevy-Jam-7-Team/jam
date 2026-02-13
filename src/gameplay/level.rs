@@ -54,34 +54,14 @@ pub(crate) fn spawn_level(
 			));
 
 			commands.spawn((
-				Landscape,
-				ScatterRoot::default(),
-				ChunkRoot::default(),
-				MapHeight,
+				Name::new("Level"),
+				SceneRoot(level_assets.level.clone()),
+				DespawnOnExit(Screen::Gameplay),
+				Level,
 				children![(
-					Name::new("Level"),
-					SceneRoot(level_assets.level.clone()),
-					DespawnOnExit(Screen::Gameplay),
-					Level,
-					children![
-						(
-							Name::new("Level Music"),
-							SamplePlayer::new(level_assets.music.clone()).looping(),
-							MusicPool
-						),
-						(
-							RigidBody::Static,
-							SceneRoot(level_assets.landscape.clone()),
-							ColliderConstructorHierarchy::new(
-								ColliderConstructor::ConvexHullFromMesh
-							)
-							.with_default_layers(CollisionLayers::new(
-								CollisionLayer::Default,
-								LayerMask::ALL,
-							))
-							.with_default_density(1_000.0)
-						),
-					]
+					Name::new("Level Music"),
+					SamplePlayer::new(level_assets.music.clone()).looping(),
+					MusicPool
 				)],
 			));
 
@@ -114,14 +94,34 @@ pub(crate) fn spawn_level(
 			let level_two_assets = level_two_assets.expect("If we don't have level two assets when spawning level two, we're in deep shit. Sorry player, we bail here.");
 
 			commands.spawn((
-				Name::new("Level"),
-				SceneRoot(level_two_assets.level.clone()),
-				DespawnOnExit(Screen::Gameplay),
-				Level,
+				Landscape,
+				ScatterRoot::default(),
+				ChunkRoot::default(),
+				MapHeight,
 				children![(
-					Name::new("Level Music"),
-					SamplePlayer::new(level_two_assets.music.clone()).looping(),
-					MusicPool
+					Name::new("Level"),
+					SceneRoot(level_two_assets.level.clone()),
+					DespawnOnExit(Screen::Gameplay),
+					Level,
+					children![
+						(
+							Name::new("Level Music"),
+							SamplePlayer::new(level_two_assets.music.clone()).looping(),
+							MusicPool
+						),
+						(
+							RigidBody::Static,
+							SceneRoot(level_assets.landscape.clone()),
+							ColliderConstructorHierarchy::new(
+								ColliderConstructor::ConvexHullFromMesh
+							)
+							.with_default_layers(CollisionLayers::new(
+								CollisionLayer::Default,
+								LayerMask::ALL,
+							))
+							.with_default_density(1_000.0)
+						),
+					]
 				)],
 			));
 

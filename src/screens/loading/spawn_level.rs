@@ -110,6 +110,7 @@ fn advance_to_gameplay_screen(
 	just_added_meshes: Query<(), Added<Mesh3d>>,
 	nav_mesh_events: MessageReader<AssetEvent<NavMesh<ThreeD>>>,
 	scatter_done: Res<ScatterDoneProbably>,
+	scatter_root: Query<&ScatterRoot>,
 ) {
 	if !(just_added_meshes.is_empty() && just_added_scenes.is_empty()) {
 		return;
@@ -117,7 +118,7 @@ fn advance_to_gameplay_screen(
 	if !nav_mesh_events.is_empty() {
 		return;
 	}
-	if !scatter_done.0 {
+	if !scatter_root.is_empty() && !scatter_done.0 {
 		return;
 	}
 
