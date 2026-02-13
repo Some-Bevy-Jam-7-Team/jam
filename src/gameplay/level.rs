@@ -37,6 +37,15 @@ pub(crate) enum CurrentLevel {
 	DayTwo,
 }
 
+impl CurrentLevel {
+	pub(crate) fn next(&self) -> Self {
+		match self {
+			CurrentLevel::DayOne => CurrentLevel::DayTwo,
+			CurrentLevel::DayTwo => CurrentLevel::DayOne,
+		}
+	}
+}
+
 /// A system that spawns the main level.
 pub(crate) fn spawn_level(
 	mut commands: Commands,
@@ -250,17 +259,28 @@ impl FromWorld for LevelTwoAssets {
 	}
 }
 
-fn advance_level(_done: On<AllObjectivesDone>, mut commands: Commands) {
-	commands.queue(|world: &mut World| {
-		let value = LevelTwoAssets::from_world(world);
+fn advance_level(
+	_done: On<AllObjectivesDone>,
+	mut commands: Commands,
+	current_level: Res<CurrentLevel>,
+) {
+	match *current_level {
+		CurrentLevel::DayOne => commands.queue(advance_level_command::<LevelTwoAssets>()),
+		CurrentLevel::DayTwo => commands.queue(advance_level_command::<LevelAssets>()),
+	};
+}
+
+fn advance_level_command<T: Asset + Resource + Clone + FromWorld>() -> impl Command {
+	|world: &mut World| {
+		let value = T::from_world(world);
 		let assets = world.resource::<AssetServer>();
 		let handle = assets.add(value);
 		let mut handles = world.resource_mut::<ResourceHandles>();
 		handles
 			.waiting
 			.push_back((handle.untyped(), move |world, handle| {
-				let assets = world.resource::<Assets<LevelTwoAssets>>();
-				if let Some(value) = assets.get(handle.id().typed::<LevelTwoAssets>()) {
+				let assets = world.resource::<Assets<T>>();
+				if let Some(value) = assets.get(handle.id().typed::<T>()) {
 					world.insert_resource(value.clone());
 				}
 			}));
@@ -270,6 +290,7 @@ fn advance_level(_done: On<AllObjectivesDone>, mut commands: Commands) {
 		world
 			.resource_mut::<NextState<Screen>>()
 			.set(Screen::Loading);
-		*world.resource_mut::<CurrentLevel>() = CurrentLevel::DayTwo;
-	});
+		let mut current_level = world.resource_mut::<CurrentLevel>();
+		*current_level = current_level.next();
+	}
 }
