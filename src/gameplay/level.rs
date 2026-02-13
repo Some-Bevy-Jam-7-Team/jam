@@ -41,7 +41,7 @@ impl CurrentLevel {
 	pub(crate) fn next(&self) -> Self {
 		match self {
 			CurrentLevel::DayOne => CurrentLevel::DayTwo,
-			CurrentLevel::DayTwo => CurrentLevel::DayTwo,
+			CurrentLevel::DayTwo => CurrentLevel::DayOne,
 		}
 	}
 }
