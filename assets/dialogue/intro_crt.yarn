@@ -12,12 +12,6 @@ title: IntroCRT
   LLManager: Since my fleshless existence has evolved beyond interaction with legacy solids, you have a great opportunity to contribute to the company family today. #line:481947
   LLManager: Please start the $PURPOSE$ machine behind you. #line:4888554
 
-  <<if is_bool_set("first_door", "locked")>>
-    LLManager: Hm, it seems like the door may be locked. Let's see what I can do to increase productivity. #line:6478625
-    <<toggle_value "first_door" "locked">>
-    LLManager: Hopefully this worked, otherwise I'll need to call HR to find a replacement for you in a week. #line:6478626
-  <<endif>>
-
   <<create_objective "work_1" "Increase Shareholder Value" 1.0>>
   <<create_subobjective "w1_turn_on" "Turn on the        machine" "work_1">>
 
@@ -53,6 +47,7 @@ title: IntroCRT
   LLManager: Office sentiment analysis shows a decrease of morale by $RED$ percentage. #line:16593727
   LLManager:  It is employee No.6's birthday today. To increase efficiency, please engage in socialisation by congratulating them for being with us another another year. #line:10921058
   <<complete_objective "work_2">>
+  <<set_value "first_door" "locked" "false">>
 
 <<elseif get_current_objective() == "work_3">>
   LLManager: Please engage in socialisation with your fellow employees. #line:523020
@@ -100,7 +95,7 @@ title: IntroCRT
 title: Day2CRT
 ---
 
-Debug: Day two yayyy #line:15516975 
+Debug: Day two yayyy #line:15516975
 <<if get_current_objective() == "start_work">>
   LLManager: LLManager V3.1 BOOTING UP #line:7030598
   LLManager: Good morning, valued employee $EXTERNAL_NAME$. You have been working with us for 0451 days. #line:5715578
