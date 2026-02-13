@@ -16,9 +16,9 @@ use avian3d::{picking::PhysicsPickingCamera, prelude::*};
 #[cfg(feature = "native")]
 use bevy::pbr::ScreenSpaceAmbientOcclusion;
 use bevy::{
-	anti_alias::{fxaa::Fxaa, taa::TemporalAntiAliasing},
+	anti_alias::taa::TemporalAntiAliasing,
 	camera::{Exposure, visibility::RenderLayers},
-	core_pipeline::prepass::{DeferredPrepass, DepthPrepass},
+	core_pipeline::prepass::DeferredPrepass,
 	light::{AtmosphereEnvironmentMapLight, NotShadowCaster, ShadowFilteringMethod},
 	pbr::{Atmosphere, ScatteringMedium},
 	post_process::bloom::Bloom,
@@ -40,7 +40,6 @@ pub(super) fn plugin(app: &mut App) {
 	app.add_observer(add_render_layers_to_point_light);
 	app.add_observer(add_render_layers_to_spot_light);
 	app.add_observer(add_render_layers_to_directional_light);
-	app.add_systems(PreUpdate, reenable_cams);
 	app.add_systems(
 		Update,
 		update_world_model_fov
@@ -151,34 +150,6 @@ fn spawn_view_model(
 				},
 			));
 
-			// Spawn view model camera.
-			parent.spawn((
-				Name::new("View Model Camera"),
-				Camera3d::default(),
-				Camera {
-					// Bump the order to render on top of the world model.
-					order: CameraOrder::ViewModel.into(),
-					is_active: true,
-					..default()
-				},
-				ReenableCameraToFixFuckingWeirdRenderingBugWtf,
-				Projection::from(PerspectiveProjection {
-					// We use whatever FOV we set in the animation software, e.g. Blender.
-					// Tip: if you want to set a camera in Blender to the same defaults as Bevy,
-					// see [this issue](https://github.com/kaosat-dev/Blenvy/issues/223)
-					fov: 62.0_f32.to_radians(),
-					..default()
-				}),
-				// Only render objects belonging to the view model.
-				RenderLayers::from(RenderLayer::VIEW_MODEL),
-				exposure,
-				(DepthPrepass, Msaa::Off, DeferredPrepass, Fxaa::default()),
-				AtmosphereEnvironmentMapLight {
-					intensity: 0.5,
-					..default()
-				},
-			));
-
 			// Spawn the player's view model
 			parent
 				.spawn((
@@ -188,25 +159,6 @@ fn spawn_view_model(
 				.observe(configure_player_view_model);
 		})
 		.observe(move_anim_players_relationship_to_player);
-}
-
-#[derive(Component, Reflect, Debug)]
-#[reflect(Component)]
-pub(crate) struct ReenableCameraToFixFuckingWeirdRenderingBugWtf;
-
-fn reenable_cams(
-	mut cams: Query<(Entity, &mut Camera), With<ReenableCameraToFixFuckingWeirdRenderingBugWtf>>,
-	mut commands: Commands,
-) {
-	for (entity, mut cam) in cams.iter_mut() {
-		if cam.is_active {
-			cam.is_active = false;
-		} else {
-			commands
-				.entity(entity)
-				.remove::<ReenableCameraToFixFuckingWeirdRenderingBugWtf>();
-		}
-	}
 }
 
 /// It makes more sense for the animation players to be related to the [`Player`] entity

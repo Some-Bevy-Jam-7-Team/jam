@@ -209,6 +209,7 @@ enum PostPhysicsAppSystems {
 /// This ordering here mean UI > Stomach > ViewModel > World.
 enum CameraOrder {
 	World,
+	#[expect(dead_code)]
 	ViewModel,
 	Stomach,
 	Ui,
