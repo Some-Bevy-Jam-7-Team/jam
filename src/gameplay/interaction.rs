@@ -1,22 +1,17 @@
+use crate::gameplay::TargetnameEntityIndex;
 use crate::gameplay::player::camera::PlayerCameraParent;
 use crate::gameplay::player::input::Interact;
+use crate::props::interactables::InteractableEntity;
 use crate::third_party::avian3d::CollisionLayer;
 use avian3d::prelude::*;
+use bevy::platform::collections::HashSet;
 use bevy::prelude::*;
-use bevy::{ecs::component::Component, picking::Pickable};
 use bevy_enhanced_input::prelude::*;
-
-/// Marker component for an entity being interactable by clicking on it.
-#[derive(Component, Default, Reflect, Debug)]
-#[reflect(Component)]
-#[require(Pickable, PhysicsPickable)]
-pub struct InteractableObject(pub Option<String>);
 
 /// [`Resource`] describing whether there is an interactable action available and optionally if there is a name for it.
 #[derive(Resource, Default)]
 pub struct AvailableInteraction {
 	pub target_entity: Option<Entity>,
-	pub description: Option<String>,
 }
 
 /// [`Event`] triggered when the specified entity was interacted with.
@@ -32,10 +27,30 @@ pub(super) fn plugin(app: &mut App) {
 fn interact_by_input_action(
 	_trigger: On<Fire<Interact>>,
 	resource: Res<AvailableInteraction>,
+	entity_map: Option<Res<TargetnameEntityIndex>>,
+	interaction_query: Query<&InteractableEntity>,
 	mut commands: Commands,
 ) {
 	if let Some(entity) = resource.target_entity {
 		commands.trigger(InteractEvent(entity));
+
+		// Also try shooting events to friends!
+		if let (Some(entity_map), Ok(interactable)) = (entity_map, interaction_query.get(entity)) {
+			let relay_name = interactable.get_interaction_relay();
+			let objective_name = interactable.get_completes_subobjective();
+			let targets = relay_name
+				.into_iter()
+				.chain(objective_name)
+				.flat_map(|targetname| entity_map.get_entity_by_targetname(targetname).iter())
+				.copied()
+				.collect::<HashSet<Entity>>();
+			for &related in targets.iter() {
+				// Don't double-trigger
+				if related != entity {
+					commands.trigger(InteractEvent(related));
+				}
+			}
+		}
 	}
 }
 
@@ -44,7 +59,7 @@ fn iquick_plz_do_not_kill_me(
 	cam: Single<&Transform, With<PlayerCameraParent>>,
 	pickable: Query<(Entity, &Pickable)>,
 	sensors: Query<Entity, With<Sensor>>,
-	interaction_query: Query<&InteractableObject>,
+	interaction_query: Query<&InteractableEntity>,
 	mut resource: ResMut<AvailableInteraction>,
 	collider: Query<&ColliderOf>,
 ) {
@@ -60,7 +75,6 @@ fn iquick_plz_do_not_kill_me(
 		})
 		.chain(sensors.iter());
 	resource.target_entity = None;
-	resource.description = None;
 	if let Some(hit) = spatial.cast_ray(
 		transform.translation,
 		transform.forward(),
@@ -74,9 +88,8 @@ fn iquick_plz_do_not_kill_me(
 		]),
 	) && let Ok(collider) = collider.get(hit.entity)
 		&& let Ok(interaction) = interaction_query.get(collider.body)
-		&& interaction.0.as_ref().is_some_and(|desc| !desc.is_empty())
+		&& interaction.is_active()
 	{
 		resource.target_entity = Some(collider.body);
-		resource.description = interaction.0.clone();
 	}
 }

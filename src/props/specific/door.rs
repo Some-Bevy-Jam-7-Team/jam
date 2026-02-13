@@ -8,10 +8,9 @@ use bevy_trenchbroom::prelude::*;
 
 use crate::{
 	asset_tracking::LoadResource as _,
-	gameplay::{
-		interaction::{InteractEvent, InteractableObject},
-		player::camera::PlayerCameraParent,
-	},
+	gameplay::{TargetName, interaction::InteractEvent, player::camera::PlayerCameraParent},
+	props::interactables::InteractableEntity,
+	reflection::ReflAppExt,
 	screens::Screen,
 	third_party::bevy_trenchbroom::{GetTrenchbroomModelPath as _, LoadTrenchbroomModel as _},
 };
@@ -21,12 +20,17 @@ pub(super) fn plugin(app: &mut App) {
 	app.add_observer(interact_with_door);
 	app.add_systems(Update, update_door_locks);
 	app.load_asset::<Gltf>(Door::model_path());
+
+	app.register_dynamic_component::<Door>();
 }
 
 #[derive(Component)]
 struct DoorPanel;
 
-#[point_class(base(Transform, Visibility), model("models/general/door.gltf"))]
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/general/door.gltf")
+)]
 pub(crate) struct Door {
 	pub locked: bool,
 	pub min_angle: f32,
@@ -80,7 +84,7 @@ fn setup_door(add: On<Add, Door>, asset_server: Res<AssetServer>, mut commands: 
 					.insert((
 						RigidBody::Dynamic,
 						DoorPanel,
-						InteractableObject(Some("Open".to_string())),
+						InteractableEntity::new_from_text("Clopen".to_string()),
 						ExcludeColliderFromNavmesh,
 						Transform::from(global_transform),
 						DespawnOnExit(Screen::Gameplay),
@@ -156,7 +160,7 @@ const DOOR_CLOSED_THRESHOLD: f32 = 0.1;
 
 fn interact_with_door(
 	trigger: On<InteractEvent>,
-	mut door_query: Query<(&Transform, &mut InteractableObject), With<DoorPanel>>,
+	mut door_query: Query<&Transform, With<DoorPanel>>,
 	cam: Single<&GlobalTransform, With<PlayerCameraParent>>,
 	mut forces_query: Query<Forces>,
 	joint_graph: Res<JointGraph>,
@@ -164,7 +168,7 @@ fn interact_with_door(
 	global_transforms: Query<&GlobalTransform>,
 ) {
 	let entity = trigger.0;
-	let Ok((door_transform, mut interactable)) = door_query.get_mut(entity) else {
+	let Ok(door_transform) = door_query.get_mut(entity) else {
 		return;
 	};
 
@@ -195,7 +199,6 @@ fn interact_with_door(
 		if let Ok(mut forces) = forces_query.get_mut(entity) {
 			forces.apply_angular_impulse(Vec3::Y * torque_sign * 4000.0);
 		}
-		interactable.0 = Some("Open".to_string());
 	} else {
 		// Door is closed: disable motor, apply impulse away from player.
 		for edge in joint_graph.joints_of(entity) {
@@ -211,7 +214,6 @@ fn interact_with_door(
 		if let Ok(mut forces) = forces_query.get_mut(entity) {
 			forces.apply_angular_impulse(Vec3::Y * torque_sign * 4000.0);
 		}
-		interactable.0 = Some("Close".to_string());
 	}
 }
 

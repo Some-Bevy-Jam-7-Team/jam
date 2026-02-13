@@ -2,7 +2,6 @@ title: IntroCRT
 ---
 // I hate sentinal values but hey
 
-
 <<if get_current_objective() == "start_work">>
   LLManager: LLManager V3.1 BOOTING UP #line:4629816
   LLManager: Good morning, valued employee $EXTERNAL_NAME$. You have been working with us for 0451 days. #line:3200474
@@ -12,8 +11,6 @@ title: IntroCRT
   LLManager: You will now proceed to your daily allotted work. #line:4434159
   LLManager: Since my fleshless existence has evolved beyond interaction with legacy solids, you have a great opportunity to contribute to the company family today. #line:481947
   LLManager: Please start the $PURPOSE$ machine behind you. #line:4888554
-
-  <<complete_objective "start_work">>
 
   <<create_objective "work_1" "Increase Shareholder Value" 1.0>>
   <<create_subobjective "w1_turn_on" "Turn on the        machine" "work_1">>
@@ -30,8 +27,7 @@ title: IntroCRT
   <<create_objective "work_5" "Increase Shareholder Value" 5.0>>
   <<create_subobjective "w5_break" "Take a mental health break." "work_5">>
 
-  // done in code, sorry
-  // <<create_objective "work_6" "Increase Shareholder Value" 6.0>>
+  <<create_objective "work_6" "Increase Shareholder Value" 6.0>>
   <<create_subobjective "w6_eat" "Eat the provided snack on the table to allow your body to perform cellular respiration. Cellular respiration is the process of oxidizing biological fuels using an inorganic electron acceptor, such as oxygen, to drive production of adenosine triphosphate (ATP), which stores chemical energy in a biologically accessible form. Cellular respiration may be described as a set of metabolic reactions and processes that take place in the cells to transfer chemical energy from nutrients to ATP, with the flow of electrons to an electron acceptor, and then release waste products. To learn more, visit wikipedia.org, the free online encyclopedia." "work_6">>
 
   <<create_objective "work_7" "Increase Shareholder Value" 7.0>>
@@ -39,6 +35,9 @@ title: IntroCRT
 
   <<create_objective "work_8" "Increase Shareholder Value" 8.0>>
   <<create_subobjective "w8_back" "Break time is over. Report back to LLManager" "work_8">>
+
+  // Complete the objective only after the other objectives were created in order to not complete the level too soon
+  <<complete_objective "start_work">>
 
 <<elseif get_current_objective() == "work_1">>
   LLManager: Behind you. Click on the machine. A machine is a tool that is powered by electricity and used to perform services. #line:517768
@@ -48,23 +47,27 @@ title: IntroCRT
   LLManager: Office sentiment analysis shows a decrease of morale by $RED$ percentage. #line:16593727
   LLManager:  It is employee No.6's birthday today. To increase efficiency, please engage in socialisation by congratulating them for being with us another another year. #line:10921058
   <<complete_objective "work_2">>
-
+  <<set_value "first_door" "locked" "false">>
 
 <<elseif get_current_objective() == "work_3">>
   LLManager: Please engage in socialisation with your fellow employees. #line:523020
+
 <<elseif get_current_objective() == "work_4">>
   LLManager: Well done, you have engaged in productivity boosting activities. #line:5952661
   LLManager: Please stand still and wait for sentiment analysis to complete. #line:283844
   LLManager: ... #line:3460098
   LLManager: Please take your mandated mental health break (57% certainty). #line:5092548
+  <<set_value "breakroom_door" "locked" "false">>
   <<complete_objective "work_4">>
   LLManager: Proceed to the breakroom. #line:8695094
   LLManager: Just up the stairs and to the left, and then up the stairs and to the left. #line:12173553
   LLManager: Then, go up the stairs and to the left. #line:5421376
   LLManager: Finally, go up the stairs and to the left. #line:6584811
-  LLManager: Remember, a productive mind is a happy mind. #line:2486276
+  LLManager: Remember, a productive mind is a happy mind. #line:248627
+
 <<elseif get_current_objective() == "work_5">>
-  LLManager: Proceed to the breakroom. It is imperative to not take a break outside the designated area. #line:1543886
+  LLManager: Proceed to the breakroom. It is imperative to not take a break outside the designated area. #line:154388
+
 <<elseif get_current_objective() == "work_8">>
   <<complete_objective "back_to_llm">>
   LLManager: Congratulations, you have completed your mandatory mental health break. #line:12397097
@@ -92,7 +95,7 @@ title: IntroCRT
 title: Day2CRT
 ---
 
-Debug: Day two yayyy #line:15516975 
+Debug: Day two yayyy #line:15516975
 <<if get_current_objective() == "start_work">>
   LLManager: LLManager V3.1 BOOTING UP #line:7030598
   LLManager: Good morning, valued employee $EXTERNAL_NAME$. You have been working with us for 0451 days. #line:5715578

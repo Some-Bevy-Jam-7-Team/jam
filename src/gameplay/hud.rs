@@ -1,6 +1,9 @@
 use bevy::prelude::*;
 
-use crate::{gameplay::interaction::AvailableInteraction, screens::Screen, ui_layout::RootWidget};
+use crate::{
+	gameplay::interaction::AvailableInteraction, props::interactables::InteractableEntity,
+	screens::Screen, ui_layout::RootWidget,
+};
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_systems(OnEnter(Screen::Gameplay), spawn_interaction_text)
@@ -25,9 +28,18 @@ fn spawn_interaction_text(mut commands: Commands) {
 fn update_interaction_text(
 	mut interaction_text: Single<&mut Text, With<InteractionHintText>>,
 	interaction_data: Res<AvailableInteraction>,
+	interactable: Query<&InteractableEntity>,
 ) {
 	***interaction_text = interaction_data
-		.description
-		.as_ref()
-		.map_or("".to_string(), |description| format!("Click:{description}"));
+		.target_entity
+		.map_or("".to_string(), |entity| {
+			interactable
+				.get(entity)
+				.ok()
+				.map_or("Click: ???".to_string(), |interactable| {
+					interactable
+						.get_hover_text()
+						.map_or("".to_string(), |value| format!("Click:{value}"))
+				})
+		});
 }
