@@ -247,9 +247,6 @@ bitflags! {
 		const GIZMO3 = 0b0001000;
 		/// Used by the stomach and its contents.
 		const STOMACH = 0b0010000;
-
-		/// Used for the Grass, so it doesn't render to/conflict with other cameras
-		const GRASS= 0b0100000;
 	}
 }
 

@@ -15,7 +15,6 @@ pub(crate) mod level;
 pub(crate) mod npc;
 pub(crate) mod objectives;
 pub(crate) mod player;
-pub(crate) mod scatter;
 pub(crate) mod stomach;
 
 pub(super) fn plugin(app: &mut App) {

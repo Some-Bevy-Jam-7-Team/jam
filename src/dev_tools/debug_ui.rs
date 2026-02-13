@@ -16,9 +16,6 @@ use bevy::{
 	prelude::*,
 };
 use bevy_enhanced_input::prelude::*;
-use bevy_feronia::prelude::{
-	ChunkDebugConfig, HeightMapDebugConfig, ScatterOccupancyMapDebugConfig,
-};
 use bevy_inspector_egui::{bevy_egui::EguiPlugin, quick::WorldInspectorPlugin};
 use bevy_landmass::debug::{EnableLandmassDebug, Landmass3dDebugPlugin, LandmassGizmos};
 use bevy_rerecast::debug::{DetailNavmeshGizmo, NavmeshGizmoConfig};
@@ -88,7 +85,6 @@ pub(super) fn plugin(app: &mut App) {
 	);
 	app.add_observer(advance_debug_state);
 	app.add_observer(toggle_egui_inspector);
-
 	app.add_systems(Startup, setup_debug_ui_text);
 	app.add_systems(
 		Update,
@@ -106,7 +102,6 @@ pub(super) fn plugin(app: &mut App) {
 			toggle_lighting_debug_ui.run_if(toggled_state(DebugState::Lighting)),
 			toggle_physics_debug_ui.run_if(toggled_state(DebugState::Physics)),
 			toggle_landmass_debug_ui.run_if(toggled_state(DebugState::Landmass)),
-			toggle_scatter_debug_ui.run_if(toggled_state(DebugState::Scatter)),
 		)
 			.chain()
 			.in_set(PostPhysicsAppSystems::ChangeUi),
@@ -155,7 +150,6 @@ fn update_debug_ui_text(
 		DebugState::Lighting => "Lighting",
 		DebugState::Physics => "Physics",
 		DebugState::Landmass => "Landmass",
-		DebugState::Scatter => "Scatter",
 	}
 	.to_string();
 }
@@ -184,33 +178,6 @@ fn toggle_landmass_debug_ui(
 ) {
 	**debug = !**debug;
 	navmesh.detail_navmesh.enabled = !navmesh.detail_navmesh.enabled;
-}
-
-fn toggle_scatter_debug_ui(
-	mut cmd: Commands,
-	scatter_debug: Option<Res<ScatterOccupancyMapDebugConfig>>,
-	height_map_debug: Option<Res<HeightMapDebugConfig>>,
-	chunk_debug: Option<Res<ChunkDebugConfig>>,
-) {
-	if scatter_debug.is_some() {
-		cmd.remove_resource::<ScatterOccupancyMapDebugConfig>();
-	} else {
-		cmd.init_resource::<ScatterOccupancyMapDebugConfig>();
-	}
-	if height_map_debug.is_some() {
-		cmd.remove_resource::<HeightMapDebugConfig>();
-	} else {
-		cmd.init_resource::<HeightMapDebugConfig>();
-	}
-	if chunk_debug.is_some() {
-		cmd.remove_resource::<ChunkDebugConfig>();
-	} else {
-		cmd.insert_resource(ChunkDebugConfig {
-			show_aabbs: true,
-			show_lod_ranges: true,
-			..default()
-		});
-	}
 }
 
 fn toggle_fps_overlay(mut config: ResMut<FpsOverlayConfig>) {
@@ -250,7 +217,6 @@ enum DebugState {
 	Lighting,
 	Physics,
 	Landmass,
-	Scatter,
 }
 
 impl DebugState {
@@ -260,8 +226,7 @@ impl DebugState {
 			Self::Ui => Self::Lighting,
 			Self::Lighting => Self::Physics,
 			Self::Physics => Self::Landmass,
-			Self::Landmass => Self::Scatter,
-			Self::Scatter => Self::None,
+			Self::Landmass => Self::None,
 		}
 	}
 }
