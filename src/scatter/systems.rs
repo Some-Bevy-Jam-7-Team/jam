@@ -9,6 +9,7 @@ use bevy_feronia::prelude::*;
 use tracing::debug;
 
 pub fn clear_scatter_root(mut cmd: Commands, root: Single<Entity, With<ScatterRoot>>) {
+	debug!("Clearing scatter root...");
 	cmd.trigger(ClearScatterRoot(*root));
 }
 
@@ -30,6 +31,7 @@ pub fn scatter(
 	debug!("Scattering...");
 	if *current_level != CurrentLevel::DayTwo {
 		cmd.trigger(ScatterDone);
+		return;
 	};
 
 	mw_clear_root.write((*root).into());
