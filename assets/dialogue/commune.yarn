@@ -8,7 +8,7 @@ Jeff: Oh the joys of capitalism. How I miss you. #line:15430720
 
 title: CEO2
 ---
-<<declare $talked_to_ceo_2 = true>>
+<<declare $talked_to_ceo_2 = false>>
 <<if $talked_to_ceo_2 == true>>
   Mark: Was ish mit minere Stimm passiert? #line:3651129
 <<else>>
@@ -22,7 +22,7 @@ title: CEO2
 
 title: CEO3
 ---
-<<declare $talked_to_ceo_3 = true>>
+<<declare $talked_to_ceo_3 = false>>
 <<if $talked_to_ceo_3 == true>>
   Jimmy: Incoherent sobbing. #line:4508850
 <<else>>
