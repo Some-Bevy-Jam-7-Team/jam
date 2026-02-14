@@ -1,71 +1,12 @@
+use crate::gameplay::level::EnvironmentAssets;
+use crate::third_party::avian3d::CollisionLayer;
+use crate::{RenderLayer, RenderLayers};
 use avian3d::prelude::*;
 use bevy::ecs::lifecycle::HookContext;
 use bevy::ecs::world::DeferredWorld;
 use bevy::prelude::*;
 use bevy_eidolon::prelude::*;
 use bevy_feronia::prelude::*;
-
-use crate::gameplay::core::EnvironmentTemperature;
-use crate::gameplay::level::LevelAssets;
-use crate::third_party::avian3d::CollisionLayer;
-use crate::{RenderLayer, RenderLayers};
-
-#[derive(Component)]
-#[component(on_add = Self::on_add)]
-pub struct Landscape;
-
-impl Landscape {
-	pub fn on_add(mut world: DeferredWorld, _ctx: HookContext) {
-		world
-			.get_resource_mut::<NextState<ScatterState>>()
-			.unwrap()
-			.set(ScatterState::Setup);
-
-		world
-			.get_resource_mut::<NextState<HeightMapState>>()
-			.unwrap()
-			.set(HeightMapState::Setup);
-	}
-}
-
-pub fn update_density_map(
-	mut ev_asset: MessageReader<AssetEvent<Image>>,
-	mut assets: ResMut<Assets<Image>>,
-	mut level_assets: ResMut<LevelAssets>,
-) {
-	for ev in ev_asset.read() {
-		if let AssetEvent::Modified { id, .. } = ev {
-			if *id == level_assets.grass_density_map.id() {
-				level_assets.grass_density_map = assets.get_strong_handle(*id).unwrap();
-			}
-			if *id == level_assets.rock_density_map.id() {
-				level_assets.rock_density_map = assets.get_strong_handle(*id).unwrap();
-			}
-			if *id == level_assets.mushroom_density_map.id() {
-				level_assets.mushroom_density_map = assets.get_strong_handle(*id).unwrap();
-			}
-		}
-	}
-}
-
-#[derive(Component)]
-#[require(EnvironmentTemperature)]
-pub struct Mushroom;
-
-pub fn scattered_shroom(
-	trigger: On<Add, ScatteredInstance>,
-	q_scattered_instance: Query<&ScatteredInstance>,
-	q_mushroom_layer: Query<(), With<MushroomLayer>>,
-	mut cmd: Commands,
-) {
-	if q_scattered_instance
-		.get(trigger.entity)
-		.and_then(|instance| q_mushroom_layer.get(**instance))
-		.is_ok()
-	{
-		cmd.entity(trigger.entity).insert(Mushroom);
-	}
-}
 
 #[derive(Component)]
 #[component(on_add = Self::on_add)]
@@ -86,14 +27,14 @@ pub(crate) struct RockLayer;
 
 impl RockLayer {
 	fn on_add(mut world: DeferredWorld, ctx: HookContext) {
-		let LevelAssets {
+		let EnvironmentAssets {
 			rocks,
 			rocks_med,
 			rocks_low,
 			rock_density_map,
 			..
 		} = world
-			.get_resource::<LevelAssets>()
+			.get_resource::<EnvironmentAssets>()
 			.cloned()
 			.expect("Assets should be added!");
 
@@ -151,7 +92,7 @@ impl RockLayer {
 	MicroStrength(0.1),
 	SCurveStrength(0.1),
 	BopStrength(0.2),
-    DistributionDensity(20.),
+    DistributionDensity(100.),
     Avoidance(0.02),
 	WindAffected,
 	SubsurfaceScattering,
@@ -160,12 +101,12 @@ pub struct MushroomLayer;
 
 impl MushroomLayer {
 	fn on_add(mut world: DeferredWorld, ctx: HookContext) {
-		let LevelAssets {
+		let EnvironmentAssets {
 			mushroom,
 			mushroom_density_map,
 			..
 		} = world
-			.get_resource::<LevelAssets>()
+			.get_resource::<EnvironmentAssets>()
 			.cloned()
 			.expect("Assets should be added!");
 
@@ -244,14 +185,14 @@ pub(crate) struct GrassLayer;
 
 impl GrassLayer {
 	fn on_add(mut world: DeferredWorld, ctx: HookContext) {
-		let LevelAssets {
+		let EnvironmentAssets {
 			grass,
 			grass_med,
 			grass_low,
 			grass_density_map,
 			..
 		} = world
-			.get_resource::<LevelAssets>()
+			.get_resource::<EnvironmentAssets>()
 			.cloned()
 			.expect("Assets should be added!");
 

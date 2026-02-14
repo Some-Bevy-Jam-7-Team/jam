@@ -1086,6 +1086,8 @@
 "classname" "door"
 "origin" "-136 -168 40"
 "angles" "0 90 0"
+"locked" "true"
+"targetname" "first_door"
 }
 // entity 4
 {
@@ -1097,9 +1099,9 @@
 // entity 5
 {
 "classname" "crt"
-"yarn_node" "IntroCRT"
 "origin" "-72 -252 80"
 "angles" "0 -180 0"
+"interaction_relay" "IntroCRT"
 }
 // entity 6
 {
@@ -1122,6 +1124,9 @@
 {
 "classname" "door"
 "origin" "8 -312 824"
+"targetname" "breakroom_door"
+"killtarget" ""
+"locked" "true"
 }
 // entity 10
 {
@@ -1198,6 +1203,7 @@
 "origin" "84 -336 872"
 "is_edible" "true"
 "completes_subobjective" "w6_eat"
+"interaction_relay" "breakroom_timer"
 }
 // entity 20
 {
@@ -1206,10 +1212,14 @@
 "completes_subobjective" "w1_turn_on"
 "angles" "0 0 0"
 "interaction_text_override" "Turn on"
+"interaction_relay" "generator_sfx"
 }
 // entity 21
 {
-"classname" "break_room_sensor"
+"classname" "sensor_entity"
+"sensor_detect_player" "true"
+"targetname" "breakroom_sensor"
+"sensor_on_collision_start" "work_5"
 // brush 0
 {
 ( 64 -320 864 ) ( 64 -319 864 ) ( 64 -320 865 ) origin [ 0 -1 0 16 ] [ 0 0 -1 48 ] 270 1 1
@@ -1230,6 +1240,32 @@
 }
 }
 // entity 22
+{
+"classname" "yarn_node"
+"origin" "-88 -248 104"
+"targetname" "IntroCRT"
+"yarn_node" "IntroCRT"
+}
+// entity 23
+{
+"classname" "timer_entity"
+"origin" "104 -312 952"
+"targetname" "breakroom_timer"
+"timer_length" "5"
+"timer_on_finish" "work_7"
+}
+// entity 24
+{
+"classname" "special_effects_node"
+"origin" "-216 -280 56"
+"targetname" "generator_sfx"
+"sfx_sample" "audio/sound_effects/machine_activation.ogg"
+"screen_flash_duration" "0.4"
+"knockback_velocity" "10.0"
+"camera_shake_duration" "0.4"
+"camera_shake_indensity" "0.03"
+}
+// entity 25
 {
 "classname" "func_group"
 "_tb_type" "_tb_layer"
@@ -1354,13 +1390,13 @@
 ( 1904 -272 736 ) ( 1904 -272 737 ) ( 1904 -271 736 ) cobble [ 0 1 0 0 ] [ 0 0 -1 -1536 ] 180 0.05 0.05
 }
 }
-// entity 23
+// entity 26
 {
 "classname" "light_point"
 "origin" "760 -456 1160"
 "_tb_layer" "2"
 }
-// entity 24
+// entity 27
 {
 "classname" "npc"
 "yarn_node" "IntroNpc12"
@@ -1368,7 +1404,7 @@
 "angles" "0 -180 0"
 "_tb_layer" "2"
 }
-// entity 25
+// entity 28
 {
 "classname" "func_group"
 "_tb_type" "_tb_layer"
@@ -1394,7 +1430,7 @@
 ( 336 -64 160 ) ( 336 -64 161 ) ( 336 -63 160 ) crate [ 0 1 0 0 ] [ 0 0 -1 -1824 ] 0 1 1
 }
 }
-// entity 26
+// entity 29
 {
 "classname" "light_point"
 "origin" "24 -120 120"
@@ -1402,7 +1438,7 @@
 "intensity" "100000.000000"
 "_tb_layer" "3"
 }
-// entity 27
+// entity 30
 {
 "classname" "light_point"
 "origin" "344 -120 136"
@@ -1410,7 +1446,7 @@
 "intensity" "100000.000000"
 "_tb_layer" "3"
 }
-// entity 28
+// entity 31
 {
 "classname" "func_group"
 "_tb_type" "_tb_layer"
@@ -1697,7 +1733,7 @@
 ( 192 168 64 ) ( 192 168 65 ) ( 192 169 64 ) crate [ -4.2862637970157366e-16 1 0 16 ] [ 0 0 -1 -1808 ] 90 1 1
 }
 }
-// entity 29
+// entity 32
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1705,21 +1741,21 @@
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 30
+// entity 33
 {
 "classname" "keyboard"
 "origin" "-200 84 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 31
+// entity 34
 {
 "classname" "mouse"
 "origin" "-200 100 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 32
+// entity 35
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1727,21 +1763,21 @@
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 33
+// entity 36
 {
 "classname" "keyboard"
 "origin" "-140 136 72"
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 34
+// entity 37
 {
 "classname" "mouse"
 "origin" "-124 136 72"
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 35
+// entity 38
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1749,28 +1785,28 @@
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 36
+// entity 39
 {
 "classname" "keyboard"
 "origin" "-48 84 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 37
+// entity 40
 {
 "classname" "mouse"
 "origin" "-48 100 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 38
+// entity 41
 {
 "classname" "keyboard"
 "origin" "-20 136 72"
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 39
+// entity 42
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1778,28 +1814,28 @@
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 40
+// entity 43
 {
 "classname" "mouse"
 "origin" "-4 136 72"
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 41
+// entity 44
 {
 "classname" "keyboard"
 "origin" "-12 192 72"
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 42
+// entity 45
 {
 "classname" "mouse"
 "origin" "-28 192 72"
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 43
+// entity 46
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1807,21 +1843,21 @@
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 44
+// entity 47
 {
 "classname" "mouse"
 "origin" "-48 236 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 45
+// entity 48
 {
 "classname" "keyboard"
 "origin" "-48 220 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 46
+// entity 49
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1829,7 +1865,7 @@
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 47
+// entity 50
 {
 "classname" "npc"
 "yarn_node" "IntroNpc5"
@@ -1837,14 +1873,14 @@
 "angles" "0 -180 0"
 "_tb_layer" "4"
 }
-// entity 48
+// entity 51
 {
 "classname" "keyboard"
 "origin" "-124 192 72"
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 49
+// entity 52
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1852,21 +1888,21 @@
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 50
+// entity 53
 {
 "classname" "mouse"
 "origin" "-140 192 72"
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 51
+// entity 54
 {
 "classname" "keyboard"
 "origin" "-200 212 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 52
+// entity 55
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1874,28 +1910,28 @@
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 53
+// entity 56
 {
 "classname" "mouse"
 "origin" "-200 228 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 54
+// entity 57
 {
 "classname" "mouse"
 "origin" "148 128 72"
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 55
+// entity 58
 {
 "classname" "keyboard"
 "origin" "132 128 72"
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 56
+// entity 59
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1903,7 +1939,7 @@
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 57
+// entity 60
 {
 "classname" "npc"
 "yarn_node" "IntroNpc12"
@@ -1912,21 +1948,21 @@
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 58
+// entity 61
 {
 "classname" "mouse"
 "origin" "168 68 72"
 "angles" "0 180 0"
 "_tb_layer" "4"
 }
-// entity 59
+// entity 62
 {
 "classname" "keyboard"
 "origin" "168 84 72"
 "angles" "0 180 0"
 "_tb_layer" "4"
 }
-// entity 60
+// entity 63
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1934,21 +1970,21 @@
 "angles" "0 180 0"
 "_tb_layer" "4"
 }
-// entity 61
+// entity 64
 {
 "classname" "mouse"
 "origin" "260 128 72"
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 62
+// entity 65
 {
 "classname" "keyboard"
 "origin" "244 128 72"
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 63
+// entity 66
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1956,21 +1992,21 @@
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 64
+// entity 67
 {
 "classname" "mouse"
 "origin" "320 92 72"
 "angles" "0 -180 0"
 "_tb_layer" "4"
 }
-// entity 65
+// entity 68
 {
 "classname" "keyboard"
 "origin" "320 108 72"
 "angles" "0 -180 0"
 "_tb_layer" "4"
 }
-// entity 66
+// entity 69
 {
 "classname" "crt"
 "yarn_node" ""
@@ -1978,21 +2014,21 @@
 "angles" "0 -180 0"
 "_tb_layer" "4"
 }
-// entity 67
+// entity 70
 {
 "classname" "keyboard"
 "origin" "224 220 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 68
+// entity 71
 {
 "classname" "mouse"
 "origin" "224 236 72"
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 69
+// entity 72
 {
 "classname" "crt"
 "yarn_node" ""
@@ -2000,21 +2036,21 @@
 "angles" "0 0 0"
 "_tb_layer" "4"
 }
-// entity 70
+// entity 73
 {
 "classname" "mouse"
 "origin" "284 184 72"
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 71
+// entity 74
 {
 "classname" "keyboard"
 "origin" "300 184 72"
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 72
+// entity 75
 {
 "classname" "crt"
 "yarn_node" ""
@@ -2022,14 +2058,14 @@
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 73
+// entity 76
 {
 "classname" "keyboard"
 "origin" "140 184 72"
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 74
+// entity 77
 {
 "classname" "crt"
 "yarn_node" ""
@@ -2037,28 +2073,28 @@
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 75
+// entity 78
 {
 "classname" "mouse"
 "origin" "124 184 72"
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 76
+// entity 79
 {
 "classname" "mouse"
 "origin" "168 212 72"
 "angles" "0 180 0"
 "_tb_layer" "4"
 }
-// entity 77
+// entity 80
 {
 "classname" "keyboard"
 "origin" "168 228 72"
 "angles" "0 180 0"
 "_tb_layer" "4"
 }
-// entity 78
+// entity 81
 {
 "classname" "crt"
 "yarn_node" "IntroNpc6"
@@ -2066,7 +2102,7 @@
 "angles" "0 180 0"
 "_tb_layer" "4"
 }
-// entity 79
+// entity 82
 {
 "classname" "npc"
 "yarn_node" "IntroNpc4"
@@ -2074,7 +2110,7 @@
 "animation_lock" "Typing"
 "_tb_layer" "4"
 }
-// entity 80
+// entity 83
 {
 "classname" "npc"
 "yarn_node" "IntroNpc10"
@@ -2082,7 +2118,7 @@
 "angles" "0 180 0"
 "_tb_layer" "4"
 }
-// entity 81
+// entity 84
 {
 "classname" "npc"
 "yarn_node" "IntroNpc3"
@@ -2090,7 +2126,7 @@
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 82
+// entity 85
 {
 "classname" "npc"
 "yarn_node" "IntroNpc2"
@@ -2099,7 +2135,7 @@
 "animation_lock" "Typing"
 "_tb_layer" "4"
 }
-// entity 83
+// entity 86
 {
 "classname" "npc"
 "yarn_node" "IntroNpc1"
@@ -2108,7 +2144,7 @@
 "animation_lock" "Typing"
 "_tb_layer" "4"
 }
-// entity 84
+// entity 87
 {
 "classname" "npc"
 "yarn_node" "IntroNpc7"
@@ -2116,7 +2152,7 @@
 "angles" "0 90 0"
 "_tb_layer" "4"
 }
-// entity 85
+// entity 88
 {
 "classname" "npc"
 "yarn_node" "IntroNpc8"
@@ -2125,7 +2161,7 @@
 "animation_lock" "Standing"
 "_tb_layer" "4"
 }
-// entity 86
+// entity 89
 {
 "classname" "npc"
 "yarn_node" "IntroNpc9"
@@ -2134,7 +2170,7 @@
 "animation_lock" "Typing"
 "_tb_layer" "4"
 }
-// entity 87
+// entity 90
 {
 "classname" "npc"
 "yarn_node" "IntroNpc11"
@@ -2142,7 +2178,7 @@
 "angles" "0 -90 0"
 "_tb_layer" "4"
 }
-// entity 88
+// entity 91
 {
 "classname" "npc"
 "yarn_node" "IntroNpc6"

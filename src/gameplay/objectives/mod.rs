@@ -1,10 +1,13 @@
 #[cfg(feature = "dev")]
 use bevy::input::common_conditions::input_just_pressed;
-use bevy::prelude::*;
+use bevy::{
+	ecs::{lifecycle::HookContext, world::DeferredWorld},
+	prelude::*,
+};
 use bevy_trenchbroom::prelude::*;
 
 use crate::{
-	gameplay::interaction::{InteractEvent, InteractableObject},
+	gameplay::{TargetName, TargetnameEntityIndex, interaction::InteractEvent},
 	props::logic_entity::ObjectiveEntity,
 	screens::Screen,
 };
@@ -19,8 +22,7 @@ pub(super) fn plugin(app: &mut App) {
 		Update,
 		(update_current_objective, trigger_all_objectives_done).chain(),
 	);
-	//	app.add_systems(Update, find_current_objective);
-	app.add_observer(watch_for_completors);
+	app.add_observer(watch_for_completions);
 	app.add_systems(PostUpdate, complete_parent_objectives);
 	#[cfg(feature = "dev")]
 	app.add_systems(
@@ -36,19 +38,10 @@ pub(super) fn plugin(app: &mut App) {
 #[reflect(Resource)]
 pub struct CurrentObjective(Option<Entity>);
 
-/// Marker for entities that complete subobjectives on interact
-#[derive(Component, Reflect, Debug)]
-#[reflect(Component)]
-#[require(InteractableObject(Some("Complete Objective".to_string())))]
-pub struct ObjectiveCompletor {
-	/// `ObjectiveEntity::targetname` of the objective completed by this completor
-	pub target: String,
-}
-
 /// A game objective.
 #[derive(Default)]
 #[base_class]
-#[require(DespawnOnExit::<Screen>(Screen::Gameplay))]
+#[component(on_add=Objective::on_add)]
 pub struct Objective {
 	/// The description of the objective.
 	pub description: String,
@@ -60,6 +53,16 @@ impl Objective {
 		Self {
 			description: description.into(),
 		}
+	}
+
+	fn on_add(mut world: DeferredWorld, ctx: HookContext) {
+		if world.is_scene_world() {
+			return;
+		}
+		world
+			.commands()
+			.entity(ctx.entity)
+			.insert(DespawnOnExit(Screen::Gameplay));
 	}
 }
 
@@ -81,18 +84,13 @@ pub struct SubObjectiveOf {
 #[relationship_target(relationship = SubObjectiveOf)]
 pub struct SubObjectives(Vec<Entity>);
 
-fn watch_for_completors(
+fn watch_for_completions(
 	trigger: On<InteractEvent>,
-	objective_query: Query<(Entity, &ObjectiveEntity)>,
-	completor_query: Query<&ObjectiveCompletor>,
+	objective_query: Query<(), With<Objective>>,
 	mut commands: Commands,
 ) {
-	if let Ok(completor) = completor_query.get(trigger.0) {
-		for (entity, objective) in objective_query.iter() {
-			if objective.targetname == completor.target {
-				commands.entity(entity).insert(ObjectiveCompleted);
-			}
-		}
+	if objective_query.contains(trigger.0) {
+		commands.entity(trigger.0).insert(ObjectiveCompleted);
 	}
 }
 
@@ -102,8 +100,8 @@ pub(crate) fn create_dialogue_objective(
 ) {
 	commands.spawn((
 		Name::new(format!("Objective: {identifier}")),
+		TargetName::new(identifier),
 		ObjectiveEntity {
-			targetname: identifier,
 			target: None,
 			objective_order: order,
 		},
@@ -117,8 +115,8 @@ pub(crate) fn create_dialogue_subobjective(
 ) {
 	commands.spawn((
 		Name::new(format!("Subobjective: {identifier} of {parent_identifier}")),
+		TargetName::new(identifier),
 		ObjectiveEntity {
-			targetname: identifier,
 			target: Some(parent_identifier),
 			objective_order: 0.0,
 		},
@@ -129,23 +127,25 @@ pub(crate) fn create_dialogue_subobjective(
 pub(crate) fn complete_dialogue_objective(
 	In(identifier): In<String>,
 	mut commands: Commands,
-	objectives: Query<(Entity, &ObjectiveEntity)>,
+	objective_query: Query<(), With<Objective>>,
+	entity_name_index: Res<TargetnameEntityIndex>,
 ) {
-	if let Some((objective, _)) = objectives
+	for entity in entity_name_index
+		.get_entity_by_targetname(&identifier)
 		.iter()
-		.find(|(_, objective)| objective.targetname == identifier)
+		.filter(|entity| objective_query.contains(**entity))
 	{
-		commands.entity(objective).insert(ObjectiveCompleted);
+		commands.entity(*entity).insert(ObjectiveCompleted);
 	}
 }
 
 pub(crate) fn get_dialogue_current_objective(
 	current_objective: Res<CurrentObjective>,
-	objective_query: Query<&ObjectiveEntity>,
+	objective_query: Query<&TargetName>,
 ) -> String {
 	(**current_objective)
 		.and_then(|entity| objective_query.get(entity).ok())
-		.map(|objective| objective.targetname.clone())
+		.map(|objective| (**objective).clone())
 		.unwrap_or_default()
 }
 

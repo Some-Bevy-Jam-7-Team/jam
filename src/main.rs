@@ -12,11 +12,12 @@ mod gameplay;
 mod hdr;
 mod menus;
 mod props;
+mod reflection;
+mod scatter;
 mod screens;
 mod shader_compilation;
 mod theme;
 mod third_party;
-mod timer;
 mod ui_camera;
 mod ui_layout;
 
@@ -161,6 +162,9 @@ fn main() -> AppExit {
 		bevy::remote::http::RemoteHttpPlugin::default(),
 	));
 
+	// Add Celeste Chapter 6.
+	app.add_plugins(reflection::plugin);
+
 	// Add third-party plugins.
 	app.add_plugins(third_party::plugin);
 
@@ -179,6 +183,7 @@ fn main() -> AppExit {
 		ui_layout::plugin,
 		hdr::plugin,
 		audio::plugin,
+		scatter::plugin,
 	));
 
 	// Add plugins that proload levels. These have to come later than the other plugins

@@ -2,15 +2,16 @@
 
 use bevy::prelude::*;
 
-use bevy_trenchbroom::prelude::*;
 use bevy_yarnspinner::{events::DialogueCompleted, prelude::*};
 
 use crate::{
 	gameplay::{
-		interaction::InteractableObject,
 		objectives::{
 			complete_dialogue_objective, create_dialogue_objective, create_dialogue_subobjective,
 			get_dialogue_current_objective,
+		},
+		scripting::{
+			despawn_entity, read_bool_from_entity, set_value_on_entity, toggle_bool_on_entity,
 		},
 	},
 	screens::Screen,
@@ -50,11 +51,23 @@ fn setup_dialogue_runner(mut commands: Commands, yarn_project: Res<YarnProject>)
 		.add_command(
 			"create_subobjective",
 			commands.register_system(create_dialogue_subobjective),
+		)
+		.add_command("despawn_entity", commands.register_system(despawn_entity))
+		.add_command("set_value", commands.register_system(set_value_on_entity))
+		.add_command(
+			"toggle_value",
+			commands.register_system(toggle_bool_on_entity),
 		);
-	dialogue_runner.library_mut().add_function(
-		"get_current_objective",
-		commands.register_system(get_dialogue_current_objective),
-	);
+	dialogue_runner
+		.library_mut()
+		.add_function(
+			"get_current_objective",
+			commands.register_system(get_dialogue_current_objective),
+		)
+		.add_function(
+			"is_bool_set",
+			commands.register_system(read_bool_from_entity),
+		);
 	commands.spawn((
 		DespawnOnExit(Screen::Gameplay),
 		Name::new("Dialogue Runner"),
@@ -70,23 +83,5 @@ fn abort_all_dialogues_when_leaving_gameplay(
 		commands
 			.entity(dialogue_runner)
 			.trigger(|entity| DialogueCompleted { entity });
-	}
-}
-
-#[base_class]
-#[derive(Eq, PartialEq, Clone, Debug)]
-#[require(InteractableObject(Some("Talk".to_string())))]
-pub(crate) struct YarnNode {
-	#[class(must_set)]
-	pub(crate) yarn_node: String,
-	pub(crate) prompt: String,
-}
-
-impl Default for YarnNode {
-	fn default() -> Self {
-		Self {
-			yarn_node: "".to_string(),
-			prompt: "Talk".to_string(),
-		}
 	}
 }

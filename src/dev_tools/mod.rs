@@ -8,8 +8,7 @@ pub(crate) mod log_components;
 mod validate_preloading;
 
 use crate::{
-	gameplay::interaction::{InteractEvent, InteractableObject},
-	menus::Menu,
+	gameplay::interaction::InteractEvent, menus::Menu, props::interactables::InteractableEntity,
 	screens::loading::LoadingScreen,
 };
 
@@ -33,7 +32,7 @@ pub(super) fn plugin(app: &mut App) {
 fn interacted_entity(
 	event: On<InteractEvent>,
 	names: Query<&Name>,
-	interactions: Query<&InteractableObject>,
+	interactions: Query<&InteractableEntity>,
 ) {
 	info!(
 		"Interacted with: {}, with name: {:?} and interaction text: {:?}",
@@ -42,6 +41,6 @@ fn interacted_entity(
 		interactions
 			.get(event.0)
 			.ok()
-			.map(|interaction| interaction.0.as_ref()),
+			.map(|interaction| interaction.get_hover_text()),
 	)
 }

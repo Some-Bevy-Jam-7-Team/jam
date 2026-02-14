@@ -8,7 +8,7 @@ use bevy::{
 };
 
 use crate::{
-	gameplay::npc::Npc, menus::Menu, theme::widget,
+	gameplay::npc::Npc, menus::Menu, screens::Screen, theme::widget,
 	third_party::bevy_trenchbroom::GetTrenchbroomModelPath as _,
 };
 
@@ -181,8 +181,13 @@ fn spawn_dancer(
 		);
 }
 
-fn open_level_select(_: On<Pointer<Click>>, mut next_menu: ResMut<NextState<Menu>>) {
-	next_menu.set(Menu::LevelSelect);
+fn open_level_select(
+	_: On<Pointer<Click>>,
+	mut next_menu: ResMut<NextState<Menu>>,
+	mut next_screen: ResMut<NextState<Screen>>,
+) {
+	next_screen.set(Screen::Loading);
+	next_menu.set(Menu::None);
 }
 
 fn open_settings_menu(_: On<Pointer<Click>>, mut next_menu: ResMut<NextState<Menu>>) {

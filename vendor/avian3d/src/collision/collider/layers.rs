@@ -112,6 +112,21 @@ impl<L: Into<LayerMask>, const N: usize> From<[L; N]> for LayerMask {
     }
 }
 
+impl<L: Into<LayerMask>> From<Vec<L>> for LayerMask {
+    fn from(value: Vec<L>) -> Self {
+        let mut bits = 0;
+
+        for layer in value.into_iter().map(|l| {
+            let layers: LayerMask = l.into();
+            layers
+        }) {
+            bits |= layer.0;
+        }
+
+        LayerMask(bits)
+    }
+}
+
 impl LayerMask {
     /// Contains all layers.
     pub const ALL: Self = Self(0xffff_ffff);
