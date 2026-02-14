@@ -11,7 +11,7 @@ use bevy::{
 use bevy_inspector_egui::restricted_world_view::Error;
 
 use crate::{
-	gameplay::TargetnameEntityIndex,
+	gameplay::{TargetName, TargetnameEntityIndex, interaction::InteractEvent},
 	reflection::{DynamicPropertyMap, DynamicallyModifiableType},
 };
 
@@ -110,6 +110,22 @@ pub fn toggle_bool_on_entity(input: In<(String, String)>, world: &mut World) {
 			}
 		},
 		world,
+	);
+}
+
+pub fn interact_with_entity(
+	input: In<String>,
+	mut commands: Commands,
+	interactables: Query<(Entity, &TargetName)>,
+) {
+	for (entity, name) in interactables.iter() {
+		if name.targetname == input.0 {
+			commands.trigger(InteractEvent(entity));
+		}
+	}
+	warn!(
+		"Failed to interact with {}: no such targetname found",
+		input.0
 	);
 }
 

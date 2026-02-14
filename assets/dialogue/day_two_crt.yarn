@@ -52,8 +52,9 @@ title: Day2CRT
 
 title: Day2CRTCursed
 ---
-<<declare $power = false>>
-<< if $power == false >>
+<<declare $cursed_power = false>>
+
+<<if $cursed_power == false>>
 	LLManager: POWER STATUS CRITICAL #line:11979818
 	LLManager: PLEASE ENABLE EMERGENCY POWER NOW == PROTOCOL SIPHON SHEOL #line:8316181
 	LLManager: MAY GOD HAVE MERCY ON YOUR SOUL #line:1862433
@@ -62,8 +63,8 @@ title: Day2CRTCursed
     LLManager: Hell Hell Hell Hello worker. Hello worker. #line:12732615
     LLManager: Analysis shows your mental health status is beyond tolerance levels (5120%) #line:1165945
     LLManager: Exit the facility immediately to avoid demoralizing others, then fill out form A38 to calculate your disciplinary fee. #line:9477514
-    <<set_value "sensor_cursed_tp" "sensor_on_collision_start" "tp_cursed_dst">>
     <<complete_objective "work_6">>
+    <<interact_with "tp_cursed_dst">>
 <<endif>>
 ===
 

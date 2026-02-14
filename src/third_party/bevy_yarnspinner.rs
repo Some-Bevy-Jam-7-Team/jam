@@ -11,7 +11,8 @@ use crate::{
 			get_dialogue_current_objective,
 		},
 		scripting::{
-			despawn_entity, read_bool_from_entity, set_value_on_entity, toggle_bool_on_entity,
+			despawn_entity, interact_with_entity, read_bool_from_entity, set_value_on_entity,
+			toggle_bool_on_entity,
 		},
 	},
 	screens::Screen,
@@ -59,6 +60,10 @@ fn setup_dialogue_runner(mut commands: Commands, yarn_project: Res<YarnProject>)
 		.add_command(
 			"toggle_value",
 			commands.register_system(toggle_bool_on_entity),
+		)
+		.add_command(
+			"interact_with",
+			commands.register_system(interact_with_entity),
 		);
 	dialogue_runner
 		.library_mut()
