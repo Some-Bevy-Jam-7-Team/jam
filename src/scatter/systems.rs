@@ -17,20 +17,26 @@ pub fn spawn_scatter_layers(mut cmd: Commands, landscape: Single<Entity, With<Sc
 	cmd.spawn((GrassLayer, ChildOf(landscape)));
 }
 
-pub fn clear_scatter_root(mut cmd: Commands, scatter_root: Single<Entity, With<ScatterRoot>>) {
+pub fn clear_scatter_root(
+	mut mw_clear_root: MessageWriter<ClearScatterRoot>,
+	scatter_root: Single<Entity, With<ScatterRoot>>,
+) {
 	debug!("Clearing scatter root...");
-	cmd.trigger(ClearScatterRoot(*scatter_root));
+	mw_clear_root.write((*scatter_root).into());
 }
 
-pub fn toggle_chunked(
+pub fn toggle_layers(
 	mut cmd: Commands,
 	mut ns_scatter: ResMut<NextState<ScatterState>>,
-	q_chunked_layer: Query<Entity, With<ScatterChunked>>,
+	q_layer: Query<Entity, With<ScatterLayer>>,
 	current_level: Res<CurrentLevel>,
 ) {
-	let chunked = matches!(*current_level, CurrentLevel::Commune);
-	for layer in q_chunked_layer.iter() {
-		cmd.entity(layer).insert(ScatterLayerEnabled(chunked));
+	let enabled = matches!(
+		*current_level,
+		CurrentLevel::Commune | CurrentLevel::Shaders
+	);
+	for layer in q_layer.iter() {
+		cmd.entity(layer).insert(ScatterLayerEnabled(enabled));
 	}
 
 	ns_scatter.set(ScatterState::Setup);
@@ -41,8 +47,9 @@ pub fn scatter(
 	mut mw_clear_root: MessageWriter<ClearScatterRoot>,
 	root: Single<Entity, With<ScatterRoot>>,
 	current_level: Res<CurrentLevel>,
+	scatter_root: Single<Entity, With<ScatterRoot>>,
 ) {
-	mw_clear_root.write((*root).into());
+	mw_clear_root.write((*scatter_root).into());
 
 	match *current_level {
 		CurrentLevel::Commune | CurrentLevel::Shaders => {

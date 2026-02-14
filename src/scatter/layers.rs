@@ -1,8 +1,9 @@
 use crate::gameplay::level::EnvironmentAssets;
-use crate::scatter::quality::{GrassDensitySetting, MushroomDensitySetting, QualitySetting};
 use crate::props::effects::disable_shadow_casting_on_instance_ready;
+use crate::scatter::quality::{GrassDensitySetting, MushroomDensitySetting, QualitySetting};
 use crate::third_party::avian3d::CollisionLayer;
 use crate::{RenderLayer, RenderLayers};
+
 use avian3d::prelude::*;
 use bevy::ecs::lifecycle::HookContext;
 use bevy::ecs::world::DeferredWorld;
@@ -31,8 +32,6 @@ impl RockLayer {
 	fn on_add(mut world: DeferredWorld, ctx: HookContext) {
 		let EnvironmentAssets {
 			rocks,
-			rocks_med,
-			rocks_low,
 			rock_density_map,
 			..
 		} = world
@@ -49,30 +48,19 @@ impl RockLayer {
 					LayerMask::ALL,
 				));
 
-		cmd.entity(ctx.entity)
-			.insert((DistributionPattern(rock_density_map),));
+		cmd.entity(ctx.entity).insert((
+			DistributionPattern(rock_density_map),
+			LodConfig {
+				density: vec![100.0.into()],
+				..default()
+			},
+		));
 
 		cmd.spawn((
 			LevelOfDetail(0),
 			ChildOf(ctx.entity),
 			SceneRoot(rocks),
 			collider_hierarchy.clone(),
-		))
-		.observe(disable_shadow_casting_on_instance_ready);
-
-		cmd.spawn((
-			LevelOfDetail(1),
-			ChildOf(ctx.entity),
-			SceneRoot(rocks_med),
-			collider_hierarchy.clone(),
-		))
-		.observe(disable_shadow_casting_on_instance_ready);
-
-		cmd.spawn((
-			LevelOfDetail(2),
-			ChildOf(ctx.entity),
-			SceneRoot(rocks_low),
-			collider_hierarchy,
 		))
 		.observe(disable_shadow_casting_on_instance_ready);
 	}
@@ -123,35 +111,22 @@ impl MushroomLayer {
 		cmd.entity(ctx.entity).insert((
 			DistributionPattern(mushroom_density_map),
 			DistributionDensity::from(density),
+			LodConfig {
+				density: vec![100.0.into()],
+				..default()
+			},
 		));
 
 		let collider_hierarchy =
 			ColliderConstructorHierarchy::new(ColliderConstructor::ConvexHullFromMesh)
 				.with_default_layers(CollisionLayers::new(CollisionLayer::Prop, LayerMask::ALL));
 
-		cmd.spawn_batch([
-			(
-				ChildOf(ctx.entity),
-				SceneRoot(mushroom.clone()),
-				LevelOfDetail(0),
-				RigidBody::Static,
-				collider_hierarchy.clone(),
-			),
-			(
-				ChildOf(ctx.entity),
-				SceneRoot(mushroom.clone()),
-				LevelOfDetail(1),
-				RigidBody::Static,
-				collider_hierarchy.clone(),
-			),
-			(
-				ChildOf(ctx.entity),
-				SceneRoot(mushroom),
-				LevelOfDetail(2),
-				RigidBody::Static,
-				collider_hierarchy,
-			),
-		]);
+		cmd.spawn_batch([(
+			ChildOf(ctx.entity),
+			SceneRoot(mushroom.clone()),
+			RigidBody::Static,
+			collider_hierarchy.clone(),
+		)]);
 	}
 }
 

@@ -41,11 +41,7 @@ impl Plugin for ScatterPlugin {
 			)
 			.add_systems(
 				OnEnter(ScatterState::Loading),
-				(clear_scatter_root, toggle_chunked),
-			)
-			.add_systems(
-				OnExit(LoadingScreen::Shaders),
-				(clear_scatter_root, toggle_chunked),
+				(clear_scatter_root, toggle_layers),
 			)
 			.add_systems(
 				Update,
