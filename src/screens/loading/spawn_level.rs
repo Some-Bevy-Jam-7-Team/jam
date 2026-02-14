@@ -5,8 +5,8 @@ use bevy_feronia::prelude::{HeightMapState, ScatterRoot, ScatterState};
 use bevy_landmass::{NavMesh, coords::ThreeD};
 
 use super::LoadingScreen;
-use crate::gameplay::level::{CurrentLevel, spawn_landscape, spawn_level};
 use crate::font::VARIABLE_FONT;
+use crate::gameplay::level::{CurrentLevel, spawn_landscape, spawn_level};
 use crate::scatter::ScatterDone;
 use crate::theme::palette::HEADER_TEXT;
 use crate::{
