@@ -1,38 +1,105 @@
 title: CEO1
 ---
 Jeff: Ever since the revolution they've kept me here stacking boxes #line:6590288
+Jeff: Those peasants don't know the value of hard work.
+Jeff: They could never understand the joy of shareholder value, or stock prices rising, or the thrill of pulling of your first successful rug pull.
+Jeff: Oh the joys of capitalism. How I miss you.
 ===
 
 title: CEO2
 ---
-Mark: I'm tired. #line:9637217
+Mark: I am devising a scheme to carry two boxes at once.
+Mark: It will double the value I am producing. #line:9637217
+Mark: Then if I can stack the boxes in a tower I will finally reach our lord and saviour.
+
 ===
 
 title: CEO3
 ---
-Jimmy: I wasn't even rich. They just didn't like the way my face looks. #line:13409629
+Jimmy: I used to own ten homes. #line:13409629
+Jimmy: But ever since they locked me in here I haven't been able to visit them.
+Jimmy: I hope squatters haven't moved in.
+Jimmy: Those simple minded peasants probably won't understand the value of what I own.
+Jimmy: I just hope they never find the Villiano's Toastermaster 3000.
+Jimmy: Or the gold plated Vonderbike's Nuclear Microwave.
+Jimmy: Oh how I miss them.
+Jimmy: Incoherent sobbing.
 ===
 
 title: MushroomButcher
 ---
 Mushroom Lidya: Hello there love. #line:2241604
 Mushroom Lidya: If you need any mushrooms feel free to take them. #line:2509048
-Mushroom Lidya: They'll be back by tomorrow. #line:12317318
+-> Why mushrooms?
+  Mushroom Lidya: The ██████ killed all other plant life.
+  -> The what?
+    Mushroom Lidya: The ██████!
+-> Why are you just giving them to me
+  Mushroom Jannet: It's the free market innit.
 ===
 
 title: Dave
 ---
-Dave: Hello! #line:3053384
-Dave: Hic. #line:15738861
-Dave: Welcome to the anarchist syndicalists commune of Dave #line:13730968
--> Anarcho what #line:4415106
-  Dave: Imagine a libertarian, but they actually fight against the government and don't want to fuck kids. #line:5129801
--> Did I just fall from the sky #line:10020893
-  Dave: Happens all the time. You'll get used to it. #line:1652181
+Dave: Welcome to the Anarcho Syndicalist Commune of Dave.
+Dave: That's me!
+-> Anarcho huh
+  Dave: Anarcho Syndicalist!
+  Dave: I'm going to be honest I have no idea what it all means.
+  Dave: But it has my name at the end of it so it must be good.
+  Dave: From what I gather I'm supposed to be in charge of round 'ere.
+
+  -> How did that happen?
+    Dave: Well you see one night I was sloshed at the pub with my mates.
+    Dave: And we got to talking about the miserable state of affairs round these parts.
+    Dave: It was even worse than Scunthorpe.
+    Dave: To cut a long story short we stumbled out the pub protesting the state of things.
+    Dave: When the local council saw us coming they up and ran away.
+    Dave: And by the time I woke up with a hangover I was bloody well in charge.
+    Dave: Or at least I think that's how things went down.
+
+-> Did I just fall from the sky?
+  Dave: Happens all the time.
+  Dave: Sometimes.
+  Dave: You'll get used to it.
+
+-> Where is this place
+  Dave: Half way between Hull and Birmingham.
+  Dave: Just north of Norwich.
+  Dave: South by south west of Manchester.
+  Dave: Roughly 28° south of Coventry.
+  Dave: About an hour by bus from Swindon.
+  Dave: Twenty minutes east of the midlands.
+  Dave: We used to be twinned with Mügeln.
+  Dave: Does that clear it up
+
+  -> My head hurts.
+    Dave: Well get some ale and chips into you. It'll clear that right up.
+
+  -> You're British??
+    Dave: As British and Chips and Curry.
+
+  -> You're Northern??
+    Dave: Right you are.
+===
+
+// TODO: Add npc for Jannet.
+title: Jannet
+---
+Jannet: Damn estrogen is magic.
+Jannet: I have boobs now.
+Jannet: Every single woman who's ever had a crush on me is now Gay.
+Jannet: They should never have given me this power.
 ===
 
 title: Storm
 ---
-Storm: Stupid weather stole my house. #line:10973886 
-Storm: Can't have shit in ascd. #line:7346689 
+Storm: Hello there.
+Storm: You wouldn't have happened to see a house fly by you while you were up in the air?
+Storm: There was a right storm last night and it appears to have made off with our house.
+-> No
+  Storm: That's a shame.
+  Storm: Where on earth are we going to sleep?
+
+  -> Maybe you could build a house out of one of those mushrooms?
+    Storm: You're a genius, we're saved.
 ===
