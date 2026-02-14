@@ -57,6 +57,7 @@ pub fn spawn_objective_ui(
 			padding: UiRect::all(Val::Px(20.0)),
 			flex_direction: FlexDirection::Column,
 			row_gap: Val::Px(5.0),
+			border_radius: BorderRadius::all(Val::Px(10.0)),
 			..default()
 		},
 		MaterialNode(materials.add(TexturedUiMaterial::new(
