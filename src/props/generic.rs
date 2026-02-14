@@ -29,7 +29,8 @@ pub(super) fn plugin(app: &mut App) {
 		.add_observer(setup_static_prop_with_convex_hull::<DoorStainedGlass>)
 		.add_observer(setup_static_prop_with_convex_hull::<Jesus>)
 		.add_observer(setup_static_prop_with_convex_hull::<Speaker>)
-		.add_observer(setup_static_prop_with_convex_hull::<Teeth>);
+		.add_observer(setup_static_prop_with_convex_hull::<Teeth>)
+		.add_observer(setup_static_prop_with_convex_hull::<StaticCctv>);
 
 	app.add_observer(setup_static_prop_with_trimesh::<Train>);
 
@@ -37,6 +38,7 @@ pub(super) fn plugin(app: &mut App) {
 		.add_observer(setup_static_prop_with_convex_hull::<Mouse>)
 		.add_observer(setup_dynamic_prop_with_convex_hull::<PackageMedium>)
 		.add_observer(setup_dynamic_prop_with_convex_hull::<PackageSmall>)
+		.add_observer(setup_dynamic_prop_with_convex_hull::<Cctv>)
 		.add_observer(setup_dynamic_prop_with_convex_hull::<Rohlik>);
 
 	app.add_observer(setup_nonphysical_prop::<IvyPart8>)
@@ -62,7 +64,8 @@ pub(super) fn plugin(app: &mut App) {
 		.load_asset::<Gltf>(Train::model_path())
 		.load_asset::<Gltf>(Teeth::model_path())
 		.load_asset::<Gltf>(Speaker::model_path())
-		.load_asset::<Gltf>(Jesus::model_path());
+		.load_asset::<Gltf>(Jesus::model_path())
+		.load_asset::<Gltf>(Cctv::model_path());
 }
 
 // generic dynamic props
@@ -121,6 +124,18 @@ pub(crate) struct PackageMedium;
 	model("models/darkmod/containers/package_small.gltf")
 )]
 pub(crate) struct PackageSmall;
+
+#[point_class(
+	base(TargetName, InteractableEntity, Transform, Visibility),
+	model("models/cctv/cctv.gltf")
+)]
+pub(crate) struct Cctv;
+
+#[point_class(
+	base(TargetName, InteractableEntity, Transform, Visibility),
+	model("models/cctv/cctv.gltf")
+)]
+pub(crate) struct StaticCctv;
 
 // generic static props
 #[point_class(

@@ -170,8 +170,8 @@
 }
 // entity 7
 {
-"classname" "package_small"
-"origin" "464 0 160"
+"classname" "cctv"
+"origin" "480 16 128"
 "is_edible" "true"
 "interaction_relay" ""
 "completes_subobjective" "eat_camera"
