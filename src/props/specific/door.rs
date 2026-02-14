@@ -222,11 +222,9 @@ fn interact_with_door(
 		return;
 	};
 
-	/*	if door.locked {
-		   return;
-	   }
-
-	*/
+	if door.locked {
+		return;
+	}
 
 	if hinge_angle.is_closed() {
 		// Door is closed: disable motor, apply impulse away from player.
