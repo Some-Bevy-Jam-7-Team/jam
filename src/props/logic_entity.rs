@@ -340,7 +340,7 @@ fn run_yarn_setter(
 			.variable_storage_mut()
 			.set(
 				format!("${}", dbg!(&setter.yarn_variable_to_set)),
-				YarnValue::try_from(setter.yarn_value_to_set.clone()).unwrap(),
+				YarnValue::from(setter.yarn_value_to_set.clone()),
 			)
 			.unwrap();
 	}
