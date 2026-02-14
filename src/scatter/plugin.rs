@@ -1,7 +1,6 @@
 use crate::gameplay::level::EnvironmentAssets;
 use crate::scatter::observers::*;
 use crate::scatter::systems::*;
-use crate::screens::Screen;
 use bevy::app::prelude::*;
 use bevy::prelude::*;
 use bevy_eidolon::prelude::*;
@@ -32,10 +31,9 @@ impl Plugin for ScatterPlugin {
 			GpuCullComputePlugin::<InstancedWindAffectedMaterial>::default(),
 		));
 
-		app.add_systems(OnExit(Screen::Gameplay), clear_scatter_root)
-			.add_systems(
+			app.add_systems(
 				OnEnter(ScatterState::Ready),
-				scatter.run_if(in_state(Screen::Loading)),
+				scatter,
 			)
 			.add_systems(Startup, spawn_scatter_root)
 			.add_systems(

@@ -8,11 +8,6 @@ use bevy::prelude::*;
 use bevy_feronia::prelude::*;
 use tracing::debug;
 
-pub fn clear_scatter_root(mut cmd: Commands, root: Single<Entity, With<ScatterRoot>>) {
-	debug!("Clearing scatter root...");
-	cmd.trigger(ClearScatterRoot(*root));
-}
-
 pub fn spawn_scatter_layers(mut cmd: Commands, landscape: Single<Entity, With<ScatterRoot>>) {
 	let landscape = landscape.into_inner();
 	debug!("Spawning scatter layers...");
@@ -28,7 +23,6 @@ pub fn scatter(
 	root: Single<Entity, With<ScatterRoot>>,
 	current_level: Res<CurrentLevel>,
 ) {
-	debug!("Scattering...");
 	mw_clear_root.write((*root).into());
 
 	match *current_level {
@@ -36,6 +30,7 @@ pub fn scatter(
 			cmd.trigger(ScatterDone);
 		}
 		CurrentLevel::DayTwo => {
+			debug!("Scattering...");
 			cmd.trigger(Scatter::<StandardMaterial>::new(*root));
 		}
 	}
