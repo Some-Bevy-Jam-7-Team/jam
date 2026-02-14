@@ -75,10 +75,11 @@ fn iquick_plz_do_not_kill_me(
 		})
 		.chain(sensors.iter());
 	resource.target_entity = None;
+	const INTERACTION_DISTANCE: f32 = 1.8;
 	if let Some(hit) = spatial.cast_ray(
 		transform.translation,
 		transform.forward(),
-		1.5,
+		INTERACTION_DISTANCE,
 		true,
 		&SpatialQueryFilter::from_excluded_entities(ignored).with_mask([
 			CollisionLayer::Default,
