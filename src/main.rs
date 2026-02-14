@@ -99,6 +99,7 @@ fn main() -> AppExit {
 					"symphonia_format_riff::demuxer=warn,",
 					"symphonia_format_wav::demuxer=warn,",
 					"calloop::loop_logic=error,",
+					"bevy_feronia::scatter::systems::handle_scatter_requests=error",
 				),
 				default = bevy::log::DEFAULT_FILTER
 			),
