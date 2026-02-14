@@ -1,11 +1,18 @@
 title: Day2CRT
 ---
 <<if get_current_objective() == "start_work">>
+  <<llmanager_emote "boot">>
   LLManager: LLManager V5.7.0-rc.2 BOOTING UP #line:7155396
+  <<llmanager_emote "smile">>
   LLManager: Good day, valued $$$. You have been working with us for 0452 days. Onto one more day! #line:5524795
+  <<llmanager_emote "glitch">>
+  <<llmanager_emote "smile" 30>>
   LLManager: The ██████ machine has run out of in-vivo fuel and must be restarted. #line:15931198
+  <<llmanager_emote "sideways">>
   LLManager: Due to a recent decline in the $OFFICE_BIOMASS_2$ workforce, it has been relocated to their office for company. #line:4700705
+  <<llmanager_emote "point">>
   LLManager: Reminder: your social quota for this week is already at 92%. Avoid any unauthorized socialization. #line:4206666
+  <<llmanager_emote "off">>
 
   <<create_objective "work_1" "Increase Shareholder Value" 1.0>>
   <<create_subobjective "w1_turn_on" "Restart the machine" "work_1">>
@@ -32,21 +39,30 @@ title: Day2CRT
   <<set_value "first_door" "locked" "false">>
 
 <<elseif get_current_objective() == "work_1">>
+  <<llmanager_emote "smile">>
   LLManager: Proceed to the main office. Analysis shows you are aware what a machine is. If not, please fill out the concussion report form. #line:11608533
   LLManager: If not, please fill out the concussion report form. #line:12632121
+  <<llmanager_emote "off">>
 
 <<elseif get_current_objective() == "work_2">>
+  <<llmanager_emote "smile">>
   LLManager: Thank you, your positive contribution has been stored on the blockchain for later consideration. #line:7223073
   LLManager: Please stand still and wait for sentiment analysis to complete. #line:10720987
+  <<llmanager_emote "away">>
   LLManager: ... #line:7174243
+  <<llmanager_emote "smile">>
   LLManager: Please take your mandated mental health break (67% certainty). #line:10273078
   <<set_value "breakroom_door" "locked" "false">>
   <<complete_objective "work_2">>
+  <<llmanager_emote "point">>
   LLManager: Note this is the second day requiring an unscheduled productivity buffer. #line:16091743
   LLManager: Any further incidents will result in relocation to our disciplinary center $LOCATION_SCUNTHORPE$. #line:16120215
+  <<llmanager_emote "off">>
 
 <<elseif get_current_objective() == "work_3">>
+  <<llmanager_emote "smile">>
   LLManager: Please do not extend your mandated mental health break without prior approval. #line:10540699
+  <<llmanager_emote "off">>
 <<endif>>
 ===
 
@@ -55,14 +71,20 @@ title: Day2CRTCursed
 <<declare $cursed_power = false>>
 
 <<if $cursed_power == false>>
+  <<llmanager_emote "x">>
 	LLManager: POWER STATUS CRITICAL #line:11979818
 	LLManager: PLEASE ENABLE EMERGENCY POWER NOW == PROTOCOL SIPHON SHEOL #line:8316181
 	LLManager: MAY GOD HAVE MERCY ON YOUR SOUL #line:1862433
+  <<llmanager_emote "off">>
 <<else>>
+    <<llmanager_emote "boot">>
     LLManager: LLManager V5.7.0-rc.2 BOOTING UP #line:12291622
+    <<llmanager_emote "glitch">>
     LLManager: Hell Hell Hell Hello worker. Hello worker. #line:12732615
+    <<llmanager_emote "shocked">>
     LLManager: Analysis shows your mental health status is beyond tolerance levels (5120%) #line:1165945
     LLManager: Exit the facility immediately to avoid demoralizing others, then fill out form A38 to calculate your disciplinary fee. #line:9477514
+    <<llmanager_emote "off">>
     <<complete_objective "work_6">>
     <<interact_with "tp_cursed_dst">>
 <<endif>>
@@ -70,5 +92,7 @@ title: Day2CRTCursed
 
 title: Day2CRTCursed2
 ---
+<<llmanager_emote "smile">>
 LLManager: Enjoy the rest of your day! #line:7778211
+<<llmanager_emote "off">>
 ===
