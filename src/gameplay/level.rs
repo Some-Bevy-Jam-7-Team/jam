@@ -42,8 +42,8 @@ pub(super) fn plugin(app: &mut App) {
 		Update,
 		enter_level.run_if(
 			all_assets_loaded
-				.and(in_state(LoadingScreen::Shaders))
-				.and(resource_equals(CurrentLevel::CompileShaders)),
+				.and(in_state(LoadingScreen::Assets))
+				.and(not(resource_equals(CurrentLevel::CompileShaders))),
 		),
 	);
 
@@ -56,6 +56,7 @@ pub fn all_assets_loaded(resource_handles: Res<ResourceHandles>) -> bool {
 }
 
 fn enter_level(mut next_screen: ResMut<NextState<LoadingScreen>>) {
+	println!("Entering level...");
 	next_screen.set(LoadingScreen::Level);
 }
 

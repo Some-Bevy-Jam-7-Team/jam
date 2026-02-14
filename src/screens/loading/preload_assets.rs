@@ -4,7 +4,7 @@
 use bevy::prelude::*;
 
 use super::LoadingScreen;
-use crate::gameplay::level::CurrentLevel;
+use crate::gameplay::level::{CurrentLevel, LevelOneAssets};
 use crate::{
 	asset_tracking::ResourceHandles,
 	theme::{palette::SCREEN_BACKGROUND, prelude::*},
@@ -20,10 +20,11 @@ pub(super) fn plugin(app: &mut App) {
 		Update,
 		(
 			update_loading_assets_label,
+			enter_compile_shader_level.run_if(not(all_assets_loaded).and(in_state(LoadingScreen::Assets))),
 			enter_compile_shader_screen.run_if(
 				all_assets_loaded
 					.and(in_state(LoadingScreen::Assets))
-					.and(not(resource_equals(CurrentLevel::CompileShaders))),
+					.and(resource_equals(CurrentLevel::CompileShaders)),
 			),
 		),
 	);
@@ -44,6 +45,10 @@ fn spawn_or_skip_asset_loading_screen(
 		DespawnOnExit(LoadingScreen::Assets),
 		children![(widget::label("Loading Assets"), LoadingAssetsLabel)],
 	));
+}
+
+fn enter_compile_shader_level(mut current_level: ResMut<CurrentLevel>) {
+	*current_level = CurrentLevel::CompileShaders;
 }
 
 fn enter_compile_shader_screen(mut next_screen: ResMut<NextState<LoadingScreen>>) {
@@ -67,6 +72,6 @@ fn update_loading_assets_label(
 	}
 }
 
-pub fn all_assets_loaded(resource_handles: Res<ResourceHandles>) -> bool {
+fn all_assets_loaded(resource_handles: Res<ResourceHandles>) -> bool {
 	resource_handles.is_all_done()
 }
