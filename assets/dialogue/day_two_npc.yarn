@@ -1,13 +1,15 @@
 title: D2Npc2
+dir: day_two_npc
 ---
 Jannet: The office is much lonelier than usual. #line:12510488
 Jannet: But I don't mind. #line:16098898
 Jannet: I talked to LLManager and they agreed to let me start estrogen. #line:10191732
 Jannet: My productivity is through the roof. #line:11798594
-Jannet: I am happy. #line:3805675 
+Jannet: I am happy. #line:3805675
 ===
 
 title: D2Npc3
+dir: day_two_npc
 ---
 Janitor: John got the fever. #line:8061815
 Janitor: I miss him too. #line:3651679
@@ -15,12 +17,14 @@ Janitor: Will I be missed? #line:1573424
 ===
 
 title: D2Npc4
+dir: day_two_npc
 ---
 Janissary: I'm a bit shy about the generator being so close to me. #line:13927065
 Janissary: I mean, generator? I hardly know her. #line:12216199
 ===
 
 title: D2Npc5
+dir: day_two_npc
 ---
 Janibal Lectern: Did you know that instead of doing drugs, you could consume Pepsi? #line:4863241
 Janibal Lectern: You should consider it. It is the only drink. #line:4232730
@@ -28,6 +32,7 @@ Janibal Lectern: How is my propaganda improving? #line:1997580
 ===
 
 title: D2Npc6
+dir: day_two_npc
 ---
 Jannick: My birthday is over. #line:7584525
 Jannick: My workday isn't. I'm still here. #line:10090132
@@ -37,12 +42,14 @@ Jannick: Thanks for remembering me. #line:6442536
 
 
 title: D2Npc10
+dir: day_two_npc
 ---
 Jandice: I swear, I don't have a problem with alcohol. #line:13307224
 Jandice: But I do without. #line:6521554
 ===
 
 title: D2Npc11
+dir: day_two_npc
 ---
 Janateer: Janissary thinks the machine is a generator. #line:16412261
 Janateer: Fool that he is. #line:3548202
@@ -50,10 +57,11 @@ Janateer: The machine is something much bigger than us all. #line:3792523
 ===
 
 title: D2NpcHint
+dir: day_two_npc
 ---
 Janateer: The machine spoke to me. #line:168938
 Janateer: It told me to use right click to vomit. #line:11612151
 Janateer: But I can't find my mouse. #line:6161458
 Janateer: Truly, I have no mouse and I must scream. #line:14718875
-Janateer: AAAAAHHHHHH #line:16062130 
+Janateer: AAAAAHHHHHH #line:16062130
 ===

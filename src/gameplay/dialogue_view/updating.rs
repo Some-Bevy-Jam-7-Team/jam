@@ -114,6 +114,8 @@ fn present_line(
 	mut gibberish: ResMut<GibberishSounds>,
 	speaker: Res<DialogueSpeaker>,
 	transforms: Query<&GlobalTransform>,
+	runner: Single<&DialogueRunner>,
+	project: Res<YarnProject>,
 ) {
 	// Stop any previously playing voice line.
 	for entity in &voice_query {
@@ -127,8 +129,17 @@ fn present_line(
 		.0
 		.strip_prefix("line:")
 		.unwrap_or(&event.line.id.0);
-	let path = format!("audio/dialogue/{id}.ogg");
-	if std::path::Path::new(&format!("assets/{path}")).exists() {
+
+	// get the "dir" header from the node
+	let dir = runner
+		.current_node()
+		.and_then(|node| project.headers_for_node(&node))
+		.and_then(|h| h.get("dir").and_then(|h| h.first().map(|s| s.to_string())));
+
+	if let Some(dir) = dir
+		&& let path = format!("audio/dialogue/{dir}/{id}.ogg")
+		&& std::path::Path::new(&format!("assets/{path}")).exists()
+	{
 		let handle = asset_server.load::<AudioSample>(path);
 		if let Some(entity) = speaker.0.as_ref() {
 			commands.entity(*entity).with_child((
@@ -164,7 +175,7 @@ fn present_line(
 				Transform::default(),
 			));
 		}
-	};
+	}
 
 	let name = if let Some(name) = event.line.character_name() {
 		speaker_change_events.write(SpeakerChangeEvent {

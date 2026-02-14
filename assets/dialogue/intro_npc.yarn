@@ -1,4 +1,5 @@
 title: IntroNpc1
+dir: intro_npc
 ---
 Jan: I wish I had a Visa, but they say it's blocked on BSN. #line:2571463
 Jan: The visa agency says they'd need to re-issue all the visas anyway, so might as well wait now, right? #line:2100568
@@ -9,6 +10,7 @@ Jan: The visa agency says they'd need to re-issue all the visas anyway, so might
 ===
 
 title: IntroNpc2
+dir: intro_npc
 ---
 Jannet: Scrolling the internet almost makes you wish for a Y2K. #line:3444625
 Jannet: ... #line:14387382
@@ -17,6 +19,7 @@ Jannet: I should start estrogen. #line:12402187
 ===
 
 title: IntroNpc3
+dir: intro_npc
 ---
 Janitor: My friend tried to tell me about how burgers control the world. #line:13967368
 Janitor: But then LLManager made him go on holiday. #line:11530799
@@ -25,12 +28,14 @@ Janitor: I miss him. #line:821939
 ===
 
 title: IntroNpc4
+dir: intro_npc
 ---
 Janissary: I could be relaxing on a beach sipping on a cocktail of moonshine, speed, and managers' tears... #line:2280615
 Janissary: But instead, I computer. #line:7100819
 ===
 
 title: IntroNpc5
+dir: intro_npc
 ---
 Janibal Lectern: I love computer. #line:4910574
 Janibal Lectern: It shows me corporate propoganda 24/7. #line:2937368
@@ -38,6 +43,7 @@ Janibal Lectern: I want to become a propoganda maker when I grow up. #line:11020
 ===
 
 title: IntroNpc6
+dir: intro_npc
 ---
 <<declare $birthday_celebrated = false>>
 
@@ -72,12 +78,14 @@ title: IntroNpc6
 ===
 
 title: IntroNpc7
+dir: intro_npc
 ---
 Janderstülz: Last time I tried to say no to LLManager they sent me to Scunthorpe. #line:12353631
 Janderstülz: And like I don't have anything against the British, I just don't think they should be around kids. #line:4721120
 ===
 
 title: IntroNpc8
+dir: intro_npc
 ---
 Janthorpe: Janderstülz hates me. #line:4893610
 Janthorpe: He says he's not a racist, but all the racists say that. #line:9357953
@@ -86,12 +94,14 @@ Janthorpe: I should know, I'm a racist too. #line:7951100
 
 
 title: IntroNpc9
+dir: intro_npc
 ---
 Janniri: I used to be a tiler. #line:12583390
 Janniri: But then the market crashed when big concrete took over. #line:11627682
 ===
 
 title: IntroNpc10
+dir: intro_npc
 ---
 Jandice: I used to drink two bottles a day. #line:6639736
 Jandice: But my doctor said that glass was bad for my digestive system. #line:11519151
@@ -99,12 +109,14 @@ Jandice: Now I drink three bottles a day. #line:10953384
 ===
 
 title: IntroNpc11
+dir: intro_npc
 ---
 Janateer: I swapped Jandice's vodka for water. #line:16498861
 Janateer: He can't tell the difference when he's drunk. #line:3128113
 ===
 
 title: IntroNpc12
+dir: intro_npc
 ---
 John: Why did my parents name me this way. #line:7825654
 John: I just want to be normal. #line:5995818

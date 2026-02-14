@@ -1,4 +1,5 @@
 title: CEO1
+dir: commune
 ---
 Jeff: Ever since the revolution they've kept me here stacking boxes #line:6590288
 Jeff: Those peasants don't know the value of hard work. #line:61085
@@ -7,6 +8,7 @@ Jeff: Oh the joys of capitalism. How I miss you. #line:15430720
 ===
 
 title: CEO2
+dir: commune
 ---
 <<declare $talked_to_ceo_2 = false>>
 <<if $talked_to_ceo_2 == true>>
@@ -21,6 +23,7 @@ title: CEO2
 ===
 
 title: CEO3
+dir: commune
 ---
 <<declare $talked_to_ceo_3 = false>>
 <<if $talked_to_ceo_3 == true>>
@@ -39,6 +42,7 @@ title: CEO3
 ===
 
 title: MushroomButcher
+dir: commune
 ---
 Mushroom Lidya: Hello there love. #line:2241604
 Mushroom Lidya: If you need any mushrooms feel free to take them. #line:2509048
@@ -51,6 +55,7 @@ Mushroom Lidya: If you need any mushrooms feel free to take them. #line:2509048
 ===
 
 title: Dave
+dir: commune
 ---
 Dave: Welcome to the Anarcho Syndicalist Commune of Dave. #line:1676776
 Dave: That's me! #line:12496552
@@ -95,6 +100,7 @@ Dave: That's me! #line:12496552
 
 // TODO: Add npc for Jannet.
 title: Jannet
+dir: commune
 ---
 Jannet: Damn estrogen is magic. #line:5306475
 Jannet: I have boobs now. #line:10657129
@@ -103,6 +109,7 @@ Jannet: They should never have given me this power. #line:15163347
 ===
 
 title: Storm
+dir: commune
 ---
 Storm: Hello there. #line:491159
 Storm: You wouldn't have happened to see a house fly by you while you were up in the air? #line:12182704
