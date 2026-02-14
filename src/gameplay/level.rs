@@ -101,7 +101,6 @@ pub(crate) fn spawn_level(
 	level_train_assets: Option<Res<LevelTrainAssets>>,
 	level_karoline_assets: Option<Res<LevelKarolineAssets>>,
 	current_level: Res<CurrentLevel>,
-	scatter_root: Single<Entity, With<ScatterRoot>>,
 	compile_shaders_assets: Res<CompileShadersAssets>,
 ) {
 	match *current_level {

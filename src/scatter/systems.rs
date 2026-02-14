@@ -28,10 +28,7 @@ pub fn toggle_chunked(
 	q_chunked_layer: Query<Entity, With<ScatterChunked>>,
 	current_level: Res<CurrentLevel>,
 ) {
-	let chunked= matches!(
-		*current_level,
-		CurrentLevel::Commune
-	);
+	let chunked = matches!(*current_level, CurrentLevel::Commune);
 	for layer in q_chunked_layer.iter() {
 		cmd.entity(layer).insert(ScatterLayerEnabled(chunked));
 	}
