@@ -1,40 +1,53 @@
 //! Handles the animated expressions for the intro CRT
 
-use crate::{props::generic::Crt, third_party::bevy_trenchbroom::GetTrenchbroomModelPath as _};
+use crate::{
+	gameplay::dialogue_view::typewriter::Typewriter, props::generic::Crt,
+	third_party::bevy_trenchbroom::GetTrenchbroomModelPath as _,
+};
 use bevy::{platform::collections::HashMap, prelude::*};
 use bevy_yarnspinner::prelude::DialogueRunner;
+use std::collections::VecDeque;
 
 pub(super) fn plugin(app: &mut App) {
 	app.init_resource::<CrtModel>()
 		.init_resource::<CrtScreenTextures>()
+		.init_resource::<CrtEmoteCommandBuffer>()
 		.add_systems(
 			Update,
 			(
 				poll_crt_model_load.run_if(not(resource_exists::<CrtScreenMaterial>)),
 				clear_intro_crt_emote,
+				update_intro_crt_emotes.run_if(|b: Option<Res<CrtEmoteCommandBuffer>>| {
+					b.is_some_and(|b| !b.is_empty())
+				}),
 			),
 		);
 }
 
 /// Call this system from yarnspinner to change the emote
 pub(crate) fn set_intro_crt_emote(
-	emote_name: In<String>,
-	handle: Res<CrtScreenMaterial>,
-	textures: Res<CrtScreenTextures>,
-	mut materials: ResMut<Assets<StandardMaterial>>,
+	In((emote_name, delay_graphemes)): In<(String, Option<usize>)>,
+	mut commands: ResMut<CrtEmoteCommandBuffer>,
 ) {
-	if let Some(material) = materials.get_mut(&**handle) {
-		let texture = textures.get(emote_name.as_str());
-		// Paste the texture or clear it
-		material.base_color_texture = texture.cloned();
-	} else {
-		warn!("Could not get glass material from asset repository");
-	}
+	let delay_graphemes = delay_graphemes.unwrap_or_default();
+	commands.push_back(EmoteCommand {
+		emote_name,
+		delay_graphemes,
+	});
+}
+
+/// Stores deferred commands to change emotes
+#[derive(Resource, Deref, DerefMut, Default)]
+pub(crate) struct CrtEmoteCommandBuffer(VecDeque<EmoteCommand>);
+
+pub(crate) struct EmoteCommand {
+	emote_name: String,
+	delay_graphemes: usize,
 }
 
 /// Repository for the images that can be used as the intro CRT emote
 #[derive(Resource, Deref)]
-pub(crate) struct CrtScreenTextures(HashMap<String, Handle<Image>>);
+struct CrtScreenTextures(HashMap<String, Handle<Image>>);
 
 impl FromWorld for CrtScreenTextures {
 	fn from_world(world: &mut World) -> Self {
@@ -78,7 +91,7 @@ impl FromWorld for CrtScreenTextures {
 }
 
 #[derive(Resource, Deref)]
-pub(crate) struct CrtScreenMaterial(Handle<StandardMaterial>);
+struct CrtScreenMaterial(Handle<StandardMaterial>);
 
 #[derive(Resource, Deref)]
 struct CrtModel(Handle<Gltf>);
@@ -100,6 +113,27 @@ fn poll_crt_model_load(handle: Res<CrtModel>, models: Res<Assets<Gltf>>, mut com
 	}
 }
 
+fn update_intro_crt_emotes(
+	handle: Res<CrtScreenMaterial>,
+	textures: Res<CrtScreenTextures>,
+	typewriter: Res<Typewriter>,
+	mut materials: ResMut<Assets<StandardMaterial>>,
+	mut commands: ResMut<CrtEmoteCommandBuffer>,
+) {
+	if let Some(material) = materials.get_mut(&**handle) {
+		while let Some(first) = commands.front()
+			&& typewriter.elapsed_graphemes() >= first.delay_graphemes
+		{
+			let texture = textures.get(&first.emote_name);
+			// Paste the texture or clear it
+			material.base_color_texture = texture.cloned();
+			commands.pop_front();
+		}
+	} else {
+		warn!("Could not get glass material from asset repository");
+	}
+}
+
 /// Clears the emote when dialog stops
 /// so the face does not show up on every screen
 /// in a 5 mile radius
@@ -107,10 +141,12 @@ fn clear_intro_crt_emote(
 	dialog: Single<&DialogueRunner>,
 	handle: Res<CrtScreenMaterial>,
 	mut materials: ResMut<Assets<StandardMaterial>>,
+	mut commands: ResMut<CrtEmoteCommandBuffer>,
 ) {
 	if !dialog.is_running()
 		&& let Some(material) = materials.get_mut(&**handle)
 	{
 		material.base_color_texture = None;
+		commands.clear();
 	}
 }

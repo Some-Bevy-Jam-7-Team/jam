@@ -53,6 +53,7 @@ title: IntroCRT
 
 <<elseif get_current_objective() == "work_2">>
   <<llmanager_emote "smile2">>
+  <<llmanager_emote "glitch" 64>>
   LLManager: Excellent work. The board is proud of you. Believe in yourself. BElieve in yourself. #line:2656754
   <<llmanager_emote "point">>
   LLManager: Office sentiment analysis shows a decrease of morale by $RED$ percentage. #line:16593727
@@ -80,7 +81,7 @@ title: IntroCRT
   <<complete_objective "work_4">>
   <<llmanager_emote "smile">>
   LLManager: Proceed to the breakroom. #line:8695094
-  <<llmanager_emote "rightside">>
+  <<llmanager_emote "rightside" 46>>
   LLManager: Just up the stairs and to the left, and then up the stairs and to the left. #line:12173553
   <<llmanager_emote "upside">>
   LLManager: Then, go up the stairs and to the left. #line:5421376
@@ -120,6 +121,7 @@ title: IntroCRT
     <<llmanager_emote "blank">>
       -> Maybe I should go home early today? #line:12363270
       <<llmanager_emote "smile2">>
+      <<llmanager_emote "glitch" 45>>
       LLManager: That's a good idea! It's really important to it's really important to it's really important to #line:2742939
       <<llmanager_emote "x">>
       LLManager: Unfortunately, you did not collect enough Business Loyalty Points this quarter yet to unlock that request. #line:13021645

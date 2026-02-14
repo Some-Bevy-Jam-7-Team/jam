@@ -5,6 +5,8 @@ title: Day2CRT
   LLManager: LLManager V5.7.0-rc.2 BOOTING UP #line:7155396
   <<llmanager_emote "smile">>
   LLManager: Good day, valued $$$. You have been working with us for 0452 days. Onto one more day! #line:5524795
+  <<llmanager_emote "glitch">>
+  <<llmanager_emote "smile" 30>>
   LLManager: The ██████ machine has run out of in-vivo fuel and must be restarted. #line:15931198
   <<llmanager_emote "sideways">>
   LLManager: Due to a recent decline in the $OFFICE_BIOMASS_2$ workforce, it has been relocated to their office for company. #line:4700705
