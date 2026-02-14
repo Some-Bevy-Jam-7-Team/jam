@@ -13,6 +13,7 @@ mod hdr;
 mod menus;
 mod props;
 mod reflection;
+mod scatter;
 mod screens;
 mod shader_compilation;
 mod theme;
@@ -182,6 +183,7 @@ fn main() -> AppExit {
 		ui_layout::plugin,
 		hdr::plugin,
 		audio::plugin,
+		scatter::plugin,
 	));
 
 	// Add plugins that proload levels. These have to come later than the other plugins

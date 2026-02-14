@@ -60,9 +60,6 @@ pub fn fever(
 
 		cmd.trigger(FeverTick { entity });
 
-		// Remove when UI exists
-		println!("fever:{:?}, health:{:?}", temp, health);
-
 		if **temp > **threshold {
 			**health -= (**temp - **threshold) * **dmg;
 			**health = health.max(0.);
