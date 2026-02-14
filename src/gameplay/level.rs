@@ -416,7 +416,6 @@ fn advance_level(
 		CurrentLevel::DayOne => commands.queue(advance_level_command::<LevelTwoAssets>()),
 		CurrentLevel::DayTwo => commands.queue(advance_level_command::<LevelThreeAssets>()),
 		CurrentLevel::Commune => commands.queue(advance_level_command::<LevelAssets>()),
-		CurrentLevel::DayTwo => commands.queue(advance_level_command::<LevelTrainAssets>()),
 		CurrentLevel::Train => commands.queue(advance_level_command::<LevelKarolineAssets>()),
 		CurrentLevel::Karoline => commands.queue(advance_level_command::<LevelAssets>()),
 	};
