@@ -19,25 +19,19 @@ pub fn spawn_scatter_layers(mut cmd: Commands, landscape: Single<Entity, With<Sc
 
 pub fn toggle_chunked(
 	mut cmd: Commands,
-	q_grass_layer: Query<Entity, With<GrassLayer>>,
-	q_root: Query<Entity, With<ScatterRoot>>,
+	mut ns_scatter: ResMut<NextState<ScatterState>>,
+	q_chunked_layer: Query<Entity, With<ScatterChunked>>,
 	current_level: Res<CurrentLevel>,
 ) {
-	let chunked_grass = matches!(*current_level, CurrentLevel::Shaders | CurrentLevel::DayTwo);
-	for root in q_root.iter() {
-		if chunked_grass {
-			cmd.entity(root).insert(ChunkRoot::default());
-		} else {
-			cmd.entity(root).remove::<ChunkRoot>();
-		}
+	let chunked= matches!(
+		*current_level,
+	CurrentLevel::Commune
+	);
+	for layer in q_chunked_layer.iter() {
+		cmd.entity(layer).insert(ScatterLayerEnabled(chunked));
 	}
-	for layer in q_grass_layer.iter() {
-		if chunked_grass {
-			cmd.entity(layer).insert(ScatterChunked);
-		} else {
-			cmd.entity(layer).remove::<ScatterChunked>();
-		}
-	}
+
+	ns_scatter.set(ScatterState::Setup);
 }
 
 pub fn scatter(
@@ -83,5 +77,5 @@ pub fn update_density_map(
 }
 
 pub fn spawn_scatter_root(mut cmd: Commands) {
-	cmd.spawn((ScatterRoot::default(), MapHeight));
+	cmd.spawn((ScatterRoot::default(), ChunkRoot::default(), MapHeight));
 }

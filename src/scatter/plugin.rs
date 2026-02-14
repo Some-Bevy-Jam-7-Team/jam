@@ -1,12 +1,12 @@
 use crate::gameplay::level::EnvironmentAssets;
 use crate::scatter::observers::*;
 use crate::scatter::systems::*;
+use crate::screens::Screen;
 use bevy::app::prelude::*;
 use bevy::prelude::*;
 use bevy_eidolon::prelude::*;
 use bevy_feronia::asset::backend::scene_backend::SceneAssetBackendPlugin;
 use bevy_feronia::prelude::*;
-use crate::screens::Screen;
 
 pub fn plugin(app: &mut App) {
 	app.add_plugins(ScatterPlugin);
@@ -38,13 +38,14 @@ impl Plugin for ScatterPlugin {
 				Update,
 				spawn_scatter_layers.run_if(resource_added::<EnvironmentAssets>),
 			)
-			.add_systems(OnEnter(ScatterState::Setup), toggle_chunked)
+			.add_systems(OnEnter(ScatterState::Loading), toggle_chunked)
 			.add_systems(
 				Update,
 				(
-					scatter.run_if(resource_exists_and_changed::<EnvironmentAssets>.and(
-						in_state(Screen::Gameplay)
-					)),
+					scatter.run_if(
+						resource_exists_and_changed::<EnvironmentAssets>
+							.and(in_state(Screen::Gameplay)),
+					),
 					update_density_map.run_if(resource_exists::<EnvironmentAssets>),
 				),
 			)

@@ -167,7 +167,6 @@ pub(crate) fn spawn_level(
 			let level_two_assets = level_two_assets.expect("If we don't have level two assets when spawning level two, we're in deep shit. Sorry player, we bail here.");
 
 			commands.spawn((
-				ChildOf(*scatter_root),
 				Name::new("Level"),
 				SceneRoot(level_two_assets.level.clone()),
 				DespawnOnExit(Screen::Gameplay),

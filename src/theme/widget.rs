@@ -173,3 +173,41 @@ where
 		],
 	)
 }
+
+pub(crate) fn settings_button<E, B, M, I>(
+	label_marker: impl Component,
+	text: impl Into<String>,
+	action: I,
+) -> impl Bundle
+where
+	E: EntityEvent,
+	B: Bundle,
+	I: IntoObserverSystem<E, B, M>,
+{
+	(
+		Node {
+			justify_self: JustifySelf::Start,
+			..default()
+		},
+		children![
+			button_base(
+				text,
+				action,
+				Node {
+					height: Px(30.0),
+					align_items: AlignItems::Center,
+					justify_content: JustifyContent::Center,
+					..default()
+				},
+			),
+			(
+				Node {
+					padding: UiRect::horizontal(Px(10.0)),
+					justify_content: JustifyContent::Center,
+					..default()
+				},
+				children![(label(""), label_marker)],
+			),
+		],
+	)
+}

@@ -22,7 +22,7 @@ impl Landscape {
 		world
 			.get_resource_mut::<NextState<ScatterState>>()
 			.unwrap()
-			.set(ScatterState::Setup);
+			.set(ScatterState::Loading);
 
 		world
 			.get_resource_mut::<NextState<HeightMapState>>()
