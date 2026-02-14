@@ -41,7 +41,9 @@ pub struct ButtonMaterial {
 	#[uniform(4)]
 	time: f32,
 	#[uniform(4)]
-	padding: Vec3,
+	texture_translation: Vec2,
+	#[uniform(4)]
+	texture_rotation: f32,
 }
 
 impl UiMaterial for ButtonMaterial {
@@ -64,7 +66,8 @@ fn on_add_button(
 		color_texture: BUTTON_TEXTURE,
 		border_color: Vec4::ZERO,
 		time: time.elapsed_secs(),
-		padding: Vec3::ZERO,
+		texture_translation: Vec2::new(rand::random(), rand::random()),
+		texture_rotation: rand::random_range(0.0..std::f32::consts::TAU),
 	};
 	let material_handle = materials.add(material);
 	material_node.0 = material_handle;

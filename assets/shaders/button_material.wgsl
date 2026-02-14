@@ -3,10 +3,17 @@
     ui_vertex_output::UiVertexOutput,
 };
 
+struct Animation {
+    time: f32,
+    start_translation: vec2<f32>,
+    start_rotation: f32,
+};
+
 @group(1) @binding(0) var<uniform> color: vec4<f32>;
-@group(1) @binding(1) var material_color_texture: texture_2d<f32>;
-@group(1) @binding(2) var material_color_sampler: sampler;
+@group(1) @binding(1) var texture: texture_2d<f32>;
+@group(1) @binding(2) var texture_sampler: sampler;
 @group(1) @binding(3) var<uniform> border_color: vec4<f32>;
+@group(1) @binding(4) var<uniform> animation: Animation;
 
 @fragment
 fn fragment(in: UiVertexOutput) -> @location(0) vec4<f32> {
@@ -31,7 +38,7 @@ fn fragment(in: UiVertexOutput) -> @location(0) vec4<f32> {
     let border_mask = outer_mask * (1.0 - inner_mask);
 
     // Cover mode for texture scaling (probably wrong, but looks aight)
-    let tex_size = vec2<f32>(textureDimensions(material_color_texture));
+    let tex_size = vec2<f32>(textureDimensions(texture));
     let node_size = in.size;
 
     let tex_aspect = tex_size.x / tex_size.y;
@@ -43,9 +50,29 @@ fn fragment(in: UiVertexOutput) -> @location(0) vec4<f32> {
         tex_aspect <= node_aspect
     );
 
-    let uv = (in.uv - 0.5) / scale + 0.5;
+    let base_uv = (in.uv - 0.5) / scale + 0.5;
 
-    let tex = textureSample(material_color_texture, material_color_sampler, uv);
+    // Pivot at texture center
+    let centered = base_uv - vec2<f32>(0.5, 0.5);
+
+    // Rotation
+    let c = cos(animation.start_rotation);
+    let s = sin(animation.start_rotation);
+    let rotated = vec2<f32>(
+        centered.x * c - centered.y * s,
+        centered.x * s + centered.y * c
+    );
+
+    // Apply translation and scrolling animation
+    let transformed_uv =
+        rotated
+        + vec2<f32>(0.5, 0.5)
+        + animation.start_translation
+        + vec2<f32>(animation.time * 0.03);
+
+    // Wrap for tiling textures
+    let uv = fract(transformed_uv);
+    let tex = textureSample(texture, texture_sampler, uv);
 
     // Fill
     let fill_alpha = color.a * tex.a * inner_mask;
