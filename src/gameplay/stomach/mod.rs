@@ -1,6 +1,7 @@
 use avian3d::prelude::*;
 use bevy::{
 	anti_alias::fxaa::Fxaa,
+	app::Propagate,
 	camera::{RenderTarget, ScalingMode, visibility::RenderLayers},
 	core_pipeline::{
 		prepass::{DeferredPrepass, DepthPrepass},
@@ -56,36 +57,8 @@ const STOMACH_POSITION: Vec3 = Vec3::new(2000.0, 2000.0, 2000.0);
 
 const MESH_THICKNESS: f32 = 0.25;
 
-fn spawn_stomach(
-	mut commands: Commands,
-	mut meshes: ResMut<Assets<Mesh>>,
-	mut materials: ResMut<Assets<StandardMaterial>>,
-) {
+fn spawn_stomach(mut commands: Commands, assets: Res<AssetServer>) {
 	let stomach = Stomach::default();
-	let mesh_thickness = MESH_THICKNESS;
-	let vertical_mesh = meshes.add(Cuboid::new(
-		mesh_thickness,
-		stomach.target_size.y + mesh_thickness * 2.0,
-		stomach.target_size.z + mesh_thickness * 2.0,
-	));
-	let horizontal_mesh = meshes.add(Cuboid::new(
-		stomach.target_size.x + mesh_thickness * 2.0,
-		mesh_thickness,
-		stomach.target_size.z + mesh_thickness * 2.0,
-	));
-	let back_mesh = meshes.add(Cuboid::new(
-		stomach.target_size.x + mesh_thickness * 2.0,
-		stomach.target_size.y + mesh_thickness * 2.0,
-		mesh_thickness,
-	));
-	let wall_material = materials.add(StandardMaterial {
-		unlit: true,
-		..Color::srgb(0.8, 0.1, 0.1).into()
-	});
-	let back_material = materials.add(StandardMaterial {
-		unlit: true,
-		..Color::srgb(0.4, 0.0, 0.0).into()
-	});
 
 	// TODO: Make the walls springy
 	commands.spawn((
@@ -102,13 +75,6 @@ fn spawn_stomach(
 				Collider::half_space(Vec3::X),
 				CollisionLayers::new(CollisionLayer::Stomach, CollisionLayer::Stomach),
 				Transform::from_translation(Vec3::new(-stomach.target_size.x / 2.0, 0.0, 0.0,)),
-				Visibility::default(),
-				children![(
-					Mesh3d(vertical_mesh.clone()),
-					MeshMaterial3d(wall_material.clone()),
-					RenderLayers::from(RenderLayer::STOMACH),
-					Transform::from_translation(Vec3::new(-mesh_thickness / 2.0, 0.0, 0.0)),
-				)]
 			),
 			(
 				Name::new("Stomach Right Wall"),
@@ -116,13 +82,6 @@ fn spawn_stomach(
 				Collider::half_space(-Vec3::X),
 				CollisionLayers::new(CollisionLayer::Stomach, CollisionLayer::Stomach),
 				Transform::from_translation(Vec3::new(stomach.target_size.x / 2.0, 0.0, 0.0,)),
-				Visibility::default(),
-				children![(
-					Mesh3d(vertical_mesh),
-					MeshMaterial3d(wall_material.clone()),
-					RenderLayers::from(RenderLayer::STOMACH),
-					Transform::from_translation(Vec3::new(mesh_thickness / 2.0, 0.0, 0.0)),
-				)]
 			),
 			(
 				Name::new("Stomach Ceiling"),
@@ -130,13 +89,6 @@ fn spawn_stomach(
 				Collider::half_space(-Vec3::Y),
 				CollisionLayers::new(CollisionLayer::Stomach, CollisionLayer::Stomach),
 				Transform::from_translation(Vec3::new(0.0, stomach.target_size.y / 2.0, 0.0)),
-				Visibility::default(),
-				children![(
-					Mesh3d(horizontal_mesh.clone()),
-					MeshMaterial3d(wall_material.clone()),
-					RenderLayers::from(RenderLayer::STOMACH),
-					Transform::from_translation(Vec3::new(0.0, mesh_thickness / 2.0, 0.0)),
-				)]
 			),
 			(
 				Name::new("Stomach Floor"),
@@ -144,13 +96,6 @@ fn spawn_stomach(
 				Collider::half_space(Vec3::Y),
 				CollisionLayers::new(CollisionLayer::Stomach, CollisionLayer::Stomach),
 				Transform::from_translation(Vec3::new(0.0, -stomach.target_size.y / 2.0, 0.0)),
-				Visibility::default(),
-				children![(
-					Mesh3d(horizontal_mesh),
-					MeshMaterial3d(wall_material),
-					RenderLayers::from(RenderLayer::STOMACH),
-					Transform::from_translation(Vec3::new(0.0, -mesh_thickness / 2.0, 0.0)),
-				)]
 			),
 			(
 				Name::new("Stomach Back Wall"),
@@ -158,21 +103,21 @@ fn spawn_stomach(
 				Collider::half_space(Vec3::Z),
 				CollisionLayers::new(CollisionLayer::Stomach, CollisionLayer::Stomach),
 				Transform::from_translation(Vec3::new(0.0, 0.0, -stomach.target_size.z / 2.0)),
-				Visibility::default(),
-				children![(
-					Mesh3d(back_mesh),
-					MeshMaterial3d(back_material),
-					RenderLayers::from(RenderLayer::STOMACH),
-					Transform::from_translation(Vec3::new(0.0, 0.0, -mesh_thickness / 2.0)),
-				)]
 			),
 			(
-				Name::new("Stomach Front Wall (Invisible)"),
-				// No mesh for the front wall, so that we can see inside the stomach.
+				Name::new("Stomach Front Wall"),
 				Pickable::IGNORE,
 				Collider::half_space(-Vec3::Z),
 				CollisionLayers::new(CollisionLayer::Stomach, CollisionLayer::Stomach),
 				Transform::from_translation(Vec3::new(0.0, 0.0, stomach.target_size.z / 2.0,)),
+			),
+			(
+				Name::new("Stomach Mesh"),
+				Pickable::IGNORE,
+				Propagate::<RenderLayers>(RenderLayers::from(RenderLayer::STOMACH)),
+				Transform::from_scale(stomach.target_size),
+				RenderLayers::from(RenderLayer::STOMACH),
+				SceneRoot(assets.load("models/stomach/stomach.gltf#Scene0"))
 			),
 		],
 	));

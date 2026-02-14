@@ -37,6 +37,7 @@ impl Plugin for ScatterPlugin {
 				Update,
 				spawn_scatter_layers.run_if(resource_added::<EnvironmentAssets>),
 			)
+			.add_systems(OnEnter(ScatterState::Setup), toggle_chunked_grass)
 			.add_systems(
 				Update,
 				(

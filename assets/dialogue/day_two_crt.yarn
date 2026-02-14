@@ -56,8 +56,7 @@ title: Day2CRT
   <<complete_objective "work_2">>
   <<llmanager_emote "point">>
   LLManager: Note this is the second day requiring an unscheduled productivity buffer. #line:16091743
-  LLManager: Any further incidents will result in relocation to our disciplinary center $LOCATION_SCUNTHORPE$. #line:16120215
-  <<llmanager_emote "off">>
+  LLManager: Any further incidents will result in relocation to our trauma department. $LOCATION_SCUNTHORPE$. #line:16120215
 
 <<elseif get_current_objective() == "work_3">>
   <<llmanager_emote "smile">>

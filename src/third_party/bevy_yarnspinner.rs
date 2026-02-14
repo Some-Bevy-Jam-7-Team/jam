@@ -26,6 +26,7 @@ pub(super) fn plugin(app: &mut App) {
 			YarnFileSource::file("dialogue/intro_crt.yarn"),
 			YarnFileSource::file("dialogue/day_two_crt.yarn"),
 			YarnFileSource::file("dialogue/intro_npc.yarn"),
+			YarnFileSource::file("dialogue/commune.yarn"),
 			YarnFileSource::file("dialogue/day_two_npc.yarn"),
 		])
 		.with_localizations(Localizations {

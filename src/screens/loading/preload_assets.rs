@@ -3,12 +3,12 @@
 
 use bevy::prelude::*;
 
+use super::LoadingScreen;
+use crate::gameplay::level::{AdvanceLevel, CurrentLevel};
 use crate::{
 	asset_tracking::ResourceHandles,
 	theme::{palette::SCREEN_BACKGROUND, prelude::*},
 };
-
-use super::LoadingScreen;
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_systems(
@@ -20,22 +20,38 @@ pub(super) fn plugin(app: &mut App) {
 		Update,
 		(
 			update_loading_assets_label,
-			enter_compile_shader_screen
-				.run_if(all_assets_loaded.and(in_state(LoadingScreen::Assets))),
+			enter_compile_shader_screen.run_if(
+				all_assets_loaded
+					.and(in_state(LoadingScreen::Assets))
+					.and(resource_equals(CurrentLevel::Shaders)),
+			),
 		),
 	);
 }
 
+/// This is a hack, a `Screen:Shader` stage could be added
+/// instead of using `LoadingScreen::Assets` for compiling shaders.
 fn spawn_or_skip_asset_loading_screen(
-	mut commands: Commands,
-	resource_handles: Res<ResourceHandles>,
+	mut cmd: Commands,
+	mut current_level: ResMut<CurrentLevel>,
+	mut shaders_compiled: Local<bool>,
 	mut next_screen: ResMut<NextState<LoadingScreen>>,
+	resource_handles: Res<ResourceHandles>,
 ) {
 	if resource_handles.is_all_done() {
+		if *shaders_compiled {
+			debug!("Skipping shader compilation...");
+			next_screen.set(LoadingScreen::Level);
+			cmd.trigger(AdvanceLevel);
+			return;
+		}
+		debug!("Compiling shaders...");
+		*shaders_compiled = true;
+		*current_level = CurrentLevel::Shaders;
 		next_screen.set(LoadingScreen::Shaders);
 		return;
 	}
-	commands.spawn((
+	cmd.spawn((
 		widget::ui_root("Loading Screen"),
 		BackgroundColor(SCREEN_BACKGROUND),
 		DespawnOnExit(LoadingScreen::Assets),

@@ -17,6 +17,10 @@ pub(super) fn plugin(app: &mut App) {
 		OnEnter(LoadingScreen::Level),
 		(spawn_level_loading_screen, spawn_landscape, spawn_level),
 	)
+	.add_systems(
+		OnEnter(LoadingScreen::Shaders),
+		(spawn_landscape, spawn_level),
+	)
 	.add_systems(OnExit(Screen::Gameplay), reset_scatter_state);
 
 	app.add_systems(

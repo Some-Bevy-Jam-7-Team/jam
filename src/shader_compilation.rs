@@ -4,7 +4,6 @@ use bevy::render::render_resource::{CachedPipelineState, PipelineCache};
 use bevy::render::{MainWorld, RenderApp};
 
 use crate::asset_tracking::LoadResource as _;
-use crate::screens::loading::LoadingScreen;
 
 pub(super) fn plugin(app: &mut App) {
 	app.load_resource::<CompileShadersAssets>();
@@ -15,23 +14,12 @@ pub(super) fn plugin(app: &mut App) {
 		.add_systems(ExtractSchedule, update_loaded_pipeline_count);
 }
 
-pub(crate) fn spawn_shader_compilation_map(
-	mut commands: Commands,
-	compile_shaders_assets: Res<CompileShadersAssets>,
-) {
-	commands.spawn((
-		Name::new("Compile Shaders Map"),
-		SceneRoot(compile_shaders_assets.level.clone()),
-		DespawnOnExit(LoadingScreen::Shaders),
-	));
-}
-
 /// A [`Resource`] that contains all the assets needed to spawn the level.
 /// We use this to preload assets before the level is spawned.
 #[derive(Resource, Asset, Clone, TypePath)]
 pub(crate) struct CompileShadersAssets {
 	#[dependency]
-	level: Handle<Scene>,
+	pub(crate) level: Handle<Scene>,
 }
 
 impl FromWorld for CompileShadersAssets {
@@ -61,11 +49,11 @@ impl LoadedPipelineCount {
 		let count = {
 			#[cfg(feature = "native")]
 			{
-				74
+				104
 			}
 			#[cfg(feature = "web")]
 			{
-				55
+				100
 			}
 		};
 		#[cfg(feature = "dev")]

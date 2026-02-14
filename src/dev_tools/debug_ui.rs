@@ -5,7 +5,7 @@ use std::any::Any as _;
 use super::input::{ForceFreeCursor, ToggleDebugUi};
 use crate::RenderLayer;
 use crate::gameplay::crosshair::CrosshairState;
-use crate::gameplay::level::LevelAssets;
+use crate::gameplay::level::LevelOneAssets;
 use crate::{PostPhysicsAppSystems, theme::widget};
 use avian3d::prelude::*;
 use bevy::camera::visibility::RenderLayers;
@@ -96,7 +96,7 @@ pub(super) fn plugin(app: &mut App) {
 	);
 	app.add_systems(
 		Update,
-		add_navmesh_gizmo.run_if(resource_exists_and_changed::<LevelAssets>),
+		add_navmesh_gizmo.run_if(resource_exists_and_changed::<LevelOneAssets>),
 	);
 	app.add_systems(
 		Update,
@@ -114,7 +114,7 @@ pub(super) fn plugin(app: &mut App) {
 }
 
 fn add_navmesh_gizmo(
-	level: Res<LevelAssets>,
+	level: Res<LevelOneAssets>,
 	mut commands: Commands,
 	mut gizmo_config: ResMut<NavmeshGizmoConfig>,
 ) {
