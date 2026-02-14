@@ -15,7 +15,11 @@ use bevy::{
 
 use crate::{
 	CameraOrder, RenderLayer,
-	gameplay::player::{Player, camera::PlayerCameraParent},
+	font::VARIABLE_FONT,
+	gameplay::{
+		level::CurrentLevel,
+		player::{Player, camera::PlayerCameraParent},
+	},
 	screens::Screen,
 	third_party::avian3d::CollisionLayer,
 };
@@ -30,6 +34,7 @@ pub(super) fn plugin(app: &mut App) {
 		(spawn_stomach, spawn_stomach_ui_and_render).chain(),
 	);
 	app.add_systems(FixedUpdate, move_stomach);
+	app.add_systems(Update, update_stomach_ui_visibility);
 }
 
 #[derive(Component, Reflect, Debug, Default)]
@@ -52,10 +57,11 @@ impl Default for Stomach {
 	}
 }
 
+#[derive(Component, Debug)]
+pub struct StomachUi;
+
 /// The offscreen position of the stomach.
 const STOMACH_POSITION: Vec3 = Vec3::new(2000.0, 2000.0, 2000.0);
-
-const MESH_THICKNESS: f32 = 0.25;
 
 fn spawn_stomach(mut commands: Commands, assets: Res<AssetServer>) {
 	let stomach = Stomach::default();
@@ -152,8 +158,8 @@ fn spawn_stomach_ui_and_render(
 		},
 		Projection::Orthographic(OrthographicProjection {
 			scaling_mode: ScalingMode::Fixed {
-				width: stomach.target_size.x + MESH_THICKNESS * 2.0,
-				height: stomach.target_size.y + MESH_THICKNESS * 2.0,
+				width: stomach.target_size.x,
+				height: stomach.target_size.y,
 			},
 			..OrthographicProjection::default_3d()
 		}),
@@ -169,6 +175,7 @@ fn spawn_stomach_ui_and_render(
 	// Spawn stomach UI at the top right corner of the screen.
 	commands.spawn((
 		Name::new("Stomach UI"),
+		StomachUi,
 		Node {
 			flex_direction: FlexDirection::Column,
 			..default()
@@ -178,7 +185,9 @@ fn spawn_stomach_ui_and_render(
 		children![
 			(
 				Node {
-					width: Val::Percent(100.0),
+					width: Val::Vw(15.0),
+					max_width: Val::Px(300.0),
+					max_height: Val::Px(300.0 / aspect_ratio),
 					justify_content: JustifyContent::Center,
 					..default()
 				},
@@ -187,14 +196,21 @@ fn spawn_stomach_ui_and_render(
 					// TODO: add red recording circle instead of ().
 					Name::new("Stomach label"),
 					Text("LIVE () STOMACH REACTION".into()),
-					TextFont::from_font_size(18.0),
+					TextFont {
+						font: VARIABLE_FONT,
+						font_size: 18.0,
+						weight: FontWeight(800),
+						..default()
+					},
 					TextColor(Color::BLACK),
 				)]
 			),
 			(
 				Node {
-					width: Val::Px(256.0),
-					height: Val::Px(256.0 / aspect_ratio),
+					width: Val::Vw(15.0),
+					height: Val::Vw(15.0 / aspect_ratio),
+					max_width: Val::Px(300.0),
+					max_height: Val::Px(300.0 / aspect_ratio),
 					..default()
 				},
 				ImageNode {
@@ -227,4 +243,23 @@ fn move_stomach(
 	stomach_velocity.0 = stomach_velocity.lerp(target_velocity, smoothing_factor);
 	// Lock movement in the z-axis.
 	stomach_velocity.z = 0.0;
+}
+
+/// Updates the visibility of the stomach UI based on whether the stomach has any contents.
+fn update_stomach_ui_visibility(
+	stomach: Single<&Stomach>,
+	mut node: Single<&mut Node, With<StomachUi>>,
+	current_level: Res<CurrentLevel>,
+) {
+	// Hide the stomach UI if the stomach is empty, or if we are
+	// on the first level.
+	let new_display = if stomach.contents.is_empty() || *current_level == CurrentLevel::DayOne {
+		Display::None
+	} else {
+		Display::Flex
+	};
+
+	if node.display != new_display {
+		node.display = new_display;
+	}
 }

@@ -4,7 +4,9 @@
 use bevy::prelude::*;
 
 use super::LoadingScreen;
+use crate::font::VARIABLE_FONT;
 use crate::gameplay::level::AdvanceLevel;
+use crate::theme::palette::HEADER_TEXT;
 use crate::{
 	shader_compilation::{LoadedPipelineCount, all_pipelines_loaded},
 	theme::{palette::SCREEN_BACKGROUND, prelude::*},
@@ -40,7 +42,18 @@ fn spawn_or_skip_shader_compilation_loading_screen(
 		widget::ui_root("Loading Screen"),
 		BackgroundColor(SCREEN_BACKGROUND),
 		DespawnOnExit(LoadingScreen::Shaders),
-		children![(widget::label("Compiling shaders..."), LoadingShadersLabel)],
+		children![(
+			Name::new("Compiling shaders text"),
+			Text("Compiling Shaders".into()),
+			TextFont {
+				font: VARIABLE_FONT,
+				font_size: 22.0,
+				weight: FontWeight(800),
+				..default()
+			},
+			TextColor(HEADER_TEXT),
+			LoadingShadersLabel
+		)],
 	));
 }
 

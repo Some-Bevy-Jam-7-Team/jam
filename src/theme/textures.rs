@@ -21,32 +21,76 @@ pub(crate) fn plugin(app: &mut App) {
 		load_image
 	);
 
-	app.add_plugins(UiMaterialPlugin::<ButtonMaterial>::default());
+	app.add_plugins(UiMaterialPlugin::<TexturedUiMaterial>::default());
 	app.add_observer(on_add_button);
-	app.add_systems(Update, animate_button_material);
+	app.add_systems(Update, animate_textured_ui_material);
 }
 
-#[derive(AsBindGroup, Asset, TypePath, Debug, Default, Clone)]
-pub struct ButtonMaterial {
-	/// Color multiplied with the image
+/// A UI material that applies a texture to the UI element, with some additional parameters for animation.
+#[derive(AsBindGroup, Asset, TypePath, Debug, Clone)]
+pub struct TexturedUiMaterial {
+	/// Color multiplied with the texture's color.
 	#[uniform(0)]
 	pub color: Vec4,
-	/// Image used to represent the slider
+	/// Texture applied to the UI element
 	#[texture(1)]
 	#[sampler(2)]
 	pub color_texture: Handle<Image>,
-	/// Color of the image's border
+	/// Color of the border around the UI element
 	#[uniform(3)]
 	pub border_color: Vec4,
-	#[uniform(4)]
-	time: f32,
 	#[uniform(4)]
 	texture_translation: Vec2,
 	#[uniform(4)]
 	texture_rotation: f32,
+	#[uniform(4)]
+	_padding1: f32,
+	#[uniform(5)]
+	time: f32,
+	#[uniform(5)]
+	pub animation_speed: f32,
+	#[uniform(5)]
+	_padding2: Vec2,
 }
 
-impl UiMaterial for ButtonMaterial {
+impl Default for TexturedUiMaterial {
+	fn default() -> Self {
+		Self {
+			color: Vec4::ONE,
+			color_texture: Handle::default(),
+			border_color: Vec4::ZERO,
+			texture_translation: Vec2::ZERO,
+			texture_rotation: 0.0,
+			_padding1: 0.0,
+			time: 0.0,
+			animation_speed: 1.0,
+			_padding2: Vec2::ZERO,
+		}
+	}
+}
+
+impl TexturedUiMaterial {
+	pub fn new(
+		color: impl Into<Color>,
+		color_texture: Handle<Image>,
+		animation_speed: f32,
+	) -> Self {
+		let color: Color = color.into();
+		Self {
+			color: color.to_srgba().to_vec4(),
+			color_texture,
+			border_color: Vec4::ZERO,
+			texture_translation: Vec2::new(rand::random(), rand::random()),
+			texture_rotation: rand::random_range(0.0..std::f32::consts::TAU),
+			_padding1: 0.0,
+			time: 0.0,
+			animation_speed,
+			_padding2: Vec2::ZERO,
+		}
+	}
+}
+
+impl UiMaterial for TexturedUiMaterial {
 	fn fragment_shader() -> ShaderRef {
 		BUTTON_SHADER_ASSET_PATH.into()
 	}
@@ -54,28 +98,30 @@ impl UiMaterial for ButtonMaterial {
 
 fn on_add_button(
 	add: On<Add, Button>,
-	mut materials: ResMut<Assets<ButtonMaterial>>,
-	mut query: Query<&mut MaterialNode<ButtonMaterial>>,
+	mut materials: ResMut<Assets<TexturedUiMaterial>>,
+	mut query: Query<&mut MaterialNode<TexturedUiMaterial>>,
 	time: Res<Time<Real>>,
 ) {
 	let Ok(mut material_node) = query.get_mut(add.entity) else {
 		return;
 	};
-	let material = ButtonMaterial {
+	let material = TexturedUiMaterial {
 		color: Vec4::ONE,
 		color_texture: BUTTON_TEXTURE,
 		border_color: Vec4::ZERO,
 		time: time.elapsed_secs(),
 		texture_translation: Vec2::new(rand::random(), rand::random()),
 		texture_rotation: rand::random_range(0.0..std::f32::consts::TAU),
+		animation_speed: 0.03,
+		..default()
 	};
 	let material_handle = materials.add(material);
 	material_node.0 = material_handle;
 }
 
-fn animate_button_material(
-	mut materials: ResMut<Assets<ButtonMaterial>>,
-	query: Query<&MaterialNode<ButtonMaterial>>,
+fn animate_textured_ui_material(
+	mut materials: ResMut<Assets<TexturedUiMaterial>>,
+	query: Query<&MaterialNode<TexturedUiMaterial>>,
 	time: Res<Time<Real>>,
 ) {
 	for material_node in query.iter() {

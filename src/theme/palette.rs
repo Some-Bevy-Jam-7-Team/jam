@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 /// #e0d185
 pub(crate) const LABEL_TEXT: Color = Color::hsl(50.0, 0.6, 0.7);
-/// hsl(20, 60%, 60%)
+/// #d6855c
 pub(crate) const HEADER_TEXT: Color = Color::hsl(20.0, 0.6, 0.6);
 /// #ececec
 pub(crate) const BUTTON_TEXT: Color = Color::hsl(0.0, 0.1, 0.92);

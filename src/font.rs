@@ -7,12 +7,19 @@ use bevy::{
 };
 
 pub(crate) const DEFAULT_FONT: Handle<Font> = uuid_handle!("28dfb1e9-7b35-454f-9fe3-3457797c40bc");
+pub(crate) const VARIABLE_FONT: Handle<Font> = uuid_handle!("28dfb1e9-7b35-454f-9fe3-3457797c40bc");
 
 pub(crate) fn plugin(app: &mut App) {
 	load_internal_binary_asset!(
 		app,
 		DEFAULT_FONT,
 		"../assets/fonts/Finger_Paint/FingerPaint-Regular.ttf",
+		load_font
+	);
+	load_internal_binary_asset!(
+		app,
+		VARIABLE_FONT,
+		"../assets/fonts/Shantell_Sans/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf",
 		load_font
 	);
 

@@ -8,7 +8,10 @@ use bevy::{
 	ui::Val::*,
 };
 
-use crate::theme::{interaction::InteractionPalette, palette::*, textures::ButtonMaterial};
+use crate::{
+	font::VARIABLE_FONT,
+	theme::{interaction::InteractionPalette, palette::*, textures::TexturedUiMaterial},
+};
 
 /// A root UI node that fills the window and centers its content.
 pub(crate) fn ui_root(name: impl Into<Cow<'static, str>>) -> impl Bundle {
@@ -36,7 +39,12 @@ pub(crate) fn header(text: impl Into<String>) -> impl Bundle {
 	(
 		Name::new("Header"),
 		Text(text.into()),
-		TextFont::from_font_size(40.0),
+		TextFont {
+			font: VARIABLE_FONT,
+			font_size: 40.0,
+			weight: FontWeight(800),
+			..default()
+		},
 		TextColor(HEADER_TEXT),
 	)
 }
@@ -131,7 +139,7 @@ where
 					},
 					// This handle gets replaced in an observer.
 					// Cursed? Naaaaah surely not
-					MaterialNode::<ButtonMaterial>(default()),
+					MaterialNode::<TexturedUiMaterial>(default()),
 					children![(
 						Name::new("Button Text"),
 						Text(text),

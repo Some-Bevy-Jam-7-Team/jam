@@ -4,7 +4,9 @@
 use bevy::prelude::*;
 
 use super::LoadingScreen;
+use crate::font::VARIABLE_FONT;
 use crate::gameplay::level::{AdvanceLevel, CurrentLevel};
+use crate::theme::palette::HEADER_TEXT;
 use crate::{
 	asset_tracking::ResourceHandles,
 	theme::{palette::SCREEN_BACKGROUND, prelude::*},
@@ -55,7 +57,18 @@ fn spawn_or_skip_asset_loading_screen(
 		widget::ui_root("Loading Screen"),
 		BackgroundColor(SCREEN_BACKGROUND),
 		DespawnOnExit(LoadingScreen::Assets),
-		children![(widget::label("Loading Assets"), LoadingAssetsLabel)],
+		children![(
+			Name::new("Loading assets text"),
+			Text("Loading Assets".into()),
+			TextFont {
+				font: VARIABLE_FONT,
+				font_size: 22.0,
+				weight: FontWeight(800),
+				..default()
+			},
+			TextColor(HEADER_TEXT),
+			LoadingAssetsLabel
+		)],
 	));
 }
 

@@ -3,7 +3,7 @@ use bevy_seedling::sample::{AudioSample, SamplePlayer};
 
 use crate::{
 	PostPhysicsAppSystems, asset_tracking::LoadResource, audio::SfxPool,
-	theme::textures::ButtonMaterial,
+	theme::textures::TexturedUiMaterial,
 };
 
 pub(super) fn plugin(app: &mut App) {
@@ -71,11 +71,11 @@ fn apply_button_interaction_palette(
 		(
 			&Interaction,
 			&InteractionPalette,
-			&MaterialNode<ButtonMaterial>,
+			&MaterialNode<TexturedUiMaterial>,
 		),
 		Changed<Interaction>,
 	>,
-	mut materials: ResMut<Assets<ButtonMaterial>>,
+	mut materials: ResMut<Assets<TexturedUiMaterial>>,
 ) {
 	for (interaction, palette, material_handle) in &palette_query {
 		let material = materials.get_mut(&material_handle.0).unwrap();

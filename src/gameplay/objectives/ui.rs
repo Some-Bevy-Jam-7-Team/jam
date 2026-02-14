@@ -1,10 +1,12 @@
 use bevy::prelude::*;
 
 use crate::{
+	font::VARIABLE_FONT,
 	gameplay::objectives::{
 		CurrentObjective, Objective, ObjectiveCompleted, SubObjectiveOf, SubObjectives,
 	},
 	screens::Screen,
+	theme::{palette::HEADER_TEXT, textures::TexturedUiMaterial},
 };
 
 pub(super) fn plugin(app: &mut App) {
@@ -42,19 +44,49 @@ pub struct ObjectiveOfNode {
 }
 
 /// Spawns the main objective UI node.
-pub fn spawn_objective_ui(mut commands: Commands) {
+pub fn spawn_objective_ui(
+	mut commands: Commands,
+	mut materials: ResMut<Assets<TexturedUiMaterial>>,
+	asset_server: Res<AssetServer>,
+) {
 	commands.spawn((
 		Name::new("Objective UI"),
 		crate::ui_layout::RootWidget,
 		DespawnOnExit(Screen::Gameplay),
-		ObjectiveUi,
 		Node {
-			padding: UiRect::all(Val::Px(10.0)),
+			padding: UiRect::all(Val::Px(20.0)),
 			flex_direction: FlexDirection::Column,
 			row_gap: Val::Px(5.0),
+			border_radius: BorderRadius::all(Val::Px(10.0)),
 			..default()
 		},
-		BackgroundColor(Color::srgba(0.0, 0.0, 0.0, 0.6)),
+		MaterialNode(materials.add(TexturedUiMaterial::new(
+			Color::hsl(340.0, 0.5, 0.05),
+			asset_server.load("textures/carpet/carpet_ambientOcclusion.png"),
+			0.01,
+		))),
+		children![
+			(
+				Name::new("Objective UI Title"),
+				Text("Objectives".into()),
+				TextFont {
+					font: VARIABLE_FONT,
+					font_size: 22.0,
+					weight: FontWeight(800),
+					..default()
+				},
+				TextColor(HEADER_TEXT)
+			),
+			(
+				ObjectiveUi,
+				Node {
+					display: Display::Flex,
+					flex_direction: FlexDirection::Column,
+					row_gap: Val::Px(5.0),
+					..default()
+				}
+			)
+		],
 	));
 }
 
@@ -70,7 +102,16 @@ fn objective_node(description: impl Into<String>, depth: usize) -> impl Bundle {
 		},
 		children![(
 			Text::new(description),
-			TextFont::from_font_size((16.0 - depth as f32 * 2.0).max(10.0)),
+			if depth == 0 {
+				TextFont {
+					font: VARIABLE_FONT,
+					font_size: 16.0,
+					weight: FontWeight(800),
+					..default()
+				}
+			} else {
+				TextFont::from_font_size((16.0 - depth as f32 * 2.0).max(10.0))
+			},
 		)],
 	)
 }

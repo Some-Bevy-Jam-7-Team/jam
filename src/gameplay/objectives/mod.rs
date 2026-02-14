@@ -32,7 +32,7 @@ pub struct CurrentObjective(Option<Entity>);
 /// A game objective.
 #[derive(Default)]
 #[base_class]
-#[component(on_add=Objective::on_add)]
+#[component(on_add = Objective::on_add)]
 #[require(DespawnOnExit::<Screen>(Screen::Gameplay))]
 pub struct Objective {
 	/// The description of the objective.

@@ -1,3 +1,5 @@
+use crate::theme::palette::SCREEN_BACKGROUND;
+use crate::theme::textures::{BUTTON_TEXTURE, TexturedUiMaterial};
 use crate::ui_layout::RootWidget;
 
 use super::assets::image_handle;
@@ -28,7 +30,11 @@ pub(super) struct OptionsNode;
 #[derive(Debug, Component)]
 pub(super) struct OptionButton(pub OptionId);
 
-fn setup(mut commands: Commands) {
+fn setup(
+	mut commands: Commands,
+	mut materials: ResMut<Assets<TexturedUiMaterial>>,
+	asset_server: Res<AssetServer>,
+) {
 	// root node
 	commands
 		.spawn((
@@ -53,23 +59,6 @@ fn setup(mut commands: Commands) {
 			UiRootNode,
 		))
 		.with_children(|parent| {
-			parent.spawn((
-				fmt_name("name"),
-				Text::default(),
-				text_style::name(),
-				Node {
-					margin: UiRect {
-						left: Val::Px(TEXT_BORDER_HORIZONTAL / 2.0),
-						bottom: Val::Px(-8.0),
-						..default()
-					},
-					..default()
-				},
-				ZIndex(1),
-				DialogueNameNode,
-				Label,
-			));
-
 			parent
 				.spawn((
 					fmt_name("dialogue"),
@@ -83,12 +72,29 @@ fn setup(mut commands: Commands) {
 							left: Val::Px(TEXT_BORDER_HORIZONTAL),
 							right: Val::Px(TEXT_BORDER_HORIZONTAL),
 						},
-						border_radius: BorderRadius::all(Val::Px(20.0)),
+						border_radius: BorderRadius::all(Val::Px(10.0)),
 						..default()
 					},
-					BackgroundColor(Color::BLACK.with_alpha(0.8)),
+					MaterialNode(materials.add(TexturedUiMaterial::new(
+						Color::hsl(195.0, 0.2, 0.1),
+						asset_server.load("textures/carpet/carpet_ambientOcclusion.png"),
+						0.01,
+					))),
 				))
 				.with_children(|parent| {
+					// Speaker name
+					parent.spawn((
+						fmt_name("name"),
+						Text::default(),
+						text_style::name(),
+						Node {
+							margin: UiRect::bottom(Val::Px(10.0)),
+							..default()
+						},
+						DialogueNameNode,
+						Label,
+					));
+
 					// Dialog itself
 					parent.spawn((
 						fmt_name("text"),
@@ -98,8 +104,7 @@ fn setup(mut commands: Commands) {
 						DialogueNode,
 						Label,
 					));
-				})
-				.with_children(|parent| {
+
 					// Options
 					parent.spawn((
 						fmt_name("options"),
@@ -201,8 +206,8 @@ where
 	});
 }
 
-const DIALOG_WIDTH: f32 = 800.0 * 0.8;
-const TEXT_BORDER_HORIZONTAL: f32 = 120.0;
+const DIALOG_WIDTH: f32 = 600.0;
+const TEXT_BORDER_HORIZONTAL: f32 = 60.0;
 const TEXT_BORDER_TOP: f32 = 30.0;
 const TEXT_BORDER_BOTTOM: f32 = TEXT_BORDER_TOP + 10.0;
 
@@ -225,10 +230,13 @@ mod style {
 }
 
 mod text_style {
-	use crate::font::DEFAULT_FONT;
-
 	use super::*;
+	use crate::{
+		font::{DEFAULT_FONT, VARIABLE_FONT},
+		theme::palette::{HEADER_TEXT, LABEL_TEXT},
+	};
 	use bevy::color::palettes::css;
+
 	pub(super) fn standard() -> (TextFont, TextColor) {
 		(
 			TextFont {
@@ -239,14 +247,16 @@ mod text_style {
 			TextColor(Color::WHITE),
 		)
 	}
+
 	pub(super) fn name() -> (TextFont, TextColor) {
 		(
 			TextFont {
-				font: DEFAULT_FONT,
-				font_size: 18.0,
+				font: VARIABLE_FONT,
+				font_size: 22.0,
+				weight: FontWeight(900),
 				..standard().0
 			},
-			standard().1,
+			TextColor(Color::hsl(120.0, 1.0, 0.9)),
 		)
 	}
 
@@ -266,7 +276,7 @@ mod text_style {
 				font_size: 18.0,
 				..standard().0
 			},
-			TextColor(css::TOMATO.into()),
+			TextColor(LABEL_TEXT),
 		)
 	}
 }

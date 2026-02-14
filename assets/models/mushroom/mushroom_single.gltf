@@ -92,7 +92,7 @@
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":552,
+			"count":570,
 			"type":"SCALAR"
 		}
 	],
@@ -117,7 +117,7 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":1104,
+			"byteLength":1140,
 			"byteOffset":4928,
 			"target":34963
 		}
@@ -130,7 +130,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":6032,
+			"byteLength":6068,
 			"uri":"mushroom_single.bin"
 		}
 	]

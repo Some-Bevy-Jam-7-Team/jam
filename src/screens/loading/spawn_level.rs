@@ -5,8 +5,10 @@ use bevy_feronia::prelude::{HeightMapState, ScatterRoot, ScatterState};
 use bevy_landmass::{NavMesh, coords::ThreeD};
 
 use super::LoadingScreen;
+use crate::font::VARIABLE_FONT;
 use crate::gameplay::level::{spawn_landscape, spawn_level};
 use crate::scatter::ScatterDone;
+use crate::theme::palette::HEADER_TEXT;
 use crate::{
 	screens::Screen,
 	theme::{palette::SCREEN_BACKGROUND, prelude::*},
@@ -43,7 +45,17 @@ fn spawn_level_loading_screen(mut commands: Commands) {
 		widget::ui_root("Loading Screen"),
 		BackgroundColor(SCREEN_BACKGROUND),
 		DespawnOnExit(LoadingScreen::Level),
-		children![widget::label("Spawning Level...")],
+		children![(
+			Name::new("Spawning level text"),
+			Text("Spawning Level".into()),
+			TextFont {
+				font: VARIABLE_FONT,
+				font_size: 22.0,
+				weight: FontWeight(800),
+				..default()
+			},
+			TextColor(HEADER_TEXT),
+		)],
 	));
 }
 

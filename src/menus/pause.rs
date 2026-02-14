@@ -28,21 +28,25 @@ fn spawn_pause_menu(
 	commands.spawn((
 		DespawnOnExit(Menu::Pause),
 		RootWidget,
+		GlobalZIndex(3),
 		widget::header("Game paused!"),
 	));
 	commands.spawn((
 		DespawnOnExit(Menu::Pause),
 		RootWidget,
+		GlobalZIndex(3),
 		widget::button("Unpause", close_pause_menu),
 	));
 	commands.spawn((
 		DespawnOnExit(Menu::Pause),
 		RootWidget,
+		GlobalZIndex(3),
 		widget::button("Settings", open_settings_menu),
 	));
 	commands.spawn((
 		DespawnOnExit(Menu::Pause),
 		RootWidget,
+		GlobalZIndex(3),
 		widget::button("Quit to title", quit_to_title),
 	));
 	crosshair

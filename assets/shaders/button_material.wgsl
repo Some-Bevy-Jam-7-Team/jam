@@ -3,17 +3,24 @@
     ui_vertex_output::UiVertexOutput,
 };
 
+struct TextureTransform {
+    translation: vec2<f32>,
+    rotation: f32,
+    _padding: f32,
+};
+
 struct Animation {
     time: f32,
-    start_translation: vec2<f32>,
-    start_rotation: f32,
+    speed: f32,
+    _padding: vec2<f32>,
 };
 
 @group(1) @binding(0) var<uniform> color: vec4<f32>;
 @group(1) @binding(1) var texture: texture_2d<f32>;
 @group(1) @binding(2) var texture_sampler: sampler;
 @group(1) @binding(3) var<uniform> border_color: vec4<f32>;
-@group(1) @binding(4) var<uniform> animation: Animation;
+@group(1) @binding(4) var<uniform> texture_transform: TextureTransform;
+@group(1) @binding(5) var<uniform> animation: Animation;
 
 @fragment
 fn fragment(in: UiVertexOutput) -> @location(0) vec4<f32> {
@@ -56,8 +63,8 @@ fn fragment(in: UiVertexOutput) -> @location(0) vec4<f32> {
     let centered = base_uv - vec2<f32>(0.5, 0.5);
 
     // Rotation
-    let c = cos(animation.start_rotation);
-    let s = sin(animation.start_rotation);
+    let c = cos(texture_transform.rotation);
+    let s = sin(texture_transform.rotation);
     let rotated = vec2<f32>(
         centered.x * c - centered.y * s,
         centered.x * s + centered.y * c
@@ -67,8 +74,8 @@ fn fragment(in: UiVertexOutput) -> @location(0) vec4<f32> {
     let transformed_uv =
         rotated
         + vec2<f32>(0.5, 0.5)
-        + animation.start_translation
-        + vec2<f32>(animation.time * 0.03);
+        + texture_transform.translation
+        + vec2<f32>(animation.time * animation.speed);
 
     // Wrap for tiling textures
     let uv = fract(transformed_uv);
