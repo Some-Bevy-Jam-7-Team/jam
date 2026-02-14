@@ -21,9 +21,6 @@ pub fn spawn_scatter_layers(
 	let landscape = landscape.into_inner();
 	debug!("Spawning scatter layers...");
 	match *current_level {
-		CurrentLevel::DayOne => {
-			cmd.trigger(ScatterDone);
-		}
 		CurrentLevel::DayTwo => {
 			cmd.spawn((
 				DespawnOnExit(Screen::Gameplay),
@@ -40,6 +37,9 @@ pub fn spawn_scatter_layers(
 				GrassLayer,
 				ChildOf(landscape),
 			));
+		}
+		_ => {
+			cmd.trigger(ScatterDone);
 		}
 	}
 }

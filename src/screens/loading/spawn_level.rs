@@ -1,7 +1,7 @@
 //! The loading screen that appears when the game is starting, but still spawning the level.
 
 use bevy::{prelude::*, scene::SceneInstance};
-use bevy_feronia::prelude::{HeightMapState, ScatterRoot};
+use bevy_feronia::prelude::{HeightMapState, ScatterRoot, ScatterState};
 use bevy_landmass::{NavMesh, coords::ThreeD};
 
 use super::LoadingScreen;
@@ -16,13 +16,22 @@ pub(super) fn plugin(app: &mut App) {
 	app.add_systems(
 		OnEnter(LoadingScreen::Level),
 		(spawn_level_loading_screen, spawn_landscape, spawn_level),
-	);
+	)
+	.add_systems(OnExit(Screen::Gameplay), reset_scatter_state);
 
 	app.add_systems(
 		Update,
 		advance_to_gameplay_screen.run_if(in_state(LoadingScreen::Level)),
 	)
 	.add_observer(on_scatter_done);
+}
+
+fn reset_scatter_state(
+	mut ns_scatter: ResMut<NextState<ScatterState>>,
+	mut ns_height_map: ResMut<NextState<HeightMapState>>,
+) {
+	ns_scatter.set(ScatterState::Loading);
+	ns_height_map.set(HeightMapState::Loading);
 }
 
 fn spawn_level_loading_screen(mut commands: Commands) {
