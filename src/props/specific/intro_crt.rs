@@ -1,12 +1,16 @@
 //! Handles the animated expressions for the intro CRT
 
 use bevy::{platform::collections::HashMap, prelude::*};
+use bevy_yarnspinner::prelude::DialogueRunner;
 use crate::{props::generic::Crt, third_party::bevy_trenchbroom::GetTrenchbroomModelPath as _};
 
 pub(super) fn plugin(app: &mut App) {
     app.init_resource::<CrtModel>()
         .init_resource::<CrtScreenTextures>()
-        .add_systems(Update, poll_crt_model_load.run_if(not(resource_exists::<CrtScreenMaterial>)));
+        .add_systems(Update, (
+            poll_crt_model_load.run_if(not(resource_exists::<CrtScreenMaterial>)),
+            clear_intro_crt_emote,
+        ));
 }
 
 /// Call this system from yarnspinner to change the emote
@@ -75,8 +79,22 @@ fn poll_crt_model_load(
     if let Some(model) = models.get(&**handle) {
         if let Some(material) = model.named_materials.get("glass") {
             commands.insert_resource(CrtScreenMaterial(material.clone()));
+            commands.remove_resource::<CrtModel>();
         } else {
             warn!("Could not get glass material from monitor model");
         }
+    }
+}
+
+/// Clears the emote when dialog stops
+/// so the face does not show up on every screen
+/// in a 5 mile radius
+fn clear_intro_crt_emote(
+    dialog: Single<&DialogueRunner>,
+    handle: Res<CrtScreenMaterial>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+) {
+    if !dialog.is_running() && let Some(material) = materials.get_mut(&**handle) {
+        material.base_color_texture = None;
     }
 }
