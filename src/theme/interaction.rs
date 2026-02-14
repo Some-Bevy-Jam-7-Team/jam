@@ -1,7 +1,10 @@
 use bevy::prelude::*;
 use bevy_seedling::sample::{AudioSample, SamplePlayer};
 
-use crate::{PostPhysicsAppSystems, asset_tracking::LoadResource, audio::SfxPool};
+use crate::{
+	PostPhysicsAppSystems, asset_tracking::LoadResource, audio::SfxPool,
+	theme::textures::ButtonMaterial,
+};
 
 pub(super) fn plugin(app: &mut App) {
 	app.load_resource::<InteractionAssets>();
@@ -10,6 +13,7 @@ pub(super) fn plugin(app: &mut App) {
 		(
 			trigger_on_press,
 			apply_interaction_palette,
+			apply_button_interaction_palette,
 			trigger_interaction_sound_effect,
 		)
 			.run_if(resource_exists::<InteractionAssets>)
@@ -59,6 +63,27 @@ fn apply_interaction_palette(
 			Interaction::Pressed => palette.pressed,
 		}
 		.into();
+	}
+}
+
+fn apply_button_interaction_palette(
+	palette_query: Query<
+		(
+			&Interaction,
+			&InteractionPalette,
+			&MaterialNode<ButtonMaterial>,
+		),
+		Changed<Interaction>,
+	>,
+	mut materials: ResMut<Assets<ButtonMaterial>>,
+) {
+	for (interaction, palette, material_handle) in &palette_query {
+		let material = materials.get_mut(&material_handle.0).unwrap();
+		material.color = match interaction {
+			Interaction::None => palette.none.to_srgba().to_vec4(),
+			Interaction::Hovered => palette.hovered.to_srgba().to_vec4(),
+			Interaction::Pressed => palette.pressed.to_srgba().to_vec4(),
+		};
 	}
 }
 

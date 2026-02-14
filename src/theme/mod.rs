@@ -5,6 +5,7 @@
 
 pub(crate) mod interaction;
 pub(crate) mod palette;
+pub(crate) mod textures;
 pub(crate) mod widget;
 
 #[allow(unused_imports)]
@@ -15,5 +16,5 @@ pub(crate) mod prelude {
 use bevy::prelude::*;
 
 pub(super) fn plugin(app: &mut App) {
-	app.add_plugins(interaction::plugin);
+	app.add_plugins((interaction::plugin, textures::plugin));
 }
