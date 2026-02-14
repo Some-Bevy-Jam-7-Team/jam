@@ -77,6 +77,7 @@ fn spawn_view_model(
 	let medium = media.add(ScatteringMedium::default());
 
 	let (exposure, env_light) = match *current_level {
+		CurrentLevel::Shaders => (13., 0.4),
 		CurrentLevel::DayOne => (13., 0.4),
 		CurrentLevel::DayTwo => (14., 0.2),
 		CurrentLevel::Train => (13., 0.4),
