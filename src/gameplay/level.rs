@@ -130,11 +130,11 @@ pub(crate) fn spawn_level(
 				SceneRoot(level_one_assets.level.clone()),
 				DespawnOnExit(Screen::Gameplay),
 				Level,
-				children![(
-					Name::new("Level Music"),
-					SamplePlayer::new(level_one_assets.music.clone()).looping(),
-					MusicPool
-				)],
+				// children![(
+				// 	Name::new("Level Music"),
+				// 	SamplePlayer::new(level_assets.music.clone()).looping(),
+				// 	MusicPool
+				// )],
 			));
 
 			let archipelago = commands
