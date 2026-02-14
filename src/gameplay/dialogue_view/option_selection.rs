@@ -1,3 +1,5 @@
+use crate::theme::palette::LABEL_TEXT;
+
 use super::DialogueViewSystemSet;
 use super::setup::{DialogueNode, OptionButton, OptionsNode, UiRootNode, spawn_options};
 use super::typewriter::{Typewriter, TypewriterFinishedEvent};
@@ -105,10 +107,10 @@ fn select_option(
 		let (color, icon) = match *interaction {
 			Interaction::Pressed if selection.is_none() => {
 				selection = Some(button.0);
-				(css::TOMATO.into(), SystemCursorIcon::Default)
+				(LABEL_TEXT.into(), SystemCursorIcon::Default)
 			}
 			Interaction::Hovered => (Color::WHITE, SystemCursorIcon::Pointer),
-			_ => (css::TOMATO.into(), SystemCursorIcon::Default),
+			_ => (LABEL_TEXT.into(), SystemCursorIcon::Default),
 		};
 		commands.entity(*window).insert(CursorIcon::System(icon));
 		*text_writer.color(entity, 2) = TextColor(color);
