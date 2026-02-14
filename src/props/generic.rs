@@ -29,7 +29,8 @@ pub(super) fn plugin(app: &mut App) {
 		.add_observer(setup_static_prop_with_convex_hull::<DoorStainedGlass>)
 		.add_observer(setup_static_prop_with_convex_hull::<Jesus>)
 		.add_observer(setup_static_prop_with_convex_hull::<Speaker>)
-		.add_observer(setup_static_prop_with_convex_hull::<Teeth>);
+		.add_observer(setup_static_prop_with_convex_hull::<Teeth>)
+		.add_observer(setup_static_prop_with_convex_hull::<StaticCctv>);
 
 	app.add_observer(setup_static_prop_with_trimesh::<Train>);
 
@@ -129,6 +130,12 @@ pub(crate) struct PackageSmall;
 	model("models/cctv/cctv.gltf")
 )]
 pub(crate) struct Cctv;
+
+#[point_class(
+	base(TargetName, InteractableEntity, Transform, Visibility),
+	model("models/cctv/cctv.gltf")
+)]
+pub(crate) struct StaticCctv;
 
 // generic static props
 #[point_class(
