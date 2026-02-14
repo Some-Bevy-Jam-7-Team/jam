@@ -198,6 +198,14 @@ pub(crate) fn spawn_level(
 			));
 		}
 		CurrentLevel::Commune => {
+			commands.spawn((
+				Objective::new("Have a look around"),
+				TargetName::new("look_around"),
+				ObjectiveEntity {
+					target: None,
+					objective_order: -1.,
+				},
+			));
 			let level_three_assets = level_three_assets.expect("If we don't have level three assets when spawning level three, we're in deep shit. Sorry player, we bail here.");
 
 			let archipelago = commands

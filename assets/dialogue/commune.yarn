@@ -1,105 +1,124 @@
 title: CEO1
 ---
 Jeff: Ever since the revolution they've kept me here stacking boxes #line:6590288
-Jeff: Those peasants don't know the value of hard work. #line:61085 
-Jeff: They could never understand the joy of shareholder value, or stock prices rising, or the thrill of pulling of your first successful rug pull. #line:11105309 
-Jeff: Oh the joys of capitalism. How I miss you. #line:15430720 
+Jeff: Those peasants don't know the value of hard work. #line:61085
+Jeff: They could never understand the joy of shareholder value, or stock prices rising, or the thrill of pulling of your first successful rug pull. #line:11105309
+Jeff: Oh the joys of capitalism. How I miss you. #line:15430720
 ===
 
 title: CEO2
 ---
-Mark: I am devising a scheme to carry two boxes at once. #line:7805705 
-Mark: It will double the value I am producing. #line:9637217
-Mark: Then if I can stack the boxes in a tower I will finally reach our lord and saviour. #line:4786064 
-
+<<declare $talked_to_ceo_2 = true>>
+<<if $talked_to_ceo_2 == true>>
+  Mark: Was ish mit minere Stimm passiert? #line:3651129
+<<else>>
+  Mark: I am devising a scheme to carry two boxes at once. #line:7805705
+  Mark: It will double the value I am producing. #line:9637217
+  Mark: Then if I can stack the boxes in a tower I will finally reach our lord and saviour. #line:4786064
+  Mark: Ich werd miin Platz im Olymp vom Kapitalismus iineh #line:6601755
+	<<set $talked_to_ceo_2 = true>>
+<<endif>>
 ===
 
 title: CEO3
 ---
-Jimmy: I used to own ten homes. #line:13409629
-Jimmy: But ever since they locked me in here I haven't been able to visit them. #line:3321552 
-Jimmy: I hope squatters haven't moved in. #line:3425463 
-Jimmy: Those simple minded peasants probably won't understand the value of what I own. #line:9392363 
-Jimmy: I just hope they never find the Villiano's Toastermaster 3000. #line:12880488 
-Jimmy: Or the gold plated Vonderbike's Nuclear Microwave. #line:6092655 
-Jimmy: Oh how I miss them. #line:11174658 
-Jimmy: Incoherent sobbing. #line:1906482 
+<<declare $talked_to_ceo_3 = true>>
+<<if $talked_to_ceo_3 == true>>
+  Jimmy: Incoherent sobbing. #line:4508850
+<<else>>
+  Jimmy: I used to own ten homes. #line:13409629
+  Jimmy: But ever since they locked me in here I haven't been able to visit them. #line:3321552
+  Jimmy: I hope squatters haven't moved in. #line:3425463
+  Jimmy: Those simple minded peasants probably won't understand the value of what I own. #line:9392363
+  Jimmy: I just hope they never find the Villiano's Toastermaster 3000. #line:12880488
+  Jimmy: Or the gold plated Vonderbike's Nuclear Microwave. #line:6092655
+  Jimmy: Oh how I miss them. #line:11174658
+  Jimmy: Incoherent sobbing. #line:1906482
+  <<set $talked_to_ceo_3 = true>>
+<<endif>>
 ===
 
 title: MushroomButcher
 ---
 Mushroom Lidya: Hello there love. #line:2241604
 Mushroom Lidya: If you need any mushrooms feel free to take them. #line:2509048
--> Why mushrooms? #line:12584566 
-  Mushroom Lidya: The ██████ killed all other plant life. #line:8563210 
-  -> The what? #line:2380124 
-    Mushroom Lidya: The ██████! #line:4411532 
--> Why are you just giving them to me #line:16346362 
-  Mushroom Jannet: It's the free market innit. #line:5381221 
+-> Why mushrooms? #line:12584566
+  Mushroom Lidya: The ██████ killed all other plant life. #line:8563210
+  -> The what? #line:2380124
+    Mushroom Lidya: The ██████! #line:4411532
+-> Why are you just giving them to me #line:16346362
+  Mushroom Jannet: It's the free market innit. #line:5381221
 ===
 
 title: Dave
 ---
-Dave: Welcome to the Anarcho Syndicalist Commune of Dave. #line:1676776 
-Dave: That's me! #line:12496552 
--> Anarcho huh #line:2429883 
-  Dave: Anarcho Syndicalist! #line:4038891 
-  Dave: I'm going to be honest I have no idea what it all means. #line:3771426 
-  Dave: But it has my name at the end of it so it must be good. #line:1325336 
-  Dave: From what I gather I'm supposed to be in charge of round 'ere. #line:13529562 
+Dave: Welcome to the Anarcho Syndicalist Commune of Dave. #line:1676776
+Dave: That's me! #line:12496552
+-> Anarcho huh #line:2429883
+  Dave: Anarcho Syndicalist! #line:4038891
+  Dave: I'm going to be honest I have no idea what it all means. #line:3771426
+  Dave: But it has my name at the end of it so it must be good. #line:1325336
+  Dave: From what I gather I'm supposed to be in charge of round 'ere. #line:13529562
 
-  -> How did that happen? #line:16721185 
-    Dave: Well you see one night I was sloshed at the pub with my mates. #line:15550566 
-    Dave: And we got to talking about the miserable state of affairs round these parts. #line:4523041 
-    Dave: It was even worse than Scunthorpe. #line:15130587 
-    Dave: To cut a long story short we stumbled out the pub protesting the state of things. #line:16515755 
-    Dave: When the local council saw us coming they up and ran away. #line:8938234 
-    Dave: And by the time I woke up with a hangover I was bloody well in charge. #line:3146142 
-    Dave: Or at least I think that's how things went down. #line:3688498 
+  -> How did that happen? #line:16721185
+    Dave: Well you see one night I was sloshed at the pub with my mates. #line:15550566
+    Dave: And we got to talking about the miserable state of affairs round these parts. #line:4523041
+    Dave: It was even worse than Scunthorpe. #line:15130587
+    Dave: To cut a long story short we stumbled out the pub protesting the state of things. #line:16515755
+    Dave: When the local council saw us coming they up and ran away. #line:8938234
+    Dave: And by the time I woke up with a hangover I was bloody well in charge. #line:3146142
+    Dave: Or at least I think that's how things went down. #line:3688498
 
--> Did I just fall from the sky? #line:14876656 
-  Dave: Happens all the time. #line:3382850 
-  Dave: Sometimes. #line:892829 
-  Dave: You'll get used to it. #line:10258889 
+-> Did I just fall from the sky? #line:14876656
+  Dave: Happens all the time. #line:3382850
+  Dave: Sometimes. #line:892829
+  Dave: You'll get used to it. #line:10258889
 
--> Where is this place #line:13485050 
-  Dave: Half way between Hull and Birmingham. #line:7115870 
-  Dave: Just north of Norwich. #line:13307725 
-  Dave: South by south west of Manchester. #line:5343421 
-  Dave: Roughly 28° south of Coventry. #line:15266290 
-  Dave: About an hour by bus from Swindon. #line:6566055 
-  Dave: Twenty minutes east of the midlands. #line:2411056 
-  Dave: We used to be twinned with Mügeln. #line:9553237 
-  Dave: Does that clear it up #line:9691338 
+-> Where is this place #line:13485050
+  Dave: Half way between Hull and Birmingham. #line:7115870
+  Dave: Just north of Norwich. #line:13307725
+  Dave: South by south west of Manchester. #line:5343421
+  Dave: Roughly 28° south of Coventry. #line:15266290
+  Dave: About an hour by bus from Swindon. #line:6566055
+  Dave: Twenty minutes east of the midlands. #line:2411056
+  Dave: We used to be twinned with Mügeln. #line:9553237
+  Dave: Does that clear it up #line:9691338
 
-  -> My head hurts. #line:5263726 
-    Dave: Well get some ale and chips into you. It'll clear that right up. #line:2295028 
+  -> My head hurts. #line:5263726
+    Dave: Well get some ale and chips into you. It'll clear that right up. #line:2295028
 
-  -> You're British?? #line:14273870 
-    Dave: As British and Chips and Curry. #line:12488020 
+  -> You're British?? #line:14273870
+    Dave: As British and Chips and Curry. #line:12488020
 
-  -> You're Northern?? #line:15752441 
-    Dave: Right you are. #line:16664469 
+  -> You're Northern?? #line:15752441
+    Dave: Right you are. #line:16664469
+
+-> How do I get out of here? #line:7236381
+  Dave: I've heard rumours of a place that can only be found by falling. #line:8916654
+  Dave: Maybe give it a try. #line:11792722
+  <<create_objectve "leave", "Leave", 2.0>>
+  <<create_subobjective "jump", "Jump of, trust">, 3.0>
+<<set $talked = $talked + 1>>
 ===
 
 // TODO: Add npc for Jannet.
 title: Jannet
 ---
-Jannet: Damn estrogen is magic. #line:5306475 
-Jannet: I have boobs now. #line:10657129 
-Jannet: Every single woman who's ever had a crush on me is now Gay. #line:10535612 
-Jannet: They should never have given me this power. #line:15163347 
+Jannet: Damn estrogen is magic. #line:5306475
+Jannet: I have boobs now. #line:10657129
+Jannet: And every single woman who's ever had a crush on me is now Gay. #line:10535612
+Jannet: They should never have given me this power. #line:15163347
 ===
 
 title: Storm
 ---
-Storm: Hello there. #line:491159 
-Storm: You wouldn't have happened to see a house fly by you while you were up in the air? #line:12182704 
-Storm: There was a right storm last night and it appears to have made off with our house. #line:14277538 
--> No #line:4686347 
-  Storm: That's a shame. #line:892195 
-  Storm: Where on earth are we going to sleep? #line:14991202 
+Storm: Hello there. #line:491159
+Storm: You wouldn't have happened to see a house fly by you while you were up in the air? #line:12182704
+Storm: There was a right storm last night and it appears to have made off with our house. #line:14277538
+-> No #line:4686347
+  Storm: That's a shame. #line:892195
+  Storm: Where on earth are we going to sleep? #line:14991202
 
-  -> Maybe you could build a house out of one of those mushrooms? #line:10692078 
-    Storm: You're a genius, we're saved. #line:15678450 
+  -> Maybe you could build a house out of one of those mushrooms? #line:10692078
+    Storm: You're a genius, we're saved. #line:15678450
 ===
