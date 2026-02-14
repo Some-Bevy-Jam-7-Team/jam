@@ -34,7 +34,7 @@ impl Plugin for ScatterPlugin {
 
 		app.add_systems(OnExit(Screen::Gameplay), clear_scatter_root)
 			.add_systems(OnEnter(ScatterState::Ready), scatter)
-			.add_systems(Startup, (spawn_scatter_root,spawn_scatter_layers).chain())
+			.add_systems(Startup, (spawn_scatter_root, spawn_scatter_layers).chain())
 			.add_systems(
 				Update,
 				(
