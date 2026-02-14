@@ -23,6 +23,7 @@ pub(super) fn plugin(app: &mut App) {
 	app.load_resource::<EnvironmentAssets>()
 		.load_resource::<LevelAssets>()
 		.init_asset::<LevelTwoAssets>()
+		.init_asset::<LevelThreeAssets>()
 		.init_asset::<LevelTrainAssets>()
 		.init_asset::<LevelKarolineAssets>();
 
@@ -164,6 +165,8 @@ pub(crate) fn spawn_level(
 				SceneRoot(level_three_assets.level.clone()),
 				DespawnOnExit(Screen::Gameplay),
 				Level,
+			));
+		}
 		CurrentLevel::Train => {
 			let level_train_assets = level_train_assets.expect("If we don't have level two assets when spawning level two, we're in deep shit. Sorry player, we bail here.");
 

@@ -26,7 +26,10 @@ pub fn scatter(
 	mw_clear_root.write((*root).into());
 
 	match *current_level {
-		CurrentLevel::DayOne | CurrentLevel::Karoline | CurrentLevel::Train => {
+		CurrentLevel::DayOne
+		| CurrentLevel::Commune
+		| CurrentLevel::Karoline
+		| CurrentLevel::Train => {
 			cmd.trigger(ScatterDone);
 		}
 		CurrentLevel::DayTwo => {
