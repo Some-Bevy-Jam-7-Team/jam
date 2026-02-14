@@ -148,7 +148,7 @@ impl PlayerInputContext {
 				),
 				(
 					Action::<VomitObject>::new(),
-					bindings![KeyCode::KeyV, GamepadButton::East]
+					bindings![MouseButton::Right, GamepadButton::East]
 				)
 			]));
 	}

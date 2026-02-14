@@ -78,7 +78,7 @@ fn iquick_plz_do_not_kill_me(
 	if let Some(hit) = spatial.cast_ray(
 		transform.translation,
 		transform.forward(),
-		3.0,
+		1.5,
 		true,
 		&SpatialQueryFilter::from_excluded_entities(ignored).with_mask([
 			CollisionLayer::Default,

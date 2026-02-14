@@ -26,14 +26,14 @@ Janitor: I miss him. #line:821939
 
 title: IntroNpc4
 ---
-Janissary: I could be relaxing on a beach sipping on a cocktail of moonshine, speed, and managers tears... #line:2280615
-Janissary: But instead I computer. #line:7100819
+Janissary: I could be relaxing on a beach sipping on a cocktail of moonshine, speed, and managers' tears... #line:2280615
+Janissary: But instead, I computer. #line:7100819
 ===
 
 title: IntroNpc5
 ---
 Janibal Lectern: I love computer. #line:4910574
-Janibal Lectern: It shows me coporate propoganda 24/7. #line:2937368
+Janibal Lectern: It shows me corporate propoganda 24/7. #line:2937368
 Janibal Lectern: I want to become a propoganda maker when I grow up. #line:11020882
 ===
 
@@ -49,7 +49,7 @@ title: IntroNpc6
     <<complete_objective "w3_soc">>
     Jannick: He tried to take me out for dinner on my birthday. #line:364330
     Jannick: Said I was very special. #line:9209822
-    Jannick: Are you going to do that to. #line:13085080
+    Jannick: Are you going to do that too? #line:13085080
     -> No #line:14615155
       <<set $date = false>>
       Jannick: Then save your happy birthday. #line:4933784
@@ -95,7 +95,7 @@ Jandice: Now I drink three bottles a day. #line:10953384
 
 title: IntroNpc11
 ---
-Janateer: I swaped Jandice's vodka for water. #line:16498861
+Janateer: I swapped Jandice's vodka for water. #line:16498861
 Janateer: He can't tell the difference when he's drunk. #line:3128113
 ===
 

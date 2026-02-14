@@ -12,7 +12,7 @@ pub use updating::SpeakerChangeEvent;
 mod assets;
 mod option_selection;
 mod setup;
-mod typewriter;
+pub mod typewriter;
 mod updating;
 
 pub mod prelude {

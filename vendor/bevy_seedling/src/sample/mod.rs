@@ -1,17 +1,17 @@
 //! Audio sample components.
 
 use crate::{
-    node::DiffTimestamp,
-    prelude::{AudioEvents, Volume},
-    time::Audio,
+	node::DiffTimestamp,
+	prelude::{AudioEvents, Volume},
+	time::Audio,
 };
 use bevy_asset::Handle;
 use bevy_ecs::prelude::*;
 use bevy_math::FloatExt;
 use firewheel::{
-    clock::{DurationSeconds, InstantSeconds},
-    diff::Notify,
-    nodes::sampler::{PlayFrom, RepeatMode},
+	clock::{DurationSeconds, InstantSeconds},
+	diff::Notify,
+	nodes::sampler::{PlayFrom, RepeatMode},
 };
 use std::time::Duration;
 
@@ -173,95 +173,95 @@ pub use assets::{AudioSample, SampleLoader, SampleLoaderError};
 #[cfg_attr(feature = "entity_names", require(Name::new("SamplePlayer")))]
 #[cfg_attr(feature = "reflect", derive(bevy_reflect::Reflect))]
 pub struct SamplePlayer {
-    /// The sample to play.
-    pub sample: Handle<AudioSample>,
+	/// The sample to play.
+	pub sample: Handle<AudioSample>,
 
-    /// Sets the sample's [`RepeatMode`].
-    ///
-    /// Defaults to [`RepeatMode::PlayOnce`].
-    ///
-    /// The [`RepeatMode`] can only be configured once at the beginning of playback.
-    pub repeat_mode: RepeatMode,
+	/// Sets the sample's [`RepeatMode`].
+	///
+	/// Defaults to [`RepeatMode::PlayOnce`].
+	///
+	/// The [`RepeatMode`] can only be configured once at the beginning of playback.
+	pub repeat_mode: RepeatMode,
 
-    /// Sets the volume of the sample.
-    ///
-    /// Defaults to [`Volume::UNITY_GAIN`].
-    ///
-    /// This volume can only be configured once at the beginning of playback.
-    /// For dynamic volume, consider routing to buses or applying [`VolumeNode`]
-    /// as an effect.
-    ///
-    /// [`VolumeNode`]: crate::prelude::VolumeNode
-    pub volume: Volume,
+	/// Sets the volume of the sample.
+	///
+	/// Defaults to [`Volume::UNITY_GAIN`].
+	///
+	/// This volume can only be configured once at the beginning of playback.
+	/// For dynamic volume, consider routing to buses or applying [`VolumeNode`]
+	/// as an effect.
+	///
+	/// [`VolumeNode`]: crate::prelude::VolumeNode
+	pub volume: Volume,
 }
 
 impl Default for SamplePlayer {
-    fn default() -> Self {
-        Self {
-            sample: Default::default(),
-            repeat_mode: RepeatMode::PlayOnce,
-            volume: Volume::UNITY_GAIN,
-        }
-    }
+	fn default() -> Self {
+		Self {
+			sample: Default::default(),
+			repeat_mode: RepeatMode::PlayOnce,
+			volume: Volume::UNITY_GAIN,
+		}
+	}
 }
 
 impl SamplePlayer {
-    /// Construct a new [`SamplePlayer`].
-    ///
-    /// ```
-    /// # use bevy::prelude::*;
-    /// # use bevy_seedling::prelude::*;
-    /// fn play_sound(mut commands: Commands, server: Res<AssetServer>) {
-    ///     commands.spawn(SamplePlayer::new(server.load("my_sample.wav")));
-    /// }
-    /// ```
-    ///
-    /// This immediately queues up the sample for playback.
-    pub fn new(handle: Handle<AudioSample>) -> Self {
-        Self {
-            sample: handle,
-            ..Default::default()
-        }
-    }
+	/// Construct a new [`SamplePlayer`].
+	///
+	/// ```
+	/// # use bevy::prelude::*;
+	/// # use bevy_seedling::prelude::*;
+	/// fn play_sound(mut commands: Commands, server: Res<AssetServer>) {
+	///     commands.spawn(SamplePlayer::new(server.load("my_sample.wav")));
+	/// }
+	/// ```
+	///
+	/// This immediately queues up the sample for playback.
+	pub fn new(handle: Handle<AudioSample>) -> Self {
+		Self {
+			sample: handle,
+			..Default::default()
+		}
+	}
 
-    /// Enable looping playback.
-    ///
-    /// ```
-    /// # use bevy::prelude::*;
-    /// # use bevy_seedling::prelude::*;
-    /// fn play_sound(mut commands: Commands, server: Res<AssetServer>) {
-    ///     commands.spawn(SamplePlayer::new(server.load("my_sample.wav")).looping());
-    /// }
-    /// ```
-    ///
-    /// Looping can only be configured once at the beginning of playback.
-    pub fn looping(self) -> Self {
-        Self {
-            repeat_mode: RepeatMode::RepeatEndlessly,
-            ..self
-        }
-    }
+	/// Enable looping playback.
+	///
+	/// ```
+	/// # use bevy::prelude::*;
+	/// # use bevy_seedling::prelude::*;
+	/// fn play_sound(mut commands: Commands, server: Res<AssetServer>) {
+	///     commands.spawn(SamplePlayer::new(server.load("my_sample.wav")).looping());
+	/// }
+	/// ```
+	///
+	/// Looping can only be configured once at the beginning of playback.
+	pub fn looping(self) -> Self {
+		Self {
+			repeat_mode: RepeatMode::RepeatEndlessly,
+			..self
+		}
+	}
 
-    /// Set the overall sample volume.
-    ///
-    /// ```
-    /// # use bevy::prelude::*;
-    /// # use bevy_seedling::prelude::*;
-    /// fn play_sound(mut commands: Commands, server: Res<AssetServer>) {
-    ///     commands.spawn(
-    ///         SamplePlayer::new(server.load("my_sample.wav")).with_volume(Volume::Decibels(-6.0)),
-    ///     );
-    /// }
-    /// ```
-    ///
-    /// This volume can only be configured once at the beginning of playback.
-    /// For dynamic volume, consider routing to buses or applying [`VolumeNode`]
-    /// as an effect.
-    ///
-    /// [`VolumeNode`]: crate::prelude::VolumeNode
-    pub fn with_volume(self, volume: Volume) -> Self {
-        Self { volume, ..self }
-    }
+	/// Set the overall sample volume.
+	///
+	/// ```
+	/// # use bevy::prelude::*;
+	/// # use bevy_seedling::prelude::*;
+	/// fn play_sound(mut commands: Commands, server: Res<AssetServer>) {
+	///     commands.spawn(
+	///         SamplePlayer::new(server.load("my_sample.wav")).with_volume(Volume::Decibels(-6.0)),
+	///     );
+	/// }
+	/// ```
+	///
+	/// This volume can only be configured once at the beginning of playback.
+	/// For dynamic volume, consider routing to buses or applying [`VolumeNode`]
+	/// as an effect.
+	///
+	/// [`VolumeNode`]: crate::prelude::VolumeNode
+	pub fn with_volume(self, volume: Volume) -> Self {
+		Self { volume, ..self }
+	}
 }
 
 /// We use this to, by default, ensure samples play "when they should."
@@ -271,16 +271,16 @@ impl SamplePlayer {
 /// consider preloading your sound assets, or simply disable all
 /// automatic scheduling with [`ScheduleDiffing`][crate::node::ScheduleDiffing].
 pub(super) fn observe_player_insert(
-    player: On<Insert, SamplePlayer>,
-    time: Res<bevy_time::Time<Audio>>,
-    mut commands: Commands,
+	player: On<Insert, SamplePlayer>,
+	time: Res<bevy_time::Time<Audio>>,
+	mut commands: Commands,
 ) {
-    commands
-        .entity(player.event_target())
-        // When re-inserting, the current playback if any should be stopped.
-        .remove::<crate::pool::Sampler>()
-        .insert(DiffTimestamp::new(&time))
-        .insert_if_new(AudioEvents::new(&time));
+	commands
+		.entity(player.event_target())
+		// When re-inserting, the current playback if any should be stopped.
+		.remove::<crate::pool::Sampler>()
+		.insert(DiffTimestamp::new(&time))
+		.insert_if_new(AudioEvents::new(&time));
 }
 
 /// Provide explicit priorities for samples.
@@ -319,9 +319,9 @@ pub struct SamplePriority(pub i32);
 pub struct SampleQueueLifetime(pub Duration);
 
 impl Default for SampleQueueLifetime {
-    fn default() -> Self {
-        Self(Duration::from_millis(100))
-    }
+	fn default() -> Self {
+		Self(Duration::from_millis(100))
+	}
 }
 
 /// Determines what happens when a sample completes playback.
@@ -330,16 +330,16 @@ impl Default for SampleQueueLifetime {
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "reflect", derive(bevy_reflect::Reflect))]
 pub enum OnComplete {
-    /// Preserve the entity and components, leaving them untouched.
-    Preserve,
-    /// Remove the [`SamplePlayer`] and related components.
-    Remove,
-    /// Despawn the [`SamplePlayer`] entity.
-    ///
-    /// Since spawning sounds as their own isolated entity is so
-    /// common, this is the default.
-    #[default]
-    Despawn,
+	/// Preserve the entity and components, leaving them untouched.
+	Preserve,
+	/// Remove the [`SamplePlayer`] and related components.
+	Remove,
+	/// Despawn the [`SamplePlayer`] entity.
+	///
+	/// Since spawning sounds as their own isolated entity is so
+	/// common, this is the default.
+	#[default]
+	Despawn,
 }
 
 /// Sample parameters that can change during playback.
@@ -368,317 +368,317 @@ pub enum OnComplete {
 #[derive(Component, Debug, Clone)]
 #[cfg_attr(feature = "reflect", derive(bevy_reflect::Reflect))]
 pub struct PlaybackSettings {
-    /// Triggers the beginning or end of playback.
-    ///
-    /// This field provides only one-way communication with the
-    /// audio processor. To get whether the sample is playing,
-    /// see [`Sampler::is_playing`][crate::pool::Sampler::is_playing].
-    pub play: Notify<bool>,
+	/// Triggers the beginning or end of playback.
+	///
+	/// This field provides only one-way communication with the
+	/// audio processor. To get whether the sample is playing,
+	/// see [`Sampler::is_playing`][crate::pool::Sampler::is_playing].
+	pub play: Notify<bool>,
 
-    /// Determines where the sample plays from when [`PlaybackSettings::play`]
-    /// is set to `true`.
-    pub play_from: PlayFrom,
+	/// Determines where the sample plays from when [`PlaybackSettings::play`]
+	/// is set to `true`.
+	pub play_from: PlayFrom,
 
-    /// Sets the playback speed.
-    ///
-    /// This is a factor, meaning `1.0` is normal speed, `2.0` is twice
-    /// as fast, and `0.5` is half as fast.
-    ///
-    /// The speed of a sample is also inherently linked to its pitch. A
-    /// sample played twice as fast will sound an octave higher
-    /// (i.e. a fair bit higher-pitched). This can be a relatively cheap way
-    /// to break up the monotony of repeated sounds. The [`RandomPitch`]
-    /// component is an easy way to get started with this technique.
-    pub speed: f64,
+	/// Sets the playback speed.
+	///
+	/// This is a factor, meaning `1.0` is normal speed, `2.0` is twice
+	/// as fast, and `0.5` is half as fast.
+	///
+	/// The speed of a sample is also inherently linked to its pitch. A
+	/// sample played twice as fast will sound an octave higher
+	/// (i.e. a fair bit higher-pitched). This can be a relatively cheap way
+	/// to break up the monotony of repeated sounds. The [`RandomPitch`]
+	/// component is an easy way to get started with this technique.
+	pub speed: f64,
 
-    /// Determines this sample's behavior on playback completion.
-    pub on_complete: OnComplete,
+	/// Determines this sample's behavior on playback completion.
+	pub on_complete: OnComplete,
 }
 
 impl PlaybackSettings {
-    /// Set the playback.
-    pub fn with_playback(self, play: bool) -> Self {
-        Self {
-            play: Notify::new(play),
-            ..self
-        }
-    }
+	/// Set the playback.
+	pub fn with_playback(self, play: bool) -> Self {
+		Self {
+			play: Notify::new(play),
+			..self
+		}
+	}
 
-    /// Set the [`PlayFrom`] state.
-    pub fn with_play_from(self, play_from: PlayFrom) -> Self {
-        Self { play_from, ..self }
-    }
+	/// Set the [`PlayFrom`] state.
+	pub fn with_play_from(self, play_from: PlayFrom) -> Self {
+		Self { play_from, ..self }
+	}
 
-    /// Set the sample speed.
-    pub fn with_speed(self, speed: f64) -> Self {
-        Self { speed, ..self }
-    }
+	/// Set the sample speed.
+	pub fn with_speed(self, speed: f64) -> Self {
+		Self { speed, ..self }
+	}
 
-    /// Set the [`OnComplete`] behavior.
-    pub fn with_on_complete(self, on_complete: OnComplete) -> Self {
-        Self {
-            on_complete,
-            ..self
-        }
-    }
+	/// Set the [`OnComplete`] behavior.
+	pub fn with_on_complete(self, on_complete: OnComplete) -> Self {
+		Self {
+			on_complete,
+			..self
+		}
+	}
 
-    /// Set [`PlaybackSettings::on_complete`] to [`OnComplete::Preserve`].
-    pub fn preserve(self) -> Self {
-        Self {
-            on_complete: OnComplete::Preserve,
-            ..self
-        }
-    }
+	/// Set [`PlaybackSettings::on_complete`] to [`OnComplete::Preserve`].
+	pub fn preserve(self) -> Self {
+		Self {
+			on_complete: OnComplete::Preserve,
+			..self
+		}
+	}
 
-    /// Set [`PlaybackSettings::on_complete`] to [`OnComplete::Remove`].
-    pub fn remove(self) -> Self {
-        Self {
-            on_complete: OnComplete::Remove,
-            ..self
-        }
-    }
+	/// Set [`PlaybackSettings::on_complete`] to [`OnComplete::Remove`].
+	pub fn remove(self) -> Self {
+		Self {
+			on_complete: OnComplete::Remove,
+			..self
+		}
+	}
 
-    /// Set [`PlaybackSettings::on_complete`] to [`OnComplete::Despawn`].
-    ///
-    /// Note that this is the default value.
-    pub fn despawn(self) -> Self {
-        Self {
-            on_complete: OnComplete::Despawn,
-            ..self
-        }
-    }
+	/// Set [`PlaybackSettings::on_complete`] to [`OnComplete::Despawn`].
+	///
+	/// Note that this is the default value.
+	pub fn despawn(self) -> Self {
+		Self {
+			on_complete: OnComplete::Despawn,
+			..self
+		}
+	}
 
-    /// Begin playing a sample at `time`.
-    ///
-    /// This can also be used to seek within a playing
-    /// sample by providing [`PlayFrom::Seconds`] or [`PlayFrom::Frames`].
-    ///
-    /// ```
-    /// # use bevy::prelude::*;
-    /// # use bevy_seedling::prelude::*;
-    /// fn play_at(time: Res<Time<Audio>>, server: Res<AssetServer>, mut commands: Commands) {
-    ///     let mut events = AudioEvents::new(&time);
-    ///     let settings = PlaybackSettings::default().with_playback(false);
-    ///
-    ///     // Start playing exactly one second from now.
-    ///     settings.play_at(None, time.delay(DurationSeconds(1.0)), &mut events);
-    ///
-    ///     commands.spawn((
-    ///         events,
-    ///         settings,
-    ///         SamplePlayer::new(server.load("my_sample.wav")),
-    ///     ));
-    /// }
-    /// ```
-    pub fn play_at(
-        &self,
-        play_from: Option<PlayFrom>,
-        time: InstantSeconds,
-        events: &mut AudioEvents,
-    ) {
-        events.schedule(time, self, |settings| {
-            *settings.play = true;
-            if let Some(play_from) = play_from {
-                settings.play_from = play_from;
-            }
-        });
-    }
+	/// Begin playing a sample at `time`.
+	///
+	/// This can also be used to seek within a playing
+	/// sample by providing [`PlayFrom::Seconds`] or [`PlayFrom::Frames`].
+	///
+	/// ```
+	/// # use bevy::prelude::*;
+	/// # use bevy_seedling::prelude::*;
+	/// fn play_at(time: Res<Time<Audio>>, server: Res<AssetServer>, mut commands: Commands) {
+	///     let mut events = AudioEvents::new(&time);
+	///     let settings = PlaybackSettings::default().with_playback(false);
+	///
+	///     // Start playing exactly one second from now.
+	///     settings.play_at(None, time.delay(DurationSeconds(1.0)), &mut events);
+	///
+	///     commands.spawn((
+	///         events,
+	///         settings,
+	///         SamplePlayer::new(server.load("my_sample.wav")),
+	///     ));
+	/// }
+	/// ```
+	pub fn play_at(
+		&self,
+		play_from: Option<PlayFrom>,
+		time: InstantSeconds,
+		events: &mut AudioEvents,
+	) {
+		events.schedule(time, self, |settings| {
+			*settings.play = true;
+			if let Some(play_from) = play_from {
+				settings.play_from = play_from;
+			}
+		});
+	}
 
-    /// Pause a sample at `time`.
-    ///
-    /// ```
-    /// # use bevy::prelude::*;
-    /// # use bevy_seedling::prelude::*;
-    /// fn pause(time: Res<Time<Audio>>, server: Res<AssetServer>, mut commands: Commands) {
-    ///     let mut events = AudioEvents::new(&time);
-    ///     let settings = PlaybackSettings::default();
-    ///
-    ///     // Allow the sample to start playing, but pause at exactly
-    ///     // one second from now.
-    ///     settings.pause_at(time.delay(DurationSeconds(1.0)), &mut events);
-    ///
-    ///     commands.spawn((
-    ///         events,
-    ///         settings,
-    ///         SamplePlayer::new(server.load("my_sample.wav")),
-    ///     ));
-    /// }
-    /// ```
-    pub fn pause_at(&self, time: InstantSeconds, events: &mut AudioEvents) {
-        events.schedule(time, self, |settings| {
-            *settings.play = false;
-        });
-    }
+	/// Pause a sample at `time`.
+	///
+	/// ```
+	/// # use bevy::prelude::*;
+	/// # use bevy_seedling::prelude::*;
+	/// fn pause(time: Res<Time<Audio>>, server: Res<AssetServer>, mut commands: Commands) {
+	///     let mut events = AudioEvents::new(&time);
+	///     let settings = PlaybackSettings::default();
+	///
+	///     // Allow the sample to start playing, but pause at exactly
+	///     // one second from now.
+	///     settings.pause_at(time.delay(DurationSeconds(1.0)), &mut events);
+	///
+	///     commands.spawn((
+	///         events,
+	///         settings,
+	///         SamplePlayer::new(server.load("my_sample.wav")),
+	///     ));
+	/// }
+	/// ```
+	pub fn pause_at(&self, time: InstantSeconds, events: &mut AudioEvents) {
+		events.schedule(time, self, |settings| {
+			*settings.play = false;
+		});
+	}
 
-    /// Linearly interpolate a sample's speed from its current value to `speed`.
-    ///
-    /// The interpolation uses an approximation of the average just noticeable
-    /// different (JND) for pitch to calculate how many events are required to
-    /// sound perfectly smooth. Since we are sensitive to changes in pitch,
-    /// this will usually generate many more events than volume animation.
-    ///
-    /// ```
-    /// # use bevy::prelude::*;
-    /// # use bevy_seedling::prelude::*;
-    /// fn speed_to(time: Res<Time<Audio>>, server: Res<AssetServer>, mut commands: Commands) {
-    ///     let mut events = AudioEvents::new(&time);
-    ///     let settings = PlaybackSettings::default();
-    ///
-    ///     // As soon as the sample starts playing, slow it down to half its
-    ///     // speed over one second.
-    ///     settings.speed_to(0.5, DurationSeconds(1.0), &mut events);
-    ///
-    ///     commands.spawn((
-    ///         events,
-    ///         settings,
-    ///         SamplePlayer::new(server.load("my_sample.wav")),
-    ///     ));
-    /// }
-    /// ```
-    pub fn speed_to(&self, speed: f64, duration: DurationSeconds, events: &mut AudioEvents) {
-        self.speed_at(speed, events.now(), events.now() + duration, events)
-    }
+	/// Linearly interpolate a sample's speed from its current value to `speed`.
+	///
+	/// The interpolation uses an approximation of the average just noticeable
+	/// different (JND) for pitch to calculate how many events are required to
+	/// sound perfectly smooth. Since we are sensitive to changes in pitch,
+	/// this will usually generate many more events than volume animation.
+	///
+	/// ```
+	/// # use bevy::prelude::*;
+	/// # use bevy_seedling::prelude::*;
+	/// fn speed_to(time: Res<Time<Audio>>, server: Res<AssetServer>, mut commands: Commands) {
+	///     let mut events = AudioEvents::new(&time);
+	///     let settings = PlaybackSettings::default();
+	///
+	///     // As soon as the sample starts playing, slow it down to half its
+	///     // speed over one second.
+	///     settings.speed_to(0.5, DurationSeconds(1.0), &mut events);
+	///
+	///     commands.spawn((
+	///         events,
+	///         settings,
+	///         SamplePlayer::new(server.load("my_sample.wav")),
+	///     ));
+	/// }
+	/// ```
+	pub fn speed_to(&self, speed: f64, duration: DurationSeconds, events: &mut AudioEvents) {
+		self.speed_at(speed, events.now(), events.now() + duration, events)
+	}
 
-    /// Linearly interpolate a sample's speed from its value at `start` to `speed`.
-    ///
-    /// The interpolation uses an approximation of the average just noticeable
-    /// different (JND) for pitch to calculate how many events are required to
-    /// sound perfectly smooth. Since we are sensitive to changes in pitch,
-    /// this will usually generate many more events than volume animation.
-    ///
-    /// ```
-    /// # use bevy::prelude::*;
-    /// # use bevy_seedling::prelude::*;
-    /// fn speed_at(time: Res<Time<Audio>>, server: Res<AssetServer>, mut commands: Commands) {
-    ///     let mut events = AudioEvents::new(&time);
-    ///     let settings = PlaybackSettings::default();
-    ///
-    ///     // A second after the sample starts playing, slow it down to half its
-    ///     // speed over another second.
-    ///     settings.speed_at(
-    ///         0.5,
-    ///         time.now() + DurationSeconds(1.0),
-    ///         time.now() + DurationSeconds(2.0),
-    ///         &mut events,
-    ///     );
-    ///
-    ///     commands.spawn((
-    ///         events,
-    ///         settings,
-    ///         SamplePlayer::new(server.load("my_sample.wav")),
-    ///     ));
-    /// }
-    /// ```
-    pub fn speed_at(
-        &self,
-        speed: f64,
-        start: InstantSeconds,
-        end: InstantSeconds,
-        events: &mut AudioEvents,
-    ) {
-        let start_value = events.get_value_at(start, self);
-        let mut end_value = start_value.clone();
-        end_value.speed = speed;
+	/// Linearly interpolate a sample's speed from its value at `start` to `speed`.
+	///
+	/// The interpolation uses an approximation of the average just noticeable
+	/// different (JND) for pitch to calculate how many events are required to
+	/// sound perfectly smooth. Since we are sensitive to changes in pitch,
+	/// this will usually generate many more events than volume animation.
+	///
+	/// ```
+	/// # use bevy::prelude::*;
+	/// # use bevy_seedling::prelude::*;
+	/// fn speed_at(time: Res<Time<Audio>>, server: Res<AssetServer>, mut commands: Commands) {
+	///     let mut events = AudioEvents::new(&time);
+	///     let settings = PlaybackSettings::default();
+	///
+	///     // A second after the sample starts playing, slow it down to half its
+	///     // speed over another second.
+	///     settings.speed_at(
+	///         0.5,
+	///         time.now() + DurationSeconds(1.0),
+	///         time.now() + DurationSeconds(2.0),
+	///         &mut events,
+	///     );
+	///
+	///     commands.spawn((
+	///         events,
+	///         settings,
+	///         SamplePlayer::new(server.load("my_sample.wav")),
+	///     ));
+	/// }
+	/// ```
+	pub fn speed_at(
+		&self,
+		speed: f64,
+		start: InstantSeconds,
+		end: InstantSeconds,
+		events: &mut AudioEvents,
+	) {
+		let start_value = events.get_value_at(start, self);
+		let mut end_value = start_value.clone();
+		end_value.speed = speed;
 
-        // This, too, is a very rough JND estimate.
-        let pitch_span = (end_value.speed - start_value.speed).abs();
-        let total_events = (pitch_span / 0.001).max(1.0) as usize;
-        let total_events =
-            crate::node::events::max_event_rate(end.0 - start.0, 0.001).min(total_events);
+		// This, too, is a very rough JND estimate.
+		let pitch_span = (end_value.speed - start_value.speed).abs();
+		let total_events = (pitch_span / 0.001).max(1.0) as usize;
+		let total_events =
+			crate::node::events::max_event_rate(end.0 - start.0, 0.001).min(total_events);
 
-        events.schedule_tween(
-            start,
-            end,
-            start_value,
-            end_value,
-            total_events,
-            |a, b, t| {
-                let mut output = a.clone();
-                output.speed = a.speed.lerp(b.speed, t as f64);
-                output
-            },
-        );
-    }
+		events.schedule_tween(
+			start,
+			end,
+			start_value,
+			end_value,
+			total_events,
+			|a, b, t| {
+				let mut output = a.clone();
+				output.speed = a.speed.lerp(b.speed, t as f64);
+				output
+			},
+		);
+	}
 
-    /// Start or resume playback.
-    ///
-    /// ```
-    /// # use bevy_seedling::prelude::*;
-    /// # use bevy::prelude::*;
-    /// fn resume_paused_samples(mut samples: Query<&mut PlaybackSettings>) {
-    ///     for mut params in samples.iter_mut() {
-    ///         if !*params.play {
-    ///             params.play();
-    ///         }
-    ///     }
-    /// }
-    /// ```
-    pub fn play(&mut self) {
-        *self.play = true;
-    }
+	/// Start or resume playback.
+	///
+	/// ```
+	/// # use bevy_seedling::prelude::*;
+	/// # use bevy::prelude::*;
+	/// fn resume_paused_samples(mut samples: Query<&mut PlaybackSettings>) {
+	///     for mut params in samples.iter_mut() {
+	///         if !*params.play {
+	///             params.play();
+	///         }
+	///     }
+	/// }
+	/// ```
+	pub fn play(&mut self) {
+		*self.play = true;
+	}
 
-    /// Pause playback.
-    ///
-    /// ```
-    /// # use bevy_seedling::prelude::*;
-    /// # use bevy::prelude::*;
-    /// fn pause_all_samples(mut samples: Query<&mut PlaybackSettings>) {
-    ///     for mut params in samples.iter_mut() {
-    ///         params.pause();
-    ///     }
-    /// }
-    /// ```
-    pub fn pause(&mut self) {
-        *self.play = false;
-    }
+	/// Pause playback.
+	///
+	/// ```
+	/// # use bevy_seedling::prelude::*;
+	/// # use bevy::prelude::*;
+	/// fn pause_all_samples(mut samples: Query<&mut PlaybackSettings>) {
+	///     for mut params in samples.iter_mut() {
+	///         params.pause();
+	///     }
+	/// }
+	/// ```
+	pub fn pause(&mut self) {
+		*self.play = false;
+	}
 }
 
 impl Default for PlaybackSettings {
-    fn default() -> Self {
-        Self {
-            play: Notify::new(true),
-            play_from: PlayFrom::Resume,
-            speed: 1.0,
-            on_complete: OnComplete::Despawn,
-        }
-    }
+	fn default() -> Self {
+		Self {
+			play: Notify::new(true),
+			play_from: PlayFrom::Resume,
+			speed: 1.0,
+			on_complete: OnComplete::Despawn,
+		}
+	}
 }
 
 // NOTE: this is specifically designed to produce Firewheel's
 // `SamplerNodePatch` value. This is so we can leverage the event
 // scheduling system as if this were a real node.
 impl firewheel::diff::Diff for PlaybackSettings {
-    fn diff<E: firewheel::diff::EventQueue>(
-        &self,
-        baseline: &Self,
-        path: firewheel::diff::PathBuilder,
-        event_queue: &mut E,
-    ) {
-        self.play.diff(&baseline.play, path.with(2), event_queue);
-        self.play_from
-            .diff(&baseline.play_from, path.with(3), event_queue);
-        self.speed.diff(&baseline.speed, path.with(5), event_queue);
-    }
+	fn diff<E: firewheel::diff::EventQueue>(
+		&self,
+		baseline: &Self,
+		path: firewheel::diff::PathBuilder,
+		event_queue: &mut E,
+	) {
+		self.play.diff(&baseline.play, path.with(2), event_queue);
+		self.play_from
+			.diff(&baseline.play_from, path.with(3), event_queue);
+		self.speed.diff(&baseline.speed, path.with(5), event_queue);
+	}
 }
 
 impl firewheel::diff::Patch for PlaybackSettings {
-    type Patch = firewheel::nodes::sampler::SamplerNodePatch;
+	type Patch = firewheel::nodes::sampler::SamplerNodePatch;
 
-    fn patch(
-        data: &firewheel::event::ParamData,
-        path: &[u32],
-    ) -> std::result::Result<Self::Patch, firewheel::diff::PatchError> {
-        firewheel::nodes::sampler::SamplerNode::patch(data, path)
-    }
+	fn patch(
+		data: &firewheel::event::ParamData,
+		path: &[u32],
+	) -> std::result::Result<Self::Patch, firewheel::diff::PatchError> {
+		firewheel::nodes::sampler::SamplerNode::patch(data, path)
+	}
 
-    fn apply(&mut self, patch: Self::Patch) {
-        match patch {
-            firewheel::nodes::sampler::SamplerNodePatch::Play(p) => self.play = p,
-            firewheel::nodes::sampler::SamplerNodePatch::PlayFrom(p) => self.play_from = p,
-            firewheel::nodes::sampler::SamplerNodePatch::Speed(s) => self.speed = s,
-            _ => {}
-        }
-    }
+	fn apply(&mut self, patch: Self::Patch) {
+		match patch {
+			firewheel::nodes::sampler::SamplerNodePatch::Play(p) => self.play = p,
+			firewheel::nodes::sampler::SamplerNodePatch::PlayFrom(p) => self.play_from = p,
+			firewheel::nodes::sampler::SamplerNodePatch::Speed(s) => self.speed = s,
+			_ => {}
+		}
+	}
 }
 
 /// A marker struct for entities that are waiting
@@ -695,146 +695,152 @@ pub(crate) use random::RandomPlugin;
 
 #[cfg(feature = "rand")]
 mod random {
-    use crate::SeedlingSystems;
+	use crate::SeedlingSystems;
 
-    use super::PlaybackSettings;
-    use bevy_app::prelude::*;
-    use bevy_ecs::prelude::*;
-    use rand::{SeedableRng, rngs::SmallRng};
+	use super::PlaybackSettings;
+	use bevy_app::prelude::*;
+	use bevy_ecs::prelude::*;
+	use rand::{SeedableRng, rngs::SmallRng};
 
-    pub struct RandomPlugin;
+	pub struct RandomPlugin;
 
-    impl Plugin for RandomPlugin {
-        fn build(&self, app: &mut App) {
-            app.insert_resource(PitchRngSource::new(SmallRng::from_os_rng()))
-                .add_systems(Last, RandomPitch::apply.before(SeedlingSystems::Acquire));
-        }
-    }
+	impl Plugin for RandomPlugin {
+		fn build(&self, app: &mut App) {
+			app.insert_resource(PitchRngSource::new(SmallRng::from_os_rng()))
+				.add_systems(Last, RandomPitch::apply.before(SeedlingSystems::Acquire));
+		}
+	}
 
-    trait PitchRng {
-        fn gen_pitch(&mut self, range: std::ops::Range<f64>) -> f64;
-    }
+	trait PitchRng {
+		fn gen_pitch(&mut self, range: std::ops::Range<f64>) -> f64;
+	}
 
-    struct RandRng<T>(T);
+	struct RandRng<T>(T);
 
-    impl<T: rand::Rng> PitchRng for RandRng<T> {
-        fn gen_pitch(&mut self, range: std::ops::Range<f64>) -> f64 {
-            self.0.random_range(range)
-        }
-    }
+	impl<T: rand::Rng> PitchRng for RandRng<T> {
+		fn gen_pitch(&mut self, range: std::ops::Range<f64>) -> f64 {
+			self.0.random_range(range)
+		}
+	}
 
-    /// Provides the RNG source for the [`RandomPitch`] component.
-    ///
-    /// By default, this uses [`rand::rngs::SmallRng`]. To provide
-    /// your own RNG source, simply insert this resource after
-    /// adding the [`SeedlingPlugin`][crate::prelude::SeedlingPlugin].
-    #[derive(Resource)]
-    pub struct PitchRngSource(Box<dyn PitchRng + Send + Sync>);
+	/// Provides the RNG source for the [`RandomPitch`] component.
+	///
+	/// By default, this uses [`rand::rngs::SmallRng`]. To provide
+	/// your own RNG source, simply insert this resource after
+	/// adding the [`SeedlingPlugin`][crate::prelude::SeedlingPlugin].
+	#[derive(Resource)]
+	pub struct PitchRngSource(Box<dyn PitchRng + Send + Sync>);
 
-    impl core::fmt::Debug for PitchRngSource {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            f.debug_tuple("PitchRngSource").finish_non_exhaustive()
-        }
-    }
+	impl core::fmt::Debug for PitchRngSource {
+		fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+			f.debug_tuple("PitchRngSource").finish_non_exhaustive()
+		}
+	}
 
-    impl PitchRngSource {
-        /// Construct a new [`PitchRngSource`].
-        pub fn new<T: rand::Rng + Send + Sync + 'static>(rng: T) -> Self {
-            Self(Box::new(RandRng(rng)))
-        }
-    }
+	impl PitchRngSource {
+		/// Construct a new [`PitchRngSource`].
+		pub fn new<T: rand::Rng + Send + Sync + 'static>(rng: T) -> Self {
+			Self(Box::new(RandRng(rng)))
+		}
+	}
 
-    /// A component that applies a random pitch to [`PlaybackSettings`] when spawned.
-    ///
-    /// This can be used for subtle sound variations, breaking up
-    /// the monotony of repeated sounds like footsteps.
-    ///
-    /// To control the RNG source, you can provide a custom [`PitchRngSource`] resource.
-    #[derive(Debug, Component, Default, Clone)]
-    #[require(PlaybackSettings)]
-    #[component(immutable)]
-    #[cfg_attr(feature = "reflect", derive(bevy_reflect::Reflect))]
-    pub struct RandomPitch(pub core::ops::Range<f64>);
+	/// A component that applies a random pitch to [`PlaybackSettings`] when spawned.
+	///
+	/// This can be used for subtle sound variations, breaking up
+	/// the monotony of repeated sounds like footsteps.
+	///
+	/// To control the RNG source, you can provide a custom [`PitchRngSource`] resource.
+	#[derive(Debug, Component, Default, Clone)]
+	#[require(PlaybackSettings)]
+	#[component(immutable)]
+	#[cfg_attr(feature = "reflect", derive(bevy_reflect::Reflect))]
+	pub struct RandomPitch(pub core::ops::Range<f64>);
 
-    impl RandomPitch {
-        /// Create a new [`RandomPitch`] with deviation about 1.0.
-        ///
-        /// ```
-        /// # use bevy::prelude::*;
-        /// # use bevy_seedling::prelude::*;
-        /// # fn deviation(mut commands: Commands, server: Res<AssetServer>) {
-        /// commands.spawn((
-        ///     SamplePlayer::new(server.load("my_sample.wav")),
-        ///     RandomPitch::new(0.05),
-        /// ));
-        /// # }
-        /// ```
-        pub fn new(deviation: f64) -> Self {
-            let minimum = (1.0 - deviation).clamp(0.0, f64::MAX);
-            let maximum = (1.0 + deviation).clamp(0.0, f64::MAX);
+	impl RandomPitch {
+		/// Create a new [`RandomPitch`] with deviation about 1.0.
+		///
+		/// ```
+		/// # use bevy::prelude::*;
+		/// # use bevy_seedling::prelude::*;
+		/// # fn deviation(mut commands: Commands, server: Res<AssetServer>) {
+		/// commands.spawn((
+		///     SamplePlayer::new(server.load("my_sample.wav")),
+		///     RandomPitch::new(0.05),
+		/// ));
+		/// # }
+		/// ```
+		pub fn new(deviation: f64) -> Self {
+			let minimum = (1.0 - deviation).clamp(0.0, f64::MAX);
+			let maximum = (1.0 + deviation).clamp(0.0, f64::MAX);
 
-            Self(minimum..maximum)
-        }
+			Self(minimum..maximum)
+		}
 
-        fn apply(
-            mut samples: Query<(Entity, &mut PlaybackSettings, &Self)>,
-            mut commands: Commands,
-            mut rng: ResMut<PitchRngSource>,
-        ) {
-            for (entity, mut settings, range) in samples.iter_mut() {
-                settings.speed = rng.0.gen_pitch(range.0.clone());
-                commands.entity(entity).remove::<Self>();
-            }
-        }
-    }
+		fn apply(
+			mut samples: Query<(Entity, &mut PlaybackSettings, &Self)>,
+			mut commands: Commands,
+			mut rng: ResMut<PitchRngSource>,
+		) {
+			for (entity, mut settings, range) in samples.iter_mut() {
+				let speed = if range.0.is_empty() {
+					range.0.start
+				} else {
+					rng.0.gen_pitch(range.0.clone())
+				};
+
+				settings.speed = speed;
+				commands.entity(entity).remove::<Self>();
+			}
+		}
+	}
 }
 
 #[cfg(test)]
 mod test {
-    use crate::pool::Sampler;
-    use crate::prelude::*;
-    use crate::test::{prepare_app, run};
-    use bevy::prelude::*;
+	use crate::pool::Sampler;
+	use crate::prelude::*;
+	use crate::test::{prepare_app, run};
+	use bevy::prelude::*;
 
-    #[test]
-    fn test_reinsertion() {
-        let mut app = prepare_app(|mut commands: Commands| {
-            commands.spawn((SamplerPool(DefaultPool), PoolSize(1..=1)));
+	#[test]
+	fn test_reinsertion() {
+		let mut app = prepare_app(|mut commands: Commands| {
+			commands.spawn((SamplerPool(DefaultPool), PoolSize(1..=1)));
 
-            commands
-                .spawn((VolumeNode::default(), MainBus))
-                .connect(AudioGraphOutput);
-        });
+			commands
+				.spawn((VolumeNode::default(), MainBus))
+				.connect(AudioGraphOutput);
+		});
 
-        run(
-            &mut app,
-            |mut commands: Commands, server: Res<AssetServer>| {
-                commands.spawn(SamplePlayer::new(server.load("caw.ogg")));
-            },
-        );
+		run(
+			&mut app,
+			|mut commands: Commands, server: Res<AssetServer>| {
+				commands.spawn(SamplePlayer::new(server.load("caw.ogg")));
+			},
+		);
 
-        // wait for the sample to load
-        loop {
-            let world = app.world_mut();
-            let mut q = world.query_filtered::<Entity, With<Sampler>>();
-            if q.iter(world).len() != 0 {
-                break;
-            }
-            app.update();
-        }
+		// wait for the sample to load
+		loop {
+			let world = app.world_mut();
+			let mut q = world.query_filtered::<Entity, With<Sampler>>();
+			if q.iter(world).len() != 0 {
+				break;
+			}
+			app.update();
+		}
 
-        // then, reinsert
-        run(
-            &mut app,
-            |target: Single<Entity, With<Sampler>>,
-             mut commands: Commands,
-             server: Res<AssetServer>| {
-                commands
-                    .entity(*target)
-                    .insert(SamplePlayer::new(server.load("caw.ogg")));
-            },
-        );
+		// then, reinsert
+		run(
+			&mut app,
+			|target: Single<Entity, With<Sampler>>,
+			 mut commands: Commands,
+			 server: Res<AssetServer>| {
+				commands
+					.entity(*target)
+					.insert(SamplePlayer::new(server.load("caw.ogg")));
+			},
+		);
 
-        app.update();
-    }
+		app.update();
+	}
 }

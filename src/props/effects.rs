@@ -8,8 +8,9 @@ use std::iter;
 use avian3d::prelude::*;
 use bevy_seedling::sample::{AudioSample, SamplePlayer};
 
+use crate::audio::SpatialPool;
+use crate::gameplay::TargetName;
 use crate::gameplay::interaction::InteractEvent;
-use crate::{audio::SfxPool, gameplay::TargetName};
 
 use crate::gameplay::player::{
 	Player,
@@ -114,7 +115,11 @@ fn on_special_effects(
 	// SFX
 	if let Some(path) = &sfx_node.sfx_sample {
 		let sfx: Handle<AudioSample> = assets.load(path);
-		commands.spawn((SamplePlayer::new(sfx), SfxPool));
+		commands.entity(entity).with_child((
+			SamplePlayer::new(sfx),
+			SpatialPool,
+			Transform::IDENTITY,
+		));
 	}
 
 	// Screen flash
