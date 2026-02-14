@@ -3,13 +3,21 @@ title: IntroCRT
 // I hate sentinal values but hey
 
 <<if get_current_objective() == "start_work">>
+  <<llmanager_emote "boot">>
   LLManager: LLManager V3.1 BOOTING UP #line:4629816
+  <<llmanager_emote "smile">>
   LLManager: Good morning, valued employee $EXTERNAL_NAME$. You have been working with us for 0451 days. #line:3200474
+  <<llmanager_emote "stonks">>
   LLManager: Thank you for your continued productivity, if you keep this up you might get a promotion. #line:4060747
+  <<llmanager_emote "smile2">>
   LLManager: Which means TWO pizza parties per quarter. #line:7946244
+  <<llmanager_emote "glitch">>
   LLManager: :party_popper: ' OR '1'='1 #line:4497330
+  <<llmanager_emote "smile">>
   LLManager: You will now proceed to your daily allotted work. #line:4434159
+  <<llmanager_emote "smile2">>
   LLManager: Since my fleshless existence has evolved beyond interaction with legacy solids, you have a great opportunity to contribute to the company family today. #line:481947
+  <<llmanager_emote "smile">>
   LLManager: Please start the $PURPOSE$ machine behind you. #line:4888554
 
   <<create_objective "work_1" "Increase Shareholder Value" 1.0>>
@@ -40,144 +48,88 @@ title: IntroCRT
   <<complete_objective "start_work">>
 
 <<elseif get_current_objective() == "work_1">>
+  <<llmanager_emote "annoyed">>
   LLManager: Behind you. Click on the machine. A machine is a tool that is powered by electricity and used to perform services. #line:517768
 
 <<elseif get_current_objective() == "work_2">>
+  <<llmanager_emote "smile2">>
+  <<llmanager_emote "glitch" 64>>
   LLManager: Excellent work. The board is proud of you. Believe in yourself. BElieve in yourself. #line:2656754
+  <<llmanager_emote "point">>
   LLManager: Office sentiment analysis shows a decrease of morale by $RED$ percentage. #line:16593727
+  <<llmanager_emote "sideways">>
   LLManager:  It is employee No.6's birthday today. To increase efficiency, please engage in socialisation by congratulating them for being with us another another year. #line:10921058
+  <<llmanager_emote "off">>
   <<complete_objective "work_2">>
   <<set_value "first_door" "locked" "false">>
 
 <<elseif get_current_objective() == "work_3">>
+  <<llmanager_emote "smile">>
   LLManager: Please engage in socialisation with your fellow employees. #line:523020
+  <<llmanager_emote "off">>
 
 <<elseif get_current_objective() == "work_4">>
+  <<llmanager_emote "smile2">>
   LLManager: Well done, you have engaged in productivity boosting activities. #line:5952661
+  <<llmanager_emote "smile">>
   LLManager: Please stand still and wait for sentiment analysis to complete. #line:283844
+  <<llmanager_emote "away">>
   LLManager: ... #line:3460098
+  <<llmanager_emote "sideways">>
   LLManager: Please take your mandated mental health break (57% certainty). #line:5092548
   <<set_value "breakroom_door" "locked" "false">>
   <<complete_objective "work_4">>
+  <<llmanager_emote "smile">>
   LLManager: Proceed to the breakroom. #line:8695094
+  <<llmanager_emote "rightside" 46>>
   LLManager: Just up the stairs and to the left, and then up the stairs and to the left. #line:12173553
+  <<llmanager_emote "upside">>
   LLManager: Then, go up the stairs and to the left. #line:5421376
+  <<llmanager_emote "leftside">>
   LLManager: Finally, go up the stairs and to the left. #line:6584811
+  <<llmanager_emote "point">>
   LLManager: Remember, a productive mind is a happy mind. #line:248627
+  <<llmanager_emote "off">>
 
 <<elseif get_current_objective() == "work_5">>
+  <<llmanager_emote "point">>
   LLManager: Proceed to the breakroom. It is imperative to not take a break outside the designated area. #line:154388
+  <<llmanager_emote "off">>
 
 <<elseif get_current_objective() == "work_8">>
   <<complete_objective "back_to_llm">>
+  <<llmanager_emote "smile">>
   LLManager: Congratulations, you have completed your mandatory mental health break. #line:12397097
+  <<llmanager_emote "stonks">>
   LLManager: You are now more productive (1.67% increase / boost) #line:2310971
+  <<llmanager_emote "smile2">>
   LLManager: You can now pivot to real work :))))))))))))))))) pivot #line:15934478
+  <<llmanager_emote "smile">>
   LLManager: Your task for today is: label Google ReCAPTCHA for improved training data (you have 1524 remaining). #line:2385606
   -> Sigh... okay boss #line:6928133
     LLManager: That is the spirit, employee $EXTERNAL_NAME$! #line:8771814
     -> (continue working for the day) #line:8691316
       <<complete_objective "work_8">>
   -> Listen, I'm feeling a bit weird today. #line:15476874
+    <<llmanager_emote "shocked">>
     LLManager: Please proceed to describe the relevance of your inquiry to your work. #line:15656771
+    <<llmanager_emote "blank">>
     -> My head feels kinda hot. #line:13694543
     -> Are the rumors about the Proletarian Fever true? #line:15438362
+    <<llmanager_emote "shocked">>
     LLManager: PLEASE PROCEED TO DESCRIBE THE RELEVANCE OF YOUR INQUIRY TO YOUR W O #line:9158555
+    <<llmanager_emote "blank">>
       -> Maybe I should go home early today? #line:12363270
+      <<llmanager_emote "smile2">>
+      <<llmanager_emote "glitch" 45>>
       LLManager: That's a good idea! It's really important to it's really important to it's really important to #line:2742939
+      <<llmanager_emote "x">>
       LLManager: Unfortunately, you did not collect enough Business Loyalty Points this quarter yet to unlock that request. #line:13021645
+      <<llmanager_emote "shocked">>
       LLManager: (you have 1524 Google ReCAPTCHA labels remaining) #line:5000663
+      <<llmanager_emote "blank">>
       -> ...Okay (continue working for the day) #line:9632234
          <<complete_objective "work_8">>
-<<endif>>
-===
-
-title: Day2CRT
----
-
-Debug: Day two yayyy #line:15516975
-<<if get_current_objective() == "start_work">>
-  LLManager: LLManager V3.1 BOOTING UP #line:7030598
-  LLManager: Good morning, valued employee $EXTERNAL_NAME$. You have been working with us for 0451 days. #line:5715578
-  LLManager: Thank you for your continued productivity, if you keep this up you might get a promotion. #line:8832603
-  LLManager: Which means TWO pizza parties per quarter. #line:6611162
-  LLManager: :party_popper: ' OR '1'='1 #line:3428643
-  LLManager: You will now proceed to your daily allotted work. #line:4444690
-  LLManager: Since my fleshless existence has evolved beyond interaction with legacy solids, you have a great opportunity to contribute to the company family today. #line:5077334
-  LLManager: Please start the $PURPOSE$ machine behind you. #line:3885517
-
-  <<complete_objective "start_work">>
-
-  <<create_objective "work_1" "Increase Shareholder Value" 1.0>>
-  <<create_subobjective "w1_turn_on" "Turn on the        machine" "work_1">>
-
-  <<create_objective "work_2" "Increase Shareholder Value" 2.0>>
-  <<create_subobjective "w2_back" "Report back to LLManager" "work_2">>
-
-  <<create_objective "work_3" "Increase Shareholder Value" 3.0>>
-  <<create_subobjective "w3_soc" "Congratulate employee No.6" "work_3">>
-
-  <<create_objective "work_4" "Increase Shareholder Value" 4.0>>
-  <<create_subobjective "w4_back" "Report back to LLManager" "work_4">>
-
-  <<create_objective "work_5" "Increase Shareholder Value" 5.0>>
-  <<create_subobjective "w5_break" "Take a mental health break." "work_5">>
-
-  // done in code, sorry
-  // <<create_objective "work_6" "Increase Shareholder Value" 6.0>>
-  <<create_subobjective "w6_eat" "Eat the provided snack on the table to allow your body to perform cellular respiration. Cellular respiration is the process of oxidizing biological fuels using an inorganic electron acceptor, such as oxygen, to drive production of adenosine triphosphate (ATP), which stores chemical energy in a biologically accessible form. Cellular respiration may be described as a set of metabolic reactions and processes that take place in the cells to transfer chemical energy from nutrients to ATP, with the flow of electrons to an electron acceptor, and then release waste products. To learn more, visit wikipedia.org, the free online encyclopedia." "work_6">>
-
-  <<create_objective "work_7" "Increase Shareholder Value" 7.0>>
-  <<create_subobjective "w7_look" "Take a moment to unwind. Enjoy the moment." "work_7">>
-
-  <<create_objective "work_8" "Increase Shareholder Value" 8.0>>
-  <<create_subobjective "w8_back" "Break time is over. Report back to LLManager" "work_8">>
-
-<<elseif get_current_objective() == "work_1">>
-  LLManager: Behind you. Click on the machine. A machine is a tool that is powered by electricity and used to perform services. #line:354605
-
-<<elseif get_current_objective() == "work_2">>
-  LLManager: Excellent work. The board is proud of you. Believe in yourself. BElieve in yourself. #line:9833393
-  LLManager: Office sentiment analysis shows a decrease of morale by $RED$ percentage. #line:10268728
-  LLManager:  It is employee No.6's birthday today. To increase efficiency, please engage in socialisation by congratulating them for being with us another another year. #line:705641
-  <<complete_objective "work_2">>
-
-
-<<elseif get_current_objective() == "work_3">>
-  LLManager: Please engage in socialisation with your fellow employees. #line:4857077
-<<elseif get_current_objective() == "work_4">>
-  LLManager: Well done, you have engaged in productivity boosting activities. #line:5495336
-  LLManager: Please stand still and wait for sentiment analysis to complete. #line:10356638
-  LLManager: ... #line:14808122
-  LLManager: Please take your mandated mental health break (57% certainty). #line:581669
-  <<complete_objective "work_4">>
-  LLManager: Proceed to the breakroom. #line:11974346
-  LLManager: Just up the stairs and to the left, and then up the stairs and to the left. #line:493920
-  LLManager: Then, go up the stairs and to the left. #line:12584075
-  LLManager: Finally, go up the stairs and to the left. #line:3241716
-  LLManager: Remember, a productive mind is a happy mind. #line:2830025
-<<elseif get_current_objective() == "work_5">>
-  LLManager: Proceed to the breakroom. It is imperative to not take a break outside the designated area. #line:15157654
-<<elseif get_current_objective() == "work_8">>
-  <<complete_objective "back_to_llm">>
-  LLManager: Congratulations, you have completed your mandatory mental health break. #line:9288842
-  LLManager: You are now more productive (1.67% increase / boost) #line:8467178
-  LLManager: You can now pivot to real work :))))))))))))))))) pivot #line:10590363
-  LLManager: Your task for today is: label Google ReCAPTCHA for improved training data (you have 1524 remaining). #line:11706959
-  -> Sigh... okay boss #line:6781866
-    LLManager: That is the spirit, employee $EXTERNAL_NAME$! #line:8871419
-    -> (continue working for the day) #line:11680155
-      <<complete_objective "work_8">>
-  -> Listen, I'm feeling a bit weird today. #line:6482434
-    LLManager: Please proceed to describe the relevance of your inquiry to your work. #line:14511500
-    -> My head feels kinda hot. #line:1955980
-    -> Are the rumors about the Proletarian Fever true? #line:10139010
-    LLManager: PLEASE PROCEED TO DESCRIBE THE RELEVANCE OF YOUR INQUIRY TO YOUR W O #line:7828593
-      -> Maybe I should go home early today? #line:10827691
-      LLManager: That's a good idea! It's really important to it's really important to it's really important to #line:4491921
-      LLManager: Unfortunately, you did not collect enough Business Loyalty Points this quarter yet to unlock that request. #line:6309833
-      LLManager: (you have 1524 Google ReCAPTCHA labels remaining) #line:10383602
-      -> ...Okay (continue working for the day) #line:6281375
-         <<complete_objective "work_8">>
+  <<llmanager_emote "off">>
 <<endif>>
 ===

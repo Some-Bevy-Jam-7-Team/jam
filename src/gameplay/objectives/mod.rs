@@ -42,6 +42,7 @@ pub struct CurrentObjective(Option<Entity>);
 #[derive(Default)]
 #[base_class]
 #[component(on_add=Objective::on_add)]
+#[require(DespawnOnExit::<Screen>(Screen::Gameplay))]
 pub struct Objective {
 	/// The description of the objective.
 	pub description: String,

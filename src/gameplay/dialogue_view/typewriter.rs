@@ -30,7 +30,7 @@ pub(super) fn typewriter_plugin(app: &mut App) {
 pub(super) struct TypewriterFinishedEvent;
 
 #[derive(Debug, Clone, PartialEq, Resource)]
-pub(super) struct Typewriter {
+pub(crate) struct Typewriter {
 	pub(super) character_name: Option<String>,
 	pub(super) current_text: String,
 	pub(super) graphemes_left: Vec<String>,
@@ -75,6 +75,10 @@ impl Typewriter {
 
 	pub(super) fn fast_forward(&mut self) {
 		self.fast_typing = true;
+	}
+
+	pub(crate) fn elapsed_graphemes(&self) -> usize {
+		self.current_text.chars().count()
 	}
 
 	fn update_current_text(&mut self) {

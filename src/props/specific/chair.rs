@@ -6,7 +6,8 @@ use bevy_trenchbroom::prelude::*;
 
 use crate::{
 	asset_tracking::LoadResource as _,
-	gameplay::{TargetName, core::*},
+	gameplay::TargetName,
+	props::interactables::InteractableEntity,
 	third_party::{
 		avian3d::CollisionLayer,
 		bevy_trenchbroom::{GetTrenchbroomModelPath as _, LoadTrenchbroomModel as _},
@@ -19,7 +20,7 @@ pub(super) fn plugin(app: &mut App) {
 }
 
 #[point_class(
-	base(TargetName, Transform, Visibility),
+	base(TargetName, Transform, Visibility, InteractableEntity),
 	model("models/darkmod/furniture/seating/wchair1.gltf")
 )]
 pub(crate) struct Chair;
@@ -43,7 +44,6 @@ fn setup_chair(
 			.with_default_layers(CollisionLayers::new(CollisionLayer::Prop, LayerMask::ALL))
 			// Make the chair way more dense than the default, as it feels janky to be able to push it around easily.
 			.with_default_density(10_000.0),
-		EnvironmentTemperature::default(),
 		RigidBody::Dynamic,
 		// Not inserting `TnuaNotPlatform`, otherwise the player will not be able to jump on it.
 		SceneRoot(model),
