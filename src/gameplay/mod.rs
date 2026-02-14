@@ -4,6 +4,8 @@
 //! to get a feeling for the template.
 
 use bevy::{
+	app::HierarchyPropagatePlugin,
+	camera::visibility::RenderLayers,
 	ecs::{lifecycle::HookContext, world::DeferredWorld},
 	platform::collections::HashMap,
 	prelude::*,
@@ -42,6 +44,7 @@ pub(super) fn plugin(app: &mut App) {
 		interaction::plugin,
 		hud::plugin,
 		fever::plugin,
+		HierarchyPropagatePlugin::<RenderLayers>::new(PostUpdate),
 	));
 }
 

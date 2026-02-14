@@ -17,6 +17,21 @@ pub fn spawn_scatter_layers(mut cmd: Commands, landscape: Single<Entity, With<Sc
 	cmd.spawn((GrassLayer, ChildOf(landscape)));
 }
 
+pub fn toggle_chunked_grass(
+	mut cmd: Commands,
+	q_grass_layer: Query<Entity, With<GrassLayer>>,
+	current_level: Res<CurrentLevel>,
+) {
+	let chunked_grass = matches!(*current_level, CurrentLevel::Shaders | CurrentLevel::DayTwo);
+	for layer in q_grass_layer.iter() {
+		if chunked_grass {
+			cmd.entity(layer).insert(ScatterChunked);
+		} else {
+			cmd.entity(layer).remove::<ScatterChunked>();
+		}
+	}
+}
+
 pub fn scatter(
 	mut cmd: Commands,
 	mut mw_clear_root: MessageWriter<ClearScatterRoot>,
@@ -26,15 +41,12 @@ pub fn scatter(
 	mw_clear_root.write((*root).into());
 
 	match *current_level {
-		CurrentLevel::DayOne
-		| CurrentLevel::Commune
-		| CurrentLevel::Karoline
-		| CurrentLevel::Train => {
-			cmd.trigger(ScatterDone);
-		}
-		CurrentLevel::DayTwo => {
+		CurrentLevel::Commune | CurrentLevel::Shaders => {
 			debug!("Scattering...");
 			cmd.trigger(Scatter::<StandardMaterial>::new(*root));
+		}
+		_ => {
+			cmd.trigger(ScatterDone);
 		}
 	}
 }

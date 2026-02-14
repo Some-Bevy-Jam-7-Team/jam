@@ -1,4 +1,6 @@
 use crate::gameplay::level::{CurrentLevel, EnvironmentAssets};
+use crate::screens::Screen;
+use crate::screens::loading::LoadingScreen;
 use crate::third_party::avian3d::CollisionLayer;
 
 use avian3d::prelude::*;
@@ -27,14 +29,9 @@ impl Landscape {
 			.unwrap()
 			.set(HeightMapState::Setup);
 
-		let level = world.get_resource::<CurrentLevel>().unwrap();
-
-		match *level {
-			CurrentLevel::DayOne
-			| CurrentLevel::Karoline
-			| CurrentLevel::Train
-			| CurrentLevel::Commune => {}
-			CurrentLevel::DayTwo => {
+		let level = world.get_resource::<CurrentLevel>().cloned().unwrap();
+		match level {
+			CurrentLevel::Commune | CurrentLevel::Shaders => {
 				let landscape = world
 					.get_resource::<EnvironmentAssets>()
 					.map(|a| a.landscape.clone())
@@ -49,7 +46,20 @@ impl Landscape {
 						))
 						.with_default_density(1_000.0),
 				));
+
+				if level == CurrentLevel::Shaders {
+					world
+						.commands()
+						.entity(ctx.entity)
+						.insert(DespawnOnExit(LoadingScreen::Shaders));
+				} else {
+					world
+						.commands()
+						.entity(ctx.entity)
+						.insert(DespawnOnExit(Screen::Gameplay));
+				}
 			}
+			_ => {}
 		}
 	}
 }
