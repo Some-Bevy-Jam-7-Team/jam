@@ -31,7 +31,6 @@ pub(super) fn plugin(app: &mut App) {
 
 /// This is a hack, a [`Screen:Shader`] stage could be added
 /// instead of using [`LoadingScreen::Assets`] for compiling shaders.
-
 fn spawn_or_skip_asset_loading_screen(
 	mut cmd: Commands,
 	mut current_level: ResMut<CurrentLevel>,
