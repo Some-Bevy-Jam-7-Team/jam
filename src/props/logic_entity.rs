@@ -8,6 +8,7 @@ use bevy::{
 
 use bevy_transform_interpolation::TranslationEasingState;
 use bevy_trenchbroom::prelude::*;
+use bevy_yarnspinner::prelude::{DialogueRunner, YarnValue};
 
 use crate::{
 	PostPhysicsAppSystems,
@@ -20,6 +21,7 @@ use crate::{
 	},
 	props::interactables::InteractableEntity,
 	reflection::ReflAppExt,
+	screens::Screen,
 	third_party::avian3d::CollisionLayer,
 };
 
@@ -28,6 +30,7 @@ pub(super) fn plugin(app: &mut App) {
 		.register_dynamic_component::<YarnNode>()
 		.register_dynamic_component::<TimerEntity>()
 		.register_dynamic_component::<LogicSetter>()
+		.register_dynamic_component::<YarnSetter>()
 		.register_dynamic_component::<LogicToggler>()
 		.register_dynamic_component::<LogicDespawn>()
 		.add_observer(interact_timers)
@@ -36,6 +39,7 @@ pub(super) fn plugin(app: &mut App) {
 		.add_observer(on_sensor_start)
 		.add_observer(on_sensor_end)
 		.add_observer(run_setter)
+		.add_observer(run_yarn_setter)
 		.add_observer(run_toggle)
 		.add_observer(run_despawn)
 		.add_observer(interact_teleport)
@@ -83,6 +87,7 @@ struct UnitialisedObjective;
 /// An entity describing the identity of an objective
 /// Activates (completes) on [`InteractEvent`]
 #[point_class(base(TargetName, Objective))]
+#[require(DespawnOnExit::<Screen>(Screen::Gameplay))]
 #[derive(Default)]
 pub(crate) struct ObjectiveEntity {
 	/// The objective, if any, that this is a subobjective of
@@ -295,6 +300,18 @@ pub(crate) struct LogicSetter {
 	pub logic_value_to_set: String,
 }
 
+/// An entity describing a change in Yarn properties.
+///
+/// Activates on [`InteractEvent`]
+#[point_class(base(TargetName))]
+#[derive(PartialEq, Clone, Debug, Default)]
+pub(crate) struct YarnSetter {
+	/// Name of the property to set
+	pub yarn_variable_to_set: String,
+	/// Value string of the property to set
+	pub yarn_value_to_set: String,
+}
+
 fn run_setter(
 	trigger: On<InteractEvent>,
 	setter_query: Query<&LogicSetter>,
@@ -311,6 +328,23 @@ fn run_setter(
 			),
 		);
 	}
+}
+
+fn run_yarn_setter(
+	trigger: On<InteractEvent>,
+	setter_query: Query<&YarnSetter>,
+	mut dialogue_runner: Single<&mut DialogueRunner>,
+) -> Result {
+	if let Ok(setter) = setter_query.get(trigger.0) {
+		dialogue_runner
+			.variable_storage_mut()
+			.set(
+				format!("${}", dbg!(&setter.yarn_variable_to_set)),
+				YarnValue::from(setter.yarn_value_to_set.clone()),
+			)
+			.unwrap();
+	}
+	Ok(())
 }
 
 /// An entity describing a change in properties of another entity.

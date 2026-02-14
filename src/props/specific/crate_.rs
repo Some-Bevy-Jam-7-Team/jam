@@ -7,8 +7,8 @@ use bevy_trenchbroom::prelude::*;
 
 use crate::{
 	asset_tracking::LoadResource as _,
-	gameplay::core::*,
-	props::setup::setup_static_prop_with_convex_hull,
+	gameplay::TargetName,
+	props::{interactables::InteractableEntity, setup::setup_static_prop_with_convex_hull},
 	third_party::{
 		avian3d::CollisionLayer,
 		bevy_trenchbroom::{GetTrenchbroomModelPath as _, LoadTrenchbroomModel as _},
@@ -29,7 +29,7 @@ pub(super) fn plugin(app: &mut App) {
 pub(crate) struct CrateBig;
 
 #[point_class(
-	base(Transform, Visibility),
+	base(Transform, Visibility, TargetName, InteractableEntity),
 	model("models/darkmod/containers/crate01_small.gltf")
 )]
 pub(crate) struct CrateSmall;
@@ -50,7 +50,6 @@ fn setup_crate_small(
 		ColliderConstructorHierarchy::new(ColliderConstructor::ConvexHullFromMesh)
 			.with_default_layers(CollisionLayers::new(CollisionLayer::Prop, LayerMask::ALL))
 			.with_default_density(1_000.0),
-		EnvironmentTemperature::default(),
 		SceneRoot(model),
 		// The prop should be held upright.
 		PreferredPickupRotation(Quat::IDENTITY),

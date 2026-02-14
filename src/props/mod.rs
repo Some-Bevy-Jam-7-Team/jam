@@ -9,7 +9,7 @@ mod generic;
 pub mod interactables;
 pub mod logic_entity;
 mod setup;
-mod specific;
+pub mod specific;
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_plugins((

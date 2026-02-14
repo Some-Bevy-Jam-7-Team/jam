@@ -11,9 +11,11 @@ use crate::{
 			get_dialogue_current_objective,
 		},
 		scripting::{
-			despawn_entity, read_bool_from_entity, set_value_on_entity, toggle_bool_on_entity,
+			despawn_entity, interact_with_entity, read_bool_from_entity, set_value_on_entity,
+			toggle_bool_on_entity,
 		},
 	},
+	props::specific::intro_crt::set_intro_crt_emote,
 	screens::Screen,
 };
 
@@ -22,7 +24,9 @@ pub(super) fn plugin(app: &mut App) {
 		// In Wasm, we need to load the dialogue file manually. If we're not targeting Wasm, we can just use `YarnSpinnerPlugin::default()` instead.
 		YarnSpinnerPlugin::with_yarn_sources(vec![
 			YarnFileSource::file("dialogue/intro_crt.yarn"),
+			YarnFileSource::file("dialogue/day_two_crt.yarn"),
 			YarnFileSource::file("dialogue/intro_npc.yarn"),
+			YarnFileSource::file("dialogue/day_two_npc.yarn"),
 		])
 		.with_localizations(Localizations {
 			base_localization: "en".into(),
@@ -57,6 +61,14 @@ fn setup_dialogue_runner(mut commands: Commands, yarn_project: Res<YarnProject>)
 		.add_command(
 			"toggle_value",
 			commands.register_system(toggle_bool_on_entity),
+		)
+		.add_command(
+			"llmanager_emote",
+			commands.register_system(set_intro_crt_emote),
+		)
+		.add_command(
+			"interact_with",
+			commands.register_system(interact_with_entity),
 		);
 	dialogue_runner
 		.library_mut()
