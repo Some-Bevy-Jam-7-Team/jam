@@ -1,7 +1,7 @@
 use bevy::prelude::*;
-
 use bevy_trenchbroom::prelude::*;
 
+use crate::gameplay::TargetName;
 use crate::props::effects::disable_shadow_casting;
 
 pub(super) fn plugin(app: &mut App) {

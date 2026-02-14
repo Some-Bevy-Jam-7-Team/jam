@@ -7,16 +7,195 @@
 "classname" "worldspawn"
 // brush 0
 {
-( -64 -64 -16 ) ( -64 -63 -16 ) ( -64 -64 -15 ) carpet [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -64 -64 -16 ) ( -64 -64 -15 ) ( -63 -64 -16 ) carpet [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( -400 -64 -16 ) ( -400 -63 -16 ) ( -400 -64 -15 ) carpet [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( -64 -272 -16 ) ( -64 -272 -15 ) ( -63 -272 -16 ) carpet [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
 ( -64 -64 -16 ) ( -63 -64 -16 ) ( -64 -63 -16 ) carpet [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
 ( 64 64 16 ) ( 64 65 16 ) ( 65 64 16 ) carpet [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
-( 64 64 16 ) ( 65 64 16 ) ( 64 64 17 ) carpet [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( 64 64 16 ) ( 64 64 17 ) ( 64 65 16 ) carpet [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 64 272 16 ) ( 65 272 16 ) ( 64 272 17 ) carpet [ -1 0 0 0 ] [ 0 0 -1 0 ] 90 1 1
+( 80 64 16 ) ( 80 64 17 ) ( 80 65 16 ) carpet [ 0 1 0 0 ] [ 0 0 -1 0 ] 270 1 1
+}
+// brush 1
+{
+( 64 64 16 ) ( 64 80 -16 ) ( 64 80 16 ) darkmod/window/roundtop_diamond_pattern01_brightlit [ 0 -1 0 160 ] [ 0 0 -1 -448 ] 270 0.405 0.36
+( 80 64 16 ) ( 64 64 -16 ) ( 64 64 16 ) darkmod/window/roundtop_diamond_pattern01_brightlit [ 1 0 0 160 ] [ 0 0 -1 -448 ] 270 0.405 0.36
+( 80 80 16 ) ( 64 64 16 ) ( 80 64 16 ) darkmod/window/roundtop_diamond_pattern01_brightlit [ -1 0 0 160 ] [ 0 -1 0 -448 ] 180 0.405 0.36
+( 80 80 208 ) ( 64 64 208 ) ( 64 80 208 ) darkmod/window/roundtop_diamond_pattern01_brightlit [ 1 0 0 160 ] [ 0 -1 0 -448 ] 0 0.405 0.36
+( 80 272 16 ) ( 64 272 -16 ) ( 80 272 -16 ) darkmod/window/roundtop_diamond_pattern01_brightlit [ -1 0 0 160 ] [ 0 0 -1 -448 ] 270 0.405 0.36
+( 80 80 16 ) ( 80 64 -16 ) ( 80 64 16 ) darkmod/window/roundtop_diamond_pattern01_brightlit [ 0 1 0 160 ] [ 0 0 -1 -448 ] 270 0.405 0.36
+}
+// brush 2
+{
+( -400 -80 16 ) ( -400 -64 -16 ) ( -400 -64 16 ) __TB_empty [ 0 -1 0 16 ] [ 0 0 -1 0 ] 270 1 1
+( 48 -272 16 ) ( 32 -272 -16 ) ( 32 -272 16 ) __TB_empty [ 1 0 0 -16 ] [ 0 0 -1 0 ] 0 1 1
+( 48 -64 16 ) ( 32 -80 16 ) ( 48 -80 16 ) __TB_empty [ -1 0 0 16 ] [ 0 -1 0 16 ] 90 1 1
+( 48 -64 208 ) ( 32 -80 208 ) ( 32 -64 208 ) __TB_empty [ 1 0 0 -16 ] [ 0 -1 0 16 ] 270 1 1
+( 48 272 16 ) ( 32 272 -16 ) ( 48 272 -16 ) __TB_empty [ -1 0 0 16 ] [ 0 0 -1 0 ] 270 1 1
+( -384 -64 16 ) ( -384 -80 -16 ) ( -384 -80 16 ) __TB_empty [ 0 1 0 -16 ] [ 0 0 -1 0 ] 270 1 1
+}
+// brush 3
+{
+( 64 -272 16 ) ( 64 -256 -16 ) ( 64 -256 16 ) darkmod/window/roundtop_diamond_pattern01_brightlit [ 0 -1 0 -157.62964 ] [ 0 0 -1 -448 ] 0 0.405 0.36
+( 80 -272 16 ) ( 64 -272 -16 ) ( 64 -272 16 ) darkmod/window/roundtop_diamond_pattern01_brightlit [ 1 0 0 160 ] [ 0 0 -1 -448 ] 0 0.405 0.36
+( 80 -256 16 ) ( 64 -272 16 ) ( 80 -272 16 ) darkmod/window/roundtop_diamond_pattern01_brightlit [ -1 0 0 160 ] [ 0 -1 0 -357.33325 ] 270 0.405 0.36
+( 80 -256 208 ) ( 64 -272 208 ) ( 64 -256 208 ) darkmod/window/roundtop_diamond_pattern01_brightlit [ 1 0 0 160 ] [ 0 -1 0 -357.33325 ] 90 0.405 0.36
+( 80 -64 16 ) ( 64 -64 -16 ) ( 80 -64 -16 ) darkmod/window/roundtop_diamond_pattern01_brightlit [ -1 0 0 160 ] [ 0 0 -1 -448 ] 0 0.405 0.36
+( 80 -256 16 ) ( 80 -272 -16 ) ( 80 -272 16 ) darkmod/window/roundtop_diamond_pattern01_brightlit [ 0 1 0 -34.37036 ] [ 0 0 -1 -448 ] 0 0.405 0.36
+}
+// brush 4
+{
+( 80 -80 16 ) ( 80 64 0 ) ( 80 64 16 ) darkmod/window/diamond_pattern_andbars01_unlit [ 0 -1 0 -130 ] [ 0 0 -1 -80 ] 180 0.5 0.5
+( 96 -64 16 ) ( 80 -64 0 ) ( 80 -64 16 ) darkmod/window/diamond_pattern_andbars01_unlit [ 1 0 0 -130 ] [ 0 0 -1 -80 ] 270 0.5 0.5
+( 96 64 0 ) ( 80 -80 0 ) ( 96 -80 0 ) darkmod/window/diamond_pattern_andbars01_unlit [ -1 0 0 -130 ] [ 0 -1 0 -80 ] 0 0.5 0.5
+( 96 64 208 ) ( 80 -80 208 ) ( 80 64 208 ) darkmod/window/diamond_pattern_andbars01_unlit [ 1 0 0 -130 ] [ 0 -1 0 -80 ] 180 0.5 0.5
+( 96 64 16 ) ( 80 64 0 ) ( 96 64 0 ) darkmod/window/diamond_pattern_andbars01_unlit [ -1 0 0 -130 ] [ 0 0 -1 -80 ] 0 0.5 0.5
+( 96 64 16 ) ( 96 -80 0 ) ( 96 -80 16 ) darkmod/window/diamond_pattern_andbars01_unlit [ 0 1 0 -130 ] [ 0 0 -1 -80 ] 0 0.5 0.5
+}
+// brush 5
+{
+( -400 272 16 ) ( -400 288 -16 ) ( -400 288 16 ) __TB_empty [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 80 272 16 ) ( -400 272 -16 ) ( -400 272 16 ) __TB_empty [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 80 288 -16 ) ( -400 272 -16 ) ( 80 272 -16 ) __TB_empty [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
+( 80 288 208 ) ( -400 272 208 ) ( -400 288 208 ) __TB_empty [ 1 0 0 0 ] [ 0 -1 0 0 ] 180 1 1
+( 80 288 16 ) ( -400 288 -16 ) ( 80 288 -16 ) __TB_empty [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 80 288 16 ) ( 80 272 -16 ) ( 80 272 16 ) __TB_empty [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+}
+// brush 6
+{
+( -400 -288 16 ) ( -400 -272 -16 ) ( -400 -272 16 ) __TB_empty [ 0 -1 0 -560 ] [ 0 0 -1 0 ] 270 1 1
+( 80 -288 16 ) ( -400 -288 -16 ) ( -400 -288 16 ) __TB_empty [ 1 0 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( 80 -272 -16 ) ( -400 -288 -16 ) ( 80 -288 -16 ) __TB_empty [ -1 0 0 0 ] [ 0 -1 0 -560 ] 270 1 1
+( 80 -272 208 ) ( -400 -288 208 ) ( -400 -272 208 ) __TB_empty [ 1 0 0 0 ] [ 0 -1 0 -560 ] 90 1 1
+( 80 -272 16 ) ( -400 -272 -16 ) ( 80 -272 -16 ) __TB_empty [ -1 0 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( 80 -272 16 ) ( 80 -288 -16 ) ( 80 -288 16 ) __TB_empty [ 0 1 0 560 ] [ 0 0 -1 0 ] 270 1 1
+}
+// brush 7
+{
+( 496 32 176 ) ( 496 -32 176 ) ( 496 32 96 ) darkmod/stone/brick/bt_basewall1 [ 0 1 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( 512 -32 96 ) ( 496 -32 96 ) ( 512 -32 176 ) darkmod/stone/brick/bt_basewall1 [ 1 0 0 -16 ] [ 0 0 -1 0 ] 180 1 1
+( 512 32 96 ) ( 496 32 96 ) ( 512 -32 96 ) darkmod/stone/brick/bt_basewall1 [ -1 0 0 16 ] [ 0 -1 0 0 ] 270 1 1
+( 512 -32 176 ) ( 496 -32 176 ) ( 512 32 176 ) darkmod/stone/brick/bt_basewall1 [ 1 0 0 -16 ] [ 0 -1 0 0 ] 90 1 1
+( 512 32 176 ) ( 496 32 176 ) ( 512 32 96 ) darkmod/stone/brick/bt_basewall1 [ -1 0 0 16 ] [ 0 0 -1 0 ] 180 1 1
+( 512 -32 176 ) ( 512 32 176 ) ( 512 -32 96 ) darkmod/stone/brick/bt_basewall1 [ 0 1 0 0 ] [ 0 0 -1 0 ] 180 1 1
+}
+// brush 8
+{
+( 416 -32 96 ) ( 416 32 96 ) ( 416 -32 176 ) darkmod/stone/brick/bt_basewall1 [ 0 -1 0 0 ] [ 0 0 -1 0 ] 90 1 1
+( 416 -32 176 ) ( 432 -32 176 ) ( 416 -32 96 ) darkmod/stone/brick/bt_basewall1 [ 1 0 0 16 ] [ 0 0 -1 0 ] 180 1 1
+( 416 -32 96 ) ( 432 -32 96 ) ( 416 32 96 ) darkmod/stone/brick/bt_basewall1 [ -1 0 0 -16 ] [ 0 -1 0 0 ] 270 1 1
+( 416 32 176 ) ( 432 32 176 ) ( 416 -32 176 ) darkmod/stone/brick/bt_basewall1 [ 1 0 0 16 ] [ 0 -1 0 0 ] 90 1 1
+( 416 32 96 ) ( 432 32 96 ) ( 416 32 176 ) darkmod/stone/brick/bt_basewall1 [ -1 0 0 -16 ] [ 0 0 -1 0 ] 180 1 1
+( 432 -32 96 ) ( 432 -32 176 ) ( 432 32 96 ) darkmod/stone/brick/bt_basewall1 [ 0 -1 0 0 ] [ 0 0 -1 0 ] 180 1 1
+}
+// brush 9
+{
+( 416 48 176 ) ( 416 32 176 ) ( 416 48 96 ) darkmod/stone/brick/bt_basewall1 [ 0 -1 0 16 ] [ 0 0 -1 0 ] 90 1 1
+( 480 32 176 ) ( 480 32 96 ) ( 448 32 176 ) darkmod/stone/brick/bt_basewall1 [ -1 0 0 0 ] [ 0 0 -1 0 ] 90 1 1
+( 448 48 96 ) ( 448 32 96 ) ( 480 48 96 ) darkmod/stone/brick/bt_basewall1 [ -1 0 0 0 ] [ 0 -1 0 16 ] 90 1 1
+( 480 48 176 ) ( 480 32 176 ) ( 448 48 176 ) darkmod/stone/brick/bt_basewall1 [ 1 0 0 0 ] [ 0 -1 0 16 ] 270 1 1
+( 480 48 176 ) ( 448 48 176 ) ( 480 48 96 ) darkmod/stone/brick/bt_basewall1 [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 512 48 96 ) ( 512 32 96 ) ( 512 48 176 ) darkmod/stone/brick/bt_basewall1 [ 0 1 0 -16 ] [ 0 0 -1 0 ] 180 1 1
+}
+// brush 10
+{
+( 416 -48 96 ) ( 416 -32 96 ) ( 416 -48 176 ) darkmod/stone/brick/bt_basewall1 [ 0 -1 0 -16 ] [ 0 0 -1 0 ] 270 1 1
+( 480 -48 96 ) ( 448 -48 96 ) ( 480 -48 176 ) darkmod/stone/brick/bt_basewall1 [ 1 0 0 0 ] [ 0 0 -1 0 ] 180 1 1
+( 480 -48 96 ) ( 480 -32 96 ) ( 448 -48 96 ) darkmod/stone/brick/bt_basewall1 [ -1 0 0 0 ] [ 0 -1 0 -16 ] 270 1 1
+( 448 -48 176 ) ( 448 -32 176 ) ( 480 -48 176 ) darkmod/stone/brick/bt_basewall1 [ 1 0 0 0 ] [ 0 -1 0 -16 ] 90 1 1
+( 448 -32 96 ) ( 480 -32 96 ) ( 448 -32 176 ) darkmod/stone/brick/bt_basewall1 [ 1 0 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( 512 -48 176 ) ( 512 -32 176 ) ( 512 -48 96 ) darkmod/stone/brick/bt_basewall1 [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 1 1
+}
+// brush 11
+{
+( 432 0 96 ) ( 432 0 112 ) ( 432 -32 96 ) darkmod/stone/brick/bt_basewall1 [ 0 -1 0 -16 ] [ 0 0 -1 0 ] 270 1 1
+( 432 -32 96 ) ( 432 -32 112 ) ( 464 -32 96 ) darkmod/stone/brick/bt_basewall1 [ 1 0 0 16 ] [ 0 0 -1 0 ] 0 1 1
+( 432 0 96 ) ( 432 -32 96 ) ( 464 0 96 ) darkmod/stone/brick/bt_basewall1 [ -1 0 0 -16 ] [ 0 -1 0 -16 ] 180 1 1
+( 432 -32 112 ) ( 432 0 112 ) ( 464 -32 112 ) darkmod/stone/brick/bt_basewall1 [ -1 0 0 -16 ] [ 0 -1 0 -16 ] 90 1 1
+( 464 32 96 ) ( 464 32 112 ) ( 432 32 96 ) darkmod/stone/brick/bt_basewall1 [ -1 0 0 -16 ] [ 0 0 -1 0 ] 180 1 1
+( 496 -32 96 ) ( 496 -32 112 ) ( 496 0 96 ) darkmod/stone/brick/bt_basewall1 [ 0 1 0 16 ] [ 0 0 -1 0 ] 180 1 1
+}
+// brush 12
+{
+( 64 -80 16 ) ( 64 64 0 ) ( 64 64 16 ) __TB_empty [ 0 -1 0 -130 ] [ 0 0 -1 -80 ] 90 0.5 0.5
+( 80 -64 16 ) ( 64 -64 0 ) ( 64 -64 16 ) __TB_empty [ 1 0 0 -98 ] [ 0 0 -1 -80 ] 180 0.5 0.5
+( 80 64 0 ) ( 64 -80 0 ) ( 80 -80 0 ) __TB_empty [ -1 0 0 -162 ] [ 0 -1 0 -80 ] 270 0.5 0.5
+( 80 64 208 ) ( 64 -80 208 ) ( 64 64 208 ) __TB_empty [ 1 0 0 -98 ] [ 0 -1 0 -80 ] 90 0.5 0.5
+( 80 64 16 ) ( 64 64 0 ) ( 80 64 0 ) __TB_empty [ -1 0 0 -162 ] [ 0 0 -1 -80 ] 270 0.5 0.5
+( 80 64 16 ) ( 80 -80 0 ) ( 80 -80 16 ) __TB_empty [ 0 1 0 -130 ] [ 0 0 -1 -80 ] 270 0.5 0.5
 }
 }
 // entity 1
 {
 "classname" "player"
-"origin" "8 24 24"
+"origin" "-104 -8 56"
+}
+// entity 2
+{
+"classname" "bookshelf"
+"origin" "60 0 10"
+"angles" "0 180 0"
+"scale" "2 2 2"
+"interaction_text_override" "Gaze upon the infinite knowledge"
+"interaction_relay" "bookshelf_A"
+"completes_subobjective" "bookshelf_B"
+"targetname" ""
+}
+// entity 3
+{
+"classname" "light_spot"
+"origin" "-136 0 216"
+"angles" "30 0 90"
+"intensity" "100000000,000000"
+"outer_angle" "25,000000"
+}
+// entity 4
+{
+"classname" "npc"
+"origin" "24 -120 56"
+"yarn_node" "karoline_cultist_1"
+"angles" "0 180 0"
+}
+// entity 5
+{
+"classname" "objective_entity"
+"origin" "-264 40 24"
+"targetname" "obj_1"
+"description" "Become one with the machine"
+}
+// entity 6
+{
+"classname" "npc"
+"origin" "24 120 56"
+"yarn_node" "karoline_cultist_2"
+"angles" "0 180 0"
+}
+// entity 7
+{
+"classname" "package_small"
+"origin" "464 0 160"
+"is_edible" "true"
+"interaction_relay" ""
+"completes_subobjective" "eat_camera"
+"targetname" "edible_camera"
+}
+// entity 8
+{
+"classname" "teleport_node"
+"origin" "24 0 184"
+"targetname" "teleport_summon"
+"teleport_target" "edible_camera"
+}
+// entity 9
+{
+"classname" "yarn_node"
+"origin" "8 0 24"
+"yarn_node" "karoline_bookshelf"
+"targetname" "bookshelf_A"
+}
+// entity 10
+{
+"classname" "yarn_setter"
+"origin" "8 40 24"
+"targetname" "eat_camera"
+"yarn_value_to_set" "true"
+"yarn_variable_to_set" "k_ate_camera"
 }
