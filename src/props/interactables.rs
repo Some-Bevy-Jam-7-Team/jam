@@ -18,13 +18,13 @@ pub(super) fn plugin(app: &mut App) {
 #[component(immutable)]
 pub struct InteractableEntity {
 	/// Whether this entity should be
-	is_edible: bool,
+	pub is_edible: bool,
 	/// Whether this entity should have a special line of text for being interacted with or it should be inferred from being edible.
-	interaction_text_override: Option<String>,
+	pub interaction_text_override: Option<String>,
 	/// What objective, if any, should be completed by this name. Should be the `targetname` of said objective.
-	completes_subobjective: Option<String>,
+	pub completes_subobjective: Option<String>,
 	/// What entity, if any, should additionally receive [`InteractEvent`](crate::gameplay::interaction::InteractEvent) when this one activates.
-	interaction_relay: Option<String>,
+	pub interaction_relay: Option<String>,
 }
 
 #[expect(dead_code)]
