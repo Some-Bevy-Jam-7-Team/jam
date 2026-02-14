@@ -8,7 +8,7 @@ use bevy::{
 	ui::Val::*,
 };
 
-use crate::theme::{interaction::InteractionPalette, palette::*};
+use crate::theme::{interaction::InteractionPalette, palette::*, textures::ButtonMaterial};
 
 /// A root UI node that fills the window and centers its content.
 pub(crate) fn ui_root(name: impl Into<Cow<'static, str>>) -> impl Bundle {
@@ -75,7 +75,8 @@ where
 			height: px(80),
 			align_items: AlignItems::Center,
 			justify_content: JustifyContent::Center,
-			border_radius: BorderRadius::MAX,
+			border_radius: BorderRadius::all(px(16)),
+			border: UiRect::all(px(4.0)),
 			..default()
 		},
 	)
@@ -128,6 +129,9 @@ where
 						hovered: BUTTON_HOVERED_BACKGROUND,
 						pressed: BUTTON_PRESSED_BACKGROUND,
 					},
+					// This handle gets replaced in an observer.
+					// Cursed? Naaaaah surely not
+					MaterialNode::<ButtonMaterial>(default()),
 					children![(
 						Name::new("Button Text"),
 						Text(text),
