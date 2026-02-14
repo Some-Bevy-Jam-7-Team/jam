@@ -95,8 +95,8 @@ pub(super) fn plugin(app: &mut App) {
 		update_debug_ui_text.run_if(resource_exists_and_changed::<DebugState>),
 	);
 	app.add_systems(
-        Update,
-        add_navmesh_gizmo.run_if(resource_exists_and_changed::<LevelOneAssets>),
+		Update,
+		add_navmesh_gizmo.run_if(resource_exists_and_changed::<LevelOneAssets>),
 	);
 	app.add_systems(
 		Update,
@@ -114,9 +114,9 @@ pub(super) fn plugin(app: &mut App) {
 }
 
 fn add_navmesh_gizmo(
-    level: Res<LevelOneAssets>,
-    mut commands: Commands,
-    mut gizmo_config: ResMut<NavmeshGizmoConfig>,
+	level: Res<LevelOneAssets>,
+	mut commands: Commands,
+	mut gizmo_config: ResMut<NavmeshGizmoConfig>,
 ) {
 	commands.spawn(DetailNavmeshGizmo::new(&level.navmesh));
 	gizmo_config.detail_navmesh.enabled = false;

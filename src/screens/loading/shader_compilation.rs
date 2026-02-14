@@ -3,19 +3,17 @@
 
 use bevy::prelude::*;
 
+use super::LoadingScreen;
+use crate::gameplay::level::AdvanceLevel;
 use crate::{
 	shader_compilation::{LoadedPipelineCount, all_pipelines_loaded},
 	theme::{palette::SCREEN_BACKGROUND, prelude::*},
 };
-use crate::gameplay::level::AdvanceLevel;
-use super::LoadingScreen;
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_systems(
 		OnEnter(LoadingScreen::Shaders),
-		(
-			spawn_or_skip_shader_compilation_loading_screen,
-		),
+		(spawn_or_skip_shader_compilation_loading_screen,),
 	);
 
 	app.add_systems(
@@ -46,7 +44,7 @@ fn spawn_or_skip_shader_compilation_loading_screen(
 	));
 }
 
-fn enter_spawn_level_screen(mut cmd:Commands) {
+fn enter_spawn_level_screen(mut cmd: Commands) {
 	cmd.trigger(AdvanceLevel);
 }
 

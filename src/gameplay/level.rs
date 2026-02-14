@@ -38,8 +38,25 @@ pub(super) fn plugin(app: &mut App) {
 		.run_if(input_just_pressed(KeyCode::F10)),
 	);
 
+	app.add_systems(
+		Update,
+		enter_level.run_if(
+			all_assets_loaded
+				.and(in_state(LoadingScreen::Shaders))
+				.and(resource_equals(CurrentLevel::CompileShaders)),
+		),
+	);
+
 	app.add_observer(advance_level);
 	app.init_resource::<CurrentLevel>();
+}
+
+pub fn all_assets_loaded(resource_handles: Res<ResourceHandles>) -> bool {
+	resource_handles.is_all_done()
+}
+
+fn enter_level(mut next_screen: ResMut<NextState<LoadingScreen>>) {
+	next_screen.set(LoadingScreen::Level);
 }
 
 #[derive(Resource, Reflect, Debug, Default, Copy, Clone, PartialEq)]
@@ -85,7 +102,6 @@ pub(crate) fn spawn_level(
 	scatter_root: Single<Entity, With<ScatterRoot>>,
 	compile_shaders_assets: Res<CompileShadersAssets>,
 ) {
-	println!("Spawning level...{current_level:?}");
 	match *current_level {
 		CurrentLevel::CompileShaders => {
 			commands.spawn((
@@ -106,7 +122,7 @@ pub(crate) fn spawn_level(
 				},
 			));
 
-			let level_one_assets = level_assets.expect("If we don't have level assets when spawning level two, we're in deep shit. Sorry player, we bail here.");
+			let level_one_assets = level_assets.expect("If we don't have level assets when spawning level one, we're in deep shit. Sorry player, we bail here.");
 			commands.spawn((
 				Name::new("Level"),
 				SceneRoot(level_one_assets.level.clone()),
@@ -446,22 +462,12 @@ fn advance_level_command<T: Asset + Resource + Clone + FromWorld>() -> impl Comm
 				}
 			}));
 
-		let current_level = world.resource_mut::<CurrentLevel>().clone();
-	   match current_level {
-		   CurrentLevel::CompileShaders => {
-			   world
-				   .resource_mut::<NextState<LoadingScreen>>()
-				   .set(LoadingScreen::Level);
-		   }
-           _ =>{
-			   world
-				   .resource_mut::<NextState<LoadingScreen>>()
-				   .set(LoadingScreen::Assets);
-			   world
-				   .resource_mut::<NextState<Screen>>()
-				   .set(Screen::Loading);
-		   }
-	   }
+		world
+			.resource_mut::<NextState<LoadingScreen>>()
+			.set(LoadingScreen::Assets);
+		world
+			.resource_mut::<NextState<Screen>>()
+			.set(Screen::Loading);
 
 		let mut current_level = world.resource_mut::<CurrentLevel>();
 		*current_level = current_level.next();

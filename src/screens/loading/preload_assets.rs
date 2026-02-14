@@ -3,12 +3,12 @@
 
 use bevy::prelude::*;
 
+use super::LoadingScreen;
+use crate::gameplay::level::CurrentLevel;
 use crate::{
 	asset_tracking::ResourceHandles,
 	theme::{palette::SCREEN_BACKGROUND, prelude::*},
 };
-
-use super::LoadingScreen;
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_systems(
@@ -20,8 +20,11 @@ pub(super) fn plugin(app: &mut App) {
 		Update,
 		(
 			update_loading_assets_label,
-			enter_compile_shader_screen
-				.run_if(all_assets_loaded.and(in_state(LoadingScreen::Assets))),
+			enter_compile_shader_screen.run_if(
+				all_assets_loaded
+					.and(in_state(LoadingScreen::Assets))
+					.and(not(resource_equals(CurrentLevel::CompileShaders))),
+			),
 		),
 	);
 }
@@ -64,6 +67,6 @@ fn update_loading_assets_label(
 	}
 }
 
-fn all_assets_loaded(resource_handles: Res<ResourceHandles>) -> bool {
+pub fn all_assets_loaded(resource_handles: Res<ResourceHandles>) -> bool {
 	resource_handles.is_all_done()
 }
