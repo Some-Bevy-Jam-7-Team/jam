@@ -1,7 +1,7 @@
 use crate::gameplay::level::{CurrentLevel, EnvironmentAssets};
-use crate::third_party::avian3d::CollisionLayer;
 use crate::screens::Screen;
 use crate::screens::loading::LoadingScreen;
+use crate::third_party::avian3d::CollisionLayer;
 
 use avian3d::prelude::*;
 use bevy::ecs::lifecycle::HookContext;
