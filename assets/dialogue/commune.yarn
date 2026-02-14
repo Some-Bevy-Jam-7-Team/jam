@@ -59,7 +59,6 @@ Dave: That's me! #line:12496552
   Dave: I'm going to be honest I have no idea what it all means. #line:3771426
   Dave: But it has my name at the end of it so it must be good. #line:1325336
   Dave: From what I gather I'm supposed to be in charge of round 'ere. #line:13529562
-
   -> How did that happen? #line:16721185
     Dave: Well you see one night I was sloshed at the pub with my mates. #line:15550566
     Dave: And we got to talking about the miserable state of affairs round these parts. #line:4523041
@@ -68,12 +67,10 @@ Dave: That's me! #line:12496552
     Dave: When the local council saw us coming they up and ran away. #line:8938234
     Dave: And by the time I woke up with a hangover I was bloody well in charge. #line:3146142
     Dave: Or at least I think that's how things went down. #line:3688498
-
 -> Did I just fall from the sky? #line:14876656
   Dave: Happens all the time. #line:3382850
   Dave: Sometimes. #line:892829
   Dave: You'll get used to it. #line:10258889
-
 -> Where is this place #line:13485050
   Dave: Half way between Hull and Birmingham. #line:7115870
   Dave: Just north of Norwich. #line:13307725
@@ -83,22 +80,17 @@ Dave: That's me! #line:12496552
   Dave: Twenty minutes east of the midlands. #line:2411056
   Dave: We used to be twinned with Mügeln. #line:9553237
   Dave: Does that clear it up #line:9691338
-
   -> My head hurts. #line:5263726
     Dave: Well get some ale and chips into you. It'll clear that right up. #line:2295028
-
   -> You're British?? #line:14273870
     Dave: As British and Chips and Curry. #line:12488020
-
   -> You're Northern?? #line:15752441
     Dave: Right you are. #line:16664469
-
 -> How do I get out of here? #line:7236381
-  Dave: I've heard rumours of a place that can only be found by falling. #line:8916654
+  Dave: I've heard rumour a place that can be found by eating a mushroom. #line:8916654
   Dave: Maybe give it a try. #line:11792722
-  <<create_objectve "leave", "Leave", 2.0>>
-  <<create_subobjective "jump", "Jump of, trust">, 3.0>
-<<set $talked = $talked + 1>>
+  <<create_objective "leave" "Snack on a mushroom" 1.0>>
+  <<complete_objective "look_around">>
 ===
 
 // TODO: Add npc for Jannet.

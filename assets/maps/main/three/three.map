@@ -2048,7 +2048,7 @@
 {
 "classname" "npc"
 "origin" "168 -56 56"
-"yarn_node" "a"
+"yarn_node" "Dave"
 "angles" "0 135 0"
 }
 // entity 298

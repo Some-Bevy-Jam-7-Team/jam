@@ -2,11 +2,15 @@
 
 use bevy::{asset::embedded_asset, input::common_conditions::input_just_pressed, prelude::*};
 
-use crate::{PostPhysicsAppSystems, screens::Screen, theme::prelude::*};
+use crate::{
+	PostPhysicsAppSystems,
+	screens::Screen,
+	theme::{palette::SCREEN_BACKGROUND, prelude::*},
+};
 
 pub(super) fn plugin(app: &mut App) {
 	// Spawn splash screen.
-	app.insert_resource(ClearColor(SPLASH_BACKGROUND_COLOR));
+	app.insert_resource(ClearColor(SCREEN_BACKGROUND));
 	app.add_systems(OnEnter(Screen::Splash), spawn_splash_screen);
 	embedded_asset!(app, "files/splash.png");
 
@@ -40,7 +44,6 @@ pub(super) fn plugin(app: &mut App) {
 	);
 }
 
-const SPLASH_BACKGROUND_COLOR: Color = Color::srgb(0.157, 0.157, 0.157);
 const SPLASH_DURATION_SECS: f32 = 1.8;
 const SPLASH_FADE_DURATION_SECS: f32 = 0.6;
 
@@ -65,7 +68,7 @@ fn spawn_splash_screen(mut commands: Commands, asset_server: Res<AssetServer>) {
 			)],
 		))
 		// Override the default background color provided by `ui_root`
-		.insert(BackgroundColor(SPLASH_BACKGROUND_COLOR));
+		.insert(BackgroundColor(SCREEN_BACKGROUND));
 }
 
 #[derive(Component, Reflect)]
