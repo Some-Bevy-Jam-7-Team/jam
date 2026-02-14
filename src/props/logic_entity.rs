@@ -1,12 +1,14 @@
 use avian3d::prelude::{
-	CollisionEnd, CollisionEventsEnabled, CollisionLayers, CollisionStart, Sensor,
+	CollisionEnd, CollisionEventsEnabled, CollisionLayers, CollisionStart, Position, Sensor,
 };
 use bevy::{
 	ecs::{lifecycle::HookContext, world::DeferredWorld},
 	prelude::*,
 };
 
+use bevy_transform_interpolation::TranslationEasingState;
 use bevy_trenchbroom::prelude::*;
+use bevy_yarnspinner::prelude::{DialogueRunner, YarnValue};
 
 use crate::{
 	PostPhysicsAppSystems,
@@ -14,10 +16,12 @@ use crate::{
 		TargetName, TargetnameEntityIndex,
 		interaction::InteractEvent,
 		objectives::{Objective, SubObjectiveOf},
+		player::Player,
 		scripting::ReflectionSystems,
 	},
 	props::interactables::InteractableEntity,
 	reflection::ReflAppExt,
+	screens::Screen,
 	third_party::avian3d::CollisionLayer,
 };
 
@@ -26,6 +30,7 @@ pub(super) fn plugin(app: &mut App) {
 		.register_dynamic_component::<YarnNode>()
 		.register_dynamic_component::<TimerEntity>()
 		.register_dynamic_component::<LogicSetter>()
+		.register_dynamic_component::<YarnSetter>()
 		.register_dynamic_component::<LogicToggler>()
 		.register_dynamic_component::<LogicDespawn>()
 		.add_observer(interact_timers)
@@ -34,8 +39,10 @@ pub(super) fn plugin(app: &mut App) {
 		.add_observer(on_sensor_start)
 		.add_observer(on_sensor_end)
 		.add_observer(run_setter)
+		.add_observer(run_yarn_setter)
 		.add_observer(run_toggle)
 		.add_observer(run_despawn)
+		.add_observer(interact_teleport)
 		.add_systems(
 			Update,
 			(
@@ -80,6 +87,7 @@ struct UnitialisedObjective;
 /// An entity describing the identity of an objective
 /// Activates (completes) on [`InteractEvent`]
 #[point_class(base(TargetName, Objective))]
+#[require(DespawnOnExit::<Screen>(Screen::Gameplay))]
 #[derive(Default)]
 pub(crate) struct ObjectiveEntity {
 	/// The objective, if any, that this is a subobjective of
@@ -292,6 +300,18 @@ pub(crate) struct LogicSetter {
 	pub logic_value_to_set: String,
 }
 
+/// An entity describing a change in Yarn properties.
+///
+/// Activates on [`InteractEvent`]
+#[point_class(base(TargetName))]
+#[derive(PartialEq, Clone, Debug, Default)]
+pub(crate) struct YarnSetter {
+	/// Name of the property to set
+	pub yarn_variable_to_set: String,
+	/// Value string of the property to set
+	pub yarn_value_to_set: String,
+}
+
 fn run_setter(
 	trigger: On<InteractEvent>,
 	setter_query: Query<&LogicSetter>,
@@ -308,6 +328,23 @@ fn run_setter(
 			),
 		);
 	}
+}
+
+fn run_yarn_setter(
+	trigger: On<InteractEvent>,
+	setter_query: Query<&YarnSetter>,
+	mut dialogue_runner: Single<&mut DialogueRunner>,
+) -> Result {
+	if let Ok(setter) = setter_query.get(trigger.0) {
+		dialogue_runner
+			.variable_storage_mut()
+			.set(
+				format!("${}", dbg!(&setter.yarn_variable_to_set)),
+				YarnValue::from(setter.yarn_value_to_set.clone()),
+			)
+			.unwrap();
+	}
+	Ok(())
 }
 
 /// An entity describing a change in properties of another entity.
@@ -360,5 +397,88 @@ fn run_despawn(
 			reflection_systems.get_despawn_entity_system(),
 			despawn.despawn_target.clone(),
 		);
+	}
+}
+
+/// An entity for teleportation destination
+#[point_class(base(TargetName, Transform))]
+#[derive(PartialEq, Clone, Debug, Default)]
+pub(crate) struct TeleportNode {
+	/// targetname of entity that should be teleported here
+	pub teleport_target: Option<String>,
+	/// Whether the player should be teleported too
+	pub teleport_player: bool,
+	/// targetname of entity to use as the origin, setting this will make the teleport use a relative offset (this - relative_to) it adds to the entity's transform.
+	pub teleport_relative_to: Option<String>,
+}
+
+fn interact_teleport(
+	trigger: On<InteractEvent>,
+	teleport_query: Query<(&TeleportNode, &GlobalTransform)>,
+	mut transform_query: Query<(
+		&GlobalTransform,
+		&mut Transform,
+		Option<&mut Position>,
+		Option<&mut TranslationEasingState>,
+	)>,
+	entity_index: Res<TargetnameEntityIndex>,
+	player_query: Option<Single<Entity, With<Player>>>,
+) {
+	if let Ok((teleport, teleport_transform)) = teleport_query.get(trigger.0) {
+		let relative = if let Some(name) = teleport.teleport_relative_to.as_ref() {
+			#[allow(clippy::incompatible_msrv)]
+			let Some(pos) = entity_index
+				.get_entity_by_targetname(name)
+				.as_array::<1>()
+				.and_then(|x| transform_query.get(x[0]).ok())
+				.map(|(transform, ..)| transform.translation())
+			else {
+				error!(
+					"Did not find a unique relative transform entity with name {:?}",
+					teleport.teleport_relative_to
+				);
+				return;
+			};
+			Some(pos)
+		} else {
+			None
+		};
+		let position_mutator = |position: &mut Vec3| {
+			if let Some(pos) = relative {
+				*position += teleport_transform.translation() - pos;
+			} else {
+				*position = teleport_transform.translation();
+			}
+		};
+		if let Some(targetname) = &teleport.teleport_target {
+			for &entity in entity_index.get_entity_by_targetname(targetname) {
+				if let Ok((_, mut transform, position, easing)) = transform_query.get_mut(entity) {
+					if let Some(mut x) = position {
+						position_mutator(&mut x);
+					} else {
+						position_mutator(&mut transform.translation);
+					}
+					if let Some(mut easing) = easing {
+						*easing = default();
+					}
+				}
+			}
+		}
+		if teleport.teleport_player {
+			if let Some(player_entity) = player_query {
+				if let Ok((_, mut transform, position, easing)) =
+					transform_query.get_mut(*player_entity)
+				{
+					if let Some(mut x) = position {
+						position_mutator(&mut x);
+					} else {
+						position_mutator(&mut transform.translation);
+					}
+					if let Some(mut easing) = easing {
+						*easing = default();
+					}
+				}
+			}
+		}
 	}
 }
