@@ -995,7 +995,7 @@ dependencies = [
 [[package]]
 name = "bevy_feronia"
 version = "0.8.1"
-source = "git+https://github.com/NicoZweifel/bevy_feronia?branch=fix-deferred#c97a41968bd23c916ff5e476b6cb43c7241d4c50"
+source = "git+https://github.com/NicoZweifel/bevy_feronia?branch=fix-deferred#1068d43e236d6f924251966635bf28b57fc50686"
 dependencies = [
  "avian3d",
  "bevy_app",
