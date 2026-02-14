@@ -17,6 +17,11 @@ pub fn spawn_scatter_layers(mut cmd: Commands, landscape: Single<Entity, With<Sc
 	cmd.spawn((GrassLayer, ChildOf(landscape)));
 }
 
+pub fn clear_scatter_root(mut cmd: Commands, scatter_root: Single<Entity, With<ScatterRoot>>) {
+	debug!("Clearing scatter root...");
+	cmd.trigger(ClearScatterRoot(*scatter_root));
+}
+
 pub fn toggle_chunked(
 	mut cmd: Commands,
 	mut ns_scatter: ResMut<NextState<ScatterState>>,
@@ -25,7 +30,7 @@ pub fn toggle_chunked(
 ) {
 	let chunked= matches!(
 		*current_level,
-	CurrentLevel::Commune
+		CurrentLevel::Commune
 	);
 	for layer in q_chunked_layer.iter() {
 		cmd.entity(layer).insert(ScatterLayerEnabled(chunked));
