@@ -80,6 +80,7 @@ fn spawn_view_model(
 		CurrentLevel::Shaders => (13., 0.4),
 		CurrentLevel::DayOne => (13., 0.4),
 		CurrentLevel::DayTwo => (14., 0.2),
+		CurrentLevel::Commune => (14., 0.3),
 		CurrentLevel::Train => (13., 0.4),
 		CurrentLevel::Karoline => (13., 0.4),
 	};

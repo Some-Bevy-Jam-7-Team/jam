@@ -26,6 +26,7 @@ pub(super) fn plugin(app: &mut App) {
 	app.load_resource::<EnvironmentAssets>()
 		.init_asset::<LevelOneAssets>()
 		.init_asset::<LevelTwoAssets>()
+		.init_asset::<LevelThreeAssets>()
 		.init_asset::<LevelTrainAssets>()
 		.init_asset::<LevelKarolineAssets>();
 
@@ -68,6 +69,7 @@ pub(crate) enum CurrentLevel {
 	Shaders,
 	DayOne,
 	DayTwo,
+	Commune,
 	Train,
 	Karoline,
 }
@@ -77,7 +79,8 @@ impl CurrentLevel {
 		match self {
 			CurrentLevel::Shaders => CurrentLevel::DayOne,
 			CurrentLevel::DayOne => CurrentLevel::DayTwo,
-			CurrentLevel::DayTwo => CurrentLevel::Train,
+			CurrentLevel::DayTwo => CurrentLevel::Commune,
+			CurrentLevel::Commune => CurrentLevel::Train,
 			CurrentLevel::Train => CurrentLevel::Karoline,
 			CurrentLevel::Karoline => CurrentLevel::DayOne,
 		}
@@ -94,6 +97,7 @@ pub(crate) fn spawn_level(
 	mut commands: Commands,
 	level_assets: Option<Res<LevelOneAssets>>,
 	level_two_assets: Option<Res<LevelTwoAssets>>,
+	level_three_assets: Option<Res<LevelThreeAssets>>,
 	level_train_assets: Option<Res<LevelTrainAssets>>,
 	level_karoline_assets: Option<Res<LevelKarolineAssets>>,
 	current_level: Res<CurrentLevel>,
@@ -193,6 +197,15 @@ pub(crate) fn spawn_level(
 				},
 			));
 		}
+		CurrentLevel::Commune => {
+			let level_three_assets = level_three_assets.expect("If we don't have level three assets when spawning level three, we're in deep shit. Sorry player, we bail here.");
+			commands.spawn((
+				Name::new("Level"),
+				SceneRoot(level_three_assets.level.clone()),
+				DespawnOnExit(Screen::Gameplay),
+				Level,
+			));
+		}
 		CurrentLevel::Train => {
 			let level_train_assets = level_train_assets.expect("If we don't have level two assets when spawning level two, we're in deep shit. Sorry player, we bail here.");
 
@@ -252,6 +265,11 @@ pub(crate) fn spawn_level(
 			commands.spawn((
 				Name::new("Main Level Island"),
 				DespawnOnExit(Screen::Gameplay),
+				// Island3dBundle {
+				// island: Island,
+				// archipelago_ref: ArchipelagoRef3d::new(archipelago),
+				// nav_mesh: NavMeshHandle3d(level_three_assets.navmesh.clone()),
+				// },
 				Island3dBundle {
 					island: Island,
 					archipelago_ref: ArchipelagoRef3d::new(archipelago),
@@ -438,7 +456,8 @@ fn advance_level(
 ) {
 	match *current_level {
 		CurrentLevel::DayOne => commands.queue(advance_level_command::<LevelTwoAssets>()),
-		CurrentLevel::DayTwo => commands.queue(advance_level_command::<LevelTrainAssets>()),
+		CurrentLevel::DayTwo => commands.queue(advance_level_command::<LevelThreeAssets>()),
+		CurrentLevel::Commune => commands.queue(advance_level_command::<LevelOneAssets>()),
 		CurrentLevel::Train => commands.queue(advance_level_command::<LevelKarolineAssets>()),
 		CurrentLevel::Karoline | CurrentLevel::Shaders => {
 			commands.queue(advance_level_command::<LevelOneAssets>())
@@ -470,5 +489,27 @@ fn advance_level_command<T: Asset + Resource + Clone + FromWorld>() -> impl Comm
 
 		let mut current_level = world.resource_mut::<CurrentLevel>();
 		*current_level = current_level.next();
+	}
+}
+
+/// A [`Resource`] that contains all the assets needed to spawn the level.
+/// We use this to preload assets before the level is spawned.
+#[derive(Resource, Asset, Clone, TypePath)]
+pub(crate) struct LevelThreeAssets {
+	#[dependency]
+	pub(crate) level: Handle<Scene>,
+	// #[dependency]
+	// pub(crate) navmesh: Handle<Navmesh>,
+}
+impl FromWorld for LevelThreeAssets {
+	fn from_world(world: &mut World) -> Self {
+		let assets = world.resource::<AssetServer>();
+
+		Self {
+			// Our main level is inspired by the TheDarkMod fan mission [Volta I: The Stone](https://www.thedarkmod.com/missiondetails/?internalName=volta1_3)
+			level: assets.load("maps/main/three/three.map#Scene"),
+			// You can regenerate the navmesh by using `bevy_rerecast_editor`
+			// navmesh: assets.load("maps/main/three/three.nav"),
+		}
 	}
 }

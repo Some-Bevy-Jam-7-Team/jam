@@ -31,7 +31,7 @@ impl Landscape {
 
 		let level = world.get_resource::<CurrentLevel>().cloned().unwrap();
 		match level {
-			CurrentLevel::DayTwo | CurrentLevel::Shaders => {
+			CurrentLevel::Commune | CurrentLevel::Shaders => {
 				let landscape = world
 					.get_resource::<EnvironmentAssets>()
 					.map(|a| a.landscape.clone())
