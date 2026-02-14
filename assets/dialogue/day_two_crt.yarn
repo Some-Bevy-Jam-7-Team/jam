@@ -30,7 +30,7 @@ title: Day2CRT
   <<create_subobjective "w5_look" "In a literal sense, consumption makes the world become one with you." "work_5">>
 
   <<create_objective "work_6" "Increase Shareholder Value" 6.0>>
-  <<create_subobjective "w6_back" "Break time is over. Report back to LLManager." "work_6">>
+  <<create_subobjective "w6_back" "Report back to LLManager." "work_6">>
 
   <<create_objective "work_7" "Achieve Freedom" 7.0>>
 
@@ -71,8 +71,8 @@ title: Day2CRTCursed
 
 <<if $cursed_power == false>>
   <<llmanager_emote "x">>
-	LLManager: POWER STATUS CRITICAL #line:11979818
-	LLManager: PLEASE ENABLE EMERGENCY POWER NOW == PROTOCOL SIPHON SHEOL #line:8316181
+	LLManager: FAILED TO BOOT: POWER STATUS CRITICAL #line:11979818
+	LLManager: PLEASE START EMERGENCY POWER GENERATOR IMMEDIATELY #line:8316181
 	LLManager: MAY GOD HAVE MERCY ON YOUR SOUL #line:1862433
   <<llmanager_emote "off">>
 <<else>>
