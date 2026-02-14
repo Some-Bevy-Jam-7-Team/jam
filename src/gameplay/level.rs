@@ -513,11 +513,7 @@ pub(crate) struct LevelThreeAssets {
 	#[dependency]
 	pub(crate) level: Handle<Scene>,
 	// #[dependency]
-<<<<<<< HEAD
 	pub(crate) navmesh: Handle<Navmesh>,
-=======
-	// pub(crate) navmesh: Handle<Navmesh>,
->>>>>>> origin/main
 }
 impl FromWorld for LevelThreeAssets {
 	fn from_world(world: &mut World) -> Self {
@@ -527,11 +523,7 @@ impl FromWorld for LevelThreeAssets {
 			// Our main level is inspired by the TheDarkMod fan mission [Volta I: The Stone](https://www.thedarkmod.com/missiondetails/?internalName=volta1_3)
 			level: assets.load("maps/main/three/three.map#Scene"),
 			// You can regenerate the navmesh by using `bevy_rerecast_editor`
-<<<<<<< HEAD
 			navmesh: assets.load("maps/main/three/three.nav"),
-=======
-			// navmesh: assets.load("maps/main/three/three.nav"),
->>>>>>> origin/main
 		}
 	}
 }
