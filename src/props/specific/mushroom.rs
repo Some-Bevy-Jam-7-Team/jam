@@ -1,6 +1,8 @@
 use crate::ReflectComponent;
 use crate::asset_tracking::LoadResource;
 use crate::gameplay::core::EnvironmentTemperature;
+use crate::gameplay::level::CurrentLevel;
+use crate::props::interactables::InteractableEntity;
 use crate::props::setup::{setup_static_prop_with_convex_hull, static_bundle};
 use crate::scatter::layers::MushroomLayer;
 use crate::third_party::bevy_trenchbroom::GetTrenchbroomModelPath;
@@ -51,6 +53,7 @@ pub fn scattered_shroom(
 	trigger: On<Add, ScatteredInstance>,
 	q_scattered_instance: Query<&ScatteredInstance>,
 	q_mushroom_layer: Query<(), With<MushroomLayer>>,
+	current_level: Res<CurrentLevel>,
 	mut cmd: Commands,
 ) {
 	if q_scattered_instance
@@ -58,6 +61,18 @@ pub fn scattered_shroom(
 		.and_then(|instance| q_mushroom_layer.get(**instance))
 		.is_ok()
 	{
-		cmd.entity(trigger.entity).insert(Mushroom);
+		if *current_level == CurrentLevel::Commune {
+			cmd.entity(trigger.entity).insert((
+				Mushroom,
+				InteractableEntity {
+					is_edible: true,
+					interaction_text_override: Some("Take a bite".to_string()),
+					completes_subobjective: Some("leave".to_string()),
+					interaction_relay: None,
+				},
+			));
+		} else {
+			cmd.entity(trigger.entity).insert(Mushroom);
+		}
 	}
 }
