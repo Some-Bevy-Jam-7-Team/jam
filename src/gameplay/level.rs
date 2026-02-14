@@ -59,7 +59,6 @@ pub fn all_assets_loaded(resource_handles: Res<ResourceHandles>) -> bool {
 }
 
 fn enter_level(mut next_screen: ResMut<NextState<LoadingScreen>>) {
-	println!("Entering level...");
 	next_screen.set(LoadingScreen::Level);
 }
 
@@ -475,7 +474,5 @@ fn advance_level_command<T: Asset + Resource + Clone + FromWorld>() -> impl Comm
 
 		let mut current_level = world.resource_mut::<CurrentLevel>();
 		*current_level = current_level.next();
-
-		println!("Advancing level to {:?}", current_level);
 	}
 }
