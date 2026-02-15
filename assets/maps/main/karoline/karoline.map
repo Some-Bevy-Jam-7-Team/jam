@@ -1280,40 +1280,13 @@
 // entity 79
 {
 "classname" "objective_entity"
-"origin" "-4704 728 88"
-"targetname" "obj_6_1"
-"description" "Talk to person #1"
+"origin" "-4704 656 88"
+"targetname" "obj_6_4"
+"description" "Talk to The Wise one"
 "objective_order" "1"
 "target" "obj_6"
 }
 // entity 80
-{
-"classname" "objective_entity"
-"origin" "-4704 704 88"
-"targetname" "obj_6_2"
-"description" "Talk to person #2"
-"objective_order" "1"
-"target" "obj_6"
-}
-// entity 81
-{
-"classname" "objective_entity"
-"origin" "-4704 680 88"
-"targetname" "obj_6_3"
-"description" "Talk to humanoid #3"
-"objective_order" "1"
-"target" "obj_6"
-}
-// entity 82
-{
-"classname" "objective_entity"
-"origin" "-4704 656 88"
-"targetname" "obj_6_4"
-"description" "Talk to entity #4"
-"objective_order" "1"
-"target" "obj_6"
-}
-// entity 83
 {
 "classname" "objective_entity"
 "origin" "-4672 752 88"
@@ -1321,7 +1294,7 @@
 "description" "Talk to The Driver"
 "objective_order" "7"
 }
-// entity 84
+// entity 81
 {
 "classname" "yarn_node"
 "origin" "-2144 -240 88"
@@ -1329,21 +1302,21 @@
 "yarn_node" "train_driver_door_script"
 "targetname" "train_driver_door_script"
 }
-// entity 85
+// entity 82
 {
 "classname" "teleport_node"
 "origin" "-1768 -16 -312"
 "teleport_player" "true"
 "targetname" "obj_7"
 }
-// entity 86
+// entity 83
 {
 "classname" "teleport_node"
 "origin" "-1736 -16 -312"
 "teleport_player" "true"
 "targetname" "obj_8"
 }
-// entity 87
+// entity 84
 {
 "classname" "objective_entity"
 "origin" "-4640 752 88"
@@ -1351,7 +1324,7 @@
 "description" "Become one with the machine"
 "objective_order" "8"
 }
-// entity 88
+// entity 85
 {
 "classname" "special_effects_node"
 "origin" "-4672 752 120"
@@ -1360,14 +1333,14 @@
 "camera_shake_indensity" "0.05"
 "targetname" "obj_7"
 }
-// entity 89
+// entity 86
 {
 "classname" "teleport_node"
 "origin" "-3864 -216 120"
 "targetname" "go_in"
 "teleport_player" "true"
 }
-// entity 90
+// entity 87
 {
 "classname" "teleport_node"
 "origin" "-2040 -144 72"
@@ -1375,20 +1348,20 @@
 "teleport_target" "metro_wall"
 "teleport_relative_to" "metro_wall_origin"
 }
-// entity 91
+// entity 88
 {
 "classname" "teleport_node"
 "origin" "-2040 -144 -216"
 "targetname" "metro_wall_origin"
 }
-// entity 92
+// entity 89
 {
 "classname" "timer_entity"
 "origin" "-2040 -104 72"
 "targetname" "go_in"
 "timer_on_finish" "metro_wall_destination"
 }
-// entity 93
+// entity 90
 {
 "classname" "yarn_setter"
 "origin" "-4280 8 264"
@@ -1396,7 +1369,7 @@
 "yarn_value_to_set" "true"
 "targetname" "start_track_alarm"
 }
-// entity 94
+// entity 91
 {
 "classname" "special_effects_node"
 "origin" "-1560 -16 -520"
@@ -1406,7 +1379,7 @@
 "screen_flash_duration" "0.5"
 "targetname" "despawn_floor"
 }
-// entity 95
+// entity 92
 {
 "classname" "solid_target"
 "targetname" "library_floor"
@@ -1420,14 +1393,14 @@
 ( -1456 48 -464 ) ( -1456 48 -463 ) ( -1456 49 -464 ) carpet [ 0 1 0 16 ] [ 0 0 -1 -480 ] 0 1 1
 }
 }
-// entity 96
+// entity 93
 {
 "classname" "logic_despawn"
 "origin" "-1528 -56 -456"
 "targetname" "despawn_floor"
 "despawn_target" "library_floor"
 }
-// entity 97
+// entity 94
 {
 "classname" "sensor_entity"
 "sensor_detect_player" "true"
@@ -1444,28 +1417,28 @@
 ( -1472 256 -1120 ) ( -1472 -288 -1328 ) ( -1472 -288 -1120 ) __TB_empty [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
 }
 }
-// entity 98
+// entity 95
 {
 "classname" "timer_entity"
 "origin" "-1944 56 -1176"
 "targetname" "obj_8"
 "timer_on_finish" "obj_7"
 }
-// entity 99
+// entity 96
 {
 "classname" "timer_entity"
 "origin" "-1944 24 -1176"
 "targetname" "obj_8"
 "timer_on_finish" "obj_6"
 }
-// entity 100
+// entity 97
 {
 "classname" "timer_entity"
 "origin" "-1944 -8 -1176"
 "targetname" "obj_8"
 "timer_on_finish" "report_to_library_post_camera"
 }
-// entity 101
+// entity 98
 {
 "classname" "timer_entity"
 "origin" "-1944 -40 -1176"

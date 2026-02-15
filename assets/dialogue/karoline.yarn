@@ -298,7 +298,6 @@ dir: karoline
   <<set $train_grandma_talked = true>>
 <<endif>>
 Posh Lady: Oh gosh, you're already giving me the fever. #line:6193850 
-<<complete_objective "obj_6_2">>
 Posh Lady: Get away with haste! #line:11023963 
 ===
 
@@ -306,14 +305,12 @@ title: train_geezer_1
 dir: karoline
 ---
 Geezer: Oi mate, u lookin at meh funny? HUH? UH?? YEA!? #line:5263168 
-<<complete_objective "obj_6_1">>
 ===
 
 title: train_geezer_2
 dir: karoline
 ---
 Geezer: mate, could u just get out and... phuh #line:12573912 
-<<complete_objective "obj_6_3">>
 ===
 
 title: salivatorus_dhalee
@@ -326,9 +323,9 @@ Salivatorus Dhalee: Scorpion deux? Je ne sait pas qu'il créer une sequel, aprè
 Salivatorus Dhalee: Dans le nuit je piscine la pisciculturne. Je suis qu'il aussi puisse y être. #line:5469379 
 -> Avez vous aussi parler à Glossy {$figure_name}? #line:2718280 
 Salivatorus Dhalee: Oui, j'ai lui hypercrucifié en quatro dimensions en fromagant. Un television praisir, de vrai! #line:5813994 
-<<complete_objective "obj_6_4">>
 -> Why are you dans le tube? #line:7504762 
 Salivatorus Dhalee: Et pour ma derniére électrique, je vais mangeatre la plafond sur lequel le sol s'appuie pour revoluter. comme déclaré par la loi "un voleurs: des valises. un tube: des rails." #line:13018193 
+<<complete_objective "obj_6_4">>
 // TODO: Salvatore jumps out the window
 ===
 
