@@ -4350,6 +4350,8 @@
 "yarn_node" ""
 "origin" "-2184 88 168"
 "angles" "0 0 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 178
@@ -4357,6 +4359,8 @@
 "classname" "keyboard"
 "origin" "-2168 84 168"
 "angles" "0 0 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 179
@@ -4364,6 +4368,8 @@
 "classname" "mouse"
 "origin" "-2168 100 168"
 "angles" "0 0 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 180
@@ -4371,6 +4377,8 @@
 "classname" "keyboard"
 "origin" "-2148 136 168"
 "angles" "0 -90 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 181
@@ -4378,6 +4386,8 @@
 "classname" "mouse"
 "origin" "-2132 144 168"
 "angles" "0 -90 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 182
@@ -4385,6 +4395,8 @@
 "classname" "keyboard"
 "origin" "-2016 84 168"
 "angles" "0 0 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 183
@@ -4392,6 +4404,8 @@
 "classname" "mouse"
 "origin" "-2016 100 168"
 "angles" "0 0 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 184
@@ -4399,6 +4413,8 @@
 "classname" "keyboard"
 "origin" "-1988 152 128"
 "angles" "0 -90 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 185
@@ -4406,6 +4422,8 @@
 "classname" "mouse"
 "origin" "-1972 152 128"
 "angles" "0 -90 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 186
@@ -4413,6 +4431,8 @@
 "classname" "keyboard"
 "origin" "-1844 216 128"
 "angles" "0 90 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 187
@@ -4420,6 +4440,8 @@
 "classname" "mouse"
 "origin" "-1868 192 128"
 "angles" "0 90 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 188
@@ -4435,6 +4457,8 @@
 "classname" "keyboard"
 "origin" "-1880 244 128"
 "angles" "0 0 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 190
@@ -4442,6 +4466,8 @@
 "classname" "keyboard"
 "origin" "-2165.61 186 168"
 "angles" "0 60 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 191
@@ -4449,6 +4475,8 @@
 "classname" "mouse"
 "origin" "-2179.46 194 168"
 "angles" "0 60 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 192
@@ -4456,6 +4484,8 @@
 "classname" "keyboard"
 "origin" "-2168 212 168"
 "angles" "0 0 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 193
@@ -4464,6 +4494,8 @@
 "yarn_node" ""
 "origin" "-1976 320 128"
 "angles" "0 -150 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 194
@@ -4471,6 +4503,8 @@
 "classname" "mouse"
 "origin" "-2168 228 168"
 "angles" "0 0 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 195
@@ -4478,6 +4512,8 @@
 "classname" "mouse"
 "origin" "-1820 128 128"
 "angles" "0 -90 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 196
@@ -4485,6 +4521,8 @@
 "classname" "keyboard"
 "origin" "-1836 128 128"
 "angles" "0 -90 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 197
@@ -4501,6 +4539,8 @@
 "classname" "mouse"
 "origin" "-1800 68 168"
 "angles" "0 180 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 199
@@ -4508,6 +4548,8 @@
 "classname" "keyboard"
 "origin" "-1888 -12 128"
 "angles" "0 -150 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 200
@@ -4516,6 +4558,8 @@
 "yarn_node" ""
 "origin" "-1784 80 168"
 "angles" "0 180 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 201
@@ -4523,6 +4567,8 @@
 "classname" "mouse"
 "origin" "-1716 128 168"
 "angles" "0 -90 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 202
@@ -4530,6 +4576,8 @@
 "classname" "keyboard"
 "origin" "-1760 124 132"
 "angles" "0 -90 -30"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 203
@@ -4538,6 +4586,8 @@
 "yarn_node" ""
 "origin" "-1752 144 140"
 "angles" "75 90 180"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 204
@@ -4545,6 +4595,8 @@
 "classname" "mouse"
 "origin" "-1648 92 168"
 "angles" "0 -180 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 205
@@ -4552,6 +4604,8 @@
 "classname" "keyboard"
 "origin" "-1648 108 168"
 "angles" "0 -180 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 206
@@ -4560,6 +4614,8 @@
 "yarn_node" ""
 "origin" "-1632 104 168"
 "angles" "0 -180 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 207
@@ -4567,6 +4623,8 @@
 "classname" "keyboard"
 "origin" "-1712 268 128"
 "angles" "0 0 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 208
@@ -4574,6 +4632,8 @@
 "classname" "mouse"
 "origin" "-1720 228 128"
 "angles" "0 0 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 209
@@ -4581,6 +4641,8 @@
 "classname" "mouse"
 "origin" "-1684 184 168"
 "angles" "0 90 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 210
@@ -4588,6 +4650,8 @@
 "classname" "keyboard"
 "origin" "-1668 184 168"
 "angles" "0 90 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 211
@@ -4596,6 +4660,8 @@
 "yarn_node" ""
 "origin" "-1672 168 168"
 "angles" "0 90 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 212
@@ -4603,6 +4669,8 @@
 "classname" "keyboard"
 "origin" "-1828 184 128"
 "angles" "0 90 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 213
@@ -4610,6 +4678,8 @@
 "classname" "mouse"
 "origin" "-1812 184 128"
 "angles" "0 90 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 214
@@ -4617,6 +4687,8 @@
 "classname" "mouse"
 "origin" "-1712 212 128"
 "angles" "0 180 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 215
@@ -4624,6 +4696,8 @@
 "classname" "keyboard"
 "origin" "-1800 228 128"
 "angles" "0 180 0"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 216
@@ -4640,6 +4714,8 @@
 "yarn_node" ""
 "origin" "-1952 328 136"
 "angles" "-90 0 90"
+"is_dynamic_prop" "true"
+"is_edible" "true"
 "_tb_layer" "4"
 }
 // entity 218
