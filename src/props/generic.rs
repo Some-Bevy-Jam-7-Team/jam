@@ -27,8 +27,6 @@ pub(super) fn plugin(app: &mut App) {
 		.add_observer(setup_static_prop_with_convex_hull::<CrateSquare>)
 		.add_observer(setup_static_prop_with_convex_hull::<FenceBarsDecorativeSingle>)
 		.add_observer(setup_static_prop_with_convex_hull::<DoorStainedGlass>)
-		.add_observer(setup_static_prop_with_convex_hull::<FlowerPot>)
-		.add_observer(setup_static_prop_with_convex_hull::<PottedShroom>)
 		.add_observer(setup_static_prop_with_convex_hull::<Jesus>)
 		.add_observer(setup_static_prop_with_convex_hull::<Teeth>)
 		.add_observer(setup_static_prop_with_convex_hull::<StaticCctv>);
@@ -37,7 +35,10 @@ pub(super) fn plugin(app: &mut App) {
 
 	app.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<Keyboard>)
 		.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<Mouse>)
-		.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<Speaker>);
+		.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<Speaker>)
+		.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<FlowerPot>)
+		.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<PottedPlant>)
+		.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<PottedShroom>);
 
 	app.add_observer(setup_dynamic_prop_with_convex_hull::<PackageMedium>)
 		.add_observer(setup_dynamic_prop_with_convex_hull::<PackageSmall>)
@@ -46,8 +47,7 @@ pub(super) fn plugin(app: &mut App) {
 		.add_observer(setup_dynamic_prop_with_convex_hull::<Trash>);
 
 	app.add_observer(setup_nonphysical_prop::<IvyPart8>)
-		.add_observer(setup_nonphysical_prop::<SmallDoorSign1>)
-		.add_observer(setup_nonphysical_prop::<PottedPlant>);
+		.add_observer(setup_nonphysical_prop::<SmallDoorSign1>);
 
 	app.load_asset::<Gltf>(Crt::model_path())
 		.load_asset::<Gltf>(Keyboard::model_path())
@@ -133,19 +133,19 @@ pub(crate) struct Keyboard;
 pub(crate) struct Mouse;
 
 #[point_class(
-	base(TargetName, Transform, Visibility),
+	base(TargetName, InteractableEntity, MaybeDynamic, Transform, Visibility),
 	model("models/office/pot.gltf")
 )]
 pub(crate) struct FlowerPot;
 
 #[point_class(
-	base(TargetName, Transform, Visibility),
+	base(TargetName, InteractableEntity, MaybeDynamic, Transform, Visibility),
 	model("models/office/plant.gltf")
 )]
 pub(crate) struct PottedPlant;
 
 #[point_class(
-	base(TargetName, Transform, Visibility),
+	base(TargetName, InteractableEntity, MaybeDynamic, Transform, Visibility),
 	model("models/office/shroom.gltf")
 )]
 pub(crate) struct PottedShroom;
