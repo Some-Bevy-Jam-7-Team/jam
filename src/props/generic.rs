@@ -122,14 +122,13 @@ macro_rules! define_rocks {
 }
 
 define_rocks!(
-    Rock1 => "rock_1.gltf",
-    Rock2 => "rock_2.gltf",
-    Rock3 => "rock_3.gltf",
-    Rock4 => "rock_1.gltf",
-    Rock5 => "rock_2.gltf",
-    Rock6 => "rock_3.gltf",
+	Rock1 => "rock_1.gltf",
+	Rock2 => "rock_2.gltf",
+	Rock3 => "rock_3.gltf",
+	Rock4 => "rock_1.gltf",
+	Rock5 => "rock_2.gltf",
+	Rock6 => "rock_3.gltf",
 );
-
 
 #[point_class(
 	base(TargetName, InteractableEntity, Transform, Visibility),
