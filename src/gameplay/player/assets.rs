@@ -61,10 +61,11 @@ impl FromWorld for PlayerAssets {
 			.unwrap(),
 			jump_grunts: ShuffleBag::try_new(
 				[
-					assets.load("audio/sound_effects/jump_grunt/jump_grunt_1.ogg"),
-					assets.load("audio/sound_effects/jump_grunt/jump_grunt_2.ogg"),
-					assets.load("audio/sound_effects/jump_grunt/jump_grunt_3.ogg"),
-					assets.load("audio/sound_effects/jump_grunt/jump_grunt_4.ogg"),
+					assets.load("audio/sound_effects/jump_grunt/jump1.ogg"),
+					assets.load("audio/sound_effects/jump_grunt/jump2.ogg"),
+					assets.load("audio/sound_effects/jump_grunt/jump3.ogg"),
+					assets.load("audio/sound_effects/jump_grunt/jump4.ogg"),
+					assets.load("audio/sound_effects/jump_grunt/jump5.ogg"),
 				],
 				rng,
 			)

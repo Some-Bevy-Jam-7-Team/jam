@@ -1,10 +1,12 @@
 //! A credits menu.
 
+use crate::audio::MusicPool;
 use crate::ui_layout::RootWidget;
 use crate::{menus::Menu, theme::prelude::*};
 use bevy::{
 	ecs::spawn::SpawnIter, input::common_conditions::input_just_pressed, prelude::*, ui::Val::*,
 };
+use bevy_seedling::sample::SamplePlayer;
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_systems(OnEnter(Menu::Credits), spawn_credits_menu);
@@ -14,9 +16,11 @@ pub(super) fn plugin(app: &mut App) {
 	);
 }
 
-fn spawn_credits_menu(mut commands: Commands) {
+fn spawn_credits_menu(mut commands: Commands, asset_server: Res<AssetServer>) {
 	commands.spawn((
 		RootWidget,
+		SamplePlayer::new(asset_server.load("audio/music/sexy horse.ogg")),
+		MusicPool,
 		DespawnOnExit(Menu::Credits),
 		GlobalZIndex(2),
 		children![
