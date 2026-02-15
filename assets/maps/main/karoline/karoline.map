@@ -548,7 +548,7 @@
 "classname" "static_cctv"
 "origin" "-5160 -88 120"
 "angles" "0 90 0"
-"is_edible" "true"
+"interaction_relay" "beep"
 }
 // entity 15
 {
@@ -623,4 +623,11 @@
 "classname" "trash"
 "origin" "-5240 -24 72"
 "is_edible" "true"
+}
+// entity 27
+{
+"classname" "yarn_node"
+"origin" "-5184 -72 136"
+"yarn_node" "beep"
+"targetname" "beep"
 }

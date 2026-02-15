@@ -138,3 +138,19 @@ title: karoline_cultist_2
       Novice: How am I supposed to know that? #line:87649574
 <<endif>>
 ===
+
+title: beep
+---
+<<declare $beeps = 0>>
+<<if $beeps == 0>>
+  <<set $beeps = $beeps + 1>>
+  beep: Beep #line:13738479 
+<<elseif $beeps == 1>>
+  <<set $beeps = $beeps + 1>>
+  beep: Beep beep #line:2729136 
+<<elseif $beeps == 2>>
+  <<set $beeps = $beeps + 1>>
+<<else>>
+  beep: Beep #line:6752250 
+<<endif>>
+===

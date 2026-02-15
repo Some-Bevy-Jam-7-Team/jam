@@ -170,6 +170,7 @@ fn spawn_stomach_ui_and_render(
 		RenderTarget::Image(image_handle.clone().into()),
 		Tonemapping::TonyMcMapface,
 		(DepthPrepass, Msaa::Off, DeferredPrepass, Fxaa::default()),
+		DespawnOnExit(Screen::Gameplay),
 	));
 
 	// Spawn stomach UI at the top right corner of the screen.
