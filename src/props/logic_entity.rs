@@ -32,6 +32,7 @@ pub(super) fn plugin(app: &mut App) {
 		.register_dynamic_component::<YarnSetter>()
 		.register_dynamic_component::<LogicToggler>()
 		.register_dynamic_component::<LogicDespawn>()
+		.register_dynamic_component::<SpotLight>()
 		.add_observer(interact_timers)
 		.add_observer(uninitialise_objectives)
 		.add_observer(talk_ify_yarnnode)
