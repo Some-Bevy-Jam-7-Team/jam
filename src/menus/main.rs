@@ -14,6 +14,7 @@ use crate::{
 
 pub(super) fn plugin(app: &mut App) {
 	app.load_asset::<AudioSample>("audio/music/gloopy.ogg");
+	app.load_asset::<AudioSample>("audio/music/sexy horse.ogg");
 	app.add_systems(OnEnter(Menu::Main), spawn_main_menu)
 		.add_systems(Update, spawn_dancer.run_if(in_state(Menu::Main)));
 }
