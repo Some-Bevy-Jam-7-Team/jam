@@ -2163,3 +2163,16 @@
 "origin" "232 -456 80"
 "angles" "0 45 0"
 }
+// entity 318
+{
+"classname" "rohlik"
+"origin" "344 -472 80"
+"angles" "0 135 0"
+}
+// entity 319
+{
+"classname" "world_emitter"
+"origin" "2128 -1808 -16"
+"source" "Mouth"
+"volume" "-2"
+}
