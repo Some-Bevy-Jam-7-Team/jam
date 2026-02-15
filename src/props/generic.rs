@@ -126,27 +126,6 @@ impl Crt {
 	}
 }
 
-macro_rules! define_rocks {
-    ( $( $name:ident => $filename:expr ),* $(,)? ) => {
-        $(
-            #[point_class(
-                base(TargetName, Transform, Visibility),
-                model(concat!("models/rock/", $filename))
-            )]
-            pub(crate) struct $name;
-        )*
-    };
-}
-
-define_rocks!(
-	Rock1 => "rock_1.gltf",
-	Rock2 => "rock_2.gltf",
-	Rock3 => "rock_3.gltf",
-	Rock4 => "rock_1.gltf",
-	Rock5 => "rock_2.gltf",
-	Rock6 => "rock_3.gltf",
-);
-
 #[point_class(
 	base(TargetName, InteractableEntity, MaybeDynamic, Transform, Visibility),
 	model("models/office/keyboard.gltf")
