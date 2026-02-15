@@ -75,10 +75,10 @@ impl ResourceHandles {
 		self.finished.len()
 	}
 
-    pub(crate) fn clear(&mut self) {
-        self.waiting.clear();
-        self.finished.clear();
-    }
+	pub(crate) fn clear(&mut self) {
+		self.waiting.clear();
+		self.finished.clear();
+	}
 }
 
 fn load_resource_assets(world: &mut World) {
