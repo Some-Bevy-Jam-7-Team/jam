@@ -554,7 +554,7 @@
 {
 "classname" "light_point"
 "origin" "-5144 -40 136"
-"range" "1.0"
+"range" "2.0"
 }
 // entity 16
 {
@@ -586,7 +586,10 @@
 // entity 20
 {
 "classname" "light_point"
-"origin" "-4584 8 56"
+"origin" "-4592 8 88"
+"range" "10"
+"intensity" "100000.000000"
+"color" "0.98039216 0.85882354 0.6901961"
 }
 // entity 21
 {
