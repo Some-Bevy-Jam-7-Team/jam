@@ -6,13 +6,15 @@ use bevy::{
 	shader::ShaderRef,
 	window::{CursorGrabMode, CursorOptions, PrimaryWindow, WindowResized},
 };
+use bevy_seedling::sample::{AudioSample, SamplePlayer};
 
 use crate::{
-	gameplay::npc::Npc, menus::Menu, screens::Screen, theme::widget,
-	third_party::bevy_trenchbroom::GetTrenchbroomModelPath as _,
+	asset_tracking::LoadResource, audio::SfxPool, gameplay::npc::Npc, menus::Menu, screens::Screen,
+	theme::widget, third_party::bevy_trenchbroom::GetTrenchbroomModelPath as _,
 };
 
 pub(super) fn plugin(app: &mut App) {
+	app.load_asset::<AudioSample>("audio/music/gloopy.ogg");
 	app.add_plugins(UiMaterialPlugin::<KaleidoscopeMaterial>::default());
 	app.add_systems(OnEnter(Menu::Main), spawn_main_menu)
 		.add_systems(Update, spawn_dancer.run_if(in_state(Menu::Main)))
@@ -28,6 +30,7 @@ fn spawn_main_menu(
 	mut commands: Commands,
 	mut cursor_options: Single<&mut CursorOptions>,
 	mut materials: ResMut<Assets<KaleidoscopeMaterial>>,
+	assets: Res<AssetServer>,
 	window_query: Query<&Window, With<PrimaryWindow>>,
 ) {
 	let window_size = window_query.single().map(|w| w.size());
@@ -56,6 +59,8 @@ fn spawn_main_menu(
 	));
 	commands.spawn((
 		DespawnOnExit(Menu::Main),
+		SamplePlayer::new(assets.load("audio/music/gloopy.ogg")).looping(),
+		SfxPool,
 		Node {
 			position_type: PositionType::Absolute,
 			top: px(0.0),
