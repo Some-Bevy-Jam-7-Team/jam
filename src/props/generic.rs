@@ -190,26 +190,44 @@ pub(crate) struct Cctv;
 pub(crate) struct StaticCctv;
 
 // generic static props
-macro_rules! define_rocks {
-    ( $( $name:ident => $filename:expr ),* $(,)? ) => {
-        $(
-            #[point_class(
-                base(Transform, Visibility),
-                model(concat!("models/rock/", $filename))
-            )]
-            pub(crate) struct $name;
-        )*
-    };
-}
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/rock/rock_1.gltf")
+)]
+pub(crate) struct RockModel1;
 
-define_rocks!(
-	RockModel1 => "rock_1.gltf",
-	RockModel2 => "rock_2.gltf",
-	RockModel3 => "rock_3.gltf",
-	RockModel4 => "rock_1.gltf",
-	RockModel5 => "rock_2.gltf",
-	RockModel6 => "rock_3.gltf",
-);
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/rock/rock_2.gltf")
+)]
+pub(crate) struct RockModel2;
+
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/rock/rock_3.gltf")
+)]
+pub(crate) struct RockModel3;
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/rock/rock_4.gltf")
+)]
+pub(crate) struct RockModel4;
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/rock/rock_5.gltf")
+)]
+pub(crate) struct RockModel5;
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/rock/rock_6.gltf")
+)]
+pub(crate) struct RockModel6;
+
+
 
 #[point_class(
 	base(TargetName, InteractableEntity, Transform, Visibility),

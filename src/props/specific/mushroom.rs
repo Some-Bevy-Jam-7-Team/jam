@@ -41,25 +41,38 @@ impl Plugin for MushroomPlugin {
 	}
 }
 
-macro_rules! define_mushrooms {
-    ( $( $name:ident => $filename:expr ),* $(,)? ) => {
-        $(
-            #[point_class(
-                base(TargetName, Transform, Visibility),
-                model(concat!("models/mushroom/", $filename))
-            )]
-            pub(crate) struct $name;
-        )*
-    };
-}
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/mushroom/mushroom1.gltf")
+)]
+pub(crate) struct MushroomModel1;
 
-define_mushrooms!(
-	MushroomModel1 => "mushroom1.gltf",
-	MushroomModel2 => "mushroom2.gltf",
-	MushroomModel3 => "mushroom3.gltf",
-	MushroomModel4 => "mushroom4.gltf",
-	MushroomModel5 => "mushroom5.gltf",
-);
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/mushroom/mushroom2.gltf")
+)]
+pub(crate) struct MushroomModel2;
+
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/mushroom/mushroom3.gltf")
+)]
+pub(crate) struct MushroomModel3;
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/mushroom/mushroom4.gltf")
+)]
+pub(crate) struct MushroomModel4;
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/mushroom/mushroom5.gltf")
+)]
+pub(crate) struct MushroomModel5;
+
 
 #[derive(Component, Debug, Reflect)]
 #[reflect(Component)]
