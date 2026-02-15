@@ -1,12 +1,12 @@
 //! A high-level way to load collections of asset handles as resources.
 
 use std::collections::VecDeque;
-
+use bevy::asset::AssetEventSystems;
 use bevy::prelude::*;
 
 pub(super) fn plugin(app: &mut App) {
 	app.init_resource::<ResourceHandles>();
-	app.add_systems(PreUpdate, load_resource_assets);
+	app.add_systems(PreUpdate, load_resource_assets.after(AssetEventSystems));
 }
 
 pub(crate) trait LoadResource {
