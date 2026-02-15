@@ -27,26 +27,27 @@ pub(super) fn plugin(app: &mut App) {
 		.add_observer(setup_static_prop_with_convex_hull::<CrateSquare>)
 		.add_observer(setup_static_prop_with_convex_hull::<FenceBarsDecorativeSingle>)
 		.add_observer(setup_static_prop_with_convex_hull::<DoorStainedGlass>)
-		.add_observer(setup_static_prop_with_convex_hull::<FlowerPot>)
-		.add_observer(setup_static_prop_with_convex_hull::<PottedShroom>)
 		.add_observer(setup_static_prop_with_convex_hull::<Jesus>)
-		.add_observer(setup_static_prop_with_convex_hull::<Speaker>)
 		.add_observer(setup_static_prop_with_convex_hull::<Teeth>)
 		.add_observer(setup_static_prop_with_convex_hull::<StaticCctv>);
 
 	app.add_observer(setup_static_prop_with_trimesh::<Train>);
 
-	app.add_observer(setup_static_prop_with_convex_hull::<Keyboard>)
-		.add_observer(setup_static_prop_with_convex_hull::<Mouse>)
-		.add_observer(setup_dynamic_prop_with_convex_hull::<PackageMedium>)
+	app.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<Keyboard>)
+		.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<Mouse>)
+		.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<Speaker>)
+		.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<FlowerPot>)
+		.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<PottedPlant>)
+		.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<PottedShroom>);
+
+	app.add_observer(setup_dynamic_prop_with_convex_hull::<PackageMedium>)
 		.add_observer(setup_dynamic_prop_with_convex_hull::<PackageSmall>)
 		.add_observer(setup_dynamic_prop_with_convex_hull_heavy::<Cctv>)
 		.add_observer(setup_dynamic_prop_with_convex_hull::<Rohlik>)
 		.add_observer(setup_dynamic_prop_with_convex_hull::<Trash>);
 
 	app.add_observer(setup_nonphysical_prop::<IvyPart8>)
-		.add_observer(setup_nonphysical_prop::<SmallDoorSign1>)
-		.add_observer(setup_nonphysical_prop::<PottedPlant>);
+		.add_observer(setup_nonphysical_prop::<SmallDoorSign1>);
 
 	app.load_asset::<Gltf>(Crt::model_path())
 		.load_asset::<Gltf>(Keyboard::model_path())
@@ -83,7 +84,7 @@ pub(super) fn plugin(app: &mut App) {
 // office
 
 #[point_class(
-	base(TargetName, InteractableEntity, Transform, Visibility),
+	base(TargetName, InteractableEntity, MaybeDynamic, Transform, Visibility),
 	model("models/office/crt.gltf")
 )]
 #[component(on_add = Crt::on_add)]
@@ -95,6 +96,12 @@ impl Crt {
 		if world.is_scene_world() {
 			return;
 		}
+		let MaybeDynamic { is_dynamic_prop } = world
+			.get_entity_mut(ctx.entity)
+			.expect("This is literally the insert hook of that entity")
+			.get()
+			.copied()
+			.unwrap_or_default();
 		let model = world.get_asset_server().load_trenchbroom_model::<Self>();
 
 		world.commands().entity(ctx.entity).insert((
@@ -103,38 +110,42 @@ impl Crt {
 					[CollisionLayer::Default, CollisionLayer::Dialog],
 					LayerMask::ALL,
 				)),
-			RigidBody::Static,
+			if is_dynamic_prop {
+				RigidBody::Dynamic
+			} else {
+				RigidBody::Static
+			},
 			SceneRoot(model),
 		));
 	}
 }
 
 #[point_class(
-	base(TargetName, InteractableEntity, Transform, Visibility),
+	base(TargetName, InteractableEntity, MaybeDynamic, Transform, Visibility),
 	model("models/office/keyboard.gltf")
 )]
 pub(crate) struct Keyboard;
 
 #[point_class(
-	base(TargetName, InteractableEntity, Transform, Visibility),
+	base(TargetName, InteractableEntity, MaybeDynamic, Transform, Visibility),
 	model("models/office/mouse.gltf")
 )]
 pub(crate) struct Mouse;
 
 #[point_class(
-	base(TargetName, Transform, Visibility),
+	base(TargetName, InteractableEntity, MaybeDynamic, Transform, Visibility),
 	model("models/office/pot.gltf")
 )]
 pub(crate) struct FlowerPot;
 
 #[point_class(
-	base(TargetName, Transform, Visibility),
+	base(TargetName, InteractableEntity, MaybeDynamic, Transform, Visibility),
 	model("models/office/plant.gltf")
 )]
 pub(crate) struct PottedPlant;
 
 #[point_class(
-	base(TargetName, Transform, Visibility),
+	base(TargetName, InteractableEntity, MaybeDynamic, Transform, Visibility),
 	model("models/office/shroom.gltf")
 )]
 #[require(EnvironmentTemperature(38.5))]
@@ -260,7 +271,7 @@ pub(crate) struct Jesus;
 pub(crate) struct Teeth;
 
 #[point_class(
-	base(InteractableEntity, Transform, Visibility, TargetName),
+	base(InteractableEntity, MaybeDynamic, Transform, Visibility, TargetName),
 	model("models/speaker/speaker.gltf")
 )]
 

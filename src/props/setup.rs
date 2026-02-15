@@ -7,9 +7,23 @@ use crate::third_party::bevy_trenchbroom::LoadTrenchbroomModel as _;
 use avian3d::prelude::*;
 use bevy::prelude::*;
 
-use bevy_trenchbroom::class::QuakeClass;
+use bevy_trenchbroom::{
+	class::{QuakeClass, ReflectQuakeClass},
+	prelude::base_class,
+};
 
 pub(super) fn plugin(_app: &mut App) {}
+
+/// Base component for entity types that can be instantiated
+/// as both static and dynamic objects.
+///
+/// Static by default.
+#[derive(Clone, Copy, PartialEq, Eq, Deref, Default)]
+#[base_class]
+#[component(immutable)]
+pub(crate) struct MaybeDynamic {
+	pub is_dynamic_prop: bool,
+}
 
 pub(crate) fn setup_static_prop_with_convex_hull<T: QuakeClass>(
 	add: On<Add, T>,
@@ -57,6 +71,22 @@ pub(crate) fn setup_dynamic_prop_with_convex_hull<T: QuakeClass>(
 ) {
 	let bundle = dynamic_bundle::<T>(&asset_server, ColliderConstructor::ConvexHullFromMesh);
 	commands.entity(add.entity).insert(bundle);
+}
+
+pub(crate) fn setup_static_or_dynamic_prop_with_convex_hull<T: QuakeClass>(
+	add: On<Add, (T, MaybeDynamic)>,
+	query: Query<&MaybeDynamic>,
+	asset_server: Res<AssetServer>,
+	mut commands: Commands,
+) {
+	if query.get(add.entity).is_ok_and(|m| **m) {
+		let bundle =
+			dynamic_bundle_heavy::<T>(&asset_server, ColliderConstructor::ConvexHullFromMesh);
+		commands.entity(add.entity).insert(bundle);
+	} else {
+		let bundle = static_bundle::<T>(&asset_server, ColliderConstructor::ConvexHullFromMesh);
+		commands.entity(add.entity).insert(bundle);
+	}
 }
 
 pub(crate) fn dynamic_bundle<T: QuakeClass>(
