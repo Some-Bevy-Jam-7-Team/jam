@@ -289,6 +289,7 @@ pub(crate) struct LevelOneAssets {
 pub(crate) struct EnvironmentAssets {
 	#[dependency]
 	pub(crate) landscape: Handle<Scene>,
+	#[dependency]
 	pub(crate) grass: Handle<Scene>,
 	#[dependency]
 	pub(crate) grass_med: Handle<Scene>,
