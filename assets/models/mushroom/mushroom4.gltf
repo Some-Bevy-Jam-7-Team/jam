@@ -15,7 +15,7 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"shroom.003"
+			"name":"shroom.005"
 		}
 	],
 	"materials":[
@@ -33,7 +33,7 @@
 	],
 	"meshes":[
 		{
-			"name":"shroom.003",
+			"name":"shroom.005",
 			"primitives":[
 				{
 					"attributes":{
@@ -64,61 +64,61 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":154,
+			"count":166,
 			"max":[
-				0.03336399793624878,
-				0.18725042045116425,
-				0.044669825583696365
+				0.03598257526755333,
+				0.09216893464326859,
+				0.04612850397825241
 			],
 			"min":[
-				-0.036402277648448944,
-				4.598498344421387e-05,
-				-0.02509644627571106
+				-0.0395059771835804,
+				-1.667812466621399e-05,
+				-0.02936004102230072
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":154,
+			"count":166,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":154,
+			"count":166,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":570,
+			"count":582,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":1848,
+			"byteLength":1992,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1848,
-			"byteOffset":1848,
+			"byteLength":1992,
+			"byteOffset":1992,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1232,
-			"byteOffset":3696,
+			"byteLength":1328,
+			"byteOffset":3984,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1140,
-			"byteOffset":4928,
+			"byteLength":1164,
+			"byteOffset":5312,
 			"target":34963
 		}
 	],
@@ -130,8 +130,8 @@
 	],
 	"buffers":[
 		{
-			"byteLength":6068,
-			"uri":"mushroom_single.bin"
+			"byteLength":6476,
+			"uri":"mushroom4.bin"
 		}
 	]
 }

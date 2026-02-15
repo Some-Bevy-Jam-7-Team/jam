@@ -37,6 +37,11 @@ pub(super) fn plugin(app: &mut App) {
 	app.add_observer(setup_static_prop_with_trimesh::<Train>);
 
 	app.add_observer(setup_static_prop_with_convex_hull::<Keyboard>)
+		.add_observer(setup_static_prop_with_convex_hull::<RockModel1>)
+		.add_observer(setup_static_prop_with_convex_hull::<RockModel2>)
+		.add_observer(setup_static_prop_with_convex_hull::<RockModel3>)
+		.add_observer(setup_static_prop_with_convex_hull::<RockModel4>)
+		.add_observer(setup_static_prop_with_convex_hull::<RockModel5>)
 		.add_observer(setup_static_prop_with_convex_hull::<Mouse>)
 		.add_observer(setup_dynamic_prop_with_convex_hull::<PackageMedium>)
 		.add_observer(setup_dynamic_prop_with_convex_hull::<PackageSmall>)
@@ -48,7 +53,13 @@ pub(super) fn plugin(app: &mut App) {
 		.add_observer(setup_nonphysical_prop::<SmallDoorSign1>)
 		.add_observer(setup_nonphysical_prop::<PottedPlant>);
 
-	app.load_asset::<Gltf>(Crt::model_path())
+	app.load_asset::<Gltf>(RockModel1::model_path())
+		.load_asset::<Gltf>(RockModel2::model_path())
+		.load_asset::<Gltf>(RockModel3::model_path())
+		.load_asset::<Gltf>(RockModel4::model_path())
+		.load_asset::<Gltf>(RockModel5::model_path())
+		.load_asset::<Gltf>(RockModel6::model_path())
+		.load_asset::<Gltf>(Crt::model_path())
 		.load_asset::<Gltf>(Keyboard::model_path())
 		.load_asset::<Gltf>(Mouse::model_path())
 		.load_asset::<Gltf>(PackageMedium::model_path())
@@ -108,6 +119,27 @@ impl Crt {
 		));
 	}
 }
+
+macro_rules! define_rocks {
+    ( $( $name:ident => $filename:expr ),* $(,)? ) => {
+        $(
+            #[point_class(
+                base(Transform, Visibility),
+                model(concat!("models/rock/", $filename))
+            )]
+            pub(crate) struct $name;
+        )*
+    };
+}
+
+define_rocks!(
+	RockModel1 => "rock_1.gltf",
+	RockModel2 => "rock_2.gltf",
+	RockModel3 => "rock_3.gltf",
+	RockModel4 => "rock_1.gltf",
+	RockModel5 => "rock_2.gltf",
+	RockModel6 => "rock_3.gltf",
+);
 
 #[point_class(
 	base(TargetName, InteractableEntity, Transform, Visibility),
