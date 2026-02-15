@@ -17,7 +17,6 @@ use bevy::{
 };
 use bevy_trenchbroom::prelude::*;
 
-
 pub(super) fn plugin(app: &mut App) {
 	app.add_observer(setup_static_prop_with_convex_hull::<Grate>)
 		.add_observer(setup_static_prop_with_convex_decomposition::<Table>)
@@ -34,8 +33,7 @@ pub(super) fn plugin(app: &mut App) {
 
 	app.add_observer(setup_static_prop_with_trimesh::<Train>);
 
-	app
-		.add_observer(setup_static_prop_with_convex_hull::<RockModel1>)
+	app.add_observer(setup_static_prop_with_convex_hull::<RockModel1>)
 		.add_observer(setup_static_prop_with_convex_hull::<RockModel2>)
 		.add_observer(setup_static_prop_with_convex_hull::<RockModel3>)
 		.add_observer(setup_static_prop_with_convex_hull::<RockModel4>)
@@ -133,7 +131,6 @@ impl Crt {
 		));
 	}
 }
-
 
 #[point_class(
 	base(TargetName, InteractableEntity, MaybeDynamic, Transform, Visibility),

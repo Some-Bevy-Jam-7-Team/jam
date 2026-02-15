@@ -61,12 +61,10 @@ define_mushrooms!(
 	MushroomModel5 => "mushroom5.gltf",
 );
 
-
 #[derive(Component, Debug, Reflect)]
 #[reflect(Component)]
 #[require(EnvironmentTemperature)]
 pub(crate) struct Mushroom;
-
 
 fn setup_mushroom<T: Component + QuakeClass>(
 	add: On<Add, T>,
