@@ -321,9 +321,9 @@ dependencies = [
 
 [[package]]
 name = "async-executor"
-version = "1.13.3"
+version = "1.14.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "497c00e0fd83a72a79a39fcbd8e3e2f055d6f6c7e025f3b3d91f4f8e76527fb8"
+checksum = "c96bf972d85afc50bf5ab8fe2d54d1586b4e0b46c97c50a0c9e71e2f7bcd812a"
 dependencies = [
  "async-task",
  "concurrent-queue",
@@ -995,7 +995,7 @@ dependencies = [
 [[package]]
 name = "bevy_feronia"
 version = "0.8.1"
-source = "git+https://github.com/NicoZweifel/bevy_feronia?branch=fix-deferred#c2f25bf21c866f7fb2ae70f8b893a1e287921376"
+source = "git+https://github.com/NicoZweifel/bevy_feronia?branch=fix-deferred#c8ea1326404744587beed9a2ebecdb754b64df1a"
 dependencies = [
  "avian3d",
  "bevy_app",
@@ -6971,9 +6971,9 @@ dependencies = [
 
 [[package]]
 name = "syn"
-version = "2.0.115"
+version = "2.0.116"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6e614ed320ac28113fa64972c4262d5dbc89deacdfd00c34a3e4cea073243c12"
+checksum = "3df424c70518695237746f84cede799c9c58fcb37450d7b23716568cc8bc69cb"
 dependencies = [
  "proc-macro2",
  "quote",
