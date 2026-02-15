@@ -95,7 +95,7 @@ dir: karoline
       <<set $k_dropped_camera = true>>
       The Library: Please use the provided device, it is consumed orally. #line:6989906
   <<set $k_first_question = true>>
-  The Library: Be seeing you! :) #line:12335407
+  The Library: Be seeing you! #line:12335407
 <<endif>>
 ===
 
