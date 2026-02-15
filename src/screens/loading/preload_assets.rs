@@ -87,7 +87,7 @@ fn update_loading_assets_label(
 			.iter()
 			.next()
 			.and_then(|(handle, _)| {
-				let path = asset_server.get_path(handle)?;
+				let path = asset_server.get_path(*handle)?;
 				let disp = path.path().display();
 				format!("{disp}").into()
 			})
