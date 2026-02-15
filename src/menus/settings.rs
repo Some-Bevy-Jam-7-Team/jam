@@ -10,12 +10,11 @@ use bevy_seedling::prelude::*;
 
 use crate::ui_layout::RootWidget;
 use crate::{
-	Pause,
 	audio::{MusicPool, perceptual::PerceptualVolumeConverter},
 	gameplay::player::camera::{CameraSensitivity, WorldModelFov},
 	menus::Menu,
 	screens::Screen,
-	theme::{palette::SCREEN_BACKGROUND, prelude::*},
+	theme::prelude::*,
 };
 
 pub(super) fn plugin(app: &mut App) {
@@ -45,8 +44,8 @@ pub(super) fn plugin(app: &mut App) {
 	);
 }
 
-fn spawn_settings_menu(mut commands: Commands, paused: Res<State<Pause>>) {
-	let mut entity_commands = commands.spawn((
+fn spawn_settings_menu(mut commands: Commands) {
+	commands.spawn((
 		RootWidget,
 		DespawnOnExit(Menu::Settings),
 		DespawnOnExit(Screen::Gameplay),
@@ -162,9 +161,6 @@ fn spawn_settings_menu(mut commands: Commands, paused: Res<State<Pause>>) {
 			widget::button("Back", go_back_on_click),
 		],
 	));
-	if paused.get() == &Pause(false) {
-		entity_commands.insert(BackgroundColor(SCREEN_BACKGROUND));
-	}
 }
 
 #[derive(Resource, Reflect, Debug)]

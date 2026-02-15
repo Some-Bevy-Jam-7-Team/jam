@@ -7,10 +7,7 @@ use super::LoadingScreen;
 use crate::font::VARIABLE_FONT;
 use crate::gameplay::level::{AdvanceLevel, CurrentLevel};
 use crate::theme::palette::HEADER_TEXT;
-use crate::{
-	asset_tracking::ResourceHandles,
-	theme::{palette::SCREEN_BACKGROUND, prelude::*},
-};
+use crate::{asset_tracking::ResourceHandles, theme::prelude::*};
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_systems(
@@ -55,14 +52,13 @@ fn spawn_or_skip_asset_loading_screen(
 	}
 	cmd.spawn((
 		widget::ui_root("Loading Screen"),
-		BackgroundColor(SCREEN_BACKGROUND),
 		DespawnOnExit(LoadingScreen::Assets),
 		children![(
 			Name::new("Loading assets text"),
 			Text("Loading Assets".into()),
 			TextFont {
 				font: VARIABLE_FONT,
-				font_size: 22.0,
+				font_size: 24.0,
 				weight: FontWeight(800),
 				..default()
 			},

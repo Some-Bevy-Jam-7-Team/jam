@@ -1,6 +1,7 @@
 //! The game's main screen states and transitions between them.
 
 mod credits;
+mod kaleidoscope_background;
 mod level_select;
 mod main;
 mod pause;
@@ -17,6 +18,7 @@ pub(super) fn plugin(app: &mut App) {
 		main::plugin,
 		settings::plugin,
 		pause::plugin,
+		kaleidoscope_background::plugin,
 	));
 }
 

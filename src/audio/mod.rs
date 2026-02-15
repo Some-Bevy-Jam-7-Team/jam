@@ -22,8 +22,8 @@ pub(super) fn plugin(app: &mut App) {
 	.register_type::<SvfNode<2>>()
 	.add_systems(Update, manage_filter_enabled)
 	.add_systems(Update, layer_testing)
-	.add_systems(OnExit(Menu::None), enable_music_filter)
-	.add_systems(OnEnter(Menu::None), disable_music_filter);
+	.add_systems(OnExit(Menu::Pause), enable_music_filter)
+	.add_systems(OnEnter(Menu::Pause), disable_music_filter);
 }
 
 #[derive(PoolLabel, Reflect, PartialEq, Eq, Debug, Hash, Clone)]
@@ -79,8 +79,8 @@ fn initialize_audio(server: Res<AssetServer>, mut commands: Commands) {
 			SvfNode::<2> {
 				filter_type: firewheel::nodes::svf::SvfType::LowpassX2,
 				q_factor: 1.5,
-				cutoff_hz: 800.0,
-				enabled: true,
+				cutoff_hz: 20_000.0,
+				enabled: false,
 				..default()
 			},
 			MusicFilter,

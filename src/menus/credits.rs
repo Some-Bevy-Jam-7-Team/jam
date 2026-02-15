@@ -1,18 +1,10 @@
 //! A credits menu.
 
-use crate::audio::MusicPool;
 use crate::ui_layout::RootWidget;
-use crate::{
-	Pause,
-	asset_tracking::LoadResource,
-	menus::Menu,
-	theme::{palette::SCREEN_BACKGROUND, prelude::*},
-};
+use crate::{menus::Menu, theme::prelude::*};
 use bevy::{
 	ecs::spawn::SpawnIter, input::common_conditions::input_just_pressed, prelude::*, ui::Val::*,
 };
-use bevy_seedling::sample::AudioSample;
-use bevy_seedling::sample::SamplePlayer;
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_systems(OnEnter(Menu::Credits), spawn_credits_menu);
@@ -20,13 +12,10 @@ pub(super) fn plugin(app: &mut App) {
 		Update,
 		go_back.run_if(in_state(Menu::Credits).and(input_just_pressed(KeyCode::Escape))),
 	);
-
-	app.load_resource::<CreditsAssets>();
-	app.add_systems(OnEnter(Menu::Credits), start_credits_music);
 }
 
-fn spawn_credits_menu(mut commands: Commands, paused: Res<State<Pause>>) {
-	let mut entity_commands = commands.spawn((
+fn spawn_credits_menu(mut commands: Commands) {
+	commands.spawn((
 		RootWidget,
 		DespawnOnExit(Menu::Credits),
 		GlobalZIndex(2),
@@ -38,9 +27,6 @@ fn spawn_credits_menu(mut commands: Commands, paused: Res<State<Pause>>) {
 			widget::button("Back", go_back_on_click),
 		],
 	));
-	if paused.get() == &Pause(false) {
-		entity_commands.insert(BackgroundColor(SCREEN_BACKGROUND));
-	}
 }
 
 fn created_by() -> impl Bundle {
@@ -57,7 +43,6 @@ fn assets() -> impl Bundle {
 			"All rights reserved by the Bevy Foundation, permission granted for splash screen use when unmodified",
 		],
 		["Button SFX", "CC0 by Jaszunio15"],
-		["Music", "CC BY 3.0 by Kevin MacLeod"],
 		["Ambient music and Footstep SFX", "CC0 by NOX SOUND"],
 		[
 			"Throw SFX",
@@ -123,29 +108,4 @@ fn go_back_on_click(_: On<Pointer<Click>>, mut next_menu: ResMut<NextState<Menu>
 
 fn go_back(mut next_menu: ResMut<NextState<Menu>>) {
 	next_menu.set(Menu::Main);
-}
-
-#[derive(Resource, Asset, Clone, Reflect)]
-#[reflect(Resource)]
-struct CreditsAssets {
-	#[dependency]
-	music: Handle<AudioSample>,
-}
-
-impl FromWorld for CreditsAssets {
-	fn from_world(world: &mut World) -> Self {
-		let assets = world.resource::<AssetServer>();
-		Self {
-			music: assets.load("audio/music/Monkeys Spinning Monkeys.ogg"),
-		}
-	}
-}
-
-fn start_credits_music(mut commands: Commands, credits_music: Res<CreditsAssets>) {
-	commands.spawn((
-		Name::new("Credits Music"),
-		DespawnOnExit(Menu::Credits),
-		SamplePlayer::new(credits_music.music.clone()).looping(),
-		MusicPool,
-	));
 }

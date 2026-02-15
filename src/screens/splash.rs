@@ -48,27 +48,24 @@ const SPLASH_DURATION_SECS: f32 = 1.8;
 const SPLASH_FADE_DURATION_SECS: f32 = 0.6;
 
 fn spawn_splash_screen(mut commands: Commands, asset_server: Res<AssetServer>) {
-	commands
-		.spawn((
-			widget::ui_root("Splash Screen"),
-			DespawnOnExit(Screen::Splash),
-			children![(
-				Name::new("Splash image"),
-				Node {
-					margin: UiRect::all(Val::Auto),
-					width: Val::Percent(70.0),
-					..default()
-				},
-				ImageNode::new(asset_server.load("embedded://jam/screens/files/splash.png")),
-				ImageNodeFadeInOut {
-					total_duration: SPLASH_DURATION_SECS,
-					fade_duration: SPLASH_FADE_DURATION_SECS,
-					t: 0.0,
-				},
-			)],
-		))
-		// Override the default background color provided by `ui_root`
-		.insert(BackgroundColor(SCREEN_BACKGROUND));
+	commands.spawn((
+		widget::ui_root("Splash Screen"),
+		DespawnOnExit(Screen::Splash),
+		children![(
+			Name::new("Splash image"),
+			Node {
+				margin: UiRect::all(Val::Auto),
+				width: Val::Percent(70.0),
+				..default()
+			},
+			ImageNode::new(asset_server.load("embedded://jam/screens/files/splash.png")),
+			ImageNodeFadeInOut {
+				total_duration: SPLASH_DURATION_SECS,
+				fade_duration: SPLASH_FADE_DURATION_SECS,
+				t: 0.0,
+			},
+		)],
+	));
 }
 
 #[derive(Component, Reflect)]

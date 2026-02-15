@@ -9,10 +9,7 @@ use crate::font::VARIABLE_FONT;
 use crate::gameplay::level::{CurrentLevel, spawn_landscape, spawn_level};
 use crate::scatter::ScatterDone;
 use crate::theme::palette::HEADER_TEXT;
-use crate::{
-	screens::Screen,
-	theme::{palette::SCREEN_BACKGROUND, prelude::*},
-};
+use crate::{screens::Screen, theme::prelude::*};
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_systems(
@@ -48,14 +45,13 @@ fn reset_scatter_state(
 fn spawn_level_loading_screen(mut commands: Commands) {
 	commands.spawn((
 		widget::ui_root("Loading Screen"),
-		BackgroundColor(SCREEN_BACKGROUND),
 		DespawnOnExit(LoadingScreen::Level),
 		children![(
 			Name::new("Spawning level text"),
 			Text("Spawning Level".into()),
 			TextFont {
 				font: VARIABLE_FONT,
-				font_size: 22.0,
+				font_size: 24.0,
 				weight: FontWeight(800),
 				..default()
 			},

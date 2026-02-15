@@ -1,40 +1,28 @@
 //! The main menu (seen on the title screen).
+
 use bevy::{
 	prelude::*,
-	render::render_resource::AsBindGroup,
 	scene::SceneInstanceReady,
-	shader::ShaderRef,
-	window::{CursorGrabMode, CursorOptions, PrimaryWindow, WindowResized},
+	window::{CursorGrabMode, CursorOptions},
 };
 use bevy_seedling::sample::{AudioSample, SamplePlayer};
 
 use crate::{
-	asset_tracking::LoadResource, audio::SfxPool, gameplay::npc::Npc, menus::Menu, screens::Screen,
-	theme::widget, third_party::bevy_trenchbroom::GetTrenchbroomModelPath as _,
+	asset_tracking::LoadResource, audio::MusicPool, gameplay::npc::Npc, menus::Menu,
+	screens::Screen, theme::widget, third_party::bevy_trenchbroom::GetTrenchbroomModelPath as _,
 };
 
 pub(super) fn plugin(app: &mut App) {
 	app.load_asset::<AudioSample>("audio/music/gloopy.ogg");
-	app.add_plugins(UiMaterialPlugin::<KaleidoscopeMaterial>::default());
 	app.add_systems(OnEnter(Menu::Main), spawn_main_menu)
-		.add_systems(Update, spawn_dancer.run_if(in_state(Menu::Main)))
-		.add_systems(
-			Update,
-			(resize_resolution, animation_time_system)
-				.chain()
-				.run_if(in_state(Menu::Main)),
-		);
+		.add_systems(Update, spawn_dancer.run_if(in_state(Menu::Main)));
 }
 
 fn spawn_main_menu(
 	mut commands: Commands,
 	mut cursor_options: Single<&mut CursorOptions>,
-	mut materials: ResMut<Assets<KaleidoscopeMaterial>>,
 	assets: Res<AssetServer>,
-	window_query: Query<&Window, With<PrimaryWindow>>,
 ) {
-	let window_size = window_query.single().map(|w| w.size());
-
 	cursor_options.grab_mode = CursorGrabMode::None;
 	commands.spawn((
 		DespawnOnExit(Menu::Main),
@@ -58,82 +46,12 @@ fn spawn_main_menu(
 		widget::button("Exit", exit_app),
 	));
 	commands.spawn((
-		DespawnOnExit(Menu::Main),
+		DespawnOnEnter(Screen::Gameplay),
 		SamplePlayer::new(assets.load("audio/music/gloopy.ogg")).looping(),
-		SfxPool,
-		Node {
-			position_type: PositionType::Absolute,
-			top: px(0.0),
-			bottom: px(0.0),
-			left: px(0.0),
-			right: px(0.0),
-			width: percent(100.0),
-			height: percent(100.0),
-			..default()
-		},
-		MaterialNode(materials.add(KaleidoscopeMaterial::new(
-			window_size.unwrap_or(Vec2::new(1920.0, 1080.0)),
-		))),
-		ZIndex(-1),
+		MusicPool,
 	));
 	commands.spawn((DespawnOnExit(Menu::Main), Camera3d::default()));
 	commands.spawn((DespawnOnExit(Menu::Main), DirectionalLight::default()));
-}
-
-/// A UI material that implements a kaleidoscope shader effect.
-#[derive(AsBindGroup, Asset, TypePath, Debug, Clone)]
-pub struct KaleidoscopeMaterial {
-	/// Resolution of the shader's output, in pixels.
-	#[uniform(0)]
-	pub resolution: Vec2,
-	/// Time, in seconds.
-	#[uniform(0)]
-	pub time: f32,
-	#[uniform(0)]
-	_padding: f32,
-}
-
-impl KaleidoscopeMaterial {
-	/// Creates a new [`KaleidoscopeMaterial`] with the given resolution.
-	pub fn new(resolution: Vec2) -> Self {
-		Self {
-			resolution,
-			time: 0.0,
-			_padding: 0.0,
-		}
-	}
-}
-
-impl UiMaterial for KaleidoscopeMaterial {
-	fn fragment_shader() -> ShaderRef {
-		"shaders/kaleidoscope.wgsl".into()
-	}
-}
-
-fn resize_resolution(
-	mut resized: MessageReader<WindowResized>,
-	query: Query<&MaterialNode<KaleidoscopeMaterial>>,
-	mut materials: ResMut<Assets<KaleidoscopeMaterial>>,
-) {
-	for event in resized.read() {
-		for material_node in query.iter() {
-			if let Some(material) = materials.get_mut(&material_node.0) {
-				material.resolution = Vec2::new(event.width, event.height) * 4.0;
-			}
-		}
-	}
-}
-
-fn animation_time_system(
-	time: Res<Time>,
-	query: Query<&MaterialNode<KaleidoscopeMaterial>>,
-	mut materials: ResMut<Assets<KaleidoscopeMaterial>>,
-) {
-	for material_node in query.iter() {
-		if let Some(material) = materials.get_mut(&material_node.0) {
-			material.time += time.delta_secs();
-		}
-	}
 }
 
 #[derive(Component, Reflect, Debug)]
