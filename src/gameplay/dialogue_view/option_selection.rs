@@ -109,7 +109,7 @@ fn select_option(
 				selection = Some(button.0);
 				(LABEL_TEXT.into(), SystemCursorIcon::Default)
 			}
-			Interaction::Hovered => (Color::WHITE, SystemCursorIcon::Pointer),
+			Interaction::Hovered => (LABEL_TEXT.into(), SystemCursorIcon::Pointer),
 			_ => (LABEL_TEXT.into(), SystemCursorIcon::Default),
 		};
 		commands.entity(*window).insert(CursorIcon::System(icon));
