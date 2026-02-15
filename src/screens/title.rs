@@ -2,6 +2,7 @@
 
 use bevy::prelude::*;
 use bevy_seedling::sample::SamplePlayer;
+use firewheel::Volume;
 
 use crate::{audio::MusicPool, menus::Menu, screens::Screen};
 
@@ -21,7 +22,9 @@ fn close_menu(mut next_menu: ResMut<NextState<Menu>>) {
 fn spawn_gloop(mut commands: Commands, assets: Res<AssetServer>) {
 	commands.spawn((
 		DespawnOnEnter(Screen::Gameplay),
-		SamplePlayer::new(assets.load("audio/music/gloopy.ogg")).looping(),
+		SamplePlayer::new(assets.load("audio/music/gloopy.ogg"))
+			.looping()
+			.with_volume(Volume::Decibels(6.0)),
 		MusicPool,
 	));
 }
