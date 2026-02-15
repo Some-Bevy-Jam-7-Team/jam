@@ -2253,7 +2253,7 @@
 "classname" "light_point"
 "origin" "-128 -280 208"
 "shadows_enabled" "true"
-"range" "3"
+"range" "4"
 }
 // entity 3
 {
@@ -2642,7 +2642,7 @@
 "classname" "light_point"
 "origin" "-2096 -280 208"
 "shadows_enabled" "false"
-"range" "3"
+"range" "4"
 }
 // entity 57
 {
@@ -2705,7 +2705,7 @@
 "classname" "light_point"
 "origin" "-2968 -280 208"
 "shadows_enabled" "false"
-"range" "3"
+"range" "4"
 }
 // entity 66
 {
