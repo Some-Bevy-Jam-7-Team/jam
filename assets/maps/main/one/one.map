@@ -1073,6 +1073,7 @@
 {
 "classname" "player"
 "origin" "-152 -248 184"
+"intensity" "0"
 }
 // entity 2
 {
