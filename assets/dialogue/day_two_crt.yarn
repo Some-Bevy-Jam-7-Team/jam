@@ -5,14 +5,14 @@ dir: day_two_crt
   <<llmanager_emote "boot">>
   LLManager: LLManager V5.7.0-rc.2 BOOTING UP #line:7155396
   <<llmanager_emote "smile">>
-  LLManager: Good day, valued $$$. You have been working with us for 0452 days. Onto one more day! #line:5524795
+  LLManager: Good day, valued $$$. You have been working with us for 0452 days. Here's to another day! #line:5524795
   <<llmanager_emote "glitch">>
   <<llmanager_emote "smile" 30>>
   LLManager: The ██████ machine has run out of in-vivo fuel and must be restarted. #line:15931198
   <<llmanager_emote "sideways">>
   LLManager: Due to a recent decline in the $OFFICE_BIOMASS_2$ workforce, it has been relocated to their office for company. #line:4700705
   <<llmanager_emote "point">>
-  LLManager: Reminder: your social quota for this week is already at 92%. Avoid any unauthorized socialization. #line:4206666
+  LLManager: Reminder: your social quota for this week is already at 92%. Please avoid any unauthorized socialization. #line:4206666
   <<llmanager_emote "off">>
 
   <<create_objective "work_1" "Increase Shareholder Value" 1.0>>
@@ -42,7 +42,7 @@ dir: day_two_crt
 <<elseif get_current_objective() == "work_1">>
   <<llmanager_emote "smile">>
   LLManager: Proceed to the main office. Analysis shows you are aware what a machine is. #line:11608533
-  LLManager: If not, please fill out the concussion report form. #line:12632121
+  LLManager: If this analysis is inaccurate, please fill out the concussion report form. #line:12632121
   <<llmanager_emote "off">>
 
 <<elseif get_current_objective() == "work_2">>
@@ -84,7 +84,7 @@ dir: day_two_crt
     LLManager: Hell Hell Hell Hello worker. Hello worker. #line:12732615
     <<llmanager_emote "shocked">>
     LLManager: Analysis shows your mental health status is beyond tolerance levels (5120%) #line:1165945
-    LLManager: Exit the facility immediately to avoid demoralizing others, then fill out form A38 to calculate your disciplinary fee. #line:9477514
+    LLManager: Please exit the facility immediately to avoid demoralizing others, then fill out form A38 to calculate your disciplinary fee. #line:9477514
     <<llmanager_emote "off">>
     <<complete_objective "work_6">>
     <<interact_with "tp_cursed_dst">>
