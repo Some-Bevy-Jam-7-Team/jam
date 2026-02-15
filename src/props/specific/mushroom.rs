@@ -47,13 +47,11 @@ impl Plugin for MushroomPlugin {
 )]
 pub(crate) struct MushroomModel1;
 
-
 #[point_class(
 	base(TargetName, Transform, Visibility),
 	model("models/mushroom/mushroom2.gltf")
 )]
 pub(crate) struct MushroomModel2;
-
 
 #[point_class(
 	base(TargetName, Transform, Visibility),
@@ -72,7 +70,6 @@ pub(crate) struct MushroomModel4;
 	model("models/mushroom/mushroom5.gltf")
 )]
 pub(crate) struct MushroomModel5;
-
 
 #[derive(Component, Debug, Reflect)]
 #[reflect(Component)]
