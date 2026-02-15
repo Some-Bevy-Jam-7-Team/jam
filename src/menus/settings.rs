@@ -21,7 +21,8 @@ use crate::{
 };
 
 pub(super) fn plugin(app: &mut App) {
-	app.init_resource::<VsyncSetting>();
+	app.init_resource::<VsyncSetting>()
+		.init_resource::<CamSensitivitySetting>();
 	app.add_systems(OnEnter(Menu::Settings), spawn_settings_menu);
 	app.add_systems(
 		Update,
@@ -42,6 +43,7 @@ pub(super) fn plugin(app: &mut App) {
 			.run_if(in_state(Menu::Settings)),
 	)
 	.add_observer(on_add_quality);
+	app.add_systems(Update, update_camera_sensitivity);
 }
 
 fn spawn_settings_menu(mut commands: Commands) {
@@ -250,39 +252,36 @@ where
 #[reflect(Component)]
 struct CameraSensitivityLabel;
 
-fn lower_camera_sensitivity(
-	_on: On<Pointer<Click>>,
-	cam: Single<(Entity, &CharacterControllerCameraOf)>,
-	mut command: Commands,
-) {
-	let (entity, cam) = cam.into_inner();
-	let mut cam = *cam;
-	cam.mult -= 0.1;
+fn lower_camera_sensitivity(_on: On<Pointer<Click>>, mut sens: ResMut<CamSensitivitySetting>) {
+	sens.0 -= 0.1;
 	const MIN_SENSITIVITY: f32 = 0.1;
-	cam.mult.x = cam.mult.x.max(MIN_SENSITIVITY);
-	cam.mult.y = cam.mult.y.max(MIN_SENSITIVITY);
-	command.entity(entity).insert(cam);
+	sens.x = sens.x.max(MIN_SENSITIVITY);
+	sens.y = sens.y.max(MIN_SENSITIVITY);
 }
 
-fn raise_camera_sensitivity(
-	_on: On<Pointer<Click>>,
-	cam: Single<(Entity, &CharacterControllerCameraOf)>,
-	mut command: Commands,
-) {
-	let (entity, cam) = cam.into_inner();
-	let mut cam = *cam;
-	cam.mult += 0.1;
+fn raise_camera_sensitivity(_on: On<Pointer<Click>>, mut sens: ResMut<CamSensitivitySetting>) {
+	sens.0 += 0.1;
 	const MAX_SENSITIVITY: f32 = 20.0;
-	cam.mult.x = cam.mult.x.min(MAX_SENSITIVITY);
-	cam.mult.y = cam.mult.y.min(MAX_SENSITIVITY);
-	command.entity(entity).insert(cam);
+	sens.x = sens.x.min(MAX_SENSITIVITY);
+	sens.y = sens.y.min(MAX_SENSITIVITY);
 }
 
 fn update_camera_sensitivity_label(
 	mut label: Single<&mut Text, With<CameraSensitivityLabel>>,
-	camera_sensitivity: Single<&CharacterControllerCameraOf>,
+	sens: Res<CamSensitivitySetting>,
 ) {
-	label.0 = format!("{:.1}", camera_sensitivity.mult.x);
+	label.0 = format!("{:.1}", sens.x);
+}
+
+fn update_camera_sensitivity(
+	cam: Single<(Entity, &CharacterControllerCameraOf)>,
+	mut commands: Commands,
+	sens: Res<CamSensitivitySetting>,
+) {
+	let (entity, camera) = cam.into_inner();
+	let mut camera = *camera;
+	camera.mult = sens.0;
+	commands.entity(entity).insert(camera);
 }
 
 #[derive(Component, Reflect)]
@@ -304,6 +303,15 @@ fn update_camera_fov_label(
 	camera_fov: Res<WorldModelFov>,
 ) {
 	label.0 = format!("{:.1}", camera_fov.0);
+}
+
+#[derive(Resource, Reflect, Debug, Deref, DerefMut)]
+struct CamSensitivitySetting(Vec2);
+
+impl Default for CamSensitivitySetting {
+	fn default() -> Self {
+		Self(Vec2::ONE)
+	}
 }
 
 #[derive(Resource, Reflect, Debug, Default)]

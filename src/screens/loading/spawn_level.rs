@@ -69,21 +69,28 @@ struct ScatterReadyToAdvance;
 fn advance_to_gameplay_screen(
 	mut next_screen: ResMut<NextState<Screen>>,
 	scene_spawner: Res<SceneSpawner>,
-	scene_instances: Query<&SceneInstance>,
+	scene_instances: Query<(NameOrEntity, &SceneInstance)>,
 	just_added_scenes: Query<(), (With<SceneRoot>, Without<SceneInstance>)>,
 	just_added_meshes: Query<(), Added<Mesh3d>>,
 	nav_mesh_events: MessageReader<AssetEvent<NavMesh<ThreeD>>>,
 	_: Single<Entity, (With<ScatterRoot>, With<ScatterReadyToAdvance>)>,
 ) {
-	if !(just_added_meshes.is_empty() && just_added_scenes.is_empty()) {
+	if !just_added_meshes.is_empty() {
+		info!("Spawning: just added a mesh");
+		return;
+	}
+	if !just_added_scenes.is_empty() {
+		info!("Spawning: just added a scene");
 		return;
 	}
 	if !nav_mesh_events.is_empty() {
+		info!("Spawning: got nav mesh event");
 		return;
 	}
 
-	for scene_instance in scene_instances.iter() {
+	for (name, scene_instance) in scene_instances.iter() {
 		if !scene_spawner.instance_is_ready(**scene_instance) {
+			info!("Spawning: scene {name} instance not ready");
 			return;
 		}
 	}

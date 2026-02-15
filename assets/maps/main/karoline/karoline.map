@@ -563,6 +563,17 @@
 ( -3968 480 64 ) ( -3967 480 64 ) ( -3968 480 65 ) __TB_empty [ -1 0 0 16 ] [ 0 0 -1 0 ] 90 1 1
 ( -3968 1184 64 ) ( -3968 1184 65 ) ( -3968 1185 64 ) __TB_empty [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 1 1
 }
+// brush 62
+{
+( -3084 -160 64 ) ( -3084 -128 32 ) ( -3084 -128 64 ) __TB_empty [ 0 -1 0 0 ] [ 0 0 -1 0 ] 90 1 1
+( -3053 -199 42 ) ( -3084 -208 36 ) ( -3084 -192 36 ) __TB_empty [ 0.9817798505902814 0 0.1900219065658609 21.599121 ] [ 0 -1 0 0 ] 90 1 1
+( -2998 -336 64 ) ( -3030 -336 32 ) ( -3030 -336 64 ) __TB_empty [ 1 0 0 22 ] [ 0 0 -1 0 ] 0 1 1
+( -2998 -128 32 ) ( -3030 -160 32 ) ( -2998 -160 32 ) __TB_empty [ -1 0 0 -22 ] [ 0 -1 0 0 ] 270 1 1
+( -2998 -128 42 ) ( -3030 -160 42 ) ( -3030 -128 42 ) __TB_empty [ 1 0 0 22 ] [ 0 -1 0 0 ] 90 1 1
+( -2998 -128 64 ) ( -3030 -128 32 ) ( -2998 -128 32 ) __TB_empty [ -1 0 0 -22 ] [ 0 0 -1 0 ] 270 1 1
+( -2997 -176 42 ) ( -2967 -174 36 ) ( -2967 -210 36 ) __TB_empty [ 0.9805806756909202 0 -0.19611613513818404 21.572754 ] [ 0 -1 0 0 ] 90 1 1
+( -2967 -128 64 ) ( -2967 -160 32 ) ( -2967 -160 64 ) __TB_empty [ 0 1 0 0 ] [ 0 0 -1 0 ] 180 1 1
+}
 }
 // entity 1
 {
@@ -794,7 +805,7 @@
 // entity 31
 {
 "classname" "light_point"
-"origin" "-5280 112 152"
+"origin" "-5296 192 152"
 "intensity" "50000.000000"
 "range" "10"
 }
@@ -1041,7 +1052,7 @@
 // entity 55
 {
 "classname" "train"
-"origin" "-2552 -254 2"
+"origin" "-2551 -252 2"
 }
 // entity 56
 {
@@ -1183,4 +1194,196 @@
 "origin" "-4504 360 264"
 "sfx_sample" "audio/sound_effects/mental_health_alarm.ogg"
 "targetname" "track_alarm"
+}
+// entity 72
+{
+"classname" "solid_target"
+"targetname" "metro_wall"
+"angles" "0 90 0"
+// brush 0
+{
+( -3984 -144 -208 ) ( -3984 -143 -208 ) ( -3984 -144 -207 ) darkmod/metal/detailed/panel_rivets_dirty02 [ -1.837589179357618e-15 -1 0 -394.66696 ] [ 0 0 -1 -64 ] 90 0.3 0.4
+( -3600 -160 -224 ) ( -3601 -160 -224 ) ( -3600 -160 -223 ) darkmod/metal/detailed/panel_rivets_dirty02 [ 1 -1.837589179357618e-15 0 -106.666016 ] [ 0 0 -1 -64 ] 0 0.3 0.4
+( -3600 -160 -224 ) ( -3600 -159 -224 ) ( -3601 -160 -224 ) darkmod/metal/detailed/panel_rivets_dirty02 [ -1.837589179357618e-15 -1 0 -394.66696 ] [ 1 -1.837589179357618e-15 0 96 ] 90 0.3 0.4
+( -3888 -144 -32 ) ( -3889 -144 -32 ) ( -3888 -143 -32 ) darkmod/metal/detailed/panel_rivets_dirty02 [ 1.837589179357618e-15 1 0 394.66696 ] [ 1 -1.837589179357618e-15 0 96 ] 90 0.3 0.4
+( -3888 -152 -208 ) ( -3888 -152 -207 ) ( -3889 -152 -208 ) darkmod/metal/detailed/panel_rivets_dirty02 [ -1 1.837589179357618e-15 0 106.666016 ] [ 0 0 -1 -64 ] 270 0.3 0.4
+( -2032 -160 -224 ) ( -2032 -160 -223 ) ( -2032 -159 -224 ) darkmod/metal/detailed/panel_rivets_dirty02 [ 1.837589179357618e-15 1 0 394.66696 ] [ 0 0 -1 -64 ] 180 0.3 0.4
+}
+}
+// entity 73
+{
+"classname" "npc"
+"origin" "-3512 -200 88"
+"animation_lock" "Running"
+"angles" "0 -90 0"
+"yarn_node" "train_geezer_1"
+"completes_subobjective" "obj_6_1"
+}
+// entity 74
+{
+"classname" "npc"
+"origin" "-3349 -259 90"
+"animation_lock" "Standing"
+"angles" "0 90 0"
+"yarn_node" "train_grandma"
+}
+// entity 75
+{
+"classname" "npc"
+"origin" "-2760 -200 88"
+"animation_lock" "Standing"
+"angles" "0 -90 0"
+"yarn_node" "train_geezer_2"
+"completes_subobjective" "obj_6_3"
+}
+// entity 76
+{
+"classname" "npc"
+"origin" "-2364 -268 88"
+"animation_lock" "Dancing"
+"angles" "0 -180 0"
+"yarn_node" "salivatorus_dhalee"
+}
+// entity 77
+{
+"classname" "solid_interactable"
+"sensor_detect_player" "true"
+"interaction_relay" "train_driver_door_script"
+"interaction_text_override" "Talk to The Driver"
+// brush 0
+{
+( -2128 -256 112 ) ( -2128 -144 -16 ) ( -2128 -144 112 ) __TB_empty [ 0 -1 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( -2048 -272 112 ) ( -2080 -272 -16 ) ( -2080 -272 112 ) __TB_empty [ 1 0 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( -2048 -144 32 ) ( -2080 -256 32 ) ( -2048 -256 32 ) __TB_empty [ -1 0 0 0 ] [ 0 -1 0 0 ] 270 1 1
+( -2048 -144 128 ) ( -2080 -256 128 ) ( -2080 -144 128 ) __TB_empty [ 1 0 0 0 ] [ 0 -1 0 0 ] 270 1 1
+( -2048 -208 112 ) ( -2080 -208 -16 ) ( -2048 -208 -16 ) __TB_empty [ -1 0 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( -2048 -144 112 ) ( -2048 -256 -16 ) ( -2048 -256 112 ) __TB_empty [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+}
+}
+// entity 78
+{
+"classname" "objective_entity"
+"origin" "-4704 752 88"
+"targetname" "obj_6"
+"description" "Gather wisdom"
+"objective_order" "6"
+}
+// entity 79
+{
+"classname" "objective_entity"
+"origin" "-4704 728 88"
+"targetname" "obj_6_1"
+"description" "Talk to person #1"
+"objective_order" "1"
+"target" "obj_6"
+}
+// entity 80
+{
+"classname" "objective_entity"
+"origin" "-4704 704 88"
+"targetname" "obj_6_2"
+"description" "Talk to person #2"
+"objective_order" "1"
+"target" "obj_6"
+}
+// entity 81
+{
+"classname" "objective_entity"
+"origin" "-4704 680 88"
+"targetname" "obj_6_3"
+"description" "Talk to humanoid #3"
+"objective_order" "1"
+"target" "obj_6"
+}
+// entity 82
+{
+"classname" "objective_entity"
+"origin" "-4704 656 88"
+"targetname" "obj_6_4"
+"description" "Talk to entity #4"
+"objective_order" "1"
+"target" "obj_6"
+}
+// entity 83
+{
+"classname" "objective_entity"
+"origin" "-4672 752 88"
+"targetname" "obj_7"
+"description" "Talk to The Driver"
+"objective_order" "7"
+}
+// entity 84
+{
+"classname" "yarn_node"
+"origin" "-2144 -240 88"
+"is_non_dialogue" "true"
+"yarn_node" "train_driver_door_script"
+"targetname" "train_driver_door_script"
+}
+// entity 85
+{
+"classname" "teleport_node"
+"origin" "-1768 -16 -312"
+"teleport_player" "true"
+"targetname" "obj_7"
+}
+// entity 86
+{
+"classname" "teleport_node"
+"origin" "-1736 -16 -312"
+"teleport_player" "true"
+"targetname" "obj_8"
+}
+// entity 87
+{
+"classname" "objective_entity"
+"origin" "-4640 752 88"
+"targetname" "obj_8"
+"description" "Become one with the machine"
+"objective_order" "8"
+}
+// entity 88
+{
+"classname" "special_effects_node"
+"origin" "-4672 752 120"
+"screen_flash_duration" "2"
+"camera_shake_duration" "1"
+"camera_shake_indensity" "0.05"
+"targetname" "obj_7"
+}
+// entity 89
+{
+"classname" "teleport_node"
+"origin" "-3864 -216 120"
+"targetname" "go_in"
+"teleport_player" "true"
+}
+// entity 90
+{
+"classname" "teleport_node"
+"origin" "-2040 -144 72"
+"targetname" "metro_wall_destination"
+"teleport_target" "metro_wall"
+"teleport_relative_to" "metro_wall_origin"
+}
+// entity 91
+{
+"classname" "teleport_node"
+"origin" "-2040 -144 -216"
+"targetname" "metro_wall_origin"
+}
+// entity 92
+{
+"classname" "timer_entity"
+"origin" "-2040 -104 72"
+"targetname" "go_in"
+"timer_on_finish" "metro_wall_destination"
+}
+// entity 93
+{
+"classname" "yarn_setter"
+"origin" "-4280 8 264"
+"yarn_variable_to_set" "k_trespassed"
+"yarn_value_to_set" "true"
+"targetname" "start_track_alarm"
 }

@@ -5,7 +5,7 @@ use bevy::prelude::*;
 
 use super::LoadingScreen;
 use crate::font::VARIABLE_FONT;
-use crate::gameplay::level::{AdvanceLevel, CurrentLevel};
+use crate::gameplay::level::CurrentLevel;
 use crate::theme::palette::HEADER_TEXT;
 use crate::{asset_tracking::ResourceHandles, theme::prelude::*};
 
@@ -41,7 +41,6 @@ fn spawn_or_skip_asset_loading_screen(
 		if *shaders_compiled {
 			debug!("Skipping shader compilation...");
 			next_screen.set(LoadingScreen::Level);
-			cmd.trigger(AdvanceLevel);
 			return;
 		}
 		debug!("Compiling shaders...");
