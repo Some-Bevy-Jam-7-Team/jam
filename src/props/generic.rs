@@ -42,8 +42,9 @@ pub(super) fn plugin(app: &mut App) {
 		.add_observer(setup_static_prop_with_convex_hull::<RockModel3>)
 		.add_observer(setup_static_prop_with_convex_hull::<RockModel4>)
 		.add_observer(setup_static_prop_with_convex_hull::<RockModel5>)
-		.add_observer(setup_static_prop_with_convex_hull::<Mouse>)
-		.add_observer(setup_dynamic_prop_with_convex_hull::<PackageMedium>)
+		.add_observer(setup_static_prop_with_convex_hull::<Mouse>);
+
+	app.add_observer(setup_dynamic_prop_with_convex_hull::<PackageMedium>)
 		.add_observer(setup_dynamic_prop_with_convex_hull::<PackageSmall>)
 		.add_observer(setup_dynamic_prop_with_convex_hull_heavy::<Cctv>)
 		.add_observer(setup_dynamic_prop_with_convex_hull::<Rohlik>)
