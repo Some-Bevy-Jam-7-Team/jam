@@ -55,12 +55,7 @@ pub(super) fn plugin(app: &mut App) {
 	app.add_observer(setup_nonphysical_prop::<IvyPart8>)
 		.add_observer(setup_nonphysical_prop::<SmallDoorSign1>);
 
-	app.load_asset::<Gltf>(RockModel1::model_path())
-		.load_asset::<Gltf>(RockModel2::model_path())
-		.load_asset::<Gltf>(RockModel3::model_path())
-		.load_asset::<Gltf>(RockModel4::model_path())
-		.load_asset::<Gltf>(RockModel5::model_path())
-		.load_asset::<Gltf>(RockModel6::model_path())
+	app
 		.load_asset::<Gltf>(Crt::model_path())
 		.load_asset::<Gltf>(Keyboard::model_path())
 		.load_asset::<Gltf>(Mouse::model_path())
@@ -221,12 +216,12 @@ pub(crate) struct RockModel4;
 )]
 pub(crate) struct RockModel5;
 
+
 #[point_class(
 	base(TargetName, Transform, Visibility),
 	model("models/rock/rock_6.gltf")
 )]
 pub(crate) struct RockModel6;
-
 
 
 #[point_class(
