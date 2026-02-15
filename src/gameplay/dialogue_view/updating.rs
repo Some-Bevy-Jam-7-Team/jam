@@ -143,7 +143,7 @@ fn present_line(
 		let handle = asset_server.load::<AudioSample>(path);
 		if let Some(entity) = speaker.0.as_ref() {
 			commands.entity(*entity).with_child((
-				SamplePlayer::new(handle).with_volume(Volume::Decibels(9.0)),
+				SamplePlayer::new(handle).with_volume(Volume::Decibels(11.0)),
 				SpatialPool,
 				VoiceAudio,
 				Transform::default(),
