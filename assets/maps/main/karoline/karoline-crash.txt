@@ -1,0 +1,12 @@
+OS:	KDE Flatpak runtime
+Qt:	6.8.3
+GL_VENDOR:	AMD
+GL_RENDERER:	AMD Radeon RX 7900 XTX (radeonsi, navi31, LLVM 19.1.7, DRM 3.64, 6.17.12-300.fc43.x86_64)
+GL_VERSION:	4.6 (Compatibility Profile) Mesa 25.3.3 (git-a9c6420d8c)
+TrenchBroom Version:	2025.4
+TrenchBroom Build:	v2025.4-dirty Release Linux
+Reason:	SIGSEGV
+Stack trace:
+[0x7ffd62d0d260]
+[0x7ffd62d0d4c8]
+

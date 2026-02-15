@@ -38,8 +38,9 @@ pub(super) fn plugin(app: &mut App) {
 		.add_observer(setup_static_prop_with_convex_hull::<Mouse>)
 		.add_observer(setup_dynamic_prop_with_convex_hull::<PackageMedium>)
 		.add_observer(setup_dynamic_prop_with_convex_hull::<PackageSmall>)
-		.add_observer(setup_dynamic_prop_with_convex_hull::<Cctv>)
-		.add_observer(setup_dynamic_prop_with_convex_hull::<Rohlik>);
+		.add_observer(setup_dynamic_prop_with_convex_hull_heavy::<Cctv>)
+		.add_observer(setup_dynamic_prop_with_convex_hull::<Rohlik>)
+		.add_observer(setup_dynamic_prop_with_convex_hull::<Trash>);
 
 	app.add_observer(setup_nonphysical_prop::<IvyPart8>)
 		.add_observer(setup_nonphysical_prop::<SmallDoorSign1>);
@@ -66,7 +67,8 @@ pub(super) fn plugin(app: &mut App) {
 		.load_asset::<Gltf>(Speaker::model_path())
 		.load_asset::<Gltf>(Jesus::model_path())
 		.load_asset::<Gltf>(Jesus::model_path())
-		.load_asset::<Gltf>(Cctv::model_path());
+		.load_asset::<Gltf>(Cctv::model_path())
+		.load_asset::<Gltf>(Trash::model_path());
 
 	app.add_observer(on_library_light_interaction);
 }
@@ -237,7 +239,13 @@ pub(crate) struct Teeth;
 	base(InteractableEntity, Transform, Visibility, TargetName),
 	model("models/speaker/speaker.gltf")
 )]
+
 pub(crate) struct Speaker;
+#[point_class(
+	base(InteractableEntity, Transform, Visibility, TargetName),
+	model("models/trash/trash.gltf")
+)]
+pub(crate) struct Trash;
 
 #[point_class(base(SpotLight, TargetName))]
 pub(crate) struct LibraryLight {

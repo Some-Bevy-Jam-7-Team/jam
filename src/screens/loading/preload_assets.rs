@@ -83,10 +83,21 @@ struct LoadingAssetsLabel;
 fn update_loading_assets_label(
 	mut query: Query<&mut Text, With<LoadingAssetsLabel>>,
 	resource_handles: Res<ResourceHandles>,
+	asset_server: Res<AssetServer>,
 ) {
 	for mut text in query.iter_mut() {
+		let waiting = resource_handles
+			.waiting
+			.iter()
+			.next()
+			.and_then(|(handle, _)| {
+				let path = asset_server.get_path(handle)?;
+				let disp = path.path().display();
+				format!("{disp}").into()
+			})
+			.unwrap_or_else(|| "Done".to_string());
 		text.0 = format!(
-			"Loading Assets: {} / {}",
+			"Loading Assets: {} / {} \n{waiting}",
 			resource_handles.finished_count(),
 			resource_handles.total_count()
 		);

@@ -74,6 +74,29 @@ pub(crate) fn dynamic_bundle<T: QuakeClass>(
 	)
 }
 
+pub(crate) fn setup_dynamic_prop_with_convex_hull_heavy<T: QuakeClass>(
+	add: On<Add, T>,
+	asset_server: Res<AssetServer>,
+	mut commands: Commands,
+) {
+	let bundle = dynamic_bundle_heavy::<T>(&asset_server, ColliderConstructor::ConvexHullFromMesh);
+	commands.entity(add.entity).insert(bundle);
+}
+
+pub(crate) fn dynamic_bundle_heavy<T: QuakeClass>(
+	asset_server: &AssetServer,
+	constructor: ColliderConstructor,
+) -> impl Bundle {
+	let model = asset_server.load_trenchbroom_model::<T>();
+	(
+		ColliderConstructorHierarchy::new(constructor)
+			.with_default_layers(CollisionLayers::new(CollisionLayer::Prop, LayerMask::ALL))
+			.with_default_density(10000.0),
+		RigidBody::Dynamic,
+		SceneRoot(model),
+	)
+}
+
 pub(crate) fn static_bundle<T: QuakeClass>(
 	asset_server: &AssetServer,
 	constructor: ColliderConstructor,

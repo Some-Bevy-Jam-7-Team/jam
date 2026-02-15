@@ -349,102 +349,57 @@
 }
 // brush 38
 {
+( -3200 -128 64 ) ( -3200 -127 64 ) ( -3200 -128 65 ) darkmod/metal/grate/fence_iron_01 [ 0 -1 0 0 ] [ 0 0 -1 0 ] 270 0.1 0.1
+( -3200 -128 64 ) ( -3200 -128 65 ) ( -3199 -128 64 ) darkmod/metal/grate/fence_iron_01 [ 1 0 0 -16 ] [ 0 0 -1 0 ] 270 0.1 0.1
+( -3200 -128 64 ) ( -3199 -128 64 ) ( -3200 -127 64 ) darkmod/metal/grate/fence_iron_01 [ -1 0 0 16 ] [ 0 -1 0 0 ] 270 0.1 0.1
+( -3184 272 208 ) ( -3184 273 208 ) ( -3183 272 208 ) darkmod/metal/grate/fence_iron_01 [ 1 0 0 -16 ] [ 0 -1 0 0 ] 90 0.1 0.1
+( -3184 272 80 ) ( -3183 272 80 ) ( -3184 272 81 ) darkmod/metal/grate/fence_iron_01 [ -1 0 0 16 ] [ 0 0 -1 0 ] 270 0.1 0.1
+( -3184 272 80 ) ( -3184 272 81 ) ( -3184 273 80 ) darkmod/metal/grate/fence_iron_01 [ 0 1 0 0 ] [ 0 0 -1 0 ] 270 0.1 0.1
+}
+// brush 39
+{
 ( -4560 -80 64 ) ( -4560 -79 64 ) ( -4560 -80 65 ) darkmod/metal/grate/fence_iron_01 [ 0 -1 0 0 ] [ 0 0 -1 656 ] 0 0.1 0.1
 ( -4560 -128 64 ) ( -4560 -128 65 ) ( -4559 -128 64 ) darkmod/metal/grate/fence_iron_01 [ 1 0 0 0 ] [ 0 0 -1 656 ] 270 0.1 0.1
 ( -4560 -80 64 ) ( -4559 -80 64 ) ( -4560 -79 64 ) darkmod/metal/grate/fence_iron_01 [ -1 0 0 0 ] [ 0 -1 0 656 ] 0 0.1 0.1
 ( -4544 208 256 ) ( -4544 209 256 ) ( -4543 208 256 ) darkmod/metal/grate/fence_iron_01 [ 1 0 0 0 ] [ 0 -1 0 656 ] 180 0.1 0.1
-( -4544 264 80 ) ( -4543 264 80 ) ( -4544 264 81 ) darkmod/metal/grate/fence_iron_01 [ -1 0 0 0 ] [ 0 0 -1 656 ] 180 0.1 0.1
+( -4544 272 80 ) ( -4543 272 80 ) ( -4544 272 81 ) darkmod/metal/grate/fence_iron_01 [ -1 0 0 0 ] [ 0 0 -1 656 ] 270 0.1 0.1
 ( -4552 208 80 ) ( -4552 208 81 ) ( -4552 209 80 ) darkmod/metal/grate/fence_iron_01 [ 0 1 0 0 ] [ 0 0 -1 656 ] 270 0.1 0.1
-}
-// brush 39
-{
-( -5216 0 64 ) ( -5216 1 64 ) ( -5216 0 65 ) darkmod/plaster/halftimber_2windows [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -5216 0 64 ) ( -5216 0 65 ) ( -5215 0 64 ) darkmod/plaster/halftimber_2windows [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -5216 0 64 ) ( -5215 0 64 ) ( -5216 1 64 ) darkmod/plaster/halftimber_2windows [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
-( -5168 16 144 ) ( -5168 17 144 ) ( -5167 16 144 ) darkmod/plaster/halftimber_2windows [ 1 0 0 0 ] [ 0 -1 0 0 ] 270 1 1
-( -5168 16 80 ) ( -5167 16 80 ) ( -5168 16 81 ) darkmod/plaster/halftimber_2windows [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -5168 16 80 ) ( -5168 16 81 ) ( -5168 17 80 ) darkmod/plaster/halftimber_2windows [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
 }
 // brush 40
 {
-( -5120 0 64 ) ( -5120 1 64 ) ( -5120 0 65 ) darkmod/plaster/halftimber_2windows [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -5120 0 64 ) ( -5120 0 65 ) ( -5119 0 64 ) darkmod/plaster/halftimber_2windows [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -5120 0 64 ) ( -5119 0 64 ) ( -5120 1 64 ) darkmod/plaster/halftimber_2windows [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
-( -5072 16 144 ) ( -5072 17 144 ) ( -5071 16 144 ) darkmod/plaster/halftimber_2windows [ 1 0 0 0 ] [ 0 -1 0 0 ] 270 1 1
-( -5072 16 80 ) ( -5071 16 80 ) ( -5072 16 81 ) darkmod/plaster/halftimber_2windows [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -5088 16 80 ) ( -5088 16 81 ) ( -5088 17 80 ) darkmod/plaster/halftimber_2windows [ 0 1 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( -5120 -96 64 ) ( -5120 -95 64 ) ( -5120 -96 65 ) brick [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( -5120 -96 64 ) ( -5120 -96 65 ) ( -5119 -96 64 ) brick [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( -5120 -96 64 ) ( -5119 -96 64 ) ( -5120 -95 64 ) brick [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
+( -5112 -48 128 ) ( -5112 -47 128 ) ( -5111 -48 128 ) brick [ 1 0 0 0 ] [ 0 -1 0 0 ] 270 1 1
+( -5112 -48 72 ) ( -5111 -48 72 ) ( -5112 -48 73 ) brick [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( -5112 -48 72 ) ( -5112 -48 73 ) ( -5112 -47 72 ) brick [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
 }
 // brush 41
 {
-( -5216 0 144 ) ( -5216 1 144 ) ( -5216 0 145 ) darkmod/plaster/halftimber_2windows [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -5216 0 144 ) ( -5216 0 145 ) ( -5215 0 144 ) darkmod/plaster/halftimber_2windows [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -5216 0 144 ) ( -5215 0 144 ) ( -5216 1 144 ) darkmod/plaster/halftimber_2windows [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
-( -5088 16 176 ) ( -5088 17 176 ) ( -5087 16 176 ) darkmod/plaster/halftimber_2windows [ 1 0 0 0 ] [ 0 -1 0 0 ] 270 1 1
-( -5088 16 160 ) ( -5087 16 160 ) ( -5088 16 161 ) darkmod/plaster/halftimber_2windows [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -5088 16 160 ) ( -5088 16 161 ) ( -5088 17 160 ) darkmod/plaster/halftimber_2windows [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( -5184 -96 64 ) ( -5184 -95 64 ) ( -5184 -96 65 ) brick [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( -5184 -96 64 ) ( -5184 -96 65 ) ( -5183 -96 64 ) brick [ 1 0 0 64 ] [ 0 0 -1 0 ] 0 1 1
+( -5184 -96 64 ) ( -5183 -96 64 ) ( -5184 -95 64 ) brick [ -1 0 0 -64 ] [ 0 -1 0 0 ] 0 1 1
+( -5176 -48 128 ) ( -5176 -47 128 ) ( -5175 -48 128 ) brick [ 1 0 0 64 ] [ 0 -1 0 0 ] 270 1 1
+( -5176 -48 72 ) ( -5175 -48 72 ) ( -5176 -48 73 ) brick [ -1 0 0 -64 ] [ 0 0 -1 0 ] 0 1 1
+( -5176 -48 72 ) ( -5176 -48 73 ) ( -5176 -47 72 ) brick [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
 }
 // brush 42
 {
-( -5104 -96 64 ) ( -5104 -95 64 ) ( -5104 -96 65 ) darkmod/plaster/halftimber_2windows [ 0 -1 0 -16 ] [ 0 0 -1 0 ] 180 1 1
-( -5104 -96 64 ) ( -5104 -96 65 ) ( -5103 -96 64 ) darkmod/plaster/halftimber_2windows [ 1 0 0 16 ] [ 0 0 -1 0 ] 180 1 1
-( -5104 -96 64 ) ( -5103 -96 64 ) ( -5104 -95 64 ) darkmod/plaster/halftimber_2windows [ -1 0 0 -16 ] [ 0 -1 0 -16 ] 180 1 1
-( -5088 0 176 ) ( -5088 1 176 ) ( -5087 0 176 ) darkmod/plaster/halftimber_2windows [ 1 0 0 16 ] [ 0 -1 0 -16 ] 90 1 1
-( -5088 0 80 ) ( -5087 0 80 ) ( -5088 0 81 ) darkmod/plaster/halftimber_2windows [ -1 0 0 -16 ] [ 0 0 -1 0 ] 180 1 1
-( -5088 0 80 ) ( -5088 0 81 ) ( -5088 1 80 ) darkmod/plaster/halftimber_2windows [ 0 1 0 16 ] [ 0 0 -1 0 ] 180 1 1
+( -5176 -96 64 ) ( -5176 -95 64 ) ( -5176 -96 65 ) brick [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( -5176 -96 64 ) ( -5176 -96 65 ) ( -5175 -96 64 ) brick [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( -5176 -96 64 ) ( -5175 -96 64 ) ( -5176 -95 64 ) brick [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
+( -5120 -88 128 ) ( -5120 -87 128 ) ( -5119 -88 128 ) brick [ 1 0 0 0 ] [ 0 -1 0 0 ] 270 1 1
+( -5120 -88 72 ) ( -5119 -88 72 ) ( -5120 -88 73 ) brick [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( -5120 -88 72 ) ( -5120 -88 73 ) ( -5120 -87 72 ) brick [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
 }
 // brush 43
 {
-( -5216 -96 64 ) ( -5216 -95 64 ) ( -5216 -96 65 ) darkmod/plaster/halftimber_2windows [ 0 -1 0 -16 ] [ 0 0 -1 0 ] 180 1 1
-( -5216 -96 64 ) ( -5216 -96 65 ) ( -5215 -96 64 ) darkmod/plaster/halftimber_2windows [ 1 0 0 -16 ] [ 0 0 -1 0 ] 180 1 1
-( -5216 -96 64 ) ( -5215 -96 64 ) ( -5216 -95 64 ) darkmod/plaster/halftimber_2windows [ -1 0 0 16 ] [ 0 -1 0 -16 ] 180 1 1
-( -5200 0 176 ) ( -5200 1 176 ) ( -5199 0 176 ) darkmod/plaster/halftimber_2windows [ 1 0 0 -16 ] [ 0 -1 0 -16 ] 90 1 1
-( -5200 0 80 ) ( -5199 0 80 ) ( -5200 0 81 ) darkmod/plaster/halftimber_2windows [ -1 0 0 16 ] [ 0 0 -1 0 ] 180 1 1
-( -5200 0 80 ) ( -5200 0 81 ) ( -5200 1 80 ) darkmod/plaster/halftimber_2windows [ 0 1 0 16 ] [ 0 0 -1 0 ] 180 1 1
-}
-// brush 44
-{
-( -5200 -96 64 ) ( -5200 -95 64 ) ( -5200 -96 65 ) darkmod/plaster/halftimber_2windows [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -5200 -96 64 ) ( -5200 -96 65 ) ( -5199 -96 64 ) darkmod/plaster/halftimber_2windows [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -5200 -96 64 ) ( -5199 -96 64 ) ( -5200 -95 64 ) darkmod/plaster/halftimber_2windows [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
-( -5104 -80 176 ) ( -5104 -79 176 ) ( -5103 -80 176 ) darkmod/plaster/halftimber_2windows [ 1 0 0 0 ] [ 0 -1 0 0 ] 270 1 1
-( -5104 -80 80 ) ( -5103 -80 80 ) ( -5104 -80 81 ) darkmod/plaster/halftimber_2windows [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -5104 -80 80 ) ( -5104 -80 81 ) ( -5104 -79 80 ) darkmod/plaster/halftimber_2windows [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
-}
-// brush 45
-{
-( -5200 -80 160 ) ( -5200 -79 160 ) ( -5200 -80 161 ) darkmod/plaster/halftimber_2windows [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -5200 -80 160 ) ( -5200 -80 161 ) ( -5199 -80 160 ) darkmod/plaster/halftimber_2windows [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -5200 -80 160 ) ( -5199 -80 160 ) ( -5200 -79 160 ) darkmod/plaster/halftimber_2windows [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
-( -5104 0 176 ) ( -5104 1 176 ) ( -5103 0 176 ) darkmod/plaster/halftimber_2windows [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
-( -5104 0 176 ) ( -5103 0 176 ) ( -5104 0 177 ) darkmod/plaster/halftimber_2windows [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -5104 0 176 ) ( -5104 0 177 ) ( -5104 1 176 ) darkmod/plaster/halftimber_2windows [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
-}
-// brush 46
-{
-( -5216 -96 176 ) ( -5216 -95 176 ) ( -5216 -96 177 ) darkmod/stone/brick/rough_big_blocks04_brown [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -5216 -96 176 ) ( -5216 -96 177 ) ( -5215 -96 176 ) darkmod/stone/brick/rough_big_blocks04_brown [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -5216 -96 176 ) ( -5215 -96 176 ) ( -5216 -95 176 ) darkmod/stone/brick/rough_big_blocks04_brown [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
-( -5088 16 192 ) ( -5088 17 192 ) ( -5087 16 192 ) darkmod/stone/brick/rough_big_blocks04_brown [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
-( -5088 48 192 ) ( -5087 48 192 ) ( -5088 48 193 ) darkmod/stone/brick/rough_big_blocks04_brown [ -1 0 0 0 ] [ 0 0 -1 0 ] 180 1 1
-( -5088 16 192 ) ( -5088 16 193 ) ( -5088 17 192 ) darkmod/stone/brick/rough_big_blocks04_brown [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
-}
-// brush 47
-{
-( -5280 264 64 ) ( -5280 264 65 ) ( -5280 263 64 ) darkmod/metal/grate/fence_iron_01 [ 6.123233995736766e-17 -1 0 48 ] [ 0 0 -1 656 ] 0 0.1 0.1
-( -4624 256 80 ) ( -4624 256 81 ) ( -4623 256 80 ) darkmod/metal/grate/fence_iron_01 [ 1 6.123233995736766e-17 0 -320 ] [ 0 0 -1 656 ] 90 0.1 0.1
-( -4912 264 64 ) ( -4912 263 64 ) ( -4911 264 64 ) darkmod/metal/grate/fence_iron_01 [ -6.123233995736766e-17 1 0 -48 ] [ -1 -6.123233995736766e-17 0 -560 ] 90 0.1 0.1
-( -4624 248 256 ) ( -4623 248 256 ) ( -4624 247 256 ) darkmod/metal/grate/fence_iron_01 [ 6.123233995736766e-17 -1 0 48 ] [ -1 -6.123233995736766e-17 0 -560 ] 90 0.1 0.1
-( -4912 264 64 ) ( -4911 264 64 ) ( -4912 264 65 ) darkmod/metal/grate/fence_iron_01 [ -1 -6.123233995736766e-17 0 320 ] [ 0 0 -1 656 ] 180 0.1 0.1
-( -4560 248 80 ) ( -4560 247 80 ) ( -4560 248 81 ) darkmod/metal/grate/fence_iron_01 [ -6.123233995736766e-17 1 0 -48 ] [ 0 0 -1 656 ] 90 0.1 0.1
-}
-// brush 48
-{
-( -5280 -120 64 ) ( -5280 -120 65 ) ( -5280 -121 64 ) darkmod/metal/grate/fence_iron_01 [ 6.123233995736766e-17 -1 0 -208 ] [ 0 0 -1 656 ] 180 0.1 0.1
-( -4624 -128 80 ) ( -4624 -128 81 ) ( -4623 -128 80 ) darkmod/metal/grate/fence_iron_01 [ 1 6.123233995736766e-17 0 -320 ] [ 0 0 -1 656 ] 270 0.1 0.1
-( -4912 -120 64 ) ( -4912 -121 64 ) ( -4911 -120 64 ) darkmod/metal/grate/fence_iron_01 [ -6.123233995736766e-17 1 0 208 ] [ -1 -6.123233995736766e-17 0 -560 ] 270 0.1 0.1
-( -4624 -136 256 ) ( -4623 -136 256 ) ( -4624 -137 256 ) darkmod/metal/grate/fence_iron_01 [ 6.123233995736766e-17 -1 0 -208 ] [ -1 -6.123233995736766e-17 0 -560 ] 270 0.1 0.1
-( -4912 -120 64 ) ( -4911 -120 64 ) ( -4912 -120 65 ) darkmod/metal/grate/fence_iron_01 [ -1 -6.123233995736766e-17 0 320 ] [ 0 0 -1 656 ] 0 0.1 0.1
-( -4560 -136 80 ) ( -4560 -137 80 ) ( -4560 -136 81 ) darkmod/metal/grate/fence_iron_01 [ -6.123233995736766e-17 1 0 208 ] [ 0 0 -1 656 ] 270 0.1 0.1
+( -5176 -64 120 ) ( -5176 -63 120 ) ( -5176 -64 121 ) brick [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( -5176 -88 120 ) ( -5176 -88 121 ) ( -5175 -88 120 ) brick [ 1 0 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( -5176 -64 120 ) ( -5175 -64 120 ) ( -5176 -63 120 ) brick [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
+( -5120 -56 128 ) ( -5120 -55 128 ) ( -5119 -56 128 ) brick [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
+( -5120 -48 128 ) ( -5119 -48 128 ) ( -5120 -48 129 ) brick [ -1 0 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( -5120 -56 128 ) ( -5120 -56 129 ) ( -5120 -55 128 ) brick [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
 }
 }
 // entity 1
@@ -534,93 +489,11 @@
 // entity 12
 {
 "classname" "player"
-"origin" "-5160 -8 120"
-"angles" "0 -90 0"
+"origin" "-4632 88 136"
 }
 // entity 13
 {
-"classname" "door"
-"origin" "-5144 8 72"
-"angles" "0 -90 0"
-}
-// entity 14
-{
-"classname" "static_cctv"
-"origin" "-5160 -88 120"
-"angles" "0 90 0"
-"is_edible" "true"
-}
-// entity 15
-{
-"classname" "light_point"
-"origin" "-5144 -40 136"
-"range" "1.0"
-}
-// entity 16
-{
-"classname" "train"
-"origin" "-3816 376 8"
-"angles" "0 -180 0"
-}
-// entity 17
-{
-"classname" "jesus"
-"origin" "-4584 8 64"
-"angles" "0 180 0"
-"targetname" "guardian"
-"interaction_relay" "guardian"
-}
-// entity 18
-{
-"classname" "yarn_node"
-"origin" "-4584 -40 72"
-"targetname" "guardian"
-"yarn_node" "guardian"
-}
-// entity 19
-{
-"classname" "trash"
-"origin" "-4592 224 72"
-"is_edible" "true"
-}
-// entity 20
-{
-"classname" "light_point"
-"origin" "-4584 8 56"
-}
-// entity 21
-{
-"classname" "trash"
-"origin" "-4608 192 72"
-"is_edible" "true"
-}
-// entity 22
-{
-"classname" "trash"
-"origin" "-5168 192 72"
-"is_edible" "true"
-}
-// entity 23
-{
-"classname" "trash"
-"origin" "-5200 144 72"
-"is_edible" "true"
-}
-// entity 24
-{
-"classname" "trash"
-"origin" "-5232 184 72"
-"is_edible" "true"
-}
-// entity 25
-{
-"classname" "trash"
-"origin" "-5048 -56 72"
-"is_edible" "true"
-}
-// entity 26
-{
-"classname" "trash"
-"origin" "-5240 -24 72"
-"is_edible" "true"
+"classname" "npc"
+"origin" "-4584 -24 72"
+"angles" "0 165 0"
 }
