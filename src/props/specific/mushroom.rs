@@ -41,11 +41,6 @@ impl Plugin for MushroomPlugin {
 	}
 }
 
-#[derive(Component, Debug, Reflect)]
-#[reflect(Component)]
-#[require(EnvironmentTemperature)]
-pub(crate) struct Mushroom;
-
 macro_rules! define_mushrooms {
     ( $( $name:ident => $filename:expr ),* $(,)? ) => {
         $(
@@ -65,6 +60,13 @@ define_mushrooms!(
 	MushroomModel4 => "mushroom4.gltf",
 	MushroomModel5 => "mushroom5.gltf",
 );
+
+
+#[derive(Component, Debug, Reflect)]
+#[reflect(Component)]
+#[require(EnvironmentTemperature)]
+pub(crate) struct Mushroom;
+
 
 fn setup_mushroom<T: Component + QuakeClass>(
 	add: On<Add, T>,

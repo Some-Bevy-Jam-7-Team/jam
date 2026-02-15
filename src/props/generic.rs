@@ -17,6 +17,7 @@ use bevy::{
 };
 use bevy_trenchbroom::prelude::*;
 
+
 pub(super) fn plugin(app: &mut App) {
 	app.add_observer(setup_static_prop_with_convex_hull::<Grate>)
 		.add_observer(setup_static_prop_with_convex_decomposition::<Table>)
@@ -38,7 +39,7 @@ pub(super) fn plugin(app: &mut App) {
 		.add_observer(setup_static_prop_with_convex_hull::<RockModel2>)
 		.add_observer(setup_static_prop_with_convex_hull::<RockModel3>)
 		.add_observer(setup_static_prop_with_convex_hull::<RockModel4>)
-		.add_observer(setup_static_prop_with_convex_hull::<RockModel5>)
+		.add_observer(setup_static_prop_with_convex_hull::<RockModel5>);
 
 	app.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<Keyboard>)
 		.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<Mouse>)
@@ -133,26 +134,6 @@ impl Crt {
 	}
 }
 
-macro_rules! define_rocks {
-    ( $( $name:ident => $filename:expr ),* $(,)? ) => {
-        $(
-            #[point_class(
-                base(Transform, Visibility),
-                model(concat!("models/rock/", $filename))
-            )]
-            pub(crate) struct $name;
-        )*
-    };
-}
-
-define_rocks!(
-	RockModel1 => "rock_1.gltf",
-	RockModel2 => "rock_2.gltf",
-	RockModel3 => "rock_3.gltf",
-	RockModel4 => "rock_1.gltf",
-	RockModel5 => "rock_2.gltf",
-	RockModel6 => "rock_3.gltf",
-);
 
 #[point_class(
 	base(TargetName, InteractableEntity, MaybeDynamic, Transform, Visibility),
@@ -212,6 +193,27 @@ pub(crate) struct Cctv;
 pub(crate) struct StaticCctv;
 
 // generic static props
+macro_rules! define_rocks {
+    ( $( $name:ident => $filename:expr ),* $(,)? ) => {
+        $(
+            #[point_class(
+                base(Transform, Visibility),
+                model(concat!("models/rock/", $filename))
+            )]
+            pub(crate) struct $name;
+        )*
+    };
+}
+
+define_rocks!(
+	RockModel1 => "rock_1.gltf",
+	RockModel2 => "rock_2.gltf",
+	RockModel3 => "rock_3.gltf",
+	RockModel4 => "rock_1.gltf",
+	RockModel5 => "rock_2.gltf",
+	RockModel6 => "rock_3.gltf",
+);
+
 #[point_class(
 	base(TargetName, InteractableEntity, Transform, Visibility),
 	model("models/darkmod/fireplace/grate.gltf")
