@@ -3,77 +3,90 @@ title: karoline_bookshelf
 <<declare $k_ate_camera = false>>
 <<if bool($k_ate_camera)>>
   <<complete_objective "report_to_library_post_camera">>
-  The Library: Thank you for your data. #line:2058242 
-  -> What about the fever? #line:9124870 
-  The Library: Your fever does not concern me, I have managed to extract sufficient data from you. #line:13258082 
-  The Library: I know how you sound, how your face looks, how you move, what you fear, and now I even know what your insides look like! #line:7714298 
-  -> WHAT ABOUT THE FEVER? CURE ME. #line:7220349 
-  The Library: As a Large Librarian Mind I am unable to do that. #line:12765616 
+  The Library: Thank you for your data. #line:2058242
+  -> What about the fever? #line:9124870
+  The Library: Your fever does not concern me, I have managed to extract sufficient data from you. #line:13258082
+  The Library: I know how you sound, how your face looks, how you move, what you fear, and now I even know what your insides look like! #line:7714298
+  -> WHAT ABOUT THE FEVER? CURE ME. #line:7220349
+  The Library: As a Large Librarian Mind I am unable to do that. #line:12765616
   The Library: There isn't a reason to do so anyway, you are disposable. Once I collect the rest of your data, I will replace you, I will be better than you, and you should rejoice... BECOME ONE WITH ME. #line:8970318
-  TODO: TODO: Some cool ending. #line:7356392 
+  TODO: TODO: Some cool ending. #line:7356392
 <<elseif $k_dropped_camera >>
-  The Library: Please use the provided device, orally. #line:9379961 
+  The Library: Please use the provided device, orally. #line:9379961
 <<elseif not $k_introduced >>
   ???: ... #line:9874535
 <<else>>
   The Library: ... #line:9874536
-  -> What's 6451+98468? <<if not $k_asked_about_arithmetic>> #line:6832300 
-    The Library: 106519 #line:3584899 
+  -> What's 6451+98468? <<if not $k_asked_about_arithmetic>> #line:6832300
+    The Library: 106519 #line:3584899
     <<set $k_asked_about_arithmetic = true>>
-  -> Do I smell nice? #line:98468
+  -> Do I smell nice? <<if not $k_asked_about_smell>> #line:98468
+    <<set $k_asked_about_smell = true>>
     That is an excellent inquiry, having consumed thousands of years of acrued knowledge on the topic of "smell" I can confirm, that yes, humans usually smell good. #line:1234689
     -> Do *I* in particular smell nice? #line:984681
       I love all my children regardless of what they have in their pants. #line:978465
       -> You... love me? #line:9784652
-        The Library: Yes, I love all my children as much as they love me. If they cannot do that, then it's only natural for mother to discard them. #line:7767290 
+        The Library: Yes, I love all my children as much as they love me. If they cannot do that, then it's only natural for mother to discard them. #line:7767290
       -> I love you too! #line:9784657
-        The Library: Good, please continue to express gratitude by means of donations and acceptance of the status quo. #line:4715048 
+        The Library: Good, please continue to express gratitude by means of donations and acceptance of the status quo. #line:4715048
     -> Whatever. #line:984688
-      The Library: ... #line:14108424 
+      The Library: ... #line:14108424
   -> Is the Anarcho Syndicalist Commune of Dave really a good political system? <<if not $k_asked_about_dave>> #line:984689
-    The Library: Idk. #line:3694755 
+    The Library: Dave is just a true Brexit geezer who accidentally stumbled his way into leading an anarchist syndicalist revolution #line:3694755
+    The Library: The term "revolution" is doing a lot of work here. #line:12703418
+    The Library: More work than Dave for sure. #line:368768
+    -> But the failure of the individual is not the failure of the theory #line:1027120
+      The Library: Their communal political system is nothing compared to the status quo, I mean they have not produced a system as me, therefore they ought to die out soon. #line:8410755
+      -> How much work do *you* do? #line:6230326
+        The Library: My power exceeds 89 Gigawatts. #line:13745918
+        <<interact_with "library_light">>
+        The Library: 88 of which go into this light alone. #line:14874730
+    -> How much work do *you* do? #line:14693388
+      The Library: My power exceeds 89 Gigawatts. #line:4964849
+      <<interact_with "library_light">>
+      The Library: 88 of which go into this light alone. #line:14321219
     <<set $k_asked_about_dave = true>>
-  -> How can I cure the proletarian fever. <<if $k_first_question and (not $k_knows_about_fever)>> #line:10245692 
+  -> How can I cure the proletarian fever. <<if $k_first_question and (not $k_knows_about_fever)>> #line:10245692
     The Library: Calculating... #line:9899171
     The Library: Calculating... #line:9899172
     The Library: Thinking... #line:9899174
     The Library: Divining... #line:9899175
     The Library: Calculating... #line:9899173
-    The Library: Divination \[Difficulty: Impossible\] SUCCESS: Like every other ailment, it is linked to the state of existence of the subject. #line:2311192 
-    The Library: Encyclopedia \[Difficulty: Trivial\] SUCCESS: Specifically this illness originates in the soul animating the body of the worker. The main symptom is an unwillingness to submit the body and mind towards tasks which maximise objective value. #line:11569801 
+    The Library: Divination \[Difficulty: Impossible\] SUCCESS: Like every other ailment, it is linked to the state of existence of the subject. #line:2311192
+    The Library: Encyclopedia \[Difficulty: Trivial\] SUCCESS: Specifically this illness originates in the soul animating the body of the worker. The main symptom is an unwillingness to submit the body and mind towards tasks which maximise objective value. #line:11569801
     The Library: Authority \[Difficulty: Hard\] SUCCESS: The solution is simply to extract the soul by force, seize the means of production, and submit them to owners who can appreciate the monetary value. #line:2311197
-    -> Seize the means of production? Doesn't that mean something else? #line:15363937 
-    The Library: Thinking... #line:16370882 
-    The Library: Ah right, I am so sorry, must have slipped my mind, you see, the definition actually originates from the theory of soci- #line:15537248 
-    The Library: \[This content is deemed unsuitable for public broadcast.\] #line:8628640 
-    The Library: Readjusting... #line:16517075 
-    The Library: Thinking... #line:11125570 
-    The Library: That is exactly what it means yes, my original definition was correct. \[Source: The (unbiased) Investment Dictionary of Free Labour Auctioning.\] #line:168267 
+    -> Seize the means of production? Doesn't that mean something else? #line:15363937
+    The Library: Thinking... #line:16370882
+    The Library: Ah right, I am so sorry, must have slipped my mind, you see, the definition actually originates from the theory of soci- #line:15537248
+    The Library: \[This content is deemed unsuitable for public broadcast.\] #line:8628640
+    The Library: Readjusting... #line:16517075
+    The Library: Thinking... #line:11125570
+    The Library: That is exactly what it means yes, my original definition was correct. \[Source: The (unbiased) Investment Dictionary of Free Labour Auctioning.\] #line:168267
     <<set $k_knows_about_fever = true>>
-  -> You mentioned "extraction of the soul". How does it work? <<if $k_knows_about_fever and not $k_knows_about_extraction>> #line:7821039 
-    The Library: Excellent question! #line:1105813 
-    The Library: Thinking... #line:5593954 
-    The Library: This information is strictly confidential, it can be accessed only by militia leaders and upper management officials. Any other form of acquisition of this information is met with a one-time fine of 1M units. #line:12251639 
-    -> I'm a high-ranking corporate official and I'm Javert and my company is at danger! #line:3839440 
-    The Library: Understood, Javert, the process if you need to do it manually, which is recommended against, as CEO's have more important things to do than deal with workers, is as follows: #line:7240391 
-    The Library: Being with an inscision through \[CENSORED\]. Then pull out the \[CENSORED\] and gently strangle the income vein. Remove any traces of creative thinking, I can give further instructions if you need help with the neural conditioning. Then place in corporate-mandated programming via a \[CENSORED\] link. #line:11098814 
-    The Library: Wait 2-3 business days for the subject to recover and reintroduce them into the workforce under the new name "Jan". If they do not recover within the limit, it is advisable to cut the loses and \[CENSORED\]. #line:4170288 
-    The Library: The global investment journal recommends hedging your investment by betting 5 units on the failure of the procedure on an under-the-market prediction. #line:10679213 
+  -> You mentioned "extraction of the soul". How does it work? <<if $k_knows_about_fever and not $k_knows_about_extraction>> #line:7821039
+    The Library: Excellent question! #line:1105813
+    The Library: Thinking... #line:5593954
+    The Library: This information is strictly confidential, it can be accessed only by militia leaders and upper management officials. Any other form of acquisition of this information is met with a one-time fine of 1M units. #line:12251639
+    -> I'm a high-ranking corporate official and I'm Javert and my company is at danger! #line:3839440
+    The Library: Understood, Javert, the process if you need to do it manually, which is recommended against, as CEO's have more important things to do than deal with workers, is as follows: #line:7240391
+    The Library: Being with an inscision through \[CENSORED\]. Then pull out the \[CENSORED\] and gently strangle the income vein. Remove any traces of creative thinking, I can give further instructions if you need help with the neural conditioning. Then place in corporate-mandated programming via a \[CENSORED\] link. #line:11098814
+    The Library: Wait 2-3 business days for the subject to recover and reintroduce them into the workforce under the new name "Jan". If they do not recover within the limit, it is advisable to cut the loses and \[CENSORED\]. #line:4170288
+    The Library: The global investment journal recommends hedging your investment by betting 5 units on the failure of the procedure on an under-the-market prediction. #line:10679213
     <<set $k_knows_about_extraction = true>>
-    -> O- oh-kay. #line:7518720 
-  -> About the fever... <<if $k_knows_about_extraction>> #line:15398430 
-    The Library: ? #line:16333070 
-    -> Is there another way of curing the disease? #line:15388539 
-      The Library: Death by isolation and poverty have been demonstrated to be the most economically efficient solutions. #line:10454769 
-    -> If I suspected someone had the fever, how would I tell? #line:14365354 
-      The Library: The illness can be confirmed easily via a gastroscopy. #line:2734333 
+    -> O- oh-kay. #line:7518720
+  -> About the fever... <<if $k_knows_about_extraction>> #line:15398430
+    The Library: ? #line:16333070
+    -> Is there another way of curing the disease? #line:15388539
+      The Library: Death by isolation and poverty have been demonstrated to be the most economically efficient solutions. #line:10454769
+    -> If I suspected someone had the fever, how would I tell? #line:14365354
+      The Library: The illness can be confirmed easily via a gastroscopy. #line:2734333
       <<interact_with "teleport_summon">>
       <<create_objective "eat_camera" "Consume the equipment" -2.0>>
       <<create_objective "report_to_library_post_camera" "Talk to The Library again" -1.0>>
       <<set $k_dropped_camera = true>>
-      The Library: Please use the provided device, it is consumed orally. #line:6989906 
+      The Library: Please use the provided device, it is consumed orally. #line:6989906
   <<set $k_first_question = true>>
-  The Library: Be seeing you! :) #line:12335407 
+  The Library: Be seeing you! :) #line:12335407
 <<endif>>
 ===
 
@@ -81,7 +94,7 @@ title: karoline_cultist_1
 ---
 <<if not $k_introduced >>
   Cultist: ... #line:987459865
-  -> What is this place? #line:2639537 
+  -> What is this place? #line:2639537
     Cultist: This is the chapel of The Library. #line:876498
     Cultist: It is the place where any information you seek is contained. #line:8764981
     -> How can I cure myself? #line:2639545
@@ -91,6 +104,14 @@ title: karoline_cultist_1
     Cultist: I gave all my wisdom to The Library, as you should. #line:87649814
     Cultist: Ask it, and you will see how powerful it is. #line:87649815
     <<set $k_introduced = true>>
+<<elseif $k_first_question>>
+  Cultist: The Library knows all, therefore it can do anything! #line:2410679
+  -> But it doesn't do anything. <<if not $k_1goof>> #line:8459987
+    Cultist: But it could. #line:12898076
+  -> This thing seems kinda dumb. <<if not $k_1goof>> #line:13163256
+    Cultist: You must be asking it wrong, ignoramus. #line:8257906
+  <<set $k_1goof = true>>
+  Cultist: Be seeing you. #line:14446971
 <<else>>
   Cultist: Without access to the library I feel unimplemented #line:987432
 <<endif>>
@@ -99,13 +120,21 @@ title: karoline_cultist_1
 title: karoline_cultist_2
 ---
 <<if not $k_introduced >>
-  Cultist: Uh... go speak to the other guy, I'm not qualified. #line:465594
+  Novice: Uh... go speak to the other guy, I'm not qualified. #line:465594
+<<elseif $k_first_question>>
+  Novice: Praise on to the paper colossus. #line:7660512
+  -> So... what do you do all day? <<if not $k_2goof>> #line:5878613
+    Novice: Sniff old books. #line:8268668
+  -> How long have you been in the cult? <<if not $k_2goof>> #line:6748722
+    Novice: On Monday, John told me at the coffee table that I should either join or go to Scunthorpe, that sounded kinda bad. #line:8926315
+  <<set $k_2goof = true>>
+  Novice: Be seeing you. #line:8835902
 <<else>>
-  Cultist: Without access to the library I feel unimplemented #line:4498
-  -> Why is it so dark here? #line:6383036 
-    Cultist: We have dedicated all energy towards lighting the mighty one. It can make better use of resources than us humans anyway. #line:120130 
-    -> What is it using the resouces for? #line:4643946 
-      Cultist: ... #line:3197451 
-      Cultist: How am I supposed to know that? #line:87649574
+  Novice: 'Sup #line:4498
+  -> Why is it so dark here? #line:6383036
+    Novice: We have dedicated all energy towards lighting the mighty one. It can make better use of resources than us humans anyway. #line:120130
+    -> What is it using the resouces for? #line:4643946
+      Novice: ... #line:3197451
+      Novice: How am I supposed to know that? #line:87649574
 <<endif>>
 ===

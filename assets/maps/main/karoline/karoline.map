@@ -141,18 +141,21 @@
 }
 // entity 3
 {
-"classname" "light_spot"
+"classname" "library_light"
 "origin" "-136 0 216"
 "angles" "30 0 90"
 "intensity" "100000000,000000"
 "outer_angle" "25,000000"
+"shadows_enabled" "true"
+"targetname" "library_light"
+"light_multiplier" "6.0"
 }
 // entity 4
 {
 "classname" "npc"
 "origin" "24 -120 56"
 "yarn_node" "karoline_cultist_1"
-"angles" "0 180 0"
+"angles" "0 150 0"
 }
 // entity 5
 {
@@ -166,7 +169,7 @@
 "classname" "npc"
 "origin" "24 120 56"
 "yarn_node" "karoline_cultist_2"
-"angles" "0 180 0"
+"angles" "0 -150 0"
 }
 // entity 7
 {

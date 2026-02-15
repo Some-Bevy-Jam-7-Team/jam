@@ -1,6 +1,6 @@
 use crate::{
 	asset_tracking::LoadResource,
-	gameplay::TargetName,
+	gameplay::{TargetName, interaction::InteractEvent},
 	props::interactables::InteractableEntity,
 	third_party::{
 		avian3d::CollisionLayer,
@@ -65,7 +65,10 @@ pub(super) fn plugin(app: &mut App) {
 		.load_asset::<Gltf>(Teeth::model_path())
 		.load_asset::<Gltf>(Speaker::model_path())
 		.load_asset::<Gltf>(Jesus::model_path())
+		.load_asset::<Gltf>(Jesus::model_path())
 		.load_asset::<Gltf>(Cctv::model_path());
+
+	app.add_observer(on_library_light_interaction);
 }
 
 // generic dynamic props
@@ -235,3 +238,24 @@ pub(crate) struct Teeth;
 	model("models/speaker/speaker.gltf")
 )]
 pub(crate) struct Speaker;
+
+#[point_class(base(SpotLight, TargetName))]
+pub(crate) struct LibraryLight {
+	light_multiplier: f32,
+}
+impl Default for LibraryLight {
+	fn default() -> Self {
+		Self {
+			light_multiplier: 1.0,
+		}
+	}
+}
+
+fn on_library_light_interaction(
+	trigger: On<InteractEvent>,
+	mut lib_lights: Query<(&LibraryLight, &mut SpotLight)>,
+) {
+	if let Ok((lib_light, mut light)) = lib_lights.get_mut(trigger.0) {
+		light.intensity *= lib_light.light_multiplier;
+	}
+}
