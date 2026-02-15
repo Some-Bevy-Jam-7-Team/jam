@@ -492,17 +492,17 @@ fn advance_level_command<T: Asset + Resource + Clone + FromWorld>() -> impl Comm
 		let value = T::from_world(world);
 		let assets = world.resource::<AssetServer>();
 		let handle = assets.add(value);
-	    let id = handle.id();
+		let id = handle.id();
 		let mut handles = world.resource_mut::<ResourceHandles>();
-	    handles.waiting.insert(
-            id.into(),
-            (handle.untyped(), move |world, handle| {
-                let assets = world.resource::<Assets<T>>();
-                if let Some(value) = assets.get(handle.id().typed::<T>()) {
-                    world.insert_resource(value.clone());
-                }
-            })
-        );
+		handles.waiting.insert(
+			id.into(),
+			(handle.untyped(), move |world, handle| {
+				let assets = world.resource::<Assets<T>>();
+				if let Some(value) = assets.get(handle.id().typed::<T>()) {
+					world.insert_resource(value.clone());
+				}
+			}),
+		);
 
 		world
 			.resource_mut::<NextState<LoadingScreen>>()

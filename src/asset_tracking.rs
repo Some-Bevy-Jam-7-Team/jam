@@ -83,19 +83,17 @@ fn load_resource_assets(world: &mut World) {
 				.waiting
 				.iter()
 				.filter_map(|(id, (handle, _))| {
-					if assets.is_loaded_with_dependencies(handle) {
-						Some(*id)
-					} else {
-						None
-					}
+					assets.is_loaded_with_dependencies(handle).then_some(*id)
 				})
 				.collect();
 
-			for id in resource_ids {
-				if let Some((handle, insert_fn)) = resource_handles.waiting.remove(&id) {
-					insert_fn(world, &handle);
-					resource_handles.finished.push(handle);
-				}
+			for id in resource_ids.into_iter() {
+				let Some((handle, insert_fn)) = resource_handles.waiting.remove(&id) else {
+					continue;
+				};
+
+				insert_fn(world, &handle);
+				resource_handles.finished.push(handle);
 			}
 		});
 	});
