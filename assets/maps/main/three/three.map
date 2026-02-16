@@ -2076,8 +2076,7 @@
 {
 "classname" "mouth"
 "origin" "2096 -1776 24"
-"interaction_relay" "Mouth"
-"interaction_text_override" "Beg"
+"yarn_node" "Mouth"
 }
 // entity 301
 {
@@ -2086,115 +2085,109 @@
 }
 // entity 302
 {
-"classname" "train"
-"origin" "2176 -1792 -480"
-"angles" "-90 0 0"
-}
-// entity 303
-{
 "classname" "rock"
 "origin" "1936 -1424 16"
 "angles" "0 -45 0"
 }
-// entity 304
+// entity 303
 {
 "classname" "rock"
 "origin" "1824 -1536 48"
 "angles" "0 150 0"
 }
-// entity 305
+// entity 304
 {
 "classname" "rock"
 "origin" "1856 -1440 16"
 "angles" "0 135 0"
 }
-// entity 306
+// entity 305
 {
 "classname" "rock"
 "origin" "1744 -1696 16"
 "angles" "0 -135 0"
 }
-// entity 307
+// entity 306
 {
 "classname" "rock"
 "origin" "1744 -1728 16"
 "angles" "0 0 0"
 }
-// entity 308
+// entity 307
 {
 "classname" "rock"
 "origin" "1760 -1744 16"
 "angles" "0 -150 0"
 }
-// entity 309
+// entity 308
 {
 "classname" "teeth"
 "origin" "1104 800 56"
 "angles" "-32 180 0"
 }
-// entity 310
+// entity 309
 {
 "classname" "teeth"
 "origin" "-1728 272 56"
 "angles" "-32 -75 0"
 }
-// entity 311
+// entity 310
 {
 "classname" "trash"
 "origin" "104 -600 24"
 "is_edible" "true"
 }
-// entity 312
+// entity 311
 {
 "classname" "trash"
 "origin" "200 -56 24"
 }
-// entity 313
+// entity 312
 {
 "classname" "trash"
 "origin" "-280 -184 24"
 "is_edible" "true"
 }
-// entity 314
+// entity 313
 {
 "classname" "trash"
 "origin" "-248 -168 24"
 "is_edible" "true"
 }
-// entity 315
+// entity 314
 {
 "classname" "rohlik"
 "origin" "248 168 72"
 "is_edible" "true"
 }
-// entity 316
+// entity 315
 {
 "classname" "rohlik"
 "origin" "312 168 72"
 "is_edible" "true"
 }
-// entity 317
+// entity 316
 {
 "classname" "rohlik"
 "origin" "232 -456 80"
 "angles" "0 45 0"
 "is_edible" "true"
 }
-// entity 318
+// entity 317
 {
 "classname" "rohlik"
 "origin" "344 -472 80"
 "angles" "0 135 0"
 "is_edible" "true"
 }
-// entity 319
+// entity 318
 {
 "classname" "world_emitter"
 "origin" "2128 -1808 -16"
 "source" "Mouth"
 "volume" "-2"
 }
-// entity 320
+// entity 319
 {
 "classname" "objective_entity"
 "origin" "-232 -152 376"
@@ -2202,7 +2195,7 @@
 "description" "Find out where you are"
 "targetname" "obj_1"
 }
-// entity 321
+// entity 320
 {
 "classname" "objective_entity"
 "origin" "-232 -184 376"
@@ -2210,10 +2203,47 @@
 "description" "Find out what this place is about"
 "targetname" "obj_2"
 }
+// entity 321
+{
+"classname" "sensor_entity"
+"sensor_detect_player" "true"
+"sensor_on_collision_start" "obj_2"
+// brush 0
+{
+( 1792 -1904 -1008 ) ( 1792 -1903 -1008 ) ( 1792 -1904 -1007 ) __TB_empty [ 0 -1 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( 1952 -1968 -1008 ) ( 1952 -1968 -1007 ) ( 1953 -1968 -1008 ) __TB_empty [ 1 0 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( 1952 -1904 -1008 ) ( 1953 -1904 -1008 ) ( 1952 -1903 -1008 ) __TB_empty [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
+( 2208 -1504 -992 ) ( 2208 -1503 -992 ) ( 2209 -1504 -992 ) __TB_empty [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
+( 2208 -1504 -992 ) ( 2209 -1504 -992 ) ( 2208 -1504 -991 ) __TB_empty [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 2368 -1504 -992 ) ( 2368 -1504 -991 ) ( 2368 -1503 -992 ) __TB_empty [ 0 1 0 0 ] [ 0 0 -1 0 ] 270 1 1
+}
+}
 // entity 322
 {
-"classname" "yarn_node"
-"origin" "2144 -1744 -32"
+"classname" "sensor_entity"
+"sensor_detect_player" "true"
+"sensor_on_collision_start" "obj_1"
+// brush 0
+{
+( 1792 -1904 -800 ) ( 1792 -1903 -800 ) ( 1792 -1904 -799 ) __TB_empty [ 0 -1 0 0 ] [ 0 0 -1 16 ] 0 1 1
+( 1952 -1968 -800 ) ( 1952 -1968 -799 ) ( 1953 -1968 -800 ) __TB_empty [ 1 0 0 0 ] [ 0 0 -1 16 ] 0 1 1
+( 1952 -1904 -800 ) ( 1953 -1904 -800 ) ( 1952 -1903 -800 ) __TB_empty [ -1 0 0 0 ] [ 0 -1 0 0 ] 90 1 1
+( 2208 -1504 -784 ) ( 2208 -1503 -784 ) ( 2209 -1504 -784 ) __TB_empty [ 1 0 0 0 ] [ 0 -1 0 0 ] 90 1 1
+( 2208 -1504 -784 ) ( 2209 -1504 -784 ) ( 2208 -1504 -783 ) __TB_empty [ -1 0 0 0 ] [ 0 0 -1 16 ] 90 1 1
+( 2368 -1504 -784 ) ( 2368 -1504 -783 ) ( 2368 -1503 -784 ) __TB_empty [ 0 1 0 0 ] [ 0 0 -1 16 ] 0 1 1
+}
+}
+// entity 323
+{
+"classname" "npc"
+"origin" "-88 392 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 324
+{
+"classname" "npc"
+"origin" "1968 -1600 16"
+"angles" "0 -60 0"
 "yarn_node" "Mouth"
-"targetname" "Mouth"
 }
