@@ -69,7 +69,7 @@ fn main() -> AppExit {
 		})
 		.set(WindowPlugin {
 			primary_window: Window {
-				title: "Jam".to_string(),
+				title: "Laborgeist".to_string(),
 				fit_canvas_to_parent: true,
 				present_mode: PresentMode::Mailbox,
 				#[cfg(feature = "web")]
