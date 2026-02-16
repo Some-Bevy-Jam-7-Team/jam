@@ -33,6 +33,12 @@ pub(super) fn plugin(app: &mut App) {
 
 	app.add_observer(setup_static_prop_with_trimesh::<Train>);
 
+	app.add_observer(setup_static_prop_with_convex_hull::<RockModel1>)
+		.add_observer(setup_static_prop_with_convex_hull::<RockModel2>)
+		.add_observer(setup_static_prop_with_convex_hull::<RockModel3>)
+		.add_observer(setup_static_prop_with_convex_hull::<RockModel4>)
+		.add_observer(setup_static_prop_with_convex_hull::<RockModel5>);
+
 	app.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<Keyboard>)
 		.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<Mouse>)
 		.add_observer(setup_static_or_dynamic_prop_with_convex_hull::<Speaker>)
@@ -178,6 +184,42 @@ pub(crate) struct Cctv;
 pub(crate) struct StaticCctv;
 
 // generic static props
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/rock/rock_1.gltf")
+)]
+pub(crate) struct RockModel1;
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/rock/rock_2.gltf")
+)]
+pub(crate) struct RockModel2;
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/rock/rock_3.gltf")
+)]
+pub(crate) struct RockModel3;
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/rock/rock_4.gltf")
+)]
+pub(crate) struct RockModel4;
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/rock/rock_5.gltf")
+)]
+pub(crate) struct RockModel5;
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/rock/rock_6.gltf")
+)]
+pub(crate) struct RockModel6;
+
 #[point_class(
 	base(TargetName, InteractableEntity, Transform, Visibility),
 	model("models/darkmod/fireplace/grate.gltf")
