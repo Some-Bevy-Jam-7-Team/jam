@@ -101,7 +101,6 @@ pub(crate) fn spawn_level(
 	level_karoline_assets: Option<Res<LevelKarolineAssets>>,
 	current_level: Res<CurrentLevel>,
 	compile_shaders_assets: Res<CompileShadersAssets>,
-	assets: Res<AssetServer>,
 ) {
 	match *current_level {
 		CurrentLevel::Shaders => {
@@ -170,6 +169,11 @@ pub(crate) fn spawn_level(
 				SceneRoot(level_two_assets.level.clone()),
 				DespawnOnExit(Screen::Gameplay),
 				Level,
+				children![(
+					Name::new("Level Music"),
+					SamplePlayer::new(level_two_assets.music.clone()).looping(),
+					MusicPool
+				)],
 			));
 
 			let archipelago = commands
@@ -213,7 +217,7 @@ pub(crate) fn spawn_level(
 				},
 				children![(
 					Name::new("Level Music"),
-					SamplePlayer::new(assets.load("audio/music/mushroom waltz.ogg")).looping(),
+					SamplePlayer::new(level_three_assets.music.clone()).looping(),
 					MusicPool
 				)],
 			));
@@ -228,7 +232,7 @@ pub(crate) fn spawn_level(
 				Level,
 				children![(
 					Name::new("Level Music"),
-					SamplePlayer::new(assets.load("audio/music/station.ogg")).looping(),
+					SamplePlayer::new(level_karoline_assets.music_1.clone()).looping(),
 					MusicPool
 				)],
 			));
@@ -271,6 +275,8 @@ pub(crate) struct LevelOneAssets {
 	pub(crate) level: Handle<Scene>,
 	#[dependency]
 	pub(crate) navmesh: Handle<Navmesh>,
+	#[dependency]
+	pub(crate) music: Handle<AudioSample>,
 	#[dependency]
 	pub(crate) break_room_alarm: Handle<AudioSample>,
 }
@@ -333,6 +339,8 @@ impl FromWorld for LevelOneAssets {
 			level: assets.load("maps/main/one/one.map#Scene"),
 			// You can regenerate the navmesh by using `bevy_rerecast_editor`
 			navmesh: assets.load("maps/main/one/one.nav"),
+
+			music: assets.load("audio/music/corpo slop to eat your computer to.ogg"),
 			break_room_alarm: assets.load("audio/sound_effects/mental_health_alarm.ogg"),
 		}
 	}
@@ -346,6 +354,8 @@ pub(crate) struct LevelTwoAssets {
 	pub(crate) level: Handle<Scene>,
 	#[dependency]
 	pub(crate) navmesh: Handle<Navmesh>,
+	#[dependency]
+	pub(crate) music: Handle<AudioSample>,
 }
 
 impl FromWorld for LevelTwoAssets {
@@ -357,6 +367,8 @@ impl FromWorld for LevelTwoAssets {
 			level: assets.load("maps/main/two/two.map#Scene"),
 			// You can regenerate the navmesh by using `bevy_rerecast_editor`
 			navmesh: assets.load("maps/main/two/two.nav"),
+			music: Default::default(),
+			// music: assets.load("audio/music/corpo slorpo feverrrrrrrr.ogg"),
 		}
 	}
 }
@@ -369,6 +381,10 @@ pub(crate) struct LevelKarolineAssets {
 	pub(crate) level: Handle<Scene>,
 	#[dependency]
 	pub(crate) navmesh: Handle<Navmesh>,
+	#[dependency]
+	pub(crate) music_1: Handle<AudioSample>,
+	#[dependency]
+	pub(crate) music_2: Handle<AudioSample>,
 }
 
 impl FromWorld for LevelKarolineAssets {
@@ -380,6 +396,8 @@ impl FromWorld for LevelKarolineAssets {
 			level: assets.load("maps/main/karoline/karoline.map#Scene"),
 			// You can regenerate the navmesh by using `bevy_rerecast_editor`
 			navmesh: assets.load("maps/main/karoline/karoline.nav"),
+			music_1: assets.load("audio/music/station.ogg"),
+			music_2: assets.load("audio/music/station.ogg"),
 		}
 	}
 }
@@ -437,6 +455,8 @@ pub(crate) struct LevelCommuneAssets {
 	pub(crate) level: Handle<Scene>,
 	#[dependency]
 	pub(crate) navmesh: Handle<Navmesh>,
+	#[dependency]
+	pub(crate) music: Handle<AudioSample>,
 }
 impl FromWorld for LevelCommuneAssets {
 	fn from_world(world: &mut World) -> Self {
@@ -447,6 +467,7 @@ impl FromWorld for LevelCommuneAssets {
 			level: assets.load("maps/main/three/three.map#Scene"),
 			// You can regenerate the navmesh by using `bevy_rerecast_editor`
 			navmesh: assets.load("maps/main/three/three.nav"),
+			music: assets.load("audio/music/mushroom waltz.ogg"),
 		}
 	}
 }
