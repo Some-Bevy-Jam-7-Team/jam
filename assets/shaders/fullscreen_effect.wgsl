@@ -91,7 +91,6 @@ fn fragment(in: FullscreenVertexOutput) -> @location(0) vec4<f32> {
 
     var kaleidoscope = gradient3(fract(shaped + time * 0.1), color1, color2, color3);
 
-    // Depth glow
     let depth_val = textureLoad(depth_texture, coords, 0);
     let near_boost = smoothstep(0.0, 1.0, depth_val);
 
