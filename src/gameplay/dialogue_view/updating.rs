@@ -150,7 +150,7 @@ fn present_line(
 			));
 		} else {
 			commands.spawn((
-				SamplePlayer::new(handle).with_volume(Volume::Decibels(2.0)),
+				SamplePlayer::new(handle).with_volume(Volume::Decibels(11.0)),
 				SfxPool,
 				VoiceAudio,
 				Transform::default(),
@@ -160,7 +160,7 @@ fn present_line(
 		let handle = gibberish.0.pick(&mut rand::rng()).clone();
 		if let Some(entity) = speaker.0.as_ref() {
 			commands.entity(*entity).with_child((
-				SamplePlayer::new(handle).with_volume(Volume::Decibels(2.0)),
+				SamplePlayer::new(handle).with_volume(Volume::Decibels(11.0)),
 				RandomPitch(1.05..1.25),
 				SpatialPool,
 				VoiceAudio,
@@ -168,7 +168,7 @@ fn present_line(
 			));
 		} else {
 			commands.spawn((
-				SamplePlayer::new(handle).with_volume(Volume::Decibels(2.0)),
+				SamplePlayer::new(handle).with_volume(Volume::Decibels(11.0)),
 				RandomPitch(1.05..1.25),
 				SfxPool,
 				VoiceAudio,
