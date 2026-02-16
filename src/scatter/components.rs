@@ -32,10 +32,7 @@ impl Landscape {
 		let level = world.get_resource::<CurrentLevel>().cloned().unwrap();
 		match level {
 			CurrentLevel::Commune | CurrentLevel::Shaders => {
-				let landscape = world
-					.get_resource::<EnvironmentAssets>()
-					.map(|a| a.landscape.clone())
-					.expect("Assets should be loaded.");
+				let landscape = world.resource::<EnvironmentAssets>().landscape.clone();
 
 				world.commands().entity(ctx.entity).insert((
 					SceneRoot(landscape.clone()),
@@ -45,6 +42,7 @@ impl Landscape {
 							LayerMask::ALL,
 						))
 						.with_default_density(1_000.0),
+					Transform::from_scale(Vec3::ONE * 0.73),
 				));
 
 				if level == CurrentLevel::Shaders {

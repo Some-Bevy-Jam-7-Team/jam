@@ -21,12 +21,7 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"Plane",
-			"scale":[
-				150,
-				150,
-				150
-			]
+			"name":"Plane"
 		}
 	],
 	"materials":[
@@ -84,61 +79,61 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":4,
+			"count":8,
 			"max":[
-				0.7666666507720947,
+				150,
 				0,
-				0.7666666507720947
+				150
 			],
 			"min":[
-				-0.7666666507720947,
+				-150,
 				0,
-				-0.7666666507720947
+				-150
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":4,
+			"count":8,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":4,
+			"count":8,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":6,
+			"count":24,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":48,
+			"byteLength":96,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":48,
-			"byteOffset":48,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":32,
+			"byteLength":96,
 			"byteOffset":96,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":12,
-			"byteOffset":128,
+			"byteLength":64,
+			"byteOffset":192,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":48,
+			"byteOffset":256,
 			"target":34963
 		}
 	],
@@ -150,7 +145,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":140,
+			"byteLength":304,
 			"uri":"landscape_flat_large.bin"
 		}
 	]
