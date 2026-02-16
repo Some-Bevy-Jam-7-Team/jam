@@ -193,5 +193,5 @@ pub fn update_density_map(
 }
 
 pub fn spawn_scatter_root(mut cmd: Commands) {
-	cmd.spawn((ScatterRoot::default(), ChunkRoot::default()));
+	cmd.spawn((ScatterRoot::default(), ChunkRoot::default(), MapHeight));
 }
