@@ -118,6 +118,8 @@ pub mod prelude {
     pub use crate::reflect::AppFunctionRegistry;
 }
 
+pub static FEVER: std::sync::RwLock<f32> = std::sync::RwLock::new(0.0);
+
 /// Exports used by macros.
 ///
 /// These are not meant to be used directly and are subject to breaking changes.

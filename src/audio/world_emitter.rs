@@ -50,6 +50,10 @@ impl FromWorld for SoundMap {
 				world.load_asset("audio/music/corpo slop to eat your computer to.ogg"),
 			),
 			(
+				WorldSounds::Corpo2,
+				world.load_asset("audio/music/corpo slorpo feverrrrrrrr.ogg"),
+			),
+			(
 				WorldSounds::Computer,
 				world.load_asset("audio/sound_effects/office/computer.ogg"),
 			),
@@ -65,6 +69,10 @@ impl FromWorld for SoundMap {
 				WorldSounds::Voices,
 				world.load_asset("audio/sound_effects/office/voices.ogg"),
 			),
+			(
+				WorldSounds::Mouth,
+				world.load_asset("audio/sound_effects/mouth.ogg"),
+			),
 		]);
 
 		Self(map)
@@ -74,10 +82,12 @@ impl FromWorld for SoundMap {
 #[derive(PartialEq, Eq, Hash, Reflect, FgdType)]
 enum WorldSounds {
 	Corpo,
+	Corpo2,
 	Computer,
 	Light1,
 	Light2,
 	Voices,
+	Mouth,
 }
 
 fn observe_world_emitter(
