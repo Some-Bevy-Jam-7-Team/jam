@@ -42,6 +42,7 @@ impl Landscape {
 							LayerMask::ALL,
 						))
 						.with_default_density(1_000.0),
+					Transform::from_scale(Vec3::ONE * 0.73),
 				));
 
 				if level == CurrentLevel::Shaders {
