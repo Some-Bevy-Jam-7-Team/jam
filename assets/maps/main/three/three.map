@@ -629,6 +629,7 @@
 "classname" "light_directional"
 "origin" "-448 -16 688"
 "angles" "60 0 1"
+"shadows_enabled" "false"
 }
 // entity 15
 {
@@ -644,6 +645,7 @@
 {
 "classname" "crate_small"
 "origin" "464 -792 24"
+"is_edible" "true"
 }
 // entity 18
 {
@@ -654,11 +656,13 @@
 {
 "classname" "package_medium"
 "origin" "200 -832 24"
+"is_edible" "true"
 }
 // entity 20
 {
 "classname" "package_small"
 "origin" "232 -832 24"
+"is_edible" "true"
 }
 // entity 21
 {
@@ -2020,6 +2024,7 @@
 "classname" "npc"
 "origin" "-352 -816 336"
 "yarn_node" "CEO1"
+"is_walker" "true"
 }
 // entity 293
 {
@@ -2031,12 +2036,14 @@
 "classname" "npc"
 "origin" "-368 -504 320"
 "yarn_node" "CEO2"
+"is_walker" "true"
 }
 // entity 295
 {
 "classname" "npc"
 "origin" "-376 -120 312"
 "yarn_node" "CEO3"
+"is_walker" "true"
 }
 // entity 296
 {
@@ -2058,6 +2065,7 @@
 "origin" "-280 280 32"
 "angles" "0 -45 0"
 "yarn_node" "Storm"
+"is_walker" "true"
 }
 // entity 299
 {
@@ -2132,6 +2140,7 @@
 {
 "classname" "trash"
 "origin" "104 -600 24"
+"is_edible" "true"
 }
 // entity 312
 {
@@ -2142,33 +2151,39 @@
 {
 "classname" "trash"
 "origin" "-280 -184 24"
+"is_edible" "true"
 }
 // entity 314
 {
 "classname" "trash"
 "origin" "-248 -168 24"
+"is_edible" "true"
 }
 // entity 315
 {
 "classname" "rohlik"
 "origin" "248 168 72"
+"is_edible" "true"
 }
 // entity 316
 {
 "classname" "rohlik"
 "origin" "312 168 72"
+"is_edible" "true"
 }
 // entity 317
 {
 "classname" "rohlik"
 "origin" "232 -456 80"
 "angles" "0 45 0"
+"is_edible" "true"
 }
 // entity 318
 {
 "classname" "rohlik"
 "origin" "344 -472 80"
 "angles" "0 135 0"
+"is_edible" "true"
 }
 // entity 319
 {
@@ -2184,4 +2199,12 @@
 "objective_order" "-1"
 "description" "Find out where you are"
 "targetname" "obj_1"
+}
+// entity 321
+{
+"classname" "objective_entity"
+"origin" "-232 -184 376"
+"objective_order" "-1"
+"description" "Find out what this place is about"
+"targetname" "obj_2"
 }

@@ -1,79 +1,42 @@
 use std::f32::consts::TAU;
 
-use avian3d::prelude::{ColliderOf, SpatialQuery, SpatialQueryFilter};
+use avian3d::prelude::{SpatialQuery, SpatialQueryFilter};
 use bevy::prelude::*;
 use bevy_bae::prelude::*;
 use bevy_landmass::{Archipelago3d, FromAgentRadius as _, PointSampleDistance3d};
+use bevy_trenchbroom::prelude::*;
 use rand::{Rng, rng};
 
 use crate::{
-	gameplay::{
-		npc::ai::{Agent, NpcWalkTargetOf},
-		player::Player,
-	},
+	gameplay::npc::ai::{Agent, NpcWalkTargetOf},
 	third_party::avian3d::CollisionLayer,
 };
 
 pub(super) fn plugin(app: &mut App) {
-	app.add_systems(FixedUpdate, update_sensors.before(BaeSystems::ExecutePlan));
+	app.add_observer(add_walker);
 }
 
-fn update_sensors(
-	spatial: SpatialQuery,
-	mut enemies: Query<(&GlobalTransform, &mut Props, &mut EnemyAiState)>,
-	player: Single<(Entity, &Transform), With<Player>>,
-	colliders: Query<&ColliderOf>,
-	time: Res<Time>,
-) {
-	let (player_entity, player_transform) = player.into_inner();
-	for (transform, mut props, mut state) in enemies.iter_mut() {
-		state.walk_timer.tick(time.delta());
-		if !props.get::<bool>("alert") {
-			let dist_sq = transform
-				.translation()
-				.distance_squared(player_transform.translation);
-			const MAX_DIST: f32 = 30.0;
-			if dist_sq < MAX_DIST * MAX_DIST
-				&& let Ok(dir) = Dir3::new(player_transform.translation - transform.translation())
-				&& spatial
-					.cast_ray(
-						transform.translation(),
-						dir,
-						MAX_DIST,
-						true,
-						&SpatialQueryFilter::from_mask([
-							CollisionLayer::Default,
-							CollisionLayer::Prop,
-							CollisionLayer::PlayerCharacter,
-						]),
-					)
-					.is_none_or(|hit| {
-						colliders
-							.get(hit.entity)
-							.is_ok_and(|rb| rb.body == player_entity)
-					}) {
-				props.set("alert", true);
-			}
-		}
+#[base_class]
+#[derive(Default)]
+pub struct Walker {
+	is_walker: bool,
+}
+
+fn add_walker(add: On<Insert, Walker>, walker: Query<&Walker>, mut commands: Commands) {
+	let Ok(walker) = walker.get(add.entity) else {
+		return;
+	};
+	if walker.is_walker {
+		commands.entity(add.entity).insert(enemy_htn());
 	}
 }
 
-#[expect(dead_code)]
 pub(crate) fn enemy_htn() -> impl Bundle {
 	(
 		EnemyAiState::default(),
 		Plan::new(),
 		Select,
-		tasks![
-			(
-				conditions![Condition::eq("alert", false)],
-				Operator::new(walk_randomly),
-			),
-			(
-				conditions![Condition::eq("alert", true)],
-				Operator::new(attack_player),
-			),
-		],
+		tasks![(Operator::new(walk_randomly),),],
 	)
 }
 
@@ -82,11 +45,12 @@ fn walk_randomly(
 	mut npcs: Query<&Agent>,
 	transforms: Query<&GlobalTransform>,
 	archipelago: Single<&Archipelago3d>,
-	mut states: Query<&EnemyAiState>,
+	mut states: Query<&mut EnemyAiState>,
 	spatial: SpatialQuery,
 	mut commands: Commands,
+	time: Res<Time>,
 ) -> OperatorStatus {
-	let Ok(state) = states.get_mut(input.entity) else {
+	let Ok(mut state) = states.get_mut(input.entity) else {
 		return OperatorStatus::Failure;
 	};
 
@@ -97,15 +61,17 @@ fn walk_randomly(
 		return OperatorStatus::Failure;
 	};
 
+	state.walk_timer.tick(time.delta());
 	if state.walk_timer.is_finished() {
 		let yaw = rng().random_range(0.0..TAU);
 		let dir = Dir3::new_unchecked(Vec3::NEG_Z.rotate_y(yaw));
 		const MAX_WALK_DIST: f32 = 10.0;
+		let walk_dist = rng().random_range(0.5..MAX_WALK_DIST);
 		let target_dist = spatial
 			.cast_ray(
 				transform.translation(),
 				dir,
-				MAX_WALK_DIST,
+				walk_dist,
 				true,
 				&SpatialQueryFilter::from_mask([
 					CollisionLayer::Default,
@@ -113,7 +79,7 @@ fn walk_randomly(
 					CollisionLayer::Prop,
 				]),
 			)
-			.map_or(MAX_WALK_DIST, |hit| (hit.distance - 0.1).max(0.0));
+			.map_or(walk_dist, |hit| (hit.distance - 0.1).max(0.0));
 		let target_pos = transform.translation() + dir * target_dist;
 		agent.entity();
 
@@ -133,11 +99,6 @@ fn walk_randomly(
 	OperatorStatus::Success
 }
 
-fn attack_player(In(_input): In<OperatorInput>) -> OperatorStatus {
-	// TODO: Implement lol
-	OperatorStatus::Success
-}
-
 #[derive(Component, Reflect, Debug)]
 #[reflect(Component)]
 struct EnemyAiState {
@@ -147,7 +108,7 @@ struct EnemyAiState {
 impl Default for EnemyAiState {
 	fn default() -> Self {
 		Self {
-			walk_timer: Timer::from_seconds(rng().random_range(4.0..6.0), TimerMode::Repeating),
+			walk_timer: Timer::from_seconds(rng().random_range(6.0..10.0), TimerMode::Repeating),
 		}
 	}
 }

@@ -20,7 +20,7 @@ fn setup_light_window_brush_entity(add: On<Add, LightWindow>, mut commands: Comm
 			color: Color::srgb_u8(239, 173, 144),
 			intensity: 200_000.0,
 			radius: 0.1,
-			shadows_enabled: true,
+			shadows_enabled: false,
 			..default()
 		})
 		.queue(disable_shadow_casting);

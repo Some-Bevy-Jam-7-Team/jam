@@ -10,7 +10,7 @@ use bevy_trenchbroom::prelude::*;
 use crate::{
 	animation::AnimationState,
 	asset_tracking::LoadResource,
-	gameplay::TargetName,
+	gameplay::{TargetName, npc::enemy::Walker},
 	props::{interactables::InteractableEntity, logic_entity::YarnNode},
 	third_party::{
 		avian3d::CollisionLayer,
@@ -38,7 +38,14 @@ pub(super) fn plugin(app: &mut App) {
 }
 
 #[point_class(
-	base(TargetName, YarnNode, InteractableEntity, Transform, Visibility),
+	base(
+		TargetName,
+		YarnNode,
+		InteractableEntity,
+		Transform,
+		Visibility,
+		Walker
+	),
 	model("models/jan_npc/jan.gltf")
 )]
 #[derive(Default)]
