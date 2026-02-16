@@ -2062,10 +2062,10 @@
 // entity 298
 {
 "classname" "npc"
-"origin" "-248 376 32"
+"origin" "-280 280 32"
 "angles" "0 -45 0"
 "yarn_node" "Storm"
-"is_walker" "false"
+"is_walker" "true"
 }
 // entity 299
 {
@@ -2076,6 +2076,8 @@
 {
 "classname" "mouth"
 "origin" "2096 -1776 24"
+"interaction_relay" "Mouth"
+"interaction_text_override" "Beg"
 }
 // entity 301
 {
@@ -2210,98 +2212,8 @@
 }
 // entity 322
 {
-"classname" "npc"
-"origin" "-512 352 128"
-"is_walker" "true"
-"yarn_node" "Eater"
-}
-// entity 323
-{
-"classname" "mushroom_model1"
-"origin" "248 184 72"
-"is_edible" "true"
-}
-// entity 324
-{
-"classname" "mushroom_model2"
-"origin" "280 168 72"
-"is_edible" "true"
-}
-// entity 325
-{
-"classname" "mushroom_model2"
-"origin" "344 168 72"
-"is_edible" "true"
-}
-// entity 326
-{
-"classname" "mushroom_model1"
-"origin" "376 168 72"
-"is_edible" "true"
-}
-// entity 327
-{
-"classname" "mushroom_model1"
-"origin" "408 184 72"
-"is_edible" "true"
-}
-// entity 328
-{
-"classname" "mushroom_model4"
-"origin" "344 216 24"
-"is_edible" "true"
-}
-// entity 329
-{
-"classname" "mushroom_model5"
-"origin" "392 232 24"
-"is_edible" "true"
-}
-// entity 330
-{
-"classname" "mushroom_model2"
-"origin" "312 200 24"
-"is_edible" "true"
-}
-// entity 331
-{
-"classname" "mushroom_model1"
-"origin" "424 200 24"
-"is_edible" "true"
-}
-// entity 332
-{
-"classname" "mushroom_model3"
-"origin" "328 248 24"
-"is_edible" "true"
-}
-// entity 333
-{
-"classname" "mushroom_model2"
-"origin" "296 168 72"
-"is_edible" "true"
-}
-// entity 334
-{
-"classname" "mushroom_model1"
-"origin" "280 184 72"
-"is_edible" "true"
-}
-// entity 335
-{
-"classname" "mushroom_model1"
-"origin" "328 184 72"
-"is_edible" "true"
-}
-// entity 336
-{
-"classname" "mushroom_model1"
-"origin" "264 168 72"
-"is_edible" "true"
-}
-// entity 337
-{
-"classname" "mushroom_model2"
-"origin" "264 184 72"
-"is_edible" "true"
+"classname" "yarn_node"
+"origin" "2144 -1744 -32"
+"yarn_node" "Mouth"
+"targetname" "Mouth"
 }
