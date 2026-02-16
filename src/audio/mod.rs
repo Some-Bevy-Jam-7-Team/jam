@@ -8,6 +8,7 @@ use animation::AnimateCutoff;
 pub(crate) mod animation;
 pub(crate) mod doppler;
 pub(crate) mod layers;
+pub(crate) mod mouth;
 pub(crate) mod perceptual;
 pub(crate) mod world_emitter;
 
@@ -16,6 +17,7 @@ pub(super) fn plugin(app: &mut App) {
 		layers::plugin,
 		doppler::DopplerPlugin,
 		world_emitter::EmitterPlugin,
+		mouth::CommunePlugin,
 	))
 	.add_systems(Startup, initialize_audio)
 	.register_node::<SvfNode<2>>()
@@ -77,6 +79,7 @@ fn initialize_audio(server: Res<AssetServer>, mut commands: Commands) {
 			sample_effects![VolumeNode::default()],
 			VolumeNode { ..default() },
 		))
+		.chain_node((VolumeNode::default(), mouth::MouthInfluence))
 		.chain_node((
 			SvfNode::<2> {
 				filter_type: firewheel::nodes::svf::SvfType::LowpassX2,
