@@ -62,7 +62,7 @@ impl Plugin for ScatterPlugin {
 			.add_systems(
 				Update,
 				(
-					(clear_scatter_root, scatter).run_if(
+					scatter.run_if(
 						resource_exists_and_changed::<EnvironmentAssets>
 							.and(in_state(Screen::Gameplay))
 							.and(in_state(ScatterState::Ready)),
