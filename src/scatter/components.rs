@@ -14,7 +14,7 @@ pub struct ScatterDone;
 
 #[derive(Component)]
 #[component(on_add = Self::on_add)]
-#[require(RigidBody::Static, Name::new("Landscape"), MapHeight)]
+#[require(RigidBody::Static, Name::new("Landscape"))]
 pub struct Landscape;
 
 impl Landscape {
