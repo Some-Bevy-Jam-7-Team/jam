@@ -52,10 +52,27 @@ fn spawn_settings_menu(mut commands: Commands) {
 		DespawnOnExit(Menu::Settings),
 		DespawnOnExit(Screen::Gameplay),
 		GlobalZIndex(2),
+		widget::button("Back", go_back_on_click),
+	));
+
+	commands.spawn((
+		DespawnOnExit(Menu::Settings),
+		DespawnOnExit(Screen::Gameplay),
+		Node {
+			position_type: PositionType::Absolute,
+			width: Percent(100.0),
+			height: Percent(100.0),
+			justify_content: JustifyContent::Center,
+			align_items: AlignItems::Center,
+			flex_direction: FlexDirection::Column,
+			row_gap: Px(20.0),
+			..default()
+		},
 		children![
-			widget::header("Settings"),
+			(widget::header("Settings"), GlobalZIndex(4)),
 			(
 				Name::new("Settings Grid"),
+				GlobalZIndex(4),
 				Node {
 					display: Display::Grid,
 					row_gap: Px(10.0),
@@ -142,7 +159,6 @@ fn spawn_settings_menu(mut commands: Commands) {
 					QualitySettingsButton
 				],
 			),
-			widget::button("Back", go_back_on_click),
 		],
 	));
 }

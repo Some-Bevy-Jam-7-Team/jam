@@ -9,7 +9,7 @@ use bevy::{
 };
 
 use crate::{
-	font::VARIABLE_FONT,
+	font::{MONO_FONT, VARIABLE_FONT},
 	theme::{interaction::InteractionPalette, palette::*, textures::TexturedUiMaterial},
 };
 
@@ -46,6 +46,7 @@ pub(crate) fn header(text: impl Into<String>) -> impl Bundle {
 			..default()
 		},
 		TextColor(HEADER_TEXT),
+		TextLayout::new_with_justify(Justify::Center),
 	)
 }
 
@@ -55,7 +56,7 @@ pub(crate) fn label(text: impl Into<String>) -> impl Bundle {
 }
 
 pub(crate) fn label_small(text: impl Into<String>) -> impl Bundle {
-	label_base(text, 12.0)
+	label_base(text, 10.0)
 }
 
 /// A simple text label.
@@ -105,6 +106,7 @@ where
 			height: Px(30.0),
 			align_items: AlignItems::Center,
 			justify_content: JustifyContent::Center,
+			border_radius: BorderRadius::all(px(6)),
 			..default()
 		},
 	)
@@ -172,15 +174,27 @@ where
 			..default()
 		},
 		children![
-			button_small("-", lower),
-			button_small("+", raise),
+			(
+				Node {
+					column_gap: Px(4.0),
+					..default()
+				},
+				children![button_small("-", lower), button_small("+", raise)]
+			),
 			(
 				Node {
 					padding: UiRect::horizontal(Px(10.0)),
 					justify_content: JustifyContent::Center,
 					..default()
 				},
-				children![(label(""), label_marker)],
+				children![(
+					(
+						Text::new(""),
+						TextFont::from_font_size(24.0).with_font(MONO_FONT),
+						TextColor(LABEL_TEXT),
+					),
+					label_marker
+				)],
 			),
 		],
 	)
