@@ -95,7 +95,7 @@ fn setup_burning_logs(
 				color: Color::srgb(1.0, 0.7, 0.4),
 				intensity: BASE_INTENSITY,
 				radius: 0.1,
-				shadows_enabled: true,
+				shadows_enabled: false,
 				..default()
 			},
 			Transform::from_xyz(0.0, 0.2, 0.0),

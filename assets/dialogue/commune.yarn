@@ -44,14 +44,26 @@ dir: commune
 title: MushroomButcher
 dir: commune
 ---
-Mushroom Lidya: Hello there love. #line:2241604
-Mushroom Lidya: If you need any mushrooms feel free to take them. #line:2509048
--> Why mushrooms? #line:12584566
-  Mushroom Lidya: The ██████ killed all other plant life. #line:8563210
-  -> The what? #line:2380124
-    Mushroom Lidya: The ██████! #line:4411532
--> Why are you just giving them to me #line:16346362
-  Mushroom Lidya: It's the free market innit. #line:5381221
+<<declare $d_lydia = 1>>
+<<if $d_lydia == 1>>
+  Mushroom Lidya: Hello there love. #line:2241604
+	Mushroom Lidya: If you need any mushrooms feel free to take them. #line:2509048
+	-> Why mushrooms? #line:12584566
+	  Mushroom Lidya: The ██████ killed all other plant life. #line:8563210
+	  -> The what? #line:2380124
+	    Mushroom Lidya: The ██████! #line:4411532
+	-> Why are you just giving them to me #line:16346362
+	  Mushroom Lidya: It's the free market innit. #line:5381221
+  <<set $d_lydia = 2>>
+<<elseif $d_lydia == 2>>
+  Mushroom Lidya: Fear not. The mushrooms have come, and you will be saved. #line:3991982
+  <<set $d_lydia = 3>>
+<<elseif $d_lydia == 3>>
+  Mushroom Lidya: What is strength next to the all-consuming power of the mushrooms? #line:15574622
+  <<set $d_lydia = 4>>
+<<else>>
+  Mushroom Lidya: Praise be the mushrooms for they bring us plenty. #line:15000125
+<<endif>>
 ===
 
 
@@ -61,6 +73,8 @@ dir: commune
 <<if not $d_intro>>
   Dave: Welcome to the Anarcho Syndicalist Commune of Dave. #line:1676776
   Dave: That's me! #line:12496552
+<<elseif $d_go_talk>>
+  Dave: You've had enough of me talking your ears off. #line:13202117
 <<else>>
   Dave: Nice to see you again! #line:7086013
 <<endif>>
@@ -114,7 +128,7 @@ dir: commune
   -> My head hurts. #line:5263726
     Dave: Well get some ale and chips into you. It'll clear that right up. #line:2295028
   -> You're British?? #line:14273870
-    Dave: As British and Chips and Curry. #line:12488020
+    Dave: As British as Chips and Curry. #line:12488020
   -> You're Northern?? #line:15752441
     Dave: Right you are. #line:16664469
   <<set $d_dave4 = true>>
@@ -125,8 +139,8 @@ dir: commune
   -> I had the weirdest day, you wouldn't believe it. #line:2561743
     Dave: Listen here, I happen to believe in a lot of stuff. #line:3978506
     -> No, really. This all truly was an extremely incohesive fever dream. #line:12185778
-      Dave: Now you sound like one of the mouthslops. #line:9889833
-      -> WHAT did you just call me?! #line:2974179
+      Dave: Now you sound like one of the Eaters. #line:9889833
+      -> This is not sounding any better. #line:2974179
         Dave: Relax, that's just one of the clubs. #line:11380209
   -> I don't think the commune life is for me. #line:10337167
     Dave: Have you even tried? You could join a club! #line:15764061
@@ -135,22 +149,20 @@ dir: commune
   -> I'm a level 5 anarchist. I don't live anywhere where there are buildings. #line:7341841
     Dave: Hey, I know I'm a big oaf, but no need to make fun of me. #line:9319376
     Dave: Lighten a bit up, you're like a Yeeter #line:1440398
-    -> ...because dentists make you cry? #line:5754392
-      Dave: What? Nooo, I mean the club. #line:8031782
+    -> That combination of words is meaningless #line:5754392
+      Dave: What? Oh! That's the name of the club. #line:8031782
 
-  -> Okay, I'll bite. What do you mean? #line:1279506
-    Dave: Well, you see, we have a certain... let's say neighbor. #line:5944368
-    Dave: And some of us happen to think that's quite a good chap. #line:14504202
-    Dave: And others disagree. #line:12680599
-    -> Sounds like a lot of fuss over one person. #line:12967969
-      Dave: Heh #line:11288567
-      -> What? #line:4290965
-        Dave: Oh, you'll see. #line:10441213
-    -> Y'all have a lot of time for gossip #line:3564305
-  Dave: I've heard rumour a place that can be found by eating a mushroom. #line:8916654
-  Dave: Maybe give it a try. #line:11792722
-  <<create_objective "leave" "Snack on a mushroom" 1.0>>
-  <<complete_objective "look_around">>
+  -> Okay, I'll bite. What the heck does that mean? #line:1279506
+    Dave: Hmm, as the leader, I should probably not speak for them. #line:7399095
+    -> That's literally what a leader does. #line:14267146
+      Dave: Not an anarchist leader! #line:16018729
+    -> Okay, who do I talk to then? #line:935685
+    Dave: Look, there's a bunch of friendly faces around here. #line:14628177
+    Dave: Well, at least a bunch of people with the exact same friendly face. #line:5814791
+    <<complete_objective "obj_1">>
+    <<set $d_go_talk = true>>
+    Dave: Go be a part of the community and talk to them. #line:15510360
+
 ===
 
 // TODO: Add npc for Jannet.

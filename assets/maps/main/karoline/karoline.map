@@ -1086,7 +1086,7 @@
 {
 "classname" "special_effects_node"
 "origin" "-4280 -184 264"
-"sfx_sample" "audio/sound_effects/mental_health_alarm.ogg"
+"sfx_sample" "audio/sound_effects/MIND THE GAP echo.ogg"
 "targetname" "track_alarm"
 }
 // entity 58
@@ -1131,14 +1131,14 @@
 {
 "classname" "special_effects_node"
 "origin" "-4968 -184 264"
-"sfx_sample" "audio/sound_effects/mental_health_alarm.ogg"
+"sfx_sample" "audio/sound_effects/MIND THE GAP echo.ogg"
 "targetname" "track_alarm"
 }
 // entity 63
 {
 "classname" "special_effects_node"
 "origin" "-4984 360 264"
-"sfx_sample" "audio/sound_effects/mental_health_alarm.ogg"
+"sfx_sample" "audio/sound_effects/MIND THE GAP echo.ogg"
 "targetname" "track_alarm"
 }
 // entity 64
@@ -1203,7 +1203,7 @@
 {
 "classname" "special_effects_node"
 "origin" "-4504 360 264"
-"sfx_sample" "audio/sound_effects/mental_health_alarm.ogg"
+"sfx_sample" "audio/sound_effects/MIND THE GAP echo.ogg"
 "targetname" "track_alarm"
 }
 // entity 72
