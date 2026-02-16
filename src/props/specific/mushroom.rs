@@ -73,7 +73,7 @@ pub(crate) struct MushroomModel5;
 
 #[derive(Component, Debug, Reflect)]
 #[reflect(Component)]
-#[require(EnvironmentTemperature(41.))]
+#[require(EnvironmentTemperature)]
 pub(crate) struct Mushroom;
 
 fn setup_mushroom<T: Component + QuakeClass>(
