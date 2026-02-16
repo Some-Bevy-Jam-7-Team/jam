@@ -2048,7 +2048,7 @@
 {
 "classname" "npc"
 "origin" "168 -56 56"
-"yarn_node" "Dave"
+"yarn_node" "DaveGreet"
 "angles" "0 135 0"
 }
 // entity 298
@@ -2175,4 +2175,12 @@
 "origin" "2128 -1808 -16"
 "source" "Mouth"
 "volume" "-2"
+}
+// entity 320
+{
+"classname" "objective_entity"
+"origin" "-232 -152 376"
+"objective_order" "-1"
+"description" "Find out where you are"
+"targetname" "obj_1"
 }
