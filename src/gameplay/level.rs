@@ -369,7 +369,8 @@ impl FromWorld for LevelTwoAssets {
 			level: assets.load("maps/main/two/two.map#Scene"),
 			// You can regenerate the navmesh by using `bevy_rerecast_editor`
 			navmesh: assets.load("maps/main/two/two.nav"),
-			music: assets.load("audio/music/corpo slorpo feverrrrrrrr.ogg"),
+			music: Default::default(),
+			// music: assets.load("audio/music/corpo slorpo feverrrrrrrr.ogg"),
 		}
 	}
 }
