@@ -8,6 +8,8 @@
     mesh_view_bindings::view,
     view_transformations::position_world_to_clip,
 }
+#import bevy_render::globals::Globals
+@group(0) @binding(1) var<uniform> globals: Globals;
 
 #ifdef DEFERRED_PREPASS
 #import bevy_pbr::rgb9e5
@@ -67,6 +69,12 @@ fn vertex(vertex_no_morph: Vertex) -> VertexOutput {
 #endif
 
     let mesh_world_from_local = mesh_functions::get_world_from_local(vertex_no_morph.instance_index);
+
+    if globals.fever > 0.0 {
+        let fever = globals.fever * saturate(length(mesh_world_from_local[3].xyz - view.world_from_view[3].xyz) * 0.1);
+        let crazy = vertex.position * 10.0 * saturate(sin(globals.time * 0.3) * 0.5 + 0.5) * saturate(fever - 0.5);
+        vertex.position += sin(mesh_world_from_local[3].xyz + crazy + vertex.position + globals.time) * fever;
+    }
 
 #ifdef SKINNED
     var world_from_local = skinning::skin_model(

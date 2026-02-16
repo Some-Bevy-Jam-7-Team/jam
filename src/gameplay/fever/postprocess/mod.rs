@@ -265,6 +265,7 @@ fn update_settings(
 	let (current, max, base, threshold) = fever.into_inner();
 	let range = (**max - **base).max(0.0001);
 	let fever = (**current - **base) / range;
+	*bevy::ecs::FEVER.write().unwrap() = fever;
 	let threshold = (**threshold - **base) / range;
 
 	for mut setting in &mut settings {
