@@ -170,7 +170,7 @@ title: Storm
 dir: commune
 ---
 <<if $d_go_talk>>
-  Storm: Hey there, new friendo! You should chat up Dave!
+  Storm: Hey there, new friendo! You should chat up Dave! #line:1143198
 <<elseif not $d_storm>>
   Storm: Hello there. #line:491159
   Storm: You wouldn't have happened to see a house fly by you while you were up in the air? #line:12182704
@@ -180,22 +180,29 @@ dir: commune
     Storm: Where on earth are we going to sleep? #line:14991202
     -> Maybe you could build a house out of one of those mushrooms? #line:10692078
       Storm: You're a genius, we're saved. #line:15678450
-  Storm: Now I can finally focus on getting the sacrifice ready.
-  -> The what now?
-    Storm: The sacrifice for the mouth!
-    -> The WHAT now?
-      Storm: Ah, you don't know about the Eaters yet. You should
+  Storm: Now I can finally focus on getting the sacrifice ready. #line:10743113
+  -> The what now? #line:4723853
+    Storm: The sacrifice for the mouth! #line:7524346
+    -> The WHAT now? #line:13617582
+      Storm: Ah, you don't know about the Eaters yet. You should talk to Moth, she lives in the #line:16643272
   <<set $d_storm = true>>
 <<endif>>
 ===
+
+title: Eater
+dir: commune
+---
+
+===
+
 
 title: Mouth
 dir: commune
 ---
 <<if $d_quests == 0>>
-  The Mouth: ...
-  The Mouth: Patience...
+  The Mouth: ... #line:13167010
+  The Mouth: Patience... #line:10666771
 <<elseif $d_quests == 1>>
-  The Mouth:
+  The Mouth: #line:6655500
 <<endif>>
 ===

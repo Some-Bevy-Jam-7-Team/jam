@@ -42,31 +42,31 @@ impl Plugin for MushroomPlugin {
 }
 
 #[point_class(
-	base(TargetName, Transform, Visibility),
+	base(TargetName, Transform, Visibility, InteractableEntity),
 	model("models/mushroom/mushroom1.gltf")
 )]
 pub(crate) struct MushroomModel1;
 
 #[point_class(
-	base(TargetName, Transform, Visibility),
+	base(TargetName, Transform, Visibility, InteractableEntity),
 	model("models/mushroom/mushroom2.gltf")
 )]
 pub(crate) struct MushroomModel2;
 
 #[point_class(
-	base(TargetName, Transform, Visibility),
+	base(TargetName, Transform, Visibility, InteractableEntity),
 	model("models/mushroom/mushroom3.gltf")
 )]
 pub(crate) struct MushroomModel3;
 
 #[point_class(
-	base(TargetName, Transform, Visibility),
+	base(TargetName, Transform, Visibility, InteractableEntity),
 	model("models/mushroom/mushroom4.gltf")
 )]
 pub(crate) struct MushroomModel4;
 
 #[point_class(
-	base(TargetName, Transform, Visibility),
+	base(TargetName, Transform, Visibility, InteractableEntity),
 	model("models/mushroom/mushroom5.gltf")
 )]
 pub(crate) struct MushroomModel5;
