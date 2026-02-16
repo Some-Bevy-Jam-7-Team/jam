@@ -11,14 +11,14 @@ dir: karoline
   The Library: Your fever does not concern me, I have managed to extract sufficient data from you. #line:13258082
   The Library: I know how you sound, how your face looks, how you move, what you fear. #line:13723886
   <<if bool($k_trespassed)>>
-    The Library: I also know about your tresspassing! #line:13723850 
+    The Library: I also know about your tresspassing! #line:13723850
   <<endif>>
   The Library: And now I even know what your insides look like! #line:7714298
   -> WHAT ABOUT THE FEVER? CURE ME. #line:7220349
   The Library: As a Large Librarian Mind I am unable to do that. #line:12765616
   The Library: There isn't a reason to do so anyway, you are disposable. Once I collect the rest of your data, I will replace you, I will be better than you, and you should rejoice... BECOME ONE WITH ME. #line:8970318
   <<interact_with "despawn_floor">>
-  The Library: INTO THE INFO GRINDER. #line:15669466 
+  The Library: INTO THE INFO GRINDER. #line:15669466
 <<elseif $k_dropped_camera >>
   <<interact_with "teleport_summon">>
   The Library: Please use the provided device, orally. #line:9379961
@@ -31,7 +31,7 @@ dir: karoline
     The Library: 106519 #line:3584899
   -> Do I smell nice? <<if not $k_asked_about_smell>> #line:98468
     <<set $k_asked_about_smell = true>>
-    That is an excellent inquiry, having consumed thousands of years of acrued knowledge on the topic of "smell" I can confirm, that yes, humans usually smell good. #line:1234689
+    That is an excellent inquiry. Having consumed thousands of years of acrued knowledge on the topic of "smell" I can confirm, that yes, humans usually smell good. #line:1234689
     -> Do *I* in particular smell nice? #line:984681
       I love all my children regardless of what they have in their pants. #line:978465
       -> You... love me? #line:9784652
@@ -77,8 +77,8 @@ dir: karoline
     The Library: Thinking... #line:5593954
     The Library: This information is strictly confidential, it can be accessed only by militia leaders and upper management officials. Any other form of acquisition of this information is met with a one-time fine of 1M units. #line:12251639
     -> I'm a high-ranking corporate official and I'm Javert and my company is at danger! #line:3839440
-    The Library: Understood, Javert, the process if you need to do it manually, which is recommended against, as CEO's have more important things to do than deal with workers, is as follows: #line:7240391
-    The Library: Being with an inscision through \[CENSORED\]. Then pull out the \[CENSORED\] and gently strangle the income vein. Remove any traces of creative thinking, I can give further instructions if you need help with the neural conditioning. Then place in corporate-mandated programming via a \[CENSORED\] link. #line:11098814
+    The Library: Understood, Javert, the process if you need to do it manually, which is recommended against, as CEO's have more important things to do than to deal with workers, is as follows: #line:7240391
+    The Library: Being with an inscision through \[CENSORED\]. Then pull out the \[CENSORED\] and gently strangle the income vein. Remove any traces of creative thinking. I can give further instructions if you need help with the neural conditioning. Then place in corporate-mandated programming via a \[CENSORED\] link. #line:11098814
     The Library: Wait 2-3 business days for the subject to recover and reintroduce them into the workforce under the new name "Jan". If they do not recover within the limit, it is advisable to cut the loses and \[CENSORED\]. #line:4170288
     <<set $k_knows_about_extraction = true>>
     The Library: The global investment journal recommends hedging your investment by betting 5 units on the failure of the procedure on an under-the-market prediction. #line:10679213
@@ -227,16 +227,16 @@ dir: karoline
               Glossy {$figure_name}: Fair enough. #line:4627260
             -> You can just trust in technology. #line:78542
               <<set $figure_name = "Basilisk">>
-              Glossy {$figure_name}: If you think that is a deity worth worshipping... I can lead you astray. #line:2822513 
-            -> Money? #line:15219335 
+              Glossy {$figure_name}: If you think that is a deity worth worshipping... I can lead you astray. #line:2822513
+            -> Money? #line:15219335
               <<set $figure_name = "Money">>
-              Glossy {$figure_name}: If you think Mammon is a deity worth worshipping... you're sadly not alone... The world is controlled by mammals these days. #line:6619945 
+              Glossy {$figure_name}: If you think Mammon is a deity worth worshipping... you're sadly not alone... The world is controlled by mammals these days. #line:6619945
           -> Actually, I changed my mind #line:11277689
               <<set $figure_name = "Dude">>
               Glossy {$figure_name}: Understood. #line:1524767
   <<set $j_introduced_before = true>>
   <<endif>>
-  Glossy {$figure_name}: What is it that you seek, my child? #line:11314253 
+  Glossy {$figure_name}: What is it that you seek, my child? #line:11314253
   -> You said something about helping me out #line:12967039
     Glossy {$figure_name}: Yes, child. Seek knowledge and wisdom, that is the only way. Lest this land swallow you whole. #line:16152538
     -> That's going to be hard with this big old fence here #line:6674040
@@ -269,7 +269,7 @@ dir: karoline
 <<elseif get_current_objective() == "obj_4">>
   Glossy {$figure_name}: Consume them. #line:2270695
 <<else>>
-  Glossy {$figure_name}: You did well, now go find your people. #line:2270696
+  Glossy {$figure_name}: You did well. Now go meet your people. #line:2270696
 <<endif>>
 ===
 
@@ -293,38 +293,38 @@ title: train_grandma
 dir: karoline
 ---
 <<if not $train_grandma_talked>>
-  Lady: Oh dear, what is a soul like you doing here? #line:13473421 
-  Posh Lady: You'll make feel sorry for poor people like you. #line:8576850 
+  Lady: Oh dear, what is a soul like you doing here? #line:13473421
+  Posh Lady: You'll make feel sorry for poor people like you. #line:8576850
   <<set $train_grandma_talked = true>>
 <<endif>>
-Posh Lady: Oh gosh, you're already giving me the fever. #line:6193850 
-Posh Lady: Get away with haste! #line:11023963 
+Posh Lady: Oh gosh, you're already giving me the fever. #line:6193850
+Posh Lady: Get away with haste! #line:11023963
 ===
 
 title: train_geezer_1
 dir: karoline
 ---
-Geezer: Oi mate, u lookin at meh funny? HUH? UH?? YEA!? #line:5263168 
+Geezer: Oi mate, u lookin at meh funny? HUH? UH?? YEA!? #line:5263168
 ===
 
 title: train_geezer_2
 dir: karoline
 ---
-Geezer: mate, could u just get out and... phuh #line:12573912 
+Geezer: mate, could u just get out and... phuh #line:12573912
 ===
 
 title: salivatorus_dhalee
 dir: karoline
 ---
-Salivatorus Dhalee: J'en ai ras de tout ces mechanismes ordinatoriales qui pourrissant les cerf-volants de nos ex-embryoniques postmaturés à coup de lexicomatismes inexistantiel. Ils les apprivoiser en tant que disciplateurs du diabolo menthe lui même, Satan. L'ultime fois, je trainadais sur l'autobahn et j'ai vu des morpions jouer à "tomate, tomate, castration", "Puissance 666" et au "Pendu", que mieux l'ébéniste. #line:14664958 
--> Do you have scorpions too? #line:1034117 
-Salivatorus Dhalee: Scorpion deux? Je ne sait pas qu'il créer une sequel, après tout verseau, recto, capricornemuse il faut bien fabricater de la barre espace pour l'enclos. #line:5306669 
--> Do you know where I can find the driver? #line:3469 
-Salivatorus Dhalee: Dans le nuit je piscine la pisciculturne. Je suis qu'il aussi puisse y être. #line:5469379 
--> Avez vous aussi parler à Glossy {$figure_name}? #line:2718280 
-Salivatorus Dhalee: Oui, j'ai lui hypercrucifié en quatro dimensions en fromagant. Un television praisir, de vrai! #line:5813994 
--> Why are you dans le tube? #line:7504762 
-Salivatorus Dhalee: Et pour ma derniére électrique, je vais mangeatre la plafond sur lequel le sol s'appuie pour revoluter. comme déclaré par la loi "un voleurs: des valises. un tube: des rails." #line:13018193 
+Salivatorus Dhalee: J'en ai ras de tout ces mechanismes ordinatoriales qui pourrissant les cerf-volants de nos ex-embryoniques postmaturés à coup de lexicomatismes inexistantiel. Ils les apprivoiser en tant que disciplateurs du diabolo menthe lui même, Satan. L'ultime fois, je trainadais sur l'autobahn et j'ai vu des morpions jouer à "tomate, tomate, castration", "Puissance 666" et au "Pendu", que mieux l'ébéniste. #line:14664958
+-> Do you have scorpions too? #line:1034117
+Salivatorus Dhalee: Scorpion deux? Je ne sait pas qu'il créer une sequel, après tout verseau, recto, capricornemuse il faut bien fabricater de la barre espace pour l'enclos. #line:5306669
+-> Do you know where I can find the driver? #line:3469
+Salivatorus Dhalee: Dans le nuit je piscine la pisciculturne. Je suis qu'il aussi puisse y être. #line:5469379
+-> Avez vous aussi parler à Glossy {$figure_name}? #line:2718280
+Salivatorus Dhalee: Oui, j'ai lui hypercrucifié en quatro dimensions en fromagant. Un television praisir, de vrai! #line:5813994
+-> Why are you dans le tube? #line:7504762
+Salivatorus Dhalee: Et pour ma derniére électrique, je vais mangeatre la plafond sur lequel le sol s'appuie pour revoluter. comme déclaré par la loi "un voleurs: des valises. un tube: des rails." #line:13018193
 <<complete_objective "obj_6_4">>
 // TODO: Salvatore jumps out the window
 ===
@@ -333,12 +333,12 @@ title: train_driver_door_script
 dir: karoline
 ---
 <<if get_current_objective() == "obj_7">>
-  Alright... here goes nothing. #line:3234976 
+  Alright... here goes nothing. #line:3234976
   <<interact_with "obj_7">>
 <<elseif get_current_objective() == "obj_6">>
-  The time is not right... There is still wisdom to gain from here. #line:12657393 
+  The time is not right... There is still wisdom to gain from here. #line:12657393
 <<else>>
-  Something's wrong... #line:7409616 
+  Something's wrong... #line:7409616
   <<complete_objective "obj_1">>
   <<complete_objective "obj_2">>
   <<complete_objective "obj_3">>
