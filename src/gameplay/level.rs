@@ -1,7 +1,6 @@
 //! Spawn the main level.
 
 use crate::gameplay::TargetName;
-use crate::menus::Menu;
 use crate::scatter::components::Landscape;
 use crate::{
 	asset_tracking::{LoadResource, ResourceHandles},
@@ -393,7 +392,6 @@ fn advance_level(
 	mut commands: Commands,
 	current_level: Res<CurrentLevel>,
 	mut ns_loading_screen: ResMut<NextState<Screen>>,
-	mut next_menu: ResMut<NextState<Menu>>,
 ) {
 	match *current_level {
 		CurrentLevel::DayOne => commands.queue(advance_level_command::<LevelTwoAssets>()),
@@ -401,11 +399,15 @@ fn advance_level(
 		CurrentLevel::Karoline => commands.queue(advance_level_command::<LevelCommuneAssets>()),
 		CurrentLevel::Shaders => commands.queue(advance_level_command::<LevelOneAssets>()),
 		CurrentLevel::Commune => {
+			commands.spawn(GameWon);
 			ns_loading_screen.set(Screen::Title);
-			next_menu.set(Menu::Credits);
 		}
 	};
 }
+
+#[derive(Component, Reflect, Debug)]
+#[reflect(Component)]
+pub(crate) struct GameWon;
 
 fn advance_level_command<T: Asset + Resource + Clone + FromWorld>() -> impl Command {
 	|world: &mut World| {
