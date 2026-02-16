@@ -12,40 +12,36 @@ struct FeverPostProcessSettings {
 @group(0) @binding(0) var screen_texture: texture_2d<f32>;
 @group(0) @binding(1) var texture_sampler: sampler;
 @group(0) @binding(2) var<uniform> settings: FeverPostProcessSettings;
-
 @group(0) @binding(3) var<uniform> globals: Globals;
 @group(0) @binding(4) var depth_texture: texture_depth_2d;
 @group(0) @binding(5) var motion_texture: texture_2d<f32>;
 
 @fragment
 fn fragment(in: FullscreenVertexOutput) -> @location(0) vec4<f32> {
-    // Reference: https://www.shadertoy=.com/view/fdS3Dy
+    // Original reference: https://www.shadertoy.com/view/fdS3Dy
+    // Modified a bunch and added depth & motion vectors to the shader
 
-    // Filtered heavy textures, need to use textureLoad for depth/motion raw data
     let dims = vec2<f32>(textureDimensions(screen_texture));
     let coords = vec2<i32>(in.uv * dims);
-
     let time = globals.time;
     let resolution = settings.resolution;
-    let fever = clamp(settings.fever + settings.damage_indicator, 0.0, 1.0);
 
-    // Motion setup
-    let motion = textureLoad(motion_texture, coords, 0).xy;
-    let motion_warp = motion * 10.0 * settings.fever;
+    // Fever
+    let dist_from_center = length(in.uv - 0.5);
+    let fever = clamp(settings.fever, 0.0, 1.0);
 
-    // Convert UV to pixel coordinates
-    let frag_coord = in.uv * resolution.xy;
+    // Motion and Warp Setup
+    let motion_raw = textureLoad(motion_texture, coords, 0).xy;
+    let velocity = length(motion_raw);
+    let motion_warp = motion_raw * 150.0 * fever;
 
-    // Center coordinates
-    var coord = frag_coord - (resolution.xy * 0.5) + motion_warp;
+    // Coordinate Scaling
+    let open_close = sin(time * 0.5) * 0.5 + 0.5;
+    let pulse_scale = mix(0.8, 1.5, open_close * fever);
+    var coord = (in.uv - 0.5) * resolution.xy * pulse_scale + motion_warp;
+
     let x = coord.x;
     let y = coord.y;
-
-    // Time modulation with speed
-    let velocity = length(motion);
-    let motion_flash = velocity * 100.0 * fever;
-    let j_time = glsl_mod(4.0 * sin(0.5 * (time + motion_flash)), 261.8) + 4.0;
-    coord *= pow(1.1, j_time);
 
     // Radial distances
     let eps = 0.001;
@@ -69,39 +65,68 @@ fn fragment(in: FullscreenVertexOutput) -> @location(0) vec4<f32> {
     // Combine patterns with XOR
     let e = (a | b) ^ (c | d);
 
-    // Color mapping
-    let value = fract(f32(e) * 0.000003);
-    let kaleidoscope = hsv2rgb(vec3<f32>(value + time * 0.6, 0.6, 0.6));
+    // Smooth internal structure before integer quantization
+    let f2 = fract(r2 * p2);
+    let f3 = fract(r3 * p3);
+    let f4 = fract(r4 * p4);
+    let f5 = fract(r5 * p5);
 
-    // Tint
-    let tint = vec3<f32>(1.0, 0.0, 0.0);
-    let pattern = mix(kaleidoscope, tint, 0.6);
+    // Blend smooth detail
+    let detail = 0.25 * f2 + 0.25 * f3 + 0.25 * f4 + 0.25 * f5;
+
+    // Keep original structural pattern
+    let structure = fract(f32(e) * (0.000000075 + sin(time * 0.05) * 0.000000025));
+
+    // Blend structure and smooth shading
+    var raw = mix(structure, detail, 0.2);
+
+    // Add soft S-curve shaping
+    let s = raw * raw * (3.0 - 2.0 * raw);
+    let shaped = pow(s, 2.5);
+
+    // Color Palette
+    let color1 = vec3<f32>(64.0, 27.0, 18.0) / 255.0;
+    let color2 = vec3<f32>(255.0, 97.0, 117.0) / 255.0;
+    let color3 = vec3<f32>(255.0, 0.0, 116.0) / 255.0;
+
+    var kaleidoscope = gradient3(fract(shaped + time * 0.1), color1, color2, color3);
+
+    let depth_raw = textureLoad(depth_texture, coords, 0);
+    let near_boost = smoothstep(0.0, 1.0, depth_raw);
+
+    // Glow
+    let glow = pow(smoothstep(0.7, 1.0, s), 3.0) * 1.5 * fever * (1.0 + near_boost * 4.0);
+    kaleidoscope += (color3 * glow);
 
     // Vignette
-    let dist = distance(in.uv, vec2<f32>(0.5));
-    let vignette = smoothstep(0.2, 0.8, dist);
+    let noise = gradient_noise(in.uv * dims);
+    let dithered_dist = dist_from_center + (noise - 0.5) * 0.015;
+    let vignette_mask = smoothstep(0.2, 0.7, dithered_dist) * fever;
+
+    // Iris
+    let iris_threshold = mix(1.5, 0.1, open_close * fever);
+    let iris_reveal = smoothstep(iris_threshold, iris_threshold + 0.8, dithered_dist);
+    let motion = smoothstep(0.0, 0.02, velocity) * 0.02 * fever;
 
     // Depth
-    let depth = textureLoad(depth_texture, coords, 0);
-    let depth_mask = smoothstep(0.0, 0.1, depth);
-
-    // Motion
-    let motion_mask = smoothstep(0.0, 0.02, velocity) * 0.5 * fever;
+    let depth = (smoothstep(0.01, 0.2, depth_raw) * smoothstep(0.99, 0.8, depth_raw)) * 0.2;
 
     // Combine
-    let mask = max(vignette, depth_mask);
-    let base_color = textureSample(screen_texture, texture_sampler, in.uv);
-    let mix_factor = clamp((fever + motion_mask) * mask * settings.intensity, 0.0, 1.0);
+    let mask = clamp(vignette_mask + iris_reveal + motion + depth, 0.0, 1.0);
+    let protection = smoothstep(0.99, 0.8, depth_raw);
+    let mix = mask * protection * fever * settings.intensity * (1.0 + near_boost * 2.0);
 
-    return vec4<f32>(mix(base_color.rgb, pattern, mix_factor), 1.0);
+    let base_color = textureSample(screen_texture, texture_sampler, in.uv).rgb;
+    return vec4<f32>(mix(base_color, kaleidoscope, clamp(mix, 0.0, 1.0)), 1.0);
 }
 
-fn glsl_mod(a: f32, b: f32) -> f32 {
-    return a - b * floor(a / b);
+fn gradient3(t: f32, c0: vec3<f32>, c1: vec3<f32>, c2: vec3<f32>) -> vec3<f32> {
+    let mid = 0.5;
+    if (t < mid) { return mix(c0, c1, t / mid); }
+    else { return mix(c1, c2, (t - mid) / mid); }
 }
 
-fn hsv2rgb(c: vec3<f32>) -> vec3<f32> {
-    let K = vec4<f32>(1.0, 2.0/3.0, 1.0/3.0, 3.0);
-    let p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-    return c.z * mix(K.xxx, clamp(p - K.xxx, vec3<f32>(0.0), vec3<f32>(1.0)), c.y);
+fn gradient_noise(uv: vec2<f32>) -> f32 {
+    let magic = vec3<f32>(0.06711056, 0.00583715, 52.9829189);
+    return fract(magic.z * fract(dot(uv, magic.xy)));
 }
