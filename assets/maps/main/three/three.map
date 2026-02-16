@@ -2084,115 +2084,109 @@
 }
 // entity 302
 {
-"classname" "train"
-"origin" "2176 -1792 -480"
-"angles" "-90 0 0"
-}
-// entity 303
-{
 "classname" "rock"
 "origin" "1936 -1424 16"
 "angles" "0 -45 0"
 }
-// entity 304
+// entity 303
 {
 "classname" "rock"
 "origin" "1824 -1536 48"
 "angles" "0 150 0"
 }
-// entity 305
+// entity 304
 {
 "classname" "rock"
 "origin" "1856 -1440 16"
 "angles" "0 135 0"
 }
-// entity 306
+// entity 305
 {
 "classname" "rock"
 "origin" "1744 -1696 16"
 "angles" "0 -135 0"
 }
-// entity 307
+// entity 306
 {
 "classname" "rock"
 "origin" "1744 -1728 16"
 "angles" "0 0 0"
 }
-// entity 308
+// entity 307
 {
 "classname" "rock"
 "origin" "1760 -1744 16"
 "angles" "0 -150 0"
 }
-// entity 309
+// entity 308
 {
 "classname" "teeth"
 "origin" "1104 800 56"
 "angles" "-32 180 0"
 }
-// entity 310
+// entity 309
 {
 "classname" "teeth"
 "origin" "-1728 272 56"
 "angles" "-32 -75 0"
 }
-// entity 311
+// entity 310
 {
 "classname" "trash"
 "origin" "104 -600 24"
 "is_edible" "true"
 }
-// entity 312
+// entity 311
 {
 "classname" "trash"
 "origin" "200 -56 24"
 }
-// entity 313
+// entity 312
 {
 "classname" "trash"
 "origin" "-280 -184 24"
 "is_edible" "true"
 }
-// entity 314
+// entity 313
 {
 "classname" "trash"
 "origin" "-248 -168 24"
 "is_edible" "true"
 }
-// entity 315
+// entity 314
 {
 "classname" "rohlik"
 "origin" "248 168 72"
 "is_edible" "true"
 }
-// entity 316
+// entity 315
 {
 "classname" "rohlik"
 "origin" "312 168 72"
 "is_edible" "true"
 }
-// entity 317
+// entity 316
 {
 "classname" "rohlik"
 "origin" "232 -456 80"
 "angles" "0 45 0"
 "is_edible" "true"
 }
-// entity 318
+// entity 317
 {
 "classname" "rohlik"
 "origin" "344 -472 80"
 "angles" "0 135 0"
 "is_edible" "true"
 }
-// entity 319
+// entity 318
 {
 "classname" "world_emitter"
 "origin" "2128 -1808 -16"
 "source" "Mouth"
 "volume" "-2"
 }
-// entity 320
+// entity 319
 {
 "classname" "objective_entity"
 "origin" "-232 -152 376"
@@ -2200,11 +2194,187 @@
 "description" "Find out where you are"
 "targetname" "obj_1"
 }
-// entity 321
+// entity 320
 {
 "classname" "objective_entity"
 "origin" "-232 -184 376"
 "objective_order" "-1"
 "description" "Find out what this place is about"
 "targetname" "obj_2"
+}
+// entity 321
+{
+"classname" "sensor_entity"
+"sensor_detect_player" "true"
+"sensor_on_collision_start" "obj_1"
+// brush 0
+{
+( 1872 -1904 96 ) ( 1872 -1903 96 ) ( 1872 -1904 97 ) __TB_empty [ 0 -1 0 0 ] [ 0 0 -1 16 ] 270 1 1
+( 1952 -2016 96 ) ( 1952 -2016 97 ) ( 1953 -2016 96 ) __TB_empty [ 1 0 0 0 ] [ 0 0 -1 16 ] 270 1 1
+( 1952 -1904 -64 ) ( 1953 -1904 -64 ) ( 1952 -1903 -64 ) __TB_empty [ -1 0 0 0 ] [ 0 -1 0 0 ] 270 1 1
+( 2208 -1504 112 ) ( 2208 -1503 112 ) ( 2209 -1504 112 ) __TB_empty [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
+( 2208 -1488 112 ) ( 2209 -1488 112 ) ( 2208 -1488 113 ) __TB_empty [ -1 0 0 0 ] [ 0 0 -1 16 ] 90 1 1
+( 2368 -1504 112 ) ( 2368 -1504 113 ) ( 2368 -1503 112 ) __TB_empty [ 0 1 0 0 ] [ 0 0 -1 16 ] 270 1 1
+}
+}
+// entity 322
+{
+"classname" "npc"
+"origin" "-88 392 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 323
+{
+"classname" "npc"
+"origin" "1968 -1600 16"
+"angles" "0 -60 0"
+"yarn_node" "Mouth"
+}
+// entity 324
+{
+"classname" "train"
+"origin" "2040 -1784 -440"
+"angles" "90 0 0"
+}
+// entity 325
+{
+"classname" "sensor_entity"
+"sensor_detect_player" "true"
+"sensor_on_collision_start" "obj_2"
+// brush 0
+{
+( 2000 -1904 48 ) ( 2000 -1903 48 ) ( 2000 -1904 49 ) __TB_empty [ 0 -1 0 0 ] [ 0 0 -1 0 ] 180 1 1
+( 1952 -1872 48 ) ( 1952 -1872 49 ) ( 1953 -1872 48 ) __TB_empty [ 1 0 0 0 ] [ 0 0 -1 0 ] 180 1 1
+( 1952 -1904 48 ) ( 1953 -1904 48 ) ( 1952 -1903 48 ) __TB_empty [ -1 0 0 0 ] [ 0 -1 0 0 ] 180 1 1
+( 2208 -1504 64 ) ( 2208 -1503 64 ) ( 2209 -1504 64 ) __TB_empty [ 1 0 0 0 ] [ 0 -1 0 0 ] 180 1 1
+( 2208 -1696 64 ) ( 2209 -1696 64 ) ( 2208 -1696 65 ) __TB_empty [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 2192 -1504 64 ) ( 2192 -1504 65 ) ( 2192 -1503 64 ) __TB_empty [ 0 1 0 0 ] [ 0 0 -1 0 ] 180 1 1
+}
+}
+// entity 326
+{
+"classname" "npc"
+"origin" "280 504 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 327
+{
+"classname" "npc"
+"origin" "-136 600 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 328
+{
+"classname" "npc"
+"origin" "552 440 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 329
+{
+"classname" "npc"
+"origin" "-24 152 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 330
+{
+"classname" "npc"
+"origin" "-312 24 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 331
+{
+"classname" "npc"
+"origin" "-488 -56 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 332
+{
+"classname" "npc"
+"origin" "40 -280 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 333
+{
+"classname" "npc"
+"origin" "344 24 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 334
+{
+"classname" "npc"
+"origin" "8 -536 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 335
+{
+"classname" "npc"
+"origin" "56 -696 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 336
+{
+"classname" "npc"
+"origin" "-24 -408 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 337
+{
+"classname" "npc"
+"origin" "-440 -1000 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 338
+{
+"classname" "npc"
+"origin" "-120 -936 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 339
+{
+"classname" "npc"
+"origin" "-856 -1016 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 340
+{
+"classname" "npc"
+"origin" "8 -136 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 341
+{
+"classname" "npc"
+"origin" "-56 968 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 342
+{
+"classname" "npc"
+"origin" "184 424 24"
+"yarn_node" "Eater"
+"is_walker" "true"
+}
+// entity 343
+{
+"classname" "npc"
+"origin" "-312 584 24"
+"yarn_node" "Eater"
+"is_walker" "true"
 }

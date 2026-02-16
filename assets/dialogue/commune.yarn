@@ -165,26 +165,97 @@ dir: commune
 
 ===
 
-// TODO: Add npc for Jannet.
-title: Jannet
-dir: commune
----
-Jannet: Damn estrogen is magic. #line:5306475
-Jannet: I have boobs now. #line:10657129
-Jannet: And every single woman who's ever had a crush on me is now Gay. #line:10535612
-Jannet: They should never have given me this power. #line:15163347
-===
 
 title: Storm
 dir: commune
 ---
-Storm: Hello there. #line:491159
-Storm: You wouldn't have happened to see a house fly by you while you were up in the air? #line:12182704
-Storm: There was a right storm last night and it appears to have made off with our house. #line:14277538
--> No #line:4686347
-  Storm: That's a shame. #line:892195
-  Storm: Where on earth are we going to sleep? #line:14991202
+<<if not $d_go_talk>>
+  Storm: Hey there, new friendo! You should chat up Dave! #line:1143198
+<<else>>
+  Storm: Hello there. #line:491159
+  Storm: You wouldn't have happened to see a house fly by you while you were up in the air? #line:12182704
+  Storm: There was a right storm last night and it appears to have made off with our house. #line:14277538
+  -> No #line:4686347
+    Storm: That's a shame. #line:892195
+    Storm: Where on earth are we going to sleep? #line:14991202
+    -> Maybe you could build a house out of one of those mushrooms? #line:10692078
+      Storm: You're a genius, we're saved. #line:15678450
+  Storm: Now I can finally focus on getting the sacrifice ready. #line:10743113
+  -> The what now? #line:4723853
+    Storm: The sacrifice for the mouth! #line:7524346
+    -> The WHAT now? #line:13617582
+      The Mouth! Our incomprehensible benefactor! #line:7693986
+      -> That sounds bad #line:10827949
+      -> Where do I find that mouth? #line:15821270
+        Storm: Take a look around the area. You'll bump into it. #line:6364454
+  <<set $d_storm = true>>
+<<endif>>
+===
 
-  -> Maybe you could build a house out of one of those mushrooms? #line:10692078
-    Storm: You're a genius, we're saved. #line:15678450
+title: Eater
+dir: commune
+---
+<<declare $d_eater_index = 1>>
+<<if $d_eater_index == 1>>
+  Eater: Must procure sacrifices #line:11832050
+<<set $d_eater_index = $d_eater_index + 1>>
+<<elseif $d_eater_index == 2>>
+  Eater: The hole hungers #line:15233048 
+  <<set $d_eater_index = $d_eater_index + 1>>
+<<elseif $d_eater_index == 3>>
+  Eater: Where is it. #line:10203950 
+  <<set $d_eater_index = $d_eater_index + 1>>
+<<elseif $d_eater_index == 4>>
+  Eater: Must find hole #line:11066659 
+  <<set $d_eater_index = $d_eater_index + 1>>
+<<elseif $d_eater_index == 5>>
+  Eater: HOLE #line:1850439 
+  <<set $d_eater_index = $d_eater_index + 1>>
+<<elseif $d_eater_index == 6>>
+  Eater: I love the hole #line:14105633 
+  <<set $d_eater_index = $d_eater_index + 1>>
+<<elseif $d_eater_index == 7>>
+  Eater: The hole fills my soul #line:10848550 
+  <<set $d_eater_index = $d_eater_index + 1>>
+<<elseif $d_eater_index == 7>>
+  Eater: Must give hole my body #line:9154921 
+  <<set $d_eater_index = $d_eater_index + 1>>
+<<else>>
+  Eater: The hole consumes me #line:4555022 
+<<endif>>
+===
+
+
+title: Mouth
+dir: commune
+---
+<<declare $d_mouth_index = 1>>
+<<if $d_mouth_index == 1>>
+  The Translator: I hunger. #line:1221186
+  <<set $d_mouth_index = $d_mouth_index + 1>>
+<<elseif $d_mouth_index == 2>>
+  The Translator: The hole must be fed. #line:308326
+  <<set $d_mouth_index = $d_mouth_index + 1>>
+<<elseif $d_mouth_index == 3>>
+  The Translator: This is not enough. It has never been enough. And it will never be enough. #line:2506159
+  <<set $d_mouth_index = $d_mouth_index + 1>>
+<<elseif $d_mouth_index == 4>>
+  The Translator: I must claim another. #line:10073561
+  <<set $d_mouth_index = $d_mouth_index + 1>>
+<<elseif $d_mouth_index == 5>>
+  The Translator: My hunger knows no bound. #line:5893268
+  <<set $d_mouth_index = $d_mouth_index + 1>>
+<<elseif $d_mouth_index == 6>>
+  The Translator: I am the hole. #line:8175265
+  <<set $d_mouth_index = $d_mouth_index + 1>>
+<<elseif $d_mouth_index == 7>>
+  The Translator: Give me your soul. #line:1754163
+  <<set $d_mouth_index = $d_mouth_index + 1>>
+<<elseif $d_mouth_index == 8>>
+  The Translator: You may scour every corner of the earth for more to feed me. But it will never be enough. The inevitable approaches. I require full devotion. I require you. #line:6386873
+  <<set $d_mouth_index = $d_mouth_index + 1>>
+<<elseif $d_mouth_index == 9>>
+  The Translator: You must bring me more. #line:2649782
+  <<set $d_mouth_index = 1>>
+<<endif>>
 ===

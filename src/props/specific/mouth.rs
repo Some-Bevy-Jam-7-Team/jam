@@ -5,7 +5,6 @@ use bevy_trenchbroom::prelude::*;
 use crate::{
 	asset_tracking::LoadResource as _,
 	gameplay::TargetName,
-	props::interactables::InteractableEntity,
 	third_party::{
 		avian3d::CollisionLayer,
 		bevy_trenchbroom::{GetTrenchbroomModelPath as _, LoadTrenchbroomModel as _},
@@ -22,7 +21,7 @@ pub(super) fn plugin(app: &mut App) {
 pub(crate) struct LandscapePreview;
 
 #[point_class(
-	base(Transform, Visibility, InteractableEntity, TargetName),
+	base(Transform, Visibility, TargetName),
 	model("models/mouth/mouth.gltf")
 )]
 pub(crate) struct Mouth;
