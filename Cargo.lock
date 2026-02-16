@@ -4531,46 +4531,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "92ecc6618181def0457392ccd0ee51198e065e016d1d527a7ac1b6dc7c1f09d2"
 
 [[package]]
-name = "jam"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "avian3d",
- "avian_pickup",
- "avian_rerecast",
- "bevy",
- "bevy-inspector-egui",
- "bevy_ahoy",
- "bevy_bae",
- "bevy_eidolon",
- "bevy_enhanced_input",
- "bevy_feronia",
- "bevy_fix_cursor_unlock_web",
- "bevy_framepace",
- "bevy_hanabi",
- "bevy_landmass",
- "bevy_mod_props",
- "bevy_mod_skinned_aabb",
- "bevy_rerecast",
- "bevy_seedling",
- "bevy_shuffle_bag",
- "bevy_transform_interpolation",
- "bevy_trenchbroom",
- "bevy_trenchbroom_avian",
- "bevy_yarnspinner",
- "bincode",
- "bitflags 2.11.0",
- "firewheel",
- "getrandom 0.3.4",
- "landmass_rerecast",
- "rand 0.9.2",
- "regex",
- "tracing",
- "unicode-segmentation",
- "wasm-bindgen",
-]
-
-[[package]]
 name = "jni"
 version = "0.21.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4655,6 +4615,46 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ff7f53bdf698e7aa7ec916411bbdc8078135da11b66db5182675b2227f6c0d07"
 dependencies = [
  "bitflags 2.11.0",
+]
+
+[[package]]
+name = "laborgeist"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "avian3d",
+ "avian_pickup",
+ "avian_rerecast",
+ "bevy",
+ "bevy-inspector-egui",
+ "bevy_ahoy",
+ "bevy_bae",
+ "bevy_eidolon",
+ "bevy_enhanced_input",
+ "bevy_feronia",
+ "bevy_fix_cursor_unlock_web",
+ "bevy_framepace",
+ "bevy_hanabi",
+ "bevy_landmass",
+ "bevy_mod_props",
+ "bevy_mod_skinned_aabb",
+ "bevy_rerecast",
+ "bevy_seedling",
+ "bevy_shuffle_bag",
+ "bevy_transform_interpolation",
+ "bevy_trenchbroom",
+ "bevy_trenchbroom_avian",
+ "bevy_yarnspinner",
+ "bincode",
+ "bitflags 2.11.0",
+ "firewheel",
+ "getrandom 0.3.4",
+ "landmass_rerecast",
+ "rand 0.9.2",
+ "regex",
+ "tracing",
+ "unicode-segmentation",
+ "wasm-bindgen",
 ]
 
 [[package]]
