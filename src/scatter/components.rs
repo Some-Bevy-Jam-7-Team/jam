@@ -39,12 +39,13 @@ impl Landscape {
 
 				world.commands().entity(ctx.entity).insert((
 					SceneRoot(landscape.clone()),
-					ColliderConstructorHierarchy::new(ColliderConstructor::ConvexHullFromMesh)
+					ColliderConstructorHierarchy::new(ColliderConstructor::TrimeshFromMesh)
 						.with_default_layers(CollisionLayers::new(
 							CollisionLayer::Default,
 							LayerMask::ALL,
 						))
 						.with_default_density(1_000.0),
+					Transform::from_scale(Vec3::ONE * 0.73),
 				));
 
 				if level == CurrentLevel::Shaders {
