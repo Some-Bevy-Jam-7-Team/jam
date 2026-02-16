@@ -184,7 +184,10 @@ dir: commune
   -> The what now? #line:4723853
     Storm: The sacrifice for the mouth! #line:7524346
     -> The WHAT now? #line:13617582
-      Storm: Ah, you don't know about the Eaters yet. You should talk to Moth, she lives in the #line:16643272
+      The Mouth! Our incomprehensible benefactor!
+      -> That sounds bad
+      -> Where do I find that mouth?
+        Storm: Take a look around the area. There's
   <<set $d_storm = true>>
 <<endif>>
 ===
