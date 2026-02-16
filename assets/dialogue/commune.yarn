@@ -128,7 +128,7 @@ dir: commune
   -> My head hurts. #line:5263726
     Dave: Well get some ale and chips into you. It'll clear that right up. #line:2295028
   -> You're British?? #line:14273870
-    Dave: As British and Chips and Curry. #line:12488020
+    Dave: As British as Chips and Curry. #line:12488020
   -> You're Northern?? #line:15752441
     Dave: Right you are. #line:16664469
   <<set $d_dave4 = true>>
