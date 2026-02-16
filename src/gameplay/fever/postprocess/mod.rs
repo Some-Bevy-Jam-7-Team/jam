@@ -33,7 +33,7 @@ use bevy_ahoy::CharacterController;
 
 pub fn plugin(app: &mut App) {
 	app.add_plugins(FeverPostProcessPlugin)
-		.add_systems(Update, update_settings)
+		.add_systems(Update, (update_settings,))
 		.add_observer(on_fever_tick);
 }
 
