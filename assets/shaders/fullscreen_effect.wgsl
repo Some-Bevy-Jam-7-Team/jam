@@ -19,7 +19,7 @@ struct FeverPostProcessSettings {
 @fragment
 fn fragment(in: FullscreenVertexOutput) -> @location(0) vec4<f32> {
     // Original reference: https://www.shadertoy.com/view/fdS3Dy
-    // Modified a bunch and added depth & motion vectors to the shader
+    // Modified a bunch and added depth & motion buffers to the shader
 
     let dims = vec2<f32>(textureDimensions(screen_texture));
     let coords = vec2<i32>(in.uv * dims);
