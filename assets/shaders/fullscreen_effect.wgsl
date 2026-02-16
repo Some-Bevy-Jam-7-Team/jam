@@ -114,10 +114,10 @@ fn fragment(in: FullscreenVertexOutput) -> @location(0) vec4<f32> {
     // Combine
     let mask = clamp(vignette_mask + iris_reveal + motion + depth, 0.0, 1.0);
     let protection = smoothstep(0.99, 0.8, depth_raw);
-    let mix = mask * protection * fever * settings.intensity * (1.0 + near_boost * 2.0);
+    let mix_final = mask * protection * fever * settings.intensity * (1.0 + near_boost * 2.0);
 
     let base_color = textureSample(screen_texture, texture_sampler, in.uv).rgb;
-    return vec4<f32>(mix(base_color, kaleidoscope, clamp(mix, 0.0, 1.0)), 1.0);
+    return vec4<f32>(mix(base_color, kaleidoscope, clamp(mix_final, 0.0, 1.0)), 1.0);
 }
 
 fn gradient3(t: f32, c0: vec3<f32>, c1: vec3<f32>, c2: vec3<f32>) -> vec3<f32> {
