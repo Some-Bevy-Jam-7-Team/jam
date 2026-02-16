@@ -398,9 +398,16 @@ fn advance_level(
 		CurrentLevel::DayTwo => commands.queue(advance_level_command::<LevelKarolineAssets>()),
 		CurrentLevel::Karoline => commands.queue(advance_level_command::<LevelCommuneAssets>()),
 		CurrentLevel::Shaders => commands.queue(advance_level_command::<LevelOneAssets>()),
-		CurrentLevel::Commune => ns_loading_screen.set(Screen::Title),
+		CurrentLevel::Commune => {
+			commands.spawn(GameWon);
+			ns_loading_screen.set(Screen::Title);
+		}
 	};
 }
+
+#[derive(Component, Reflect, Debug)]
+#[reflect(Component)]
+pub(crate) struct GameWon;
 
 fn advance_level_command<T: Asset + Resource + Clone + FromWorld>() -> impl Command {
 	|world: &mut World| {
