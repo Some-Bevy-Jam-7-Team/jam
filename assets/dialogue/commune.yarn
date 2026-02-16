@@ -200,7 +200,28 @@ dir: commune
   Eater: Must procure sacrifices #line:11832050
 <<set $d_eater_index = $d_eater_index + 1>>
 <<elseif $d_eater_index == 2>>
-  Eater: Must procure saahstcrifices #line:12096860
+  Eater: The hole hungers #line:15233048 
+  <<set $d_eater_index = $d_eater_index + 1>>
+<<elseif $d_eater_index == 3>>
+  Eater: Where is it. #line:10203950 
+  <<set $d_eater_index = $d_eater_index + 1>>
+<<elseif $d_eater_index == 4>>
+  Eater: Must find hole #line:11066659 
+  <<set $d_eater_index = $d_eater_index + 1>>
+<<elseif $d_eater_index == 5>>
+  Eater: HOLE #line:1850439 
+  <<set $d_eater_index = $d_eater_index + 1>>
+<<elseif $d_eater_index == 6>>
+  Eater: I love the hole #line:14105633 
+  <<set $d_eater_index = $d_eater_index + 1>>
+<<elseif $d_eater_index == 7>>
+  Eater: The hole fills my soul #line:10848550 
+  <<set $d_eater_index = $d_eater_index + 1>>
+<<elseif $d_eater_index == 7>>
+  Eater: Must give hole my body #line:9154921 
+  <<set $d_eater_index = $d_eater_index + 1>>
+<<else>>
+  Eater: The hole consumes me #line:4555022 
 <<endif>>
 ===
 

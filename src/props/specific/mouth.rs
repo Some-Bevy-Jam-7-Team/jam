@@ -5,7 +5,6 @@ use bevy_trenchbroom::prelude::*;
 use crate::{
 	asset_tracking::LoadResource as _,
 	gameplay::TargetName,
-	props::interactables::InteractableEntity,
 	third_party::{
 		avian3d::CollisionLayer,
 		bevy_trenchbroom::{GetTrenchbroomModelPath as _, LoadTrenchbroomModel as _},
