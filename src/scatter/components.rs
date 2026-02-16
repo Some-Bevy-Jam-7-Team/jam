@@ -14,7 +14,7 @@ pub struct ScatterDone;
 
 #[derive(Component)]
 #[component(on_add = Self::on_add)]
-#[require(RigidBody::Static, Name::new("Landscape"), MapHeight)]
+#[require(RigidBody::Static, Name::new("Landscape"))]
 pub struct Landscape;
 
 impl Landscape {
@@ -32,14 +32,11 @@ impl Landscape {
 		let level = world.get_resource::<CurrentLevel>().cloned().unwrap();
 		match level {
 			CurrentLevel::Commune | CurrentLevel::Shaders => {
-				let landscape = world
-					.get_resource::<EnvironmentAssets>()
-					.map(|a| a.landscape.clone())
-					.expect("Assets should be loaded.");
+				let landscape = world.resource::<EnvironmentAssets>().landscape.clone();
 
 				world.commands().entity(ctx.entity).insert((
 					SceneRoot(landscape.clone()),
-					ColliderConstructorHierarchy::new(ColliderConstructor::ConvexHullFromMesh)
+					ColliderConstructorHierarchy::new(ColliderConstructor::TrimeshFromMesh)
 						.with_default_layers(CollisionLayers::new(
 							CollisionLayer::Default,
 							LayerMask::ALL,
