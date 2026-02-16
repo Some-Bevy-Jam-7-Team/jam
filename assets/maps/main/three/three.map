@@ -2076,7 +2076,6 @@
 {
 "classname" "mouth"
 "origin" "2096 -1776 24"
-"yarn_node" "Mouth"
 }
 // entity 301
 {

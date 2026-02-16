@@ -22,7 +22,7 @@ pub(super) fn plugin(app: &mut App) {
 pub(crate) struct LandscapePreview;
 
 #[point_class(
-	base(Transform, Visibility, InteractableEntity, TargetName),
+	base(Transform, Visibility, TargetName),
 	model("models/mouth/mouth.gltf")
 )]
 pub(crate) struct Mouth;
