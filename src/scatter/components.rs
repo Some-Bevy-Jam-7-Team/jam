@@ -36,7 +36,7 @@ impl Landscape {
 
 				world.commands().entity(ctx.entity).insert((
 					SceneRoot(landscape.clone()),
-					ColliderConstructorHierarchy::new(ColliderConstructor::TrimeshFromMesh)
+					ColliderConstructorHierarchy::new(ColliderConstructor::ConvexHullFromMesh)
 						.with_default_layers(CollisionLayers::new(
 							CollisionLayer::Default,
 							LayerMask::ALL,
