@@ -123,7 +123,7 @@ dir: karoline
   <<set $k_1goof = true>>
   Cultist: Be seeing you. #line:14446971
 <<else>>
-  Cultist: Without access to the library I feel unimplemented #line:987432
+  Cultist: Without access to the library I feel unimplemented. #line:987432
 <<endif>>
 ===
 
@@ -131,22 +131,22 @@ title: karoline_cultist_2
 dir: karoline
 ---
 <<if not $k_introduced >>
-  Novice: U-Uh... g-go speak to the other guy, I-I'm not qualified. #line:465594
+  Novice: U-uh... g-go speak to the other guy, I-I'm not qualified. #line:465594
 <<elseif $k_first_question>>
-  Novice: P-Praise on to the paper colossus! #line:7660512
+  Novice: P-praise on to the paper colossus! #line:7660512
   -> So... what do you do all day? <<if not $k_2goof>> #line:5878613
     Novice: I-I sniff old books. #line:8268668
   -> How long have you been in the cult? <<if not $k_2goof>> #line:6748722
-    Novice: O-On Monday, John told me at the coffee table that I should either join or go to Scunthorpe, that sounded kinda bad. #line:8926315
+    Novice: O-on Monday, John told me at the coffee table that I should either join or go to Scunthorpe, that sounded kinda bad. #line:8926315
   <<set $k_2goof = true>>
   Novice: H-hehe, be seeing you. #line:8835902
 <<else>>
-  Novice: 'Sup #line:4498
+  Novice: H-hello? #line:4498
   -> Why is it so dark here? #line:6383036
-    Novice: W-We have dedicated all energy towards lighting the mighty one. I-It can make better use of resources than us humans a-anyway. #line:120130
+    Novice: W-we have dedicated all energy towards lighting the mighty one. I-it can make better use of resources than us humans a-anyway. #line:120130
     -> What is it using the resouces for? #line:4643946
       Novice: ... #line:3197451
-      Novice: E-Eh... How am I supposed to know that? #line:87649574
+      Novice: E-eh... How am I supposed to know that? #line:87649574
 <<endif>>
 ===
 
