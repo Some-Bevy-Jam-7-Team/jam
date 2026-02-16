@@ -35,7 +35,10 @@ pub(super) fn plugin(app: &mut App) {
 	app.add_systems(PreUpdate, assert_only_one_player);
 }
 
-#[point_class(base(Transform, Visibility), model("models/jan_npc/jan.gltf"))]
+#[point_class(
+	base(Transform, Visibility, PointLight),
+	model("models/jan_npc/jan.gltf")
+)]
 pub(crate) struct Player;
 
 // Shoulder-width of 45 cm (over average but not too diabolical)

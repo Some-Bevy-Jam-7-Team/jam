@@ -9,7 +9,9 @@
 			"name":"Scene",
 			"nodes":[
 				0,
-				1
+				1,
+				2,
+				3
 			]
 		}
 	],
@@ -37,6 +39,29 @@
 				1.5331611633300781,
 				-0.11890798062086105
 			]
+		},
+		{
+			"mesh":2,
+			"name":"Cylinder.002",
+			"scale":[
+				1.2919450998306274,
+				1.2919450998306274,
+				1.2919450998306274
+			],
+			"translation":[
+				-0.009588420391082764,
+				0.546647846698761,
+				-0.0756881907582283
+			]
+		},
+		{
+			"mesh":3,
+			"name":"Cylinder.003",
+			"translation":[
+				-0.0051032304763793945,
+				0.22605419158935547,
+				-0.09082040190696716
+			]
 		}
 	],
 	"materials":[
@@ -46,6 +71,27 @@
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
 					"index":0
+				},
+				"metallicFactor":0,
+				"roughnessFactor":0.699999988079071
+			}
+		},
+		{
+			"doubleSided":true,
+			"name":"Material.002",
+			"pbrMetallicRoughness":{
+				"baseColorTexture":{
+					"index":1
+				},
+				"metallicFactor":0
+			}
+		},
+		{
+			"doubleSided":true,
+			"name":"Material.003",
+			"pbrMetallicRoughness":{
+				"baseColorTexture":{
+					"index":1
 				},
 				"metallicFactor":0,
 				"roughnessFactor":0.699999988079071
@@ -80,12 +126,44 @@
 					"material":0
 				}
 			]
+		},
+		{
+			"name":"Cylinder.003",
+			"primitives":[
+				{
+					"attributes":{
+						"POSITION":8,
+						"NORMAL":9,
+						"TEXCOORD_0":10
+					},
+					"indices":11,
+					"material":1
+				}
+			]
+		},
+		{
+			"name":"Cylinder",
+			"primitives":[
+				{
+					"attributes":{
+						"POSITION":12,
+						"NORMAL":13,
+						"TEXCOORD_0":14
+					},
+					"indices":15,
+					"material":2
+				}
+			]
 		}
 	],
 	"textures":[
 		{
 			"sampler":0,
 			"source":0
+		},
+		{
+			"sampler":0,
+			"source":1
 		}
 	],
 	"images":[
@@ -93,6 +171,11 @@
 			"mimeType":"image/png",
 			"name":"shroom",
 			"uri":"shroom.png"
+		},
+		{
+			"mimeType":"image/png",
+			"name":"plant.png",
+			"uri":"plant.png"
 		}
 	],
 	"accessors":[
@@ -163,6 +246,74 @@
 			"componentType":5123,
 			"count":138,
 			"type":"SCALAR"
+		},
+		{
+			"bufferView":8,
+			"componentType":5126,
+			"count":12,
+			"max":[
+				0.2393406331539154,
+				0.006064474582672119,
+				0.2393406331539154
+			],
+			"min":[
+				-0.2393406331539154,
+				0.006064474582672119,
+				-0.2393406331539154
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":9,
+			"componentType":5126,
+			"count":12,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":10,
+			"componentType":5126,
+			"count":12,
+			"type":"VEC2"
+		},
+		{
+			"bufferView":11,
+			"componentType":5123,
+			"count":30,
+			"type":"SCALAR"
+		},
+		{
+			"bufferView":12,
+			"componentType":5126,
+			"count":138,
+			"max":[
+				0.34191223978996277,
+				0.35594937205314636,
+				0.34191223978996277
+			],
+			"min":[
+				-0.34191223978996277,
+				-0.22605419158935547,
+				-0.34191223978996277
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":13,
+			"componentType":5126,
+			"count":138,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":14,
+			"componentType":5126,
+			"count":138,
+			"type":"VEC2"
+		},
+		{
+			"bufferView":15,
+			"componentType":5123,
+			"count":390,
+			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
@@ -213,6 +364,54 @@
 			"byteLength":276,
 			"byteOffset":2496,
 			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":144,
+			"byteOffset":2772,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":144,
+			"byteOffset":2916,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":96,
+			"byteOffset":3060,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":60,
+			"byteOffset":3156,
+			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":1656,
+			"byteOffset":3216,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":1656,
+			"byteOffset":4872,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":1104,
+			"byteOffset":6528,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":780,
+			"byteOffset":7632,
+			"target":34963
 		}
 	],
 	"samplers":[
@@ -223,7 +422,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":2772,
+			"byteLength":8412,
 			"uri":"shroom.bin"
 		}
 	]

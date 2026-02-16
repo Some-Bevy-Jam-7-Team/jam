@@ -2,11 +2,13 @@
 
 use bevy::prelude::*;
 use bevy_seedling::sample::SamplePlayer;
+use firewheel::Volume;
 
 use crate::{audio::MusicPool, menus::Menu, screens::Screen};
 
 pub(super) fn plugin(app: &mut App) {
-	app.add_systems(OnEnter(Screen::Title), (open_main_menu, spawn_gloop));
+	app.add_systems(OnEnter(Screen::Title), open_main_menu);
+	app.add_systems(OnEnter(Menu::Main), spawn_gloop);
 	app.add_systems(OnExit(Screen::Title), close_menu);
 }
 
@@ -18,10 +20,25 @@ fn close_menu(mut next_menu: ResMut<NextState<Menu>>) {
 	next_menu.set(Menu::None);
 }
 
-fn spawn_gloop(mut commands: Commands, assets: Res<AssetServer>) {
+fn spawn_gloop(
+	mut commands: Commands,
+	assets: Res<AssetServer>,
+	only_one: Query<(), With<OnlyOneGloopPlz>>,
+) {
+	if !only_one.is_empty() {
+		return;
+	}
 	commands.spawn((
 		DespawnOnEnter(Screen::Gameplay),
-		SamplePlayer::new(assets.load("audio/music/gloopy.ogg")).looping(),
+		DespawnOnEnter(Menu::Credits),
+		SamplePlayer::new(assets.load("audio/music/gloopy.ogg"))
+			.looping()
+			.with_volume(Volume::Decibels(6.0)),
 		MusicPool,
+		OnlyOneGloopPlz,
 	));
 }
+
+#[derive(Component, Reflect, Debug)]
+#[reflect(Component)]
+pub(crate) struct OnlyOneGloopPlz;

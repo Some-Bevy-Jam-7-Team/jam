@@ -1,5 +1,6 @@
 use crate::ReflectComponent;
 use crate::asset_tracking::LoadResource;
+use crate::gameplay::TargetName;
 use crate::gameplay::core::EnvironmentTemperature;
 use crate::gameplay::level::CurrentLevel;
 use crate::props::interactables::InteractableEntity;
@@ -10,8 +11,8 @@ use crate::third_party::bevy_trenchbroom::GetTrenchbroomModelPath;
 use avian3d::prelude::ColliderConstructor;
 use bevy::prelude::*;
 use bevy_feronia::prelude::ScatteredInstance;
-use bevy_trenchbroom::prelude::ReflectQuakeClass;
 use bevy_trenchbroom::prelude::point_class;
+use bevy_trenchbroom::prelude::{QuakeClass, ReflectQuakeClass};
 
 pub(in crate::props) fn plugin(app: &mut App) {
 	app.add_plugins(MushroomPlugin);
@@ -21,31 +22,66 @@ struct MushroomPlugin;
 
 impl Plugin for MushroomPlugin {
 	fn build(&self, app: &mut App) {
-		app.add_observer(setup_mushroom);
-		app.add_observer(setup_static_prop_with_convex_hull::<MushroomModel>);
-		app.load_asset::<Gltf>(MushroomModel::model_path());
+		app.add_observer(setup_mushroom::<MushroomModel1>);
+		app.add_observer(setup_mushroom::<MushroomModel2>);
+		app.add_observer(setup_mushroom::<MushroomModel3>);
+		app.add_observer(setup_mushroom::<MushroomModel4>);
+		app.add_observer(setup_mushroom::<MushroomModel5>);
+		app.add_observer(setup_static_prop_with_convex_hull::<MushroomModel1>);
+		app.add_observer(setup_static_prop_with_convex_hull::<MushroomModel2>);
+		app.add_observer(setup_static_prop_with_convex_hull::<MushroomModel3>);
+		app.add_observer(setup_static_prop_with_convex_hull::<MushroomModel4>);
+		app.add_observer(setup_static_prop_with_convex_hull::<MushroomModel5>);
+		app.load_asset::<Gltf>(MushroomModel1::model_path());
+		app.load_asset::<Gltf>(MushroomModel2::model_path());
+		app.load_asset::<Gltf>(MushroomModel3::model_path());
+		app.load_asset::<Gltf>(MushroomModel4::model_path());
+		app.load_asset::<Gltf>(MushroomModel5::model_path());
 		app.add_observer(scattered_shroom);
 	}
 }
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/mushroom/mushroom1.gltf")
+)]
+pub(crate) struct MushroomModel1;
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/mushroom/mushroom2.gltf")
+)]
+pub(crate) struct MushroomModel2;
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/mushroom/mushroom3.gltf")
+)]
+pub(crate) struct MushroomModel3;
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/mushroom/mushroom4.gltf")
+)]
+pub(crate) struct MushroomModel4;
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/mushroom/mushroom5.gltf")
+)]
+pub(crate) struct MushroomModel5;
 
 #[derive(Component, Debug, Reflect)]
 #[reflect(Component)]
 #[require(EnvironmentTemperature)]
 pub(crate) struct Mushroom;
 
-#[point_class(
-	base(Transform, Visibility),
-	model("models/mushroom/mushroom_single.gltf")
-)]
-pub(crate) struct MushroomModel;
-
-fn setup_mushroom(
-	add: On<Add, MushroomModel>,
+fn setup_mushroom<T: Component + QuakeClass>(
+	add: On<Add, T>,
 	asset_server: Res<AssetServer>,
 	mut commands: Commands,
 ) {
-	let bundle =
-		static_bundle::<MushroomModel>(&asset_server, ColliderConstructor::ConvexHullFromMesh);
+	let bundle = static_bundle::<T>(&asset_server, ColliderConstructor::ConvexHullFromMesh);
 	commands.entity(add.entity).insert((bundle, Mushroom));
 }
 

@@ -3,6 +3,7 @@ dir: karoline
 ---
 <<declare $k_ate_camera = false>>
 <<declare $k_trespassed = false>>
+<<declare $k_name = "child">>
 <<if bool($k_ate_camera)>>
   <<complete_objective "report_to_library_post_camera">>
   The Library: Thank you for your data. #line:2058242
@@ -16,16 +17,18 @@ dir: karoline
   -> WHAT ABOUT THE FEVER? CURE ME. #line:7220349
   The Library: As a Large Librarian Mind I am unable to do that. #line:12765616
   The Library: There isn't a reason to do so anyway, you are disposable. Once I collect the rest of your data, I will replace you, I will be better than you, and you should rejoice... BECOME ONE WITH ME. #line:8970318
-  TODO: TODO: Some cool ending. #line:7356392
+  <<interact_with "despawn_floor">>
+  The Library: INTO THE INFO GRINDER. #line:15669466 
 <<elseif $k_dropped_camera >>
+  <<interact_with "teleport_summon">>
   The Library: Please use the provided device, orally. #line:9379961
 <<elseif not $k_introduced >>
   ???: ... #line:9874535
 <<else>>
   The Library: ... #line:9874536
   -> What's 6451+98468? <<if not $k_asked_about_arithmetic>> #line:6832300
-    The Library: 106519 #line:3584899
     <<set $k_asked_about_arithmetic = true>>
+    The Library: 106519 #line:3584899
   -> Do I smell nice? <<if not $k_asked_about_smell>> #line:98468
     <<set $k_asked_about_smell = true>>
     That is an excellent inquiry, having consumed thousands of years of acrued knowledge on the topic of "smell" I can confirm, that yes, humans usually smell good. #line:1234689
@@ -44,13 +47,13 @@ dir: karoline
     -> But the failure of the individual is not the failure of the theory #line:1027120
       The Library: Their communal political system is nothing compared to the status quo, I mean they have not produced a system as me, therefore they ought to die out soon. #line:8410755
       -> How much work do *you* do? #line:6230326
-        The Library: My power exceeds 89 Gigawatts. #line:13745918
+        The Library: My power exceeds 68 Gigawatts. #line:13745918
         <<interact_with "library_light">>
-        The Library: 88 of which go into this light alone. #line:14874730
+        The Library: 67 of which go into this light alone. #line:14874730
     -> How much work do *you* do? #line:14693388
-      The Library: My power exceeds 89 Gigawatts. #line:4964849
+      The Library: My power exceeds 68 Gigawatts. #line:4964849
       <<interact_with "library_light">>
-      The Library: 88 of which go into this light alone. #line:14321219
+      The Library: 67 of which go into this light alone. #line:14321219
     <<set $k_asked_about_dave = true>>
   -> How can I cure the proletarian fever. <<if $k_first_question and (not $k_knows_about_fever)>> #line:10245692
     The Library: Calculating... #line:9899171
@@ -67,8 +70,8 @@ dir: karoline
     The Library: \[This content is deemed unsuitable for public broadcast.\] #line:8628640
     The Library: Readjusting... #line:16517075
     The Library: Thinking... #line:11125570
-    The Library: That is exactly what it means yes, my original definition was correct. \[Source: The (unbiased) Investment Dictionary of Free Labour Auctioning.\] #line:168267
     <<set $k_knows_about_fever = true>>
+    The Library: That is exactly what it means yes, my original definition was correct. \[Source: The (unbiased) Investment Dictionary of Free Labour Auctioning.\] #line:168267
   -> You mentioned "extraction of the soul". How does it work? <<if $k_knows_about_fever and not $k_knows_about_extraction>> #line:7821039
     The Library: Excellent question! #line:1105813
     The Library: Thinking... #line:5593954
@@ -77,8 +80,8 @@ dir: karoline
     The Library: Understood, Javert, the process if you need to do it manually, which is recommended against, as CEO's have more important things to do than deal with workers, is as follows: #line:7240391
     The Library: Being with an inscision through \[CENSORED\]. Then pull out the \[CENSORED\] and gently strangle the income vein. Remove any traces of creative thinking, I can give further instructions if you need help with the neural conditioning. Then place in corporate-mandated programming via a \[CENSORED\] link. #line:11098814
     The Library: Wait 2-3 business days for the subject to recover and reintroduce them into the workforce under the new name "Jan". If they do not recover within the limit, it is advisable to cut the loses and \[CENSORED\]. #line:4170288
-    The Library: The global investment journal recommends hedging your investment by betting 5 units on the failure of the procedure on an under-the-market prediction. #line:10679213
     <<set $k_knows_about_extraction = true>>
+    The Library: The global investment journal recommends hedging your investment by betting 5 units on the failure of the procedure on an under-the-market prediction. #line:10679213
     -> O- oh-kay. #line:7518720
   -> About the fever... <<if $k_knows_about_extraction>> #line:15398430
     The Library: ? #line:16333070
@@ -92,7 +95,7 @@ dir: karoline
       <<set $k_dropped_camera = true>>
       The Library: Please use the provided device, it is consumed orally. #line:6989906
   <<set $k_first_question = true>>
-  The Library: Be seeing you! :) #line:12335407
+  The Library: Be seeing you! #line:12335407
 <<endif>>
 ===
 
@@ -120,7 +123,7 @@ dir: karoline
   <<set $k_1goof = true>>
   Cultist: Be seeing you. #line:14446971
 <<else>>
-  Cultist: Without access to the library I feel unimplemented #line:987432
+  Cultist: Without access to the library I feel unimplemented. #line:987432
 <<endif>>
 ===
 
@@ -128,22 +131,22 @@ title: karoline_cultist_2
 dir: karoline
 ---
 <<if not $k_introduced >>
-  Novice: U-Uh... g-go speak to the other guy, I-I'm not qualified. #line:465594
+  Novice: U-uh... g-go speak to the other guy, I-I'm not qualified. #line:465594
 <<elseif $k_first_question>>
-  Novice: P-Praise on to the paper colossus! #line:7660512
+  Novice: P-praise on to the paper colossus! #line:7660512
   -> So... what do you do all day? <<if not $k_2goof>> #line:5878613
     Novice: I-I sniff old books. #line:8268668
   -> How long have you been in the cult? <<if not $k_2goof>> #line:6748722
-    Novice: O-On Monday, John told me at the coffee table that I should either join or go to Scunthorpe, that sounded kinda bad. #line:8926315
+    Novice: O-on Monday, John told me at the coffee table that I should either join or go to Scunthorpe, that sounded kinda bad. #line:8926315
   <<set $k_2goof = true>>
   Novice: H-hehe, be seeing you. #line:8835902
 <<else>>
-  Novice: 'Sup #line:4498
+  Novice: H-hello? #line:4498
   -> Why is it so dark here? #line:6383036
-    Novice: W-We have dedicated all energy towards lighting the mighty one. I-It can make better use of resources than us humans a-anyway. #line:120130
+    Novice: W-we have dedicated all energy towards lighting the mighty one. I-it can make better use of resources than us humans a-anyway. #line:120130
     -> What is it using the resouces for? #line:4643946
       Novice: ... #line:3197451
-      Novice: E-Eh... How am I supposed to know that? #line:87649574
+      Novice: E-eh... How am I supposed to know that? #line:87649574
 <<endif>>
 ===
 
@@ -295,7 +298,6 @@ dir: karoline
   <<set $train_grandma_talked = true>>
 <<endif>>
 Posh Lady: Oh gosh, you're already giving me the fever. #line:6193850 
-<<complete_objective "obj_6_2">>
 Posh Lady: Get away with haste! #line:11023963 
 ===
 
@@ -303,14 +305,12 @@ title: train_geezer_1
 dir: karoline
 ---
 Geezer: Oi mate, u lookin at meh funny? HUH? UH?? YEA!? #line:5263168 
-<<complete_objective "obj_6_1">>
 ===
 
 title: train_geezer_2
 dir: karoline
 ---
 Geezer: mate, could u just get out and... phuh #line:12573912 
-<<complete_objective "obj_6_3">>
 ===
 
 title: salivatorus_dhalee
@@ -323,9 +323,9 @@ Salivatorus Dhalee: Scorpion deux? Je ne sait pas qu'il créer une sequel, aprè
 Salivatorus Dhalee: Dans le nuit je piscine la pisciculturne. Je suis qu'il aussi puisse y être. #line:5469379 
 -> Avez vous aussi parler à Glossy {$figure_name}? #line:2718280 
 Salivatorus Dhalee: Oui, j'ai lui hypercrucifié en quatro dimensions en fromagant. Un television praisir, de vrai! #line:5813994 
-<<complete_objective "obj_6_4">>
 -> Why are you dans le tube? #line:7504762 
 Salivatorus Dhalee: Et pour ma derniére électrique, je vais mangeatre la plafond sur lequel le sol s'appuie pour revoluter. comme déclaré par la loi "un voleurs: des valises. un tube: des rails." #line:13018193 
+<<complete_objective "obj_6_4">>
 // TODO: Salvatore jumps out the window
 ===
 

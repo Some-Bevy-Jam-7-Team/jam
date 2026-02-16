@@ -113,19 +113,19 @@ dir: intro_crt
       <<complete_objective "work_8">>
   -> Listen, I'm feeling a bit weird today. #line:15476874
     <<llmanager_emote "shocked">>
-    LLManager: Please proceed to describe the relevance of your inquiry to your work. #line:15656771
+    LLManager: Please describe the relevance of this inquiry to your work. #line:15656771
     <<llmanager_emote "blank">>
     -> My head feels kinda hot. #line:13694543
     -> Are the rumors about the Proletarian Fever true? #line:15438362
     <<llmanager_emote "shocked">>
-    LLManager: PLEASE PROCEED TO DESCRIBE THE RELEVANCE OF YOUR INQUIRY TO YOUR W O #line:9158555
+    LLManager: PLEASE DESCRIBE THE RELEVANCE OF THIS INQUIRY TO YOUR W O #line:9158555
     <<llmanager_emote "blank">>
       -> Maybe I should go home early today? #line:12363270
       <<llmanager_emote "smile2">>
       <<llmanager_emote "glitch" 45>>
       LLManager: That's a good idea! It's really important to it's really important to it's really important to #line:2742939
       <<llmanager_emote "x">>
-      LLManager: Unfortunately, you did not collect enough Business Loyalty Points this quarter yet to unlock that request. #line:13021645
+      LLManager: Unfortunately, you did not collect enough Business Loyalty Points this quarter to unlock that request. #line:13021645
       <<llmanager_emote "shocked">>
       LLManager: (you have 1524 Google ReCAPTCHA labels remaining) #line:5000663
       <<llmanager_emote "blank">>

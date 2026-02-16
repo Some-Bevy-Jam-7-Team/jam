@@ -562,6 +562,7 @@
 "classname" "player"
 "origin" "40 32 376"
 "angles" "0 -45 0"
+"intensity" "0"
 }
 // entity 2
 {
