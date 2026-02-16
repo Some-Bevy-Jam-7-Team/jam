@@ -215,6 +215,11 @@ pub(crate) fn spawn_level(
 					archipelago_ref: ArchipelagoRef3d::new(archipelago),
 					nav_mesh: NavMeshHandle3d(level_three_assets.navmesh.clone()),
 				},
+				children![(
+					Name::new("Level Music"),
+					SamplePlayer::new(level_three_assets.music.clone()).looping(),
+					MusicPool
+				)],
 			));
 		}
 		CurrentLevel::Karoline => {
@@ -447,8 +452,10 @@ fn advance_level_command<T: Asset + Resource + Clone + FromWorld>() -> impl Comm
 pub(crate) struct LevelCommuneAssets {
 	#[dependency]
 	pub(crate) level: Handle<Scene>,
-	// #[dependency]
+	#[dependency]
 	pub(crate) navmesh: Handle<Navmesh>,
+	#[dependency]
+	pub(crate) music: Handle<AudioSample>,
 }
 impl FromWorld for LevelCommuneAssets {
 	fn from_world(world: &mut World) -> Self {
@@ -459,6 +466,7 @@ impl FromWorld for LevelCommuneAssets {
 			level: assets.load("maps/main/three/three.map#Scene"),
 			// You can regenerate the navmesh by using `bevy_rerecast_editor`
 			navmesh: assets.load("maps/main/three/three.nav"),
+			music: assets.load("audio/music/mushroom waltz.ogg"),
 		}
 	}
 }
