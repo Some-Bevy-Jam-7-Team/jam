@@ -65,6 +65,10 @@ impl FromWorld for SoundMap {
 				WorldSounds::Voices,
 				world.load_asset("audio/sound_effects/office/voices.ogg"),
 			),
+			(
+				WorldSounds::Mouth,
+				world.load_asset("audio/sound_effects/mouth.ogg"),
+			),
 		]);
 
 		Self(map)
@@ -78,6 +82,7 @@ enum WorldSounds {
 	Light1,
 	Light2,
 	Voices,
+	Mouth,
 }
 
 fn observe_world_emitter(

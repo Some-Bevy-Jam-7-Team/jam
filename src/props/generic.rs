@@ -31,7 +31,8 @@ pub(super) fn plugin(app: &mut App) {
 		.add_observer(setup_static_prop_with_convex_hull::<Teeth>)
 		.add_observer(setup_static_prop_with_convex_hull::<StaticCctv>);
 
-	app.add_observer(setup_static_prop_with_trimesh::<Train>);
+	app.add_observer(setup_static_prop_with_trimesh::<Train>)
+		.add_observer(setup_static_prop_with_trimesh::<Rock>);
 
 	app.add_observer(setup_static_prop_with_convex_hull::<RockModel1>)
 		.add_observer(setup_static_prop_with_convex_hull::<RockModel2>)
@@ -156,6 +157,12 @@ pub(crate) struct PottedPlant;
 )]
 #[require(EnvironmentTemperature(38.5))]
 pub(crate) struct PottedShroom;
+
+#[point_class(
+	base(TargetName, Transform, Visibility),
+	model("models/rocks/rocks_low_lod.gltf")
+)]
+pub(crate) struct Rock;
 
 // darkmod
 
