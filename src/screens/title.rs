@@ -4,7 +4,7 @@ use bevy::prelude::*;
 use bevy_seedling::sample::SamplePlayer;
 use firewheel::Volume;
 
-use crate::{audio::MusicPool, menus::Menu, screens::Screen};
+use crate::{audio::MusicPool, gameplay::level::GameWon, menus::Menu, screens::Screen};
 
 pub(super) fn plugin(app: &mut App) {
 	app.add_systems(OnEnter(Screen::Title), open_main_menu);
@@ -12,8 +12,12 @@ pub(super) fn plugin(app: &mut App) {
 	app.add_systems(OnExit(Screen::Title), close_menu);
 }
 
-fn open_main_menu(mut next_menu: ResMut<NextState<Menu>>) {
-	next_menu.set(Menu::Main);
+fn open_main_menu(mut next_menu: ResMut<NextState<Menu>>, game_won: Query<(), With<GameWon>>) {
+	if game_won.is_empty() {
+		next_menu.set(Menu::Main);
+	} else {
+		next_menu.set(Menu::Credits);
+	}
 }
 
 fn close_menu(mut next_menu: ResMut<NextState<Menu>>) {
