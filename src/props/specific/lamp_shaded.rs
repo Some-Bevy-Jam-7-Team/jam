@@ -39,7 +39,7 @@ fn setup_lamp_shaded(
 					color: Color::srgb_u8(232, 199, 176),
 					intensity: 800_000.0,
 					radius: 0.1,
-					shadows_enabled: true,
+					shadows_enabled: false,
 					..default()
 				},
 				Transform::from_xyz(0.0, 0.1, -0.25)

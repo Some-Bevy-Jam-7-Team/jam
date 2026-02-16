@@ -54,7 +54,7 @@ fn setup_lamp_wall_electric(
 				intensity: lamp.intensity,
 				radius: 0.05,
 				range: 20.0,
-				shadows_enabled: true,
+				shadows_enabled: false,
 				..default()
 			},
 		))
