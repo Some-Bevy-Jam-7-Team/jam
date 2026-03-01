@@ -492,6 +492,7 @@ checksum = "1795ebc740ea791ffbe6685e0688ab1effec16c2864e0476db40bfdf0c02cb3d"
 name = "bevy"
 version = "0.18.0"
 dependencies = [
+ "bevy_dylib",
  "bevy_internal",
 ]
 
@@ -846,6 +847,13 @@ dependencies = [
  "log",
  "serde",
  "sysinfo",
+]
+
+[[package]]
+name = "bevy_dylib"
+version = "0.18.0"
+dependencies = [
+ "bevy_internal",
 ]
 
 [[package]]
@@ -8910,7 +8918,3 @@ checksum = "410e9ecef634c709e3831c2cfdb8d9c32164fae1c67496d5b68fff728eec37fe"
 dependencies = [
  "zune-core 0.5.1",
 ]
-
-[[patch.unused]]
-name = "bevy_dylib"
-version = "0.18.0"
