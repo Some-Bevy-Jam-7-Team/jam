@@ -41,7 +41,7 @@ pub fn update_grass(
 
 	for (mut gradient, mut color, mut sss) in &mut q_layers {
 		**color = base_color.into();
-		**sss = (fever * 2.).into();
+		**sss = (fever * 2.).max(1.);
 		*gradient = InstanceColorGradient {
 			start: 4.,
 			..InstanceColorGradient::new(gradient_start, gradient_end)
